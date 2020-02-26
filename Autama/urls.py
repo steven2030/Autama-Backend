@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from . import views
+from . import views as main_page_views  # from directory: Autama import view (the views.py file in this directory)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('about/', views.about),
-    path('', views.homepage, name='homepage'),
+    path('about/', main_page_views.about),
+    path('', main_page_views.homepage, name='homepage'),
     path('accounts/', include('accounts.urls'))
 ]

@@ -1,9 +1,9 @@
 from django.urls import path
-from . import views
+from . import views as accounts_views
 
 
 app_name = 'accounts'  # For something akin to namespacing.
 
 urlpatterns = [
-    path('signup/', views.signup_view, name="signup"),
+    path('signup/', accounts_views.signup_view, name="signup"),
 ]
