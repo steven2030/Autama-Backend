@@ -20,7 +20,15 @@ from . import views as main_page_views  # from directory: Autama import view (th
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+<<<<<<< Updated upstream:Autama/urls.py
     path('about/', main_page_views.about),
     path('', main_page_views.homepage, name='homepage'),
     path('accounts/', include('accounts.urls'))
+=======
+    path('about/', views.about),
+    path('', views.homepage),
+    path('accounts/', include('accounts.urls')),
+    path('test_db_add/', views.test_db_add),
+    path('test_db_lookup/', views.test_db_lookup)
+>>>>>>> Stashed changes:Automa/urls.py
 ]
