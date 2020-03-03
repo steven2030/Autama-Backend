@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views as main_page_views  # from directory: Autama import view (the views.py file in this directory)
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 urlpatterns = [
@@ -26,3 +29,6 @@ urlpatterns = [
     path('test_db_add/', main_page_views.test_db_add),
     path('test_db_lookup/', main_page_views.test_db_lookup)
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
