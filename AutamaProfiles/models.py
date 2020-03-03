@@ -9,8 +9,8 @@ class AutamaProfile(models.Model):
     picture = models.ImageField(upload_to='Images', blank=True)
     first = models.CharField(max_length=100)
     last = models.CharField(max_length=100)
-    #nummatches
-    #owner
+    nummatches = models.CharField(max_length=100)
+    owner = models.CharField(max_length=100)
     #pickle
     #interests
 
