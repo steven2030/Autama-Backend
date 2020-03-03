@@ -4,7 +4,7 @@ from django.db import models
 
 
 class AutamaProfile(models.Model):
-    autamaid = models.CharField(max_length=100)
+    autamaid = models.CharField(max_length=100, primary_key=True)
     creator = models.CharField(max_length=100)
     picture = models.ImageField(upload_to='Images', blank=True)
     first = models.CharField(max_length=100)
