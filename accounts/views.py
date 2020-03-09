@@ -21,3 +21,7 @@ def signup_view(request):
     else:
         form = SignUpForm()
     return render(request, 'accounts/signup.html', {'form': form})
+
+
+def profile(request):
+    return render(request, 'accounts/profile.html')
