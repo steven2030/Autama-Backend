@@ -11,8 +11,8 @@ class AutamaProfile(models.Model):
     last = models.CharField(max_length=100)
     nummatches = models.CharField(max_length=100)
     owner = models.CharField(max_length=100)
-    #pickle
-    #interests
+    pickle = models.CharField(max_length=100)
+    interests = models.CharField(max_length=100)
 
     def __str__(self):
         return self.autamaid
