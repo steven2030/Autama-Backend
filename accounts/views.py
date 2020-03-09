@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 # from django.contrib.auth import authenticate, login, logout # handle authentication (email)
+from .forms import SignUpForm
 
 
 # Create your views here.
 def signup_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             # Authentication via email, on hold for now
@@ -19,5 +19,5 @@ def signup_view(request):
             return redirect('homepage')
 
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
     return render(request, 'accounts/signup.html', {'form': form})
