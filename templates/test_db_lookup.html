@@ -3,24 +3,6 @@
     <head>
         <meta charset="UTF-8">
         <title>Test DB Lookup Entry</title>
-        <script type="text/javascript" src="https://cdnjs.cloudfire.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script>
-            $('#lookup').on('submit', function(event) {
-                event.preventDefault();
-                let form_data = {
-                    uname: $('uname').val()
-                };
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: 'POST',
-                    data: form_data,
-                    success: function(data) {
-                        $("#result").html(data);
-                    }
-                });
-                return false;
-            });
-        </script>
     </head>
     <body>
         <form id="lookup" method="post" action="/test_db_lookup/">
@@ -31,7 +13,14 @@
         </form>
         <hr>
         <div>
-            <p id="result"></p>
+            <p>Name: {{ uname }}</p>
+            <p>First: {{ first }}</p>
+            <p>Last: {{ last }}</p>
+            <p>Interests: {{ int1 }}</p>
+            <p>Interests: {{ int2 }}</p>
+            <p>Interests: {{ int3 }}</p>
+            <p>Interests: {{ int4 }}</p>
+            <p>Interests: {{ int5 }}</p>
         </div>
     </body>
 </html>

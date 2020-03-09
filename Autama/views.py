@@ -1,19 +1,28 @@
 from django.http import HttpResponse
-from django.shortcuts import render
 from accounts.models import UserProfile
 import simplejson
-
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
 def about(request):
     #return HttpResponse('about')
     return render(request, 'about.html')
 
 
+@login_required
 def homepage(request):
     #return HttpResponse('homepage')
     return render(request, 'homepage.html')
 
 
+def pagelogout(request):
+    if request.method=="POST":
+        logout(request)
+        return redirect('login')
+
+
+@login_required
 def test_db_lookup(request):
     if request.method == "POST":
         uname = request.POST.get('uname')
@@ -34,11 +43,13 @@ def test_db_lookup(request):
             'int5': db_Out.interests5
         }
 
-        return HttpResponse(simplejson.dumps(response_dict),
-                            content_type='application/json')
+        return render(request, 'test_db_lookup.html', response_dict)
+        #return HttpResponse(simplejson.dumps(response_dict),
+        #                   content_type='application/json')
     return render(request, 'test_db_lookup.html')
 
 
+@login_required
 def test_db_add(request):
     if request.method == "POST":
         entry = UserProfile()

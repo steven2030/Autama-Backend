@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'AutamaProfiles',
 ]
 
+# Dev Only, need to configure for production
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -129,3 +132,8 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/Images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Images')
+
+# URL REDIRECTS
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/homepage/'
+LOGOUT_REDIRECT_URL = '/login/'

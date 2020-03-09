@@ -19,12 +19,16 @@ from . import views as main_page_views  # from directory: Autama import view (th
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 from django.conf import settings
-
+from django.conf.urls import url
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    path('', auth_views.LoginView.as_view(), name='login'),
+    # Include all auth views
+    url('^', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path('about/', main_page_views.about),
-    path('', main_page_views.homepage, name='homepage'),
+    path('homepage/', main_page_views.homepage, name='homepage'),
     path('accounts/', include('accounts.urls')),
     path('test_db_add/', main_page_views.test_db_add),
     path('test_db_lookup/', main_page_views.test_db_lookup)
