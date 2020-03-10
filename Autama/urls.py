@@ -38,6 +38,7 @@ urlpatterns = [
     path('MyMatches/', main_page_views.my_matches, name="MyMatches"),
     path('Chat/', main_page_views.chat, name="Chat"),
     path('logout/', main_page_views.pagelogout, name="logout")
+    path('AutamaProfiles/', include('AutamaProfiles.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

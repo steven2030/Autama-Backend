@@ -9,10 +9,10 @@ class AutamaProfile(models.Model):
     picture = models.ImageField(upload_to='Images', blank=True)
     first = models.CharField(max_length=100)
     last = models.CharField(max_length=100)
-    #nummatches
-    #owner
-    #pickle
-    #interests
+    nummatches = models.CharField(max_length=100)
+    owner = models.CharField(max_length=100)
+    pickle = models.CharField(max_length=100)
+    interests = models.CharField(max_length=100)
 
     def __str__(self):
         return self.autamaid

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Autama</title>
+</head>
+<body>
+
+    <h1>Register your Autama here</h1>
+    <form class="site-form" action="/AutamaProfiles/register/" method="post">
+        {%csrf_token%}
+        {{ form }}
+        <input type="submit" value="create">
+    </form>
+
+</body>
+</html>
