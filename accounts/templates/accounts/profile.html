@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
+{% extends 'base.html' %}
+
+{% block head %}
     <title>Profile</title>
-</head>
-<body>
+{% endblock %}
+
+{% block body %}
+<div class="container">
     <h1>Profile</h1>
     <p>Username: {{ request.user.username }}</p>
     <p>First name: {{ request.user.first_name }}</p>
@@ -12,5 +13,5 @@
     <p>Email: {{ request.user.email }}</p>
     <hr>
     <a href="edit">Edit Profile</a><br>
-</body>
-</html>
+</div>
+{% endblock %}
