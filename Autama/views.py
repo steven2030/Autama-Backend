@@ -11,13 +11,27 @@ def about(request):
 
 
 @login_required
+def chat(request):
+    return render(request, 'chat.html')
+
+
+@login_required
+def find_matches(request):
+    return render(request, 'find_matches.html')
+
+
+@login_required
+def my_matches(request):
+    return render(request, 'my_matches.html')
+
+@login_required
 def homepage(request):
     #return HttpResponse('homepage')
     return render(request, 'homepage.html')
 
 
 def pagelogout(request):
-    if request.method=="POST":
+    if request.method == "POST":
         logout(request)
         return redirect('login')
 

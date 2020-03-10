@@ -135,5 +135,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'Images')
 
 # URL REDIRECTS
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/homepage/'
+LOGIN_REDIRECT_URL = '/FindMatches/'
 LOGOUT_REDIRECT_URL = '/login/'
