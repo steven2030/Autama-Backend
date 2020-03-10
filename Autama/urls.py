@@ -31,7 +31,8 @@ urlpatterns = [
     path('homepage/', main_page_views.homepage, name='homepage'),
     path('accounts/', include('accounts.urls')),
     path('test_db_add/', main_page_views.test_db_add),
-    path('test_db_lookup/', main_page_views.test_db_lookup)
+    path('test_db_lookup/', main_page_views.test_db_lookup),
+    path('AutamaProfiles/', include('AutamaProfiles.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
