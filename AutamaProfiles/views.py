@@ -17,7 +17,7 @@ def register_autama(request):
         if form.is_valid():
             form.save()
             # redirect to another page
-            return redirect('Autama:homepage')
+            return redirect('homepage')
 
     else:
         form = AutamaForm()

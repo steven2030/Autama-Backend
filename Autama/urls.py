@@ -22,6 +22,7 @@ from django.conf import settings
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
+
 urlpatterns = [
     path('', auth_views.LoginView.as_view(), name='login'),
     # Include all auth views
