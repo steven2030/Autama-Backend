@@ -79,7 +79,6 @@ class Nucleus:
         dataset = get_dataset(self.__tokenizer, self.__args.dataset_path, self.__args.dataset_cache)
         personalities = [dialog["personality"] for dataset in dataset.values() for dialog in dataset]
         personality = random.choice(personalities)
-        self.__logger.info("Selected personality: %s", self.__tokenizer.decode(chain(*personality)))
         return personality
 
     # A method to display personality
