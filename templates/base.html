@@ -23,7 +23,7 @@
             float: left;
             height: 60px;
             width: 10%;
-            font-size: 26px;
+            font-size: 28px;
             line-height: 60px;
             color: white;
             text-align: center;
@@ -49,17 +49,17 @@
 <body>
     <nav>
         <ul>
-            <li class="active"><a href="/">Home</a></li>
             {% if not request.user.is_authenticated  %}
             <li><a href="/login/">Login</a></li>
             <li><a href="/accounts/register/">Register</a></li>
             {% endif %}
 
             {% if request.user.is_authenticated  %}
-            <li><a href="/accounts/profile/">Profile</a></li>
+            <li style="margin-right: 80px" class="active"><a href="/">FindMatches</a></li>
+            <li style="margin-right: 60px" class="active"><a href="/">MyMatches</a></li>
             <li><a href="/AutamaProfiles/robot/">Autama</a></li>
-            <li style="float: right"><a href="/logout">logout</a></li>
-            <li style="float: right"><a href="#">{{ request.user }}</a></li>
+            <li style="float: right"><a href="/logout">Logout</a></li>
+            <li style="float: right"><a href="/accounts/profile/">{{ request.user }}</a></li>
             {% endif %}
         </ul>
     </nav>
