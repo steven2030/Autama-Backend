@@ -57,8 +57,8 @@
 
             {% if request.user.is_authenticated  %}
             <li style="float: right"><a href="/logout">logout</a></li>
-            {% endif %}
             <li style="float: right"><a href="#">{{ request.user }}</a></li>
+            {% endif %}
         </ul>
     </nav>
     {% block content %}

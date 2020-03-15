@@ -41,11 +41,11 @@
     <div style="width: 80%;margin: auto">
        <div class="profile">
            <p>User Profile</p>
-           <form style="overflow: hidden;margin-top: -10px" method="post" action="/profile/" id="form1">
-               <input name="id" style="display: none;" value="{{ user.id }}"/>
+           <form style="overflow: hidden;margin-top: -10px" method="post" action="/accounts/profile/" id="form1">
+               <input name="id" style="display: none;" value="{{ request.user.id }}"/>
                <div style="float: left;width: 40%;border-right:1px solid #eee">
                    <div style="height: 300px; position: relative;border-bottom: 1px solid #eee;">
-                       <img {% if user.image %}src="{{ user.image.url }}" {% endif %} id="avatar">
+                       <img {% if request.user.image %}src="{{ request.user.image.url }}" {% endif %} id="avatar">
                        <input type="file" name="photo" style="display: none;" id="upload-img"/>
                        {% if myself %}
                        <button type="button" class="btn btn-info" id="upload-img-btn" style="position: absolute;transform: translateX(-50%);left: 50%; bottom:40px">
@@ -67,25 +67,40 @@
                </div>
                <div class="right">
                    <div>
-                       <span>User:</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input name="name" value="{{ user.last_name | format_none}}">
+                       <span>User:</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input name="name" value="{{ request.user.username | format_none}}">
                    </div>
-                   <div>
-                       <span>Hobby:</span>&nbsp&nbsp&nbsp<input name="interest" value="{{ user.interest |format_none }}">
-                   </div>
+                    <div>
+                        <span>Name: {{ request.user.first_name }} {{request.user.last_name }}</span>
+                    </div>
                    <div>
                        <span>Gender:</span>&nbsp&nbsp&nbsp
-                       <label style="width: 80px;margin-left: 40px"><input name="sex" type="radio" value="0" {% if user.sex == 0 %} checked {% endif %}/>male </label>
-                       <label><input name="sex" type="radio" value="1" {% if user.sex == 1 %} checked {% endif %}/>female </label>
+                       <label style="width: 80px;margin-left: 40px"><input name="sex" type="radio" value="0" {% if request.user.sex == 0 %} checked {% endif %}/>male </label>
+                       <label><input name="sex" type="radio" value="1" {% if request.user.sex == 1 %} checked {% endif %}/>female </label>
                    </div>
                    <div>
-                       <span>address:</span>&nbsp&nbsp&nbsp<input name="address" value="{{ user.address | format_none}}">
+                       <span>email:</span>&nbsp&nbsp<input name="email" value="{{ request.user.email |format_none }}">
+                   </div>
+                   <!-- TODO: Add scroll within the container or expand entire form for interests
+                    <div>
+                        <span>Interest:</span>&nbsp&nbsp
+                        <input name="interest1" value="{{ reqeust.user.interest1 |format_none }}">
+                    </div>
+                   <div>
+                       <span>Interest:</span>&nbsp&nbsp
+                       <input name="interest2" value="{{ reqeust.user.interest2 |format_none }}">
                    </div>
                    <div>
-                       <span>phone:</span><input name="phone" value="{{ user.phone | format_none }}">
+                       <span>Interest:</span>&nbsp&nbsp
+                       <input name="interest3" value="{{ reqeust.user.interest3 |format_none }}">
                    </div>
                    <div>
-                       <span>email:</span>&nbsp&nbsp<input name="email" value="{{ user.email |format_none }}">
+                       <span>Interest:</span>&nbsp&nbsp
+                       <input name="interest4" value="{{ reqeust.user.interest4 |format_none }}">
                    </div>
+                   <div>
+                       <span>Interest:</span>&nbsp&nbsp
+                       <input name="interest5" value="{{ reqeust.user.interest5 |format_none }}">
+                   </div>-->
                    {% if myself %}
                    <div style="border: none;position: relative;height: 94px;">
                        <input type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">

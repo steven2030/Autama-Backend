@@ -60,7 +60,7 @@ class ProfileView(LoginRequiredMixin, View):
             try:
                 obj = User.objects.get(id=int(user_id))
             except Exception as e:
-                return render(request, 'error.html', {"error": "user does not exist"})
+                return render(request, '../templates/error.html', {"error": "user does not exist"})
             if obj.id == int(user_id):
                 return render(request, '../templates/profile.html', {"user": obj, 'myself': True})
             return render(request, '../templates/profile.html', {"user": obj, 'myself': False})
@@ -81,7 +81,7 @@ class ProfileView(LoginRequiredMixin, View):
         obj.phone = phone
         obj.email = email
         obj.save()
-        return HttpResponseRedirect(reverse("profile") + "?id=" + user_id)
+        return HttpResponseRedirect(reverse("accounts:profile"))
 
 
 class LoginView(View):
@@ -99,25 +99,10 @@ class LoginView(View):
                 request.session.set_expiry(0)
                 if is_remember_me:
                     request.session.set_expiry(None)
-                return HttpResponseRedirect(reverse("home"))
+                return HttpResponseRedirect(reverse("FindMatches"))
             else:
                 return render(request, "../templates/login.html", {"error": "The user is not activated!"})
         else:
             return render(request, "..templates/login.html", {"error": "username or account is incorrect！"})
 
 
-@login_required()
-def profile(request):
-    return render(request, 'accounts/templates/profile.html')
-
-@login_required()
-def edit_profile(request):
-    if request.method == "POST":
-        form = EditProfileForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('/accounts/profile/')
-    else:
-        form = EditProfileForm(instance=request.user)
-        args = {'form': form}
-        return render(request, 'accounts/edit_profile.html', args)
