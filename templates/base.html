@@ -50,12 +50,14 @@
     <nav>
         <ul>
             <li class="active"><a href="/">Home</a></li>
+            {% if not request.user.is_authenticated  %}
             <li><a href="/login/">Login</a></li>
             <li><a href="/accounts/register/">Register</a></li>
-            <li><a href="/accounts/profile/">Profile</a></li>
-            <li><a href="/AutamaProfiles/robot/">Autama</a></li>
+            {% endif %}
 
             {% if request.user.is_authenticated  %}
+            <li><a href="/accounts/profile/">Profile</a></li>
+            <li><a href="/AutamaProfiles/robot/">Autama</a></li>
             <li style="float: right"><a href="/logout">logout</a></li>
             <li style="float: right"><a href="#">{{ request.user }}</a></li>
             {% endif %}
