@@ -25,17 +25,16 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     #path('', auth_views.LoginView.as_view(), name='login'),
-    path('', main_page_views.find_matches),
+    path('', main_page_views.FindMatches.as_view()),
     # Include all auth views
     url('^', include('django.contrib.auth.urls')),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('admin/', admin.site.urls, name="admin"),
     path('about/', main_page_views.about, name="about"),
-    path('homepage/', main_page_views.homepage, name='homepage'),
     path('accounts/', include('accounts.urls')),
-    path('FindMatches/', main_page_views.find_matches, name="FindMatches"),
-    path('MyMatches/', main_page_views.my_matches, name="MyMatches"),
-    path('Chat/', main_page_views.chat, name="Chat"),
+    path('FindMatches/', main_page_views.FindMatches.as_view(), name="FindMatches"),
+    path('MyMatches/', main_page_views.MyMatches.as_view(), name="MyMatches"),
+    path('Chat/', main_page_views.Chat.as_view(), name="Chat"),
     path('logout/', main_page_views.LogoutView.as_view(), name="logout"),
     path('AutamaProfiles/', include('AutamaProfiles.urls')),
 ]

@@ -55,8 +55,8 @@
             {% endif %}
 
             {% if request.user.is_authenticated  %}
-            <li style="margin-right: 80px" class="active"><a href="/">FindMatches</a></li>
-            <li style="margin-right: 60px" class="active"><a href="/">MyMatches</a></li>
+            <li style="margin-right: 80px" class="active"><a href="/FindMatches/">FindMatches</a></li>
+            <li style="margin-right: 60px" class="active"><a href="/MyMatches/">MyMatches</a></li>
             <li><a href="/AutamaProfiles/robot/">Autama</a></li>
             <li style="float: right"><a href="/logout">Logout</a></li>
             <li style="float: right"><a href="/accounts/profile/">{{ request.user }}</a></li>

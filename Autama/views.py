@@ -143,27 +143,23 @@ class ResetPasswordView(LoginRequiredMixin, View):
         return HttpResponse(json.dumps({'code':0, "avatar": obj.image.url}), content_type="application/json")
 
 
-@login_required
-def find_matches(request):
-    return render(request, 'find_matches.html')
+class FindMatches(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'find_matches.html')
 
 
-@login_required
-def my_matches(request):
-    return render(request, 'my_matches.html')
+class MyMatches(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'my_matches.html')
 
-
+# TODO: Do we want this as part of login? Fix to view if keeping.
 def about(request):
     #return HttpResponse('about')
     return render(request, 'about.html')
 
 
-@login_required
-def chat(request):
-    return render(request, 'chat.html')
+class Chat(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'chat.html')
 
 
-@login_required
-def homepage(request):
-    #return HttpResponse('homepage')
-    return render(request, 'homepage.html')
