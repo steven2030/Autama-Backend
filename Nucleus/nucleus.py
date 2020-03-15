@@ -82,11 +82,11 @@ class Nucleus:
         return personality
 
     # A method to display personality
-    def display_personality(self, personality):
+    def display_personality(self, personality: list):
         self.__logger.info("Selected personality: %s", self.__tokenizer.decode(chain(*personality)))
 
     # A method to converse with an Autama by taking in Autama's personality and user's input
-    def converse_with(self, personality, user_input):
+    def converse_with(self, personality: list, user_input: str):
         self.__history.append(self.__tokenizer.encode(user_input))
         with torch.no_grad():
             out_ids = sample_sequence(personality, self.__history, self.__tokenizer, self.__model, self.__args)
