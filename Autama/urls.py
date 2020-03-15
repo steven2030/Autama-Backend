@@ -33,13 +33,11 @@ urlpatterns = [
     path('about/', main_page_views.about, name="about"),
     path('homepage/', main_page_views.homepage, name='homepage'),
     path('accounts/', include('accounts.urls')),
-    path('test_db_add/', main_page_views.test_db_add),
-    path('test_db_lookup/', main_page_views.test_db_lookup),
     path('FindMatches/', main_page_views.find_matches, name="FindMatches"),
     path('MyMatches/', main_page_views.my_matches, name="MyMatches"),
     path('Chat/', main_page_views.chat, name="Chat"),
-    path('logout/', main_page_views.pagelogout, name="logout"),
-    path('AutamaProfiles/', include('AutamaProfiles.urls'))
+    path('logout/', main_page_views.LogoutView.as_view(), name="logout"),
+    path('AutamaProfiles/', include('AutamaProfiles.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

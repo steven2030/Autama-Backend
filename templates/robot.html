@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block csstyle %}
+    <style>
+    div.robot{
+        height: 660px;
+        width: 380px;
+        border: 2px solid #d4cce0;
+        box-shadow: 10px 10px 5px #888888;
+    }
+    div.robot > img{
+        height: 310px;
+        width: 376px;
+    }
+    div.robot > div{
+        height: 40px;
+        width: 380px;
+        text-align: center;
+        line-height: 40px;
+        font-size: 26px;
+    }
+     div.robot > div:nth-child(1){
+        background-color: #9e9e9e59;
+    }
+    div.robot > div:nth-child(2){
+        margin-top: 30px;
+    }
+    </style>
+{%  endblock %}
+
+{% block content %}
+    <div style="width: 80%;margin: auto">
+        <h2>Autama Profile</h2>
+        <div class="robot">
+            <div>Information</div>
+            <img src="{{ robot.image.url }}">
+            <div>
+                <span>{{ robot.fname }}{{ robot.lname }},{{ robot.year }} years old</span>
+                <p style="font-size: 20px">Hobby:{{ robot.interest }}</p>
+                <p style="font-size: 20px">Owner: Happy Slackers</p>
+                <p style="font-size: 20px;display: none" id="creator">Creator:{{ robot.creator }}</p>
+                <p style="font-size: 20px;display: none" id="match_number">{{ robot.match_number }}</p>
+                <p type="button" class="btn btn-default btn-lg" onclick="match_robot()"><span class="glyphicon glyphicon-plus"></span>Claim</p>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+s
+
+{% block js %}
+    <script type="application/javascript">
+
+    function match_robot() {
+        $.post("/robot/", {'robot_id': {{robot.id}},"csrfmiddlewaretoken": "{{ csrf_token }}"},function(result){
+            //window.location.href="/robot/";
+            $("#creator").html("creator:"+ result['creator']);
+            $("#creator").show();
+            $("#match_number").html("match_number:"+result['match_number']);
+            $("#match_number").show();
+            alert("");
+          });
+
+    }
+    </script>
+{% endblock %}
+

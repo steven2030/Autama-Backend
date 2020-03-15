@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -40,10 +39,11 @@ INSTALLED_APPS = [
     'accounts',
     'Autama',
     'AutamaProfiles',
+    'accounts.templatetags',
 ]
 
 # Dev Only, need to configure for production
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -137,3 +137,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'Images')
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/FindMatches/'
 LOGOUT_REDIRECT_URL = '/login/'
+
+# Authentication
+# AUTHENTICATION_BACKENDS = ('user_profile.views.CustomBackend',)
+
+# User Model
+AUTH_USER_MODEL = 'accounts.User'

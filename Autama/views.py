@@ -1,9 +1,162 @@
 from django.http import HttpResponse
-from accounts.models import UserProfile
+from accounts.models import User
 import simplejson
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+
+import json
+from django.shortcuts import render,reverse
+from django.contrib.auth.backends import ModelBackend
+from django.contrib.auth import authenticate, login, logout
+from accounts.models import User
+from django.db.models import Q
+from django.views import View
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.core.files.base import ContentFile
+
+
+class CustomBackend(ModelBackend):
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        try:
+            username = request.POST.get("username", "")
+            password = request.POST.get("password", "")
+            user = User.objects.get(Q(username=username) | Q(email=username))
+            if user.check_password(password):
+                return user
+        except Exception as e:
+            return None
+
+
+class LoginRequiredMixin(object):
+    """
+    """
+    @classmethod
+    def as_view(cls, **initkwargs):
+        view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
+        return login_required(view, login_url='/login/')
+
+
+class HomeView(View):
+    def get(self, request):
+        return render(request, 'home.html')
+
+
+class RegisterView(View):
+    def get(self, request):
+        return render(request, 'register.html')
+
+    def post(self, request):
+        username = request.POST.get('username')
+        firstname = request.POST.get('firstname')
+        lastname = request.POST.get('lastname')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        rePassword = request.POST.get('rePassword')
+        if password != rePassword:
+            return render(request, 'register.html', {'error': 'Inconsistent passwords'})
+
+        user = User.objects.filter(Q(username=username) | Q(email=email))
+        if user:
+            return render(request, 'register.html', {'error': 'email or account already existed'})
+
+        obj = User.objects.create(username=username, first_name=firstname,last_name=lastname, email=email)
+        obj.set_password(password)
+        obj.save()
+        return HttpResponseRedirect(reverse('login'))
+
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect(reverse('login'))
+
+
+class LoginView(View):
+    def get(self, request):
+        return render(request, 'login.html')
+
+    def post(self, request):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        is_remember_me = request.POST.get('is_remember_me')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                request.session.set_expiry(0)
+                if is_remember_me:
+                    request.session.set_expiry(None)
+                return HttpResponseRedirect(reverse("home"))
+            else:
+                return render(request, "login.html", {"error": "The user is not activated!"})
+        else:
+            return render(request, "login.html", {"error": "username or account is incorrect！"})
+
+
+class ProfileView(LoginRequiredMixin, View):
+    def get(self, request):
+        user_id = request.GET.get("user_id")
+        if not user_id:
+            return render(request, 'profile.html', {"user": request.user, 'myself': True})
+        else:
+            try:
+                obj = User.objects.get(id=int(user_id))
+            except Exception as e:
+                return render(request, 'error.html', {"error": "user does not exist"})
+            if obj.id == int(user_id):
+                return render(request, 'profile.html', {"user": obj, 'myself': True})
+            return render(request, 'profile.html', {"user": obj, 'myself': False})
+
+    def post(self, request):
+        user_id = request.POST.get("id")
+        last_name = request.POST.get("name")
+        interest = request.POST.get("interest")
+        sex = request.POST.get("sex")
+        address = request.POST.get("address")
+        phone = request.POST.get("phone")
+        email = request.POST.get("email")
+        obj = User.objects.get(id=int(user_id))
+        obj.last_name = last_name
+        obj.interest = interest
+        obj.sex = int(sex)
+        obj.address = address
+        obj.phone = phone
+        obj.email = email
+        obj.save()
+        return HttpResponseRedirect(reverse("profile") + "?id=" + user_id)
+
+
+
+class ChangeAvatarView(LoginRequiredMixin, View):
+
+    def post(self, request):
+        obj = User.objects.get(id=request.user.id)
+        pic = ContentFile(request.FILES['file'].read())
+        obj.image.save(request.FILES['file'].name, pic)
+        obj.save()
+        return HttpResponse(json.dumps({'code':0, "avatar": obj.image.url}))
+
+
+class ResetPasswordView(LoginRequiredMixin, View):
+    def post(self, request):
+        obj = User.objects.get(id=request.user.id)
+        password = request.POST.get("password")
+        obj.set_password(password)
+        obj.save()
+        return HttpResponse(json.dumps({'code':0, "avatar": obj.image.url}), content_type="application/json")
+
+
+@login_required
+def find_matches(request):
+    return render(request, 'find_matches.html')
+
+
+@login_required
+def my_matches(request):
+    return render(request, 'my_matches.html')
+
 
 def about(request):
     #return HttpResponse('about')
@@ -16,69 +169,6 @@ def chat(request):
 
 
 @login_required
-def find_matches(request):
-    return render(request, 'find_matches.html')
-
-
-@login_required
-def my_matches(request):
-    return render(request, 'my_matches.html')
-
-@login_required
 def homepage(request):
     #return HttpResponse('homepage')
     return render(request, 'homepage.html')
-
-
-def pagelogout(request):
-    if request.method == "POST":
-        logout(request)
-        return redirect('login')
-
-
-@login_required
-def test_db_lookup(request):
-    if request.method == "POST":
-        uname = request.POST.get('uname')
-        try:
-            db_Out = UserProfile.objects.get(username=uname)
-        except UserProfile.DoesNotExist:
-            return HttpResponse(simplejson.dumps({"uname":"Does not exist"}), content_type='application/json')
-            #return HttpResponse("Profile does not exist")
-        response_dict = {
-            'uname': db_Out.username,
-            'email': db_Out.email,
-            'first': db_Out.first,
-            'last': db_Out.last,
-            'int1': db_Out.interests1,
-            'int2': db_Out.interests2,
-            'int3': db_Out.interests3,
-            'int4': db_Out.interests4,
-            'int5': db_Out.interests5
-        }
-
-        return render(request, 'test_db_lookup.html', response_dict)
-        #return HttpResponse(simplejson.dumps(response_dict),
-        #                   content_type='application/json')
-    return render(request, 'test_db_lookup.html')
-
-
-@login_required
-def test_db_add(request):
-    if request.method == "POST":
-        entry = UserProfile()
-        entry.username = request.POST.get('uname')
-        entry.email = request.POST.get('email')
-        entry.first = request.POST.get('fname')
-        entry.last = request.POST.get('lname')
-        entry.picture = '/Images/User' + str(entry.username)
-        entry.interests1 = request.POST.get('int1')
-        entry.interests2 = request.POST.get('int2')
-        entry.interests3 = request.POST.get('int3')
-        entry.interests4 = request.POST.get('int4')
-        entry.interests5 = request.POST.get('int5')
-        entry.save()
-
-        return HttpResponse('Successfully Added')
-    else:
-        return render(request, 'test_db_add.html')
