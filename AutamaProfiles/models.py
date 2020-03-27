@@ -1,7 +1,6 @@
 from django.db import models
 
 # Create your models here.
-# Running a test to see if I have configured Git Branches on my end correctly or not.
 
 
 class AutamaProfile(models.Model):
