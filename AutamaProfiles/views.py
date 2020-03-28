@@ -11,17 +11,17 @@ import json
 class AutamaForm(ModelForm):
     class Meta:
         model = AutamaProfile
-        fields = ['creator', 'picture', 'first', 'last', 'pickle', 'interests']
+        fields = ['creator', 'picture', 'first', 'last', 'interests']
 
 
 # HttpRequest.content_params
 def register_autama(request):
     if request.method == 'POST':
-        form = AutamaForm(request.POST)
+        form = AutamaForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             # redirect to another page
-            return redirect('homepage')
+            return redirect('about')
 
     else:
         form = AutamaForm()
