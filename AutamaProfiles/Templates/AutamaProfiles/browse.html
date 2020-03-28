@@ -8,7 +8,7 @@
         {% for profile in profiles %}
 
             <div class="profiles">
-            <h2> <a href="#"> {{ profile.first }} </a> </h2>
+            <h2> <a href="{% url 'AutamaProfiles:profile' pk=profile.pk slug=profile.get_slug %}"> {{ profile.first }} </a> </h2>
             </div>
 
         {% endfor %}
