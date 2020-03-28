@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
+from django.shortcuts import reverse
 
 # Create your models here.
 
@@ -20,13 +21,10 @@ class AutamaProfile(models.Model):
     def __str__(self):
         return self.autamaid
 
+    def get_slug(self):
+        slug = '{} {}'.format(self.first, self.last)
+        return slugify(slug)
 
-def prepare_for_save(sender, **kwargs):
-    instance = kwargs['instance']
-    new_slug = '{first} {last} {pk}'.format(first=instance.first, last=instance.last, pk=instance.pk)
-    instance.slug = slugify(new_slug)
+    def get_absolute_url(self):
+        return reverse('profile', kwargs={'pk': self.pk, 'slug': self.get_slug()})
 
-    instance.auamaid = '{letter}{pk}'.format(letter='a', pk=instance.pk)
-
-
-pre_save.connect(prepare_for_save, sender=AutamaProfile)

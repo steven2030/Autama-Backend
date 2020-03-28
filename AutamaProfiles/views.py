@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.forms import ModelForm
 from AutamaProfiles.models import AutamaProfile
@@ -31,10 +31,14 @@ def register_autama(request):
     return render(request, "AutamaProfiles/register.html", {'form': form})
 
 
-def profile(request):
-    args = {'autama_model': request.autama_model}
+def profile(request, pk, slug):
+    a_profile = get_object_or_404(AutamaProfile, pk=pk)
+    return HttpResponse(a_profile.get_slug())
 
-    return render(request, 'autama_profile.html', args)
+
+def browse(request):
+    profiles = AutamaProfile.objects.all()
+    return render(request, 'AutamaProfiles/browse.html', {'profiles':profiles})
 
 
 class RobotView(LoginRequiredMixin, View):

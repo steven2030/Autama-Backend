@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<body>
+    <h>Meet the Autamas</h>
+    <div class="profiles">
+        {% for profile in profiles %}
+
+            <div class="profiles">
+            <h2> <a href="#"> {{ profile.first }} </a> </h2>
+            </div>
+
+        {% endfor %}
+    </div>
+</body>
+{% endblock %}
