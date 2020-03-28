@@ -1,17 +1,20 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Register Autama</title>
-</head>
-<body>
+</head> -->
 
+{% block content %}
+<body>
     <h1>Register your Autama here</h1>
     <form action="/AutamaProfiles/register/" enctype="multipart/form-data" method="post">
         {%csrf_token%}
         {{ form }}
         <input type="submit" value="create">
     </form>
-
 </body>
-</html>
+{% endblock %}
+
+<!-- </html> -->
