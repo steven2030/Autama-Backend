@@ -1,9 +1,11 @@
-{% extends base.html %}
+{% extends 'base.html' %}
 
 {% block content %}
+<div class="autama_profile">
 
-<title>Profile</title>
+    <h2>{{ profile.first }} {{ profile.last }}</h2> <!-- Name -->
+    <p></p> <!-- Photo -->
+    <p></p> <!-- Interests -->
 
-{{ autama_model }}
-
+</div>
 {% endblock %}

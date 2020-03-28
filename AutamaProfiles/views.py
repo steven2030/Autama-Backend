@@ -33,12 +33,13 @@ def register_autama(request):
 
 def profile(request, pk, slug):
     a_profile = get_object_or_404(AutamaProfile, pk=pk)
-    return HttpResponse(a_profile.get_slug())
+    return render(request, 'AutamaProfiles/autama_profile.html', {'profile': a_profile})
+    #return HttpResponse(a_profile.get_slug())
 
 
 def browse(request):
     profiles = AutamaProfile.objects.all()
-    return render(request, 'AutamaProfiles/browse.html', {'profiles':profiles})
+    return render(request, 'AutamaProfiles/browse.html', {'profiles': profiles})
 
 
 class RobotView(LoginRequiredMixin, View):
