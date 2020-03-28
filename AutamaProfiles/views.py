@@ -20,6 +20,8 @@ def register_autama(request):
         form = AutamaForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+#            autama_instance = form.save(commit=False)
+#            autama_instance.slug = str(autama_instance.pk) + autama_instance.first + autama_instance.last
             # redirect to another page
             return redirect('about')
 
@@ -27,6 +29,12 @@ def register_autama(request):
         form = AutamaForm()
 
     return render(request, "AutamaProfiles/register.html", {'form': form})
+
+
+def profile(request):
+    args = {'autama_model': request.autama_model}
+
+    return render(request, 'autama_profile.html', args)
 
 
 class RobotView(LoginRequiredMixin, View):
