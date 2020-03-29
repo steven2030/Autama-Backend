@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.forms import ModelForm
 from AutamaProfiles.models import AutamaProfile
 from accounts.views import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.views import View
 import json
 
@@ -14,7 +15,7 @@ class AutamaForm(ModelForm):
         fields = ['creator', 'picture', 'first', 'last', 'interests']
 
 
-# HttpRequest.content_params
+@login_required
 def register_autama(request):
     if request.method == 'POST':
         form = AutamaForm(request.POST, request.FILES)
