@@ -1,3 +1,35 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.forms import ModelForm
+from AutamaProfiles.models import AutamaProfile
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
+
+class AutamaForm(ModelForm):
+    class Meta:
+        model = AutamaProfile
+        fields = ['creator', 'picture', 'first', 'last', 'interests']
+
+
+@login_required
+def register_autama(request):
+    if request.method == 'POST':
+        form = AutamaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('about')
+
+    else:
+        form = AutamaForm()
+
+    return render(request, "AutamaProfiles/register.html", {'form': form})
+
+
+def profile(request, pk, slug):
+    a_profile = get_object_or_404(AutamaProfile, pk=pk)
+    return render(request, 'AutamaProfiles/autama_profile.html', {'profile': a_profile})
+
+
+def browse(request):
+    profiles = AutamaProfile.objects.all()
+    return render(request, 'AutamaProfiles/browse.html', {'profiles': profiles})
+
