@@ -12,9 +12,10 @@ from django.contrib.auth import authenticate, login, logout
 from accounts.models import User
 from django.db.models import Q
 from django.views import View
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
+
 
 
 class CustomBackend(ModelBackend):
@@ -123,9 +124,7 @@ class ProfileView(LoginRequiredMixin, View):
         return HttpResponseRedirect(reverse("profile") + "?id=" + user_id)
 
 
-
 class ChangeAvatarView(LoginRequiredMixin, View):
-
     def post(self, request):
         obj = User.objects.get(id=request.user.id)
         pic = ContentFile(request.FILES['file'].read())
@@ -152,14 +151,18 @@ class MyMatches(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'my_matches.html')
 
+
 # TODO: Do we want this as part of login? Fix to view if keeping.
 def about(request):
-    #return HttpResponse('about')
+    # return HttpResponse('about')
     return render(request, 'about.html')
 
 
 class Chat(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'chat.html')
+        return JsonResponse({"chat": ["Hi", "How are you", "I'm a peach"]})
+
+    def post(self, request):
+        return JsonResponse({"data": "This is a reply!"})
 
 
