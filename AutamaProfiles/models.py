@@ -16,7 +16,7 @@ class AutamaProfile(models.Model):
     slug = models.SlugField(max_length=250, null=True, blank=True, default='')
 
     def __str__(self):
-        return self.autamaid
+        return '{pk} {first} {last}'.format(pk=self.pk, first=self.first, last=self.last)
 
     def get_slug(self):
         slug = '{} {}'.format(self.first, self.last)
