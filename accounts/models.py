@@ -10,3 +10,20 @@ class User(AbstractUser):
     interests3 = models.TextField()
     interests4 = models.TextField()
     interests5 = models.TextField()
+
+
+class Messages(models.Model):
+    # Constants used for enum in sender
+    USER = 'User'
+    AUTAMA = 'Autama'
+    SENDER_CHOICES = (
+        (USER, 'User'),
+        (AUTAMA, 'Autama'),
+    )
+
+    user_ID = models.ForeignKey('User', on_delete=models.CASCADE)
+    autama_ID = models.ForeignKey('AutamaProfiles.AutamaProfile', on_delete=models.CASCADE)
+    sender = models.CharField(max_length=6,
+                              choices=SENDER_CHOICES)
+    timeStamp = models.DateTimeField(auto_now_add=True)
+    message = models.TextField
