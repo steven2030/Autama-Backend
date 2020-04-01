@@ -12,8 +12,6 @@ class User(AbstractUser):
     interests5 = models.TextField()
 
 
-# TODO: Composite foreign key is not allowed. Look at plugin?
-# https://pypi.org/project/django-composite-foreignkey/
 class Messages(models.Model):
     # Constants used for enum in sender
     USER = 'User'
@@ -23,13 +21,9 @@ class Messages(models.Model):
         (AUTAMA, 'Autama'),
     )
 
-    class Meta:
-        unique_together = (('userID', 'autamaID'),)
-
     userID = models.ForeignKey('User', on_delete=models.CASCADE)
     autamaID = models.ForeignKey('AutamaProfiles.AutamaProfile', on_delete=models.CASCADE)
-    sender = models.CharField(max_length=6,
-                              choices=SENDER_CHOICES)
+    sender = models.CharField(max_length=6, choices=SENDER_CHOICES)
     timeStamp = models.DateTimeField(auto_now_add=True)
     message = models.TextField
 
