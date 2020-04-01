@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div style="width: 80%;margin: auto">
+        <h2> Create an account</h2>
+        <form action="/register/" method="post">
+          <div class="form-group">
+            <label for="username">username</label>
+            <input type="text" class="form-control" id="username" placeholder="username" name="username">
+          </div>
+            <div class="form-group">
+            <label for="firstname">firstname</label>
+            <input type="text" class="form-control" id="firstname" placeholder="firstname" name="firstname">
+          </div>
+            <div class="form-group">
+            <label for="lastname">lastname</label>
+            <input type="text" class="form-control" id="lastname" placeholder="lastname" name="lastname">
+          </div>
+            <div class="form-group">
+            <label for="email">email</label>
+            <input type="email" class="form-control" id="email" placeholder="email" name="email">
+          </div>
+          <div class="form-group">
+            <label for="interest1">interest1</label>
+            <input type="text" class="form-control" id="interest1" placeholder="interest 1" name="interest1">
+          </div>
+          <div class="form-group">
+            <label for="interest2">interest2</label>
+            <input type="text" class="form-control" id="interest2" placeholder="interest 2" name="interest2">
+          </div>
+            <div class="form-group">
+            <label for="interest3">interest3</label>
+            <input type="text" class="form-control" id="interest3" placeholder="interest 3" name="interest3">
+          </div>
+            <div class="form-group">
+            <label for="interest4">interest4</label>
+            <input type="text" class="form-control" id="interest4" placeholder="interest 4" name="interest4">
+          </div>
+            <div class="form-group">
+            <label for="interest5">interest5</label>
+            <input type="text" class="form-control" id="interest5" placeholder="interest 5" name="interest5">
+          </div>
+            <div class="form-group">
+            <label for="interest6">interest6</label>
+            <input type="text" class="form-control" id="interest6" placeholder="interest 6" name="interest6">
+          </div>
+          <div class="form-group">
+            <label for="password">password</label>
+            <input type="password" class="form-control" id="password" placeholder="password" name="password">
+          </div>
+            <div class="form-group">
+            <label for="rePassword">confirmed Password</label>
+            <input type="password" class="form-control" id="rePassword" placeholder="password" name="rePassword">
+          </div>
+            <input hidden name="id" value="{{ user.id }}">
+
+          <button type="submit" class="btn btn-default">register</button>
+            {% csrf_token %}
+        </form>
+        <div style="color: red;font-size: 14px">{{ error }}</div>
+    </div>
+{% endblock %}
