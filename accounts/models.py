@@ -16,10 +16,10 @@ class Messages(models.Model):
     # Constants used for enum in sender
     USER = 'User'
     AUTAMA = 'Autama'
-    SENDER_CHOICES = (
+    SENDER_CHOICES = [
         (USER, 'User'),
         (AUTAMA, 'Autama'),
-    )
+    ]
 
     userID = models.ForeignKey('User', on_delete=models.CASCADE)
     autamaID = models.ForeignKey('AutamaProfiles.AutamaProfile', on_delete=models.CASCADE)
@@ -28,4 +28,4 @@ class Messages(models.Model):
     message = models.TextField
 
     def __str__(self):
-        return '{user_ID} {autama_ID}'
+        return '{user_ID} {autama_ID}'.format(self.userID, self.autamaID)
