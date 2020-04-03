@@ -186,7 +186,7 @@ class Chat(LoginRequiredMixin, View):
         form = MessageForm(request.POST)
         print(type(form['x']))
 
-        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[0], message=form['x'])
+        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[0], message=form['x'].value())
         a_message.save()
 
         return HttpResponse(form['x'])
