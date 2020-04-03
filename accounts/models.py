@@ -21,11 +21,12 @@ class Messages(models.Model):
         (AUTAMA, 'Autama'),
     ]
 
+    message = models.TextField()
+    timeStamp = models.DateTimeField(auto_now_add=True)
     userID = models.ForeignKey('User', on_delete=models.CASCADE)
     autamaID = models.ForeignKey('AutamaProfiles.AutamaProfile', on_delete=models.CASCADE)
     sender = models.CharField(max_length=6, choices=SENDER_CHOICES)
-    timeStamp = models.DateTimeField(auto_now_add=True)
-    message = models.TextField
+
 
     def __str__(self):
-        return '{user_ID} {autama_ID}'.format(self.userID, self.autamaID)
+        return '{userID} {autamaID}'.format(userID=self.userID, autamaID=self.autamaID)

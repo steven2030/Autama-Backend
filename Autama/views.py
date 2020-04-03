@@ -9,12 +9,14 @@ import json
 from django.shortcuts import render,reverse
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import authenticate, login, logout
-from accounts.models import User
+from accounts.models import User, Messages
+from django import forms
 from django.db.models import Q
 from django.views import View
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
+from AutamaProfiles.models import AutamaProfile
 
 
 
@@ -158,12 +160,35 @@ def about(request):
     return render(request, 'about.html')
 
 
-# TODO: Modified for testing, add in LoginRequiredMixin as first parameter.
-class Chat(View):
-    def get(self, request):
-        return JsonResponse({"chat": ["Hi", "How are you", "I'm a peach"]})
+def chat_main_page(request):
+    return HttpResponse('Chat main page')
 
-    def post(self, request):
-        return JsonResponse({"data": "This is a reply!"})
+
+class MessageForm(forms.Form):
+    x = forms.CharField(label='some text')
+
+
+# TODO: Modified for testing, add in LoginRequiredMixin as first parameter.
+class Chat(LoginRequiredMixin, View):
+
+    def get(self, request, pk):
+        user = User.objects.get(pk=request.user.id)
+        autama = AutamaProfile.objects.get(pk=pk)  # Check the validity of Autama id.
+        form = MessageForm()
+        message_chain = None
+
+        return render(request, 'Chat.html', {'autama': autama, 'user': user, 'form': form, 'message_chain': message_chain})
+
+    def post(self, request, pk):
+        user = User.objects.get(pk=request.user.id)
+        autama = AutamaProfile.objects.get(pk=pk)  # Check the validity of Autama id.
+        message_chain = None
+        form = MessageForm(request.POST)
+        print(type(form['x']))
+
+        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[0], message=form['x'])
+        a_message.save()
+
+        return HttpResponse(form['x'])
 
 

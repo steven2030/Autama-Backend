@@ -8,4 +8,21 @@
     <div class="container">
         <h1>Chat!</h1>
     </div>
+
+    <div>
+        <p>The all the data in autama and user model are available for the frontend dev.
+        <p>For example the autamas name is {{autama.first}} {{autama.last}}.
+        <p>While the user name is {{user.get_username}}.
+        <p>Do note that since the user model inherits from AbstractUser. So to get the user name use the associated
+           function in the AbstractUser class.
+    </div>
+
+    <div>
+        <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
 {% endblock %}
