@@ -27,6 +27,5 @@ class Messages(models.Model):
     autamaID = models.ForeignKey('AutamaProfiles.AutamaProfile', on_delete=models.CASCADE)
     sender = models.CharField(max_length=6, choices=SENDER_CHOICES)
 
-
     def __str__(self):
         return '{userID} {autamaID}'.format(userID=self.userID, autamaID=self.autamaID)
