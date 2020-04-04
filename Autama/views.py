@@ -168,14 +168,19 @@ class MessageForm(forms.Form):
     x = forms.CharField(label='some text')
 
 
-# TODO: Modified for testing, add in LoginRequiredMixin as first parameter.
+# TODO: make sure a user can only chat with an autama they have matched with.
+# TODO: make sure autama id exists.
 class Chat(LoginRequiredMixin, View):
 
     def get(self, request, pk):
         user = User.objects.get(pk=request.user.id)
-        autama = AutamaProfile.objects.get(pk=pk)  # Check the validity of Autama id.
+        autama = AutamaProfile.objects.get(pk=pk)  # Check the validity of Autama id. Make sure only can talk to autamas you are matched with.
         form = MessageForm()
         message_chain = None
+
+        # Search for a message chain in the database.
+        # Order them, ?
+        # Send them to the HTML
 
         return render(request, 'Chat.html', {'autama': autama, 'user': user, 'form': form, 'message_chain': message_chain})
 
@@ -189,6 +194,7 @@ class Chat(LoginRequiredMixin, View):
         a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[0], message=form['x'].value())
         a_message.save()
 
-        return HttpResponse(form['x'])
+        # Bounce the user back to the page they were just at, with all of the same information they just gave
+        return redirect('Chat', pk=pk)
 
 
