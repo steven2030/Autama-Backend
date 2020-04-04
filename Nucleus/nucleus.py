@@ -81,6 +81,13 @@ class Nucleus:
         personality = random.choice(personalities)
         return personality
 
+    # A method for decoding an encoded personality
+    def decode_personality(self, encoded_personality: list):
+        encoded_personality_string = self.__tokenizer.decode(chain(*encoded_personality))
+        decoded_personality_list = [i + "." for i in encoded_personality_string.split(".")]
+        decoded_personality_list.pop()
+        return decoded_personality_list
+
     # A method to display personality
     def display_personality(self, personality: list):
         self.__logger.info("Selected personality: %s", self.__tokenizer.decode(chain(*personality)))
