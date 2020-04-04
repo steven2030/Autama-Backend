@@ -17,6 +17,7 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from AutamaProfiles.models import AutamaProfile
+from django.utils import timezone
 
 
 
@@ -174,27 +175,24 @@ class Chat(LoginRequiredMixin, View):
 
     def get(self, request, pk):
         user = User.objects.get(pk=request.user.id)
-        autama = AutamaProfile.objects.get(pk=pk)  # Check the validity of Autama id. Make sure only can talk to autamas you are matched with.
+        autama = AutamaProfile.objects.get(pk=pk)
         form = MessageForm()
-        message_chain = None
 
-        # Search for a message chain in the database.
-        # Order them, ?
-        # Send them to the HTML
+        # Search for a message chain in the database order by utc timestamp
+        message_chain = Messages.objects.all().filter(userID=user.pk).filter(autamaID=autama.pk).order_by('timeStamp')
 
-        return render(request, 'Chat.html', {'autama': autama, 'user': user, 'form': form, 'message_chain': message_chain})
+        return render(request, 'Chat.html', {'autama': autama, 'user': user, 'form': form,
+                                             'message_chain': message_chain})
 
     def post(self, request, pk):
         user = User.objects.get(pk=request.user.id)
         autama = AutamaProfile.objects.get(pk=pk)  # Check the validity of Autama id.
-        message_chain = None
         form = MessageForm(request.POST)
-        print(type(form['x']))
 
-        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[0], message=form['x'].value())
+        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[0],
+                                            message=form['x'].value())
         a_message.save()
 
-        # Bounce the user back to the page they were just at, with all of the same information they just gave
         return redirect('Chat', pk=pk)
 
 

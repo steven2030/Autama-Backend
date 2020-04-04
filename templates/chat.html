@@ -18,6 +18,12 @@
     </div>
 
     <div>
+        {% for a_message in message_chain %}
+            <p>Message: {{a_message.message}} Sent on: {{ a_message.timeStamp }}</p>  <!-- timezone is in UTC -->
+        {% endfor %}
+    </div>
+
+    <div>
         <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form }}
