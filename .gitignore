@@ -6,3 +6,6 @@ accounts/migrations/__pycache__/
 db.sqlite3
 accounts/migrations/0*
 AutamaProfiles/migrations/0*
+
+SharicesChanges
+*.DS_Store
