@@ -171,6 +171,7 @@ class MessageForm(forms.Form):
 
 # TODO: make sure a user can only chat with an autama they have matched with.
 # TODO: make sure autama id exists.
+# TODO: validate all user input.
 class Chat(LoginRequiredMixin, View):
 
     def get(self, request, pk):
