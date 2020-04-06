@@ -2,35 +2,6 @@
 
 {% block head %}
     <title>My Matches</title>
-    <style>
-        .circular--landscape {
-            display: inline-block;
-            position: relative;
-            width: 200px;
-            height: 200px;
-            overflow: hidden;
-            border-radius: 50%;
-        }
-
-        .circular--landscape img {
-            width: auto;
-            height: 100%;
-            margin-left: -50px;
-        }
-
-        .column {
-            float: left;
-            width: 33.33%;
-            padding: 5px;
-        }
-
-        /* Clearfix (clear floats) */
-        .row::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-    </style>
 {% endblock %}
 
 {% block content %}
@@ -41,6 +12,35 @@
         <!-- https://stackoverflow.com/questions/16998947/putting-text-and-images-on-same-line-within-a-list-item-html-css -->
         <!-- Turning landscape images into circular squares: https://www.webfx.com/blog/web-design/circular-images-css/ -->
         <!-- Display images side by side (in a row): https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_images_side_by_side -->
+        <style>
+            .circular--landscape {
+                display: inline-block;
+                position: relative;
+                width: 200px;
+                height: 200px;
+                overflow: hidden;
+                border-radius: 50%;
+            }
+
+            .circular--landscape img {
+                width: auto;
+                height: 100%;
+                margin-left: -50px;
+            }
+
+            .column {
+                float: left;
+                width: 33.33%;
+                padding: 5px;
+            }
+
+            /* Clearfix (clear floats) */
+            .row::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+        </style>
 
         <div class="row">
             <div class="column">
