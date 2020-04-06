@@ -7,7 +7,7 @@ _Autama: Web Platform_
 * DB
 * Supporting infrastructure
 
-Add project description here. 
+Add description here. 
 
 
 ## Build and Run  
@@ -36,6 +36,6 @@ software for license terms.
 
 ## Acknowledgments  
 
-Django tutorial references here, etc
+Django tutorial references here
 
 
