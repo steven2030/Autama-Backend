@@ -33,3 +33,6 @@ def browse(request):
     profiles = AutamaProfile.objects.all()
     return render(request, 'AutamaProfiles/browse.html', {'profiles': profiles})
 
+def testfunc():
+    return None
+
