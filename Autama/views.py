@@ -145,9 +145,24 @@ class ResetPasswordView(LoginRequiredMixin, View):
         return HttpResponse(json.dumps({'code':0, "avatar": obj.image.url}), content_type="application/json")
 
 
+# Webpage should be of the type:
+# /FindMatches/?AID=#
 class FindMatches(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'find_matches.html')
+        a_id = request.GET['AID']
+        # Add actual ID lookup here
+        data = {
+            'autama_id': 4,
+            'creator': 'Ryan',
+            'picture': 'Picture Info!',
+            'first': 'first name',
+            'last': 'last name',
+            'matches': '40',
+            'owner': 'Steveno',
+            'interests': 'Lots of Stuff!; Separating Stuff or diff fields?',
+            'slug': 'slug?',
+        }
+        return JsonResponse(data)
 
 
 class MyMatches(LoginRequiredMixin, View):
