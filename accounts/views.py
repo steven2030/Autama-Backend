@@ -102,3 +102,21 @@ class LoginView(View):
             return render(request, "..templates/login.html", {"error": "username or account is incorrect！"})
 
 
+class ChangeAvatarView(LoginRequiredMixin, View):
+    def post(self, request):
+        obj = User.objects.get(id=request.user.id)
+        pic = ContentFile(request.FILES['file'].read())
+        obj.image.save(request.FILES['file'].name, pic)
+        obj.save()
+        return HttpResponse(json.dumps({'code':0, "avatar": obj.image.url}))
+
+
+class ResetPasswordView(LoginRequiredMixin, View):
+    def post(self, request):
+        obj = User.objects.get(id=request.user.id)
+        password = request.POST.get("password")
+        obj.set_password(password)
+        obj.save()
+        return HttpResponse(json.dumps({'code':0, "avatar": obj.image.url}), content_type="application/json")
+
+

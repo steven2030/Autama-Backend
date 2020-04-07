@@ -12,7 +12,12 @@ class AutamaProfile(models.Model):
     nummatches = models.CharField(max_length=100, default='0000000', editable=False)
     owner = models.CharField(max_length=100, default='FREE')
     pickle = models.CharField(max_length=100, default='PICKLE')
-    interests = models.CharField(max_length=100)  # This should probably have default right?
+    interest1 = models.CharField(max_length=100)
+    interest2 = models.CharField(max_length=100)
+    interest3 = models.CharField(max_length=100)
+    interest4 = models.CharField(max_length=100)
+    interest5 = models.CharField(max_length=100)
+    interest6 = models.CharField(max_length=100)
     slug = models.SlugField(max_length=250, null=True, blank=True, default='')
 
     def __str__(self):

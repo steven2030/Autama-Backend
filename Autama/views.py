@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from accounts.models import User
+from AutamaProfiles.models import AutamaProfile
 import simplejson
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, get_object_or_404, redirect
@@ -145,7 +146,25 @@ class ResetPasswordView(LoginRequiredMixin, View):
         return HttpResponse(json.dumps({'code':0, "avatar": obj.image.url}), content_type="application/json")
 
 
+# Webpage should be of the type:
+# /FindMatches/?AID=#
 class FindMatches(LoginRequiredMixin, View):
+    # def get(self, request):
+    #     a_id = request.GET['AID']
+    #     autama =  AutamaProfile.objects.get(pk=a_id)
+    #     data = {
+    #         'autama_id': autama.id,
+    #         'creator': autama.creator,
+    #         'picture': autama.picture,
+    #         'first': autama.first,
+    #         'last': autama.last,
+    #         'matches': autama.nummatches,
+    #         'owner': autama.owner,
+    #         'interest1': autama.interest1,
+    #         'interest2': autama.interest2,
+    #         'interest3': autama.interest3,
+    #     }
+    #     return JsonResponse(data)
     def get(self, request):
         return render(request, 'find_matches.html')
 
@@ -189,9 +208,14 @@ class Chat(LoginRequiredMixin, View):
         user = User.objects.get(pk=request.user.id)
         autama = AutamaProfile.objects.get(pk=pk)  # Check the validity of Autama id.
         form = MessageForm(request.POST)
+        autama_response = "This is a response."
 
         a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[0],
                                             message=form['x'].value())
+        a_message.save()
+
+        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[1],
+                                            message=autama_response)
         a_message.save()
 
         return redirect('Chat', pk=pk)

@@ -8,60 +8,84 @@
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <style>
-        body > nav{
-            height: 60px;
-            background-color: #333333;
+    <style media="screen">
 
-        }
-        body > nav > ul {
-            list-style: none;
-            width: 90%;
-            overflow: hidden;
-        }
-        body > nav > ul > li {
-            float: left;
-            height: 60px;
-            width: 10%;
-            font-size: 28px;
-            line-height: 60px;
-            color: white;
-            text-align: center;
-        }
-        body > nav > ul > li > a {
-            color: white;
-            text-underline: none;
-        }
-        a:hover {
-            text-decoration: none;
-        }
-        a:active {
-            text-decoration: none;
-        }
-        a:visited {
-            text-decoration: none;
-        }
+    .navbar {
+             background-image: linear-gradient(#54B4EB, #2FA4E7 60%, #1D9CE5);
+             background-repeat: no-repeat;
+             border-bottom: 1px solid #178ACC;
+             box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
+             border-radius: 0px;
+            }
 
+            .navbar-default {
+             background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%);
+             border-style: none;;
+             border-color: #FC4F6C;
+            }
+
+            .navbar-default .navbar-brand,
+            .navbar-default .navbar-brand:hover,
+            .navbar-default .navbar-brand:focus ,
+            .navbar-default .navbar-nav > li > a {
+             color: #FFF;
+            }
+
+            .navbar-default .navbar-nav > li > a:hover,
+            .navbar-default .navbar-nav > li > a:focus {
+             color: #FFF;
+             background-color: #FC8909;
+            }
+
+            .navbar-default .navbar-toggle:hover,
+            .navbar-default .navbar-toggle:focus {
+            background-color: #FC8909;
+            }
+
+            .navbar-default .navbar-toggle {
+            border-color: #FC8909;
+            }
+
+            .navbar-default .navbar-toggle .icon-bar {
+            background-color: #FFF;
+            }
     </style>
      {% block csstyle %}
     {%  endblock %}
 </head>
 <body>
-    <nav>
-        <ul>
-            {% if not request.user.is_authenticated  %}
-            <li><a href="/login/">Login</a></li>
-            <li><a href="/accounts/register/">Register</a></li>
-            {% endif %}
+    <nav class="nav navbar-inverse navbar-default navbar-fixed-top" role="navgation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
 
-            {% if request.user.is_authenticated  %}
-            <li style="margin-right: 80px" class="active"><a href="/FindMatches/">FindMatches</a></li>
-            <li style="margin-right: 60px" class="active"><a href="/MyMatches/">MyMatches</a></li>
-            <li><a href="/AutamaProfiles/robot/">Autama</a></li>
-            <li style="float: right"><a href="/logout">Logout</a></li>
-            <li style="float: right"><a href="/accounts/profile/">{{ request.user }}</a></li>
-            {% endif %}
-        </ul>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav nav">
+                    {% if not request.user.is_authenticated  %}
+                    <li><a href="/login/">Login</a></li>
+                    <li><a href="/accounts/register/">Register</a></li>
+                    {% endif %}
+
+                    {% if request.user.is_authenticated  %}
+                    <li><a href="/FindMatches/">FindMatches</a></li>
+                    <li><a href="/MyMatches/">MyMatches</a></li>
+                    <li><a href="/AutamaProfiles/robot/">Autama</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="navbar-link" href="/logout">Logout</a></li>
+                    <li><a class="navbar-link" href="/accounts/profile/">{{ request.user }}</a></li>
+                </ul>
+
+                    {% endif %}
+
+            </div>
+        </div>
     </nav>
     {% block content %}
     {% endblock %}

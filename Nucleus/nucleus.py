@@ -88,6 +88,17 @@ class Nucleus:
         decoded_personality_list.pop()
         return decoded_personality_list
 
+    # A method to tokenize and encode an identity
+    def tokenize_and_encode(self, identity: list):
+        def tokenize(obj):
+            if isinstance(obj, str):
+                return self.__tokenizer.convert_tokens_to_ids(self.__tokenizer.tokenize(obj))
+            if isinstance(obj, dict):
+                return dict((n, tokenize(o)) for n, o in obj.items())
+            return list(tokenize(o) for o in obj)
+
+        return tokenize(identity)
+
     # A method to display personality
     def display_personality(self, personality: list):
         self.__logger.info("Selected personality: %s", self.__tokenizer.decode(chain(*personality)))
