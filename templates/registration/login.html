@@ -54,10 +54,10 @@
 
 {% block js %}
 <script>
-var imgs =["background-login01.jpg", "background-login02.jpg"];       //（设定想要显示的图片）
+var imgs =["background-login01.jpg", "background-login02.jpg"];       
         function time(){
-               var i = Math.floor(Math.random()*(2+0)+0); //（获取随机数，设置m~n的随机，此处3是代表n，0处是m，可以替换）
-               document.getElementById("div_first").src ="/Images/Images/"+imgs[i];  //红色部分是自定义的图片文件夹目录
+               var i = Math.floor(Math.random()*(2+0)+0); 
+               document.getElementById("div_first").src ="/Images/Images/"+imgs[i];  
 
              
         }setInterval("time()",1500); 
