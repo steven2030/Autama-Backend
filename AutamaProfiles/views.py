@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 class AutamaForm(ModelForm):
     class Meta:
         model = AutamaProfile
-        fields = ['creator', 'picture', 'first', 'last', 'interests']
+        fields = ['creator', 'picture', 'first', 'last']  # interests did exist here.
 
 
 @login_required
