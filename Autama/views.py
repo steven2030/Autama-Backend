@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from accounts.models import User
+from AutamaProfiles.models import AutamaProfile
 import simplejson
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, get_object_or_404, redirect
@@ -150,17 +151,18 @@ class ResetPasswordView(LoginRequiredMixin, View):
 class FindMatches(LoginRequiredMixin, View):
     # def get(self, request):
     #     a_id = request.GET['AID']
-    #     # Add actual ID lookup here
+    #     autama =  AutamaProfile.objects.get(pk=a_id)
     #     data = {
-    #         'autama_id': 4,
-    #         'creator': 'Ryan',
-    #         'picture': 'Picture Info!',
-    #         'first': 'first name',
-    #         'last': 'last name',
-    #         'matches': '40',
-    #         'owner': 'Steveno',
-    #         'interests': 'Lots of Stuff!; Separating Stuff or diff fields?',
-    #         'slug': 'slug?',
+    #         'autama_id': autama.id,
+    #         'creator': autama.creator,
+    #         'picture': autama.picture,
+    #         'first': autama.first,
+    #         'last': autama.last,
+    #         'matches': autama.nummatches,
+    #         'owner': autama.owner,
+    #         'interest1': autama.interest1,
+    #         'interest2': autama.interest2,
+    #         'interest3': autama.interest3,
     #     }
     #     return JsonResponse(data)
     def get(self, request):
