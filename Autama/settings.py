@@ -36,10 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
     'Autama',
-    'AutamaProfiles',
-    'accounts.templatetags',
+    'api',
+    'rest_framework',
 ]
 
 # Dev Only, need to configure for production
@@ -123,7 +122,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+# TODO: Check path
+STATIC_URL = '/Webapp/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'Images'),
@@ -133,6 +133,7 @@ MEDIA_URL = '/Images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Images')
 
+# TODO: Do we need this?
 # URL REDIRECTS
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/FindMatches/'
@@ -142,4 +143,13 @@ LOGOUT_REDIRECT_URL = '/login/'
 # AUTHENTICATION_BACKENDS = ('user_profile.views.CustomBackend',)
 
 # User Model
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'api.User'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication'
+    ]
+}

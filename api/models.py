@@ -1,6 +1,40 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.text import slugify
 from django.shortcuts import reverse
+
+
+class User(AbstractUser):
+    sex = models.IntegerField(verbose_name="gender", choices=((0, 'male'), (1, 'female')), default=0)
+    image = models.ImageField(max_length=1000, upload_to='avatar', verbose_name=u'picture', null=True, blank=True)
+    interest1 = models.TextField()
+    interest2 = models.TextField()
+    interest3 = models.TextField()
+    interest4 = models.TextField()
+    interest5 = models.TextField()
+
+    def __str__(self):
+        return '{id} {username} {first} {last}'.format(id=self.id, username=self.username,
+                                                       first=self.first_name,last=self.last_name)
+
+
+class Messages(models.Model):
+    # Constants used for enum in sender
+    USER = 'User'
+    AUTAMA = 'Autama'
+    SENDER_CHOICES = [
+        (USER, 'User'),
+        (AUTAMA, 'Autama'),
+    ]
+
+    message = models.TextField()
+    timeStamp = models.DateTimeField(auto_now_add=True)
+    userID = models.ForeignKey('User', on_delete=models.CASCADE)
+    autamaID = models.ForeignKey('AutamaProfile', on_delete=models.CASCADE)
+    sender = models.CharField(max_length=6, choices=SENDER_CHOICES)
+
+    def __str__(self):
+        return '{userID} {autamaID}'.format(userID=self.userID, autamaID=self.autamaID)
 
 
 class AutamaProfile(models.Model):

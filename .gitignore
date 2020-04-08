@@ -9,3 +9,6 @@ AutamaProfiles/migrations/0*
 
 SharicesChanges
 *.DS_Store
+api/__pycache__/
+api/migrations/__pycache__/
+api/migrations/
