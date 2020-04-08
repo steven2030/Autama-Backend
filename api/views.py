@@ -4,11 +4,16 @@ from .serializers import *
 from .models import *
 
 
+# NOTE: Views connect models, serialize, and display them
+
+# view users
 class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
+
     queryset = User.objects.all().order_by('username')
     serializer_class = UserSerializer
 
+    # alternative? User.objects.filter(pk)
     # Override get_queryset and filter for only the current user.
     # uses pk Primary Key from the DG and users id.
     def get_queryset(self):
@@ -18,11 +23,19 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 # TODO: Add request.autama id parameter to filter results
-class AIViewSet(viewsets.ModelViewSet):
+class AutamaViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
-    queryset = AutamaProfile.objects.all().order_by('autamaid')
+    queryset = AutamaProfile.objects.all().order_by('autamaID')
     serializer_class = AutamaSerializer
+
+
+# TODO: Add filters if needed
+class MatchViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
+    queryset = Matches.objects.all().order_by('userID')
+    serializer_class = MatchesSerializer
 
 
 # TODO: add request autama id parameter to filter results
