@@ -118,11 +118,11 @@ class ProfileView(LoginRequiredMixin, View):
     def post(self, request):
         user_id = request.POST.get("id")
         last_name = request.POST.get("name")
-        sex = request.POST.get("sex")
+        gender = request.POST.get("gender")
         email = request.POST.get("email")
         obj = User.objects.get(id=int(user_id))
         obj.last_name = last_name
-        obj.sex = int(sex)
+        obj.gender = int(gender)
         obj.email = email
         obj.save()
         return HttpResponseRedirect(reverse("profile") + "?id=" + user_id)

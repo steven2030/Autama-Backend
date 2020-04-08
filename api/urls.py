@@ -4,9 +4,9 @@ from rest_framework.authtoken.views import obtain_auth_token
 from . import views
 
 router = OptionalSlashRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'ais', views.AIViewSet)
-router.register(r'messages', views.MessageViewSet)
+router.register(r'users', views.UserViewSet)  # all users
+router.register(r'ais', views.AIViewSet)  # all Autamas
+router.register(r'messages', views.MessageViewSet)  # all messages from all users and Autama
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
