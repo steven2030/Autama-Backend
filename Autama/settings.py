@@ -30,7 +30,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    #'api.apps.ApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -145,7 +144,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'Images')
 # AUTHENTICATION_BACKENDS = ('user_profile.views.CustomBackend',)
 
 # User Model
-AUTH_USER_MODEL = 'api.User'  # can't use api.UserInfo bc need auth.User here.
+AUTH_USER_MODEL = 'api.UserInfo'  # can't use api.UserInfo bc need auth.User here.
+# AUTH_USER_MODEL = 'api.User'  # can't use api.UserInfo bc need auth.User here.
 # Note: In api/urls.py/urlpatterns specifies:
 # path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 # path('login', obtain_auth_token, name='login'),

@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.text import slugify
@@ -5,8 +6,8 @@ from django.shortcuts import reverse
 
 
 # user model info
-# would it be useful for the user model to have a numMatches trait?
-class User(AbstractUser):
+# TODO: Useful to add num_matches trait? email? password?
+class UserInfo(AbstractUser):
     gender = models.IntegerField(verbose_name="gender",
                                  choices=((0, 'Rather Not Say'), (1, 'Male'), (2, 'Female'),
                                           (3, 'Non-Conforming'), (4, 'Other')), default=0)
@@ -17,7 +18,6 @@ class User(AbstractUser):
     interest4 = models.TextField()
     interest5 = models.TextField()
     interest6 = models.TextField()
-    # what about email? password?
 
     # Overrides method in AbstractBaseUser
     def __str__(self):
@@ -26,15 +26,15 @@ class User(AbstractUser):
 
 
 # autama model info
-class Autama(models.Model):
+class AutamaInfo(models.Model):
     autamaID = models.CharField(max_length=100, default="0")
     creator = models.CharField(max_length=100, default='Team Autama OGs')
     picture = models.ImageField(upload_to='Images', blank=True)
     first = models.CharField(max_length=100)
     last = models.CharField(max_length=100)
     num_matches = models.CharField(max_length=100, default='0000000', editable=False)
-    # TODO: change owner to User.ForeignKey ?
-    owner = models.CharField(max_length=100, default='Team Autama OGs')
+    # TODO: owner field  might  still need tweaking later
+    owner = models.ForeignKey(get_user_model(),  on_delete=models.PROTECT, default="")
     pickle = models.CharField(max_length=100, default='PICKLE')  # do we still need this?
     interest1 = models.CharField(max_length=100)
     interest2 = models.CharField(max_length=100)
@@ -57,20 +57,14 @@ class Autama(models.Model):
 
 
 # user-autama matches model
-# TODO: Set matchID to primary_key
-# needs to return a list of autamaIDs the user is matched with -- one-to-many ret
 class Matches(models.Model):
-    matchID = models.IntegerField(primary_key=True, default=None)
-    # matchID = models.IntegerField()
-    userID = models.ForeignKey('User', on_delete=models.CASCADE,)
-    autamaID = models.ForeignKey('Autama', on_delete=models.CASCADE,)
-    # matchID = models.IntegerField(primary_key=True)  # pk
-    # userID = models.ForeignKey('User', on_delete=CASCADE)
-    # autamaID = models.ForeignKey('AutamaProfile', on_delete=CASCADE)
+    matchID = models.IntegerField(primary_key=True, default=None)   # pk
+    userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE,)
+    autamaID = models.ForeignKey('AutamaInfo', on_delete=models.CASCADE,)
 
     # overrides method in model
-    #def __str__(self):
-    #    return '{userID} {autamaID}'.format(userID=self.userID, autamaID=self.autamaID)
+    # def __str__(self):
+    #     return '{userID} {autamaID}'.format(userID=self.userID, autamaID=self.autamaID)
 
 
 # messages for specific conversations bot-to-user
@@ -84,14 +78,14 @@ class Messages(models.Model):
     ]
 
     matchID = models.ForeignKey('Matches', on_delete=models.CASCADE)
-    userID = models.ForeignKey('User', on_delete=models.CASCADE)  # del later?
-    autamaID = models.ForeignKey('Autama', on_delete=models.CASCADE)  # del later?
+    userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE)  # del later?
+    autamaID = models.ForeignKey('AutamaInfo', on_delete=models.CASCADE)  # del later?
     timeStamp = models.DateTimeField(auto_now_add=True)
     sender = models.CharField(max_length=6, choices=SENDER_CHOICES)
     messageTxt = models.TextField()
 
     # overrides method in model
-    #def __str__(self):
-    #    return '{sender} {timeStamp} {messageTxt}'.format(sender=self.sender,
-    #                                                      timeStamp=self.timeStamp, messageTxt=self.messageTxt)
+    # def __str__(self):
+    #     return '{sender} {timeStamp} {messageTxt}'.format(sender=self.sender,
+    #                                                       timeStamp=self.timeStamp, messageTxt=self.messageTxt)
 

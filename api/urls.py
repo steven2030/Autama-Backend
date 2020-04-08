@@ -22,14 +22,11 @@ from . import views
 # NOTE: URL patterns specify endpoints & where they go to
 
 router = OptionalSlashRouter()
-router.register(r'User', views.UserViewSet)  # user info
+router.register(r'User', views.UserViewSet)  # User info
 router.register(r'Autama', views.AutamaViewSet)  # Autama info
-router.register(r'Matches', views.MatchesViewSet)  # all matches
-router.register(r'Messages', views.MessagesViewSet)  # all messages from user and Autama
-# ^^ can filter things using matchID?
-# for testing
-#router.register(r'AllUser', views.AllUserViewSet)  # all users
-#router.register(r'AllAutama', views.AllAutamaViewSet)  # all autama
+router.register(r'Matches', views.MatchesViewSet)  # Matches
+router.register(r'Messages', views.MessagesViewSet)  # Messages between user and Autama
+# TODO: filter things using matchID, from the Matches model ^^
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
