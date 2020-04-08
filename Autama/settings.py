@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'Autama',
     'api',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 # Dev Only, need to configure for production
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'Autama.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [''],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

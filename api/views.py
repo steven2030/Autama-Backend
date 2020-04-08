@@ -17,6 +17,18 @@ class UserViewSet(viewsets.ModelViewSet):
             return self.queryset.filter(pk=self.request.user.pk)
         return self.queryset
 
+    # Overide create process to encrypt password
+    def create(self, data):
+        user = User(
+            username=data['username'],
+            first_name=data['first_name'],
+            last_name=data['last_name'],
+            email=data['email'],
+            gender=data['gender'],
+            interest1=data['interest1'],
+
+        )
+
 
 # TODO: Add request.autama id parameter to filter results
 class AIViewSet(viewsets.ModelViewSet):

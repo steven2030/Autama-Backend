@@ -3,7 +3,6 @@ from api.routers import OptionalSlashRouter
 from rest_framework.authtoken.views import obtain_auth_token
 from . import views
 
-# TODO: Rename these?
 router = OptionalSlashRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'ais', views.AIViewSet)

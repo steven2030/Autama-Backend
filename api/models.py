@@ -5,7 +5,7 @@ from django.shortcuts import reverse
 
 
 class User(AbstractUser):
-    sex = models.IntegerField(verbose_name="gender", choices=((0, 'male'), (1, 'female')), default=0)
+    gender = models.IntegerField(verbose_name="gender", choices=((0, 'male'), (1, 'female')), default=0)
     image = models.ImageField(max_length=1000, upload_to='avatar', verbose_name=u'picture', null=True, blank=True)
     interest1 = models.TextField()
     interest2 = models.TextField()
