@@ -29,3 +29,9 @@ class Messages(models.Model):
 
     def __str__(self):
         return '{userID} {autamaID}'.format(userID=self.userID, autamaID=self.autamaID)
+
+
+class Matches(models.Model):
+    timeStamp = models.DateTimeField(auto_now_add=True)
+    userID = models.ForeignKey('User', on_delete=models.CASCADE)
+    autamaID = models.ForeignKey('AutamaProfiles.AutamaProfile', on_delete=models.CASCADE)

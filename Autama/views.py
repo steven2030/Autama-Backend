@@ -10,7 +10,7 @@ import json
 from django.shortcuts import render,reverse
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import authenticate, login, logout
-from accounts.models import User, Messages
+from accounts.models import User, Messages, Matches
 from django import forms
 from django.db.models import Q
 from django.views import View
@@ -169,15 +169,19 @@ class FindMatches(LoginRequiredMixin, View):
         return render(request, 'find_matches.html')
 
 
-class MyMatches(LoginRequiredMixin, View):
-    def get(self, request):
-        return render(request, 'my_matches.html')
-
-
 # TODO: Do we want this as part of login? Fix to view if keeping.
 def about(request):
     # return HttpResponse('about')
     return render(request, 'about.html')
+
+
+class MyMatches(LoginRequiredMixin, View):
+
+    def get(self, request):
+        user = User.objects.get(pk=request.user.id)
+        user_matches = Matches.objects.all().filter(userID=user.pk).order_by('timeStamp')
+        context = {'user_matches': user_matches}
+        return render(request, 'my_matches.html', context)
 
 
 def chat_main_page(request):
