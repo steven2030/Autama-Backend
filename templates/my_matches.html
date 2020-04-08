@@ -28,11 +28,24 @@
                 margin-left: -50px;
             }
 
-            .column {
+           .circular--portrait {
+                position: relative;
+                width: 200px;
+                height: 200px;
+                overflow: hidden;
+                border-radius: 50%;
+           }
+
+           .circular--portrait img {
+                width: 100%;
+                height: auto;
+           }
+
+           .column {
                 float: left;
                 width: 33.33%;
                 padding: 5px;
-            }
+           }
 
             /* Clearfix (clear floats) */
             .row::after {
@@ -46,7 +59,7 @@
         {% for a_profile in user_matches %}
         <div class="column">
             <a href="{% url 'Chat' pk=a_profile.autamaID.pk %}" class="image">
-                <div class="circular--landscape">
+                <div class="circular--portrait">
                     <img src="{{ a_profile.autamaID.picture.url }}" alt="Avatar"/>
                 </div>
             </a>
