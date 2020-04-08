@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User  # needed? are we overloading class User(below)?
-from .models import User, AutamaProfile, Matches
+from .models import User, Autama, Matches, Messages
 # TODO: Do we need to separate from individual messages and history?
-from .models import Messages
+# from .models import Messages
 
 
 # NOTE: serializers turn models into json data to send thru service
@@ -39,8 +39,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 # return Autama object as data(json)
 class AutamaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = AutamaProfile
-        # should we also return autamaID?
+        model = Autama
+        # should we also return autamaID? pickle?
         fields = ['creator', 'picture', 'first', 'last', 'num_matches', 'owner',
                   'interest1', 'interest2', 'interest3']
         # not returning interest4, interest5, interest6 for some personality intrigue/mystery
@@ -48,17 +48,17 @@ class AutamaSerializer(serializers.HyperlinkedModelSerializer):
 
 
 # return Message object as data
-class MessageSerializer(serializers.HyperlinkedModelSerializer):
+class MessagesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Messages
-        # fields = ['matchID', 'userID', 'autamaID', 'sender', 'timeStamp', 'messageTxt'] ?
-        fields = ['sender', 'timeStamp', 'messageTxt']
+        fields = ['matchID', 'userID', 'autamaID', 'sender', 'timeStamp', 'messageTxt']  # ?
+        # fields = ['sender', 'timeStamp', 'messageTxt']
 
 
 # return list of User-Autama Matches
 class MatchesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Matches
-        fields = ['userID', 'autamaID']
-        # fields = ['matchID', 'userID', 'autamaID']
+        # fields = ['userID', 'autamaID']
+        fields = ['matchID', 'userID', 'autamaID']
 

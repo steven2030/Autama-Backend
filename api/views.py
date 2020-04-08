@@ -6,7 +6,7 @@ from .models import *
 
 # NOTE: Views connect models, serialize, and display them
 
-# view users
+# view user info
 class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
@@ -22,16 +22,32 @@ class UserViewSet(viewsets.ModelViewSet):
         return self.queryset
 
 
+# view all users for testing
+# class AllUserViewSet(viewsets.ModelViewSet):
+#     permission_classes = [IsAuthenticated]
+#
+#     queryset = User.objects.all().order_by('username')
+#     serializer_class = UserSerializer
+
+
 # TODO: Add request.autama id parameter to filter results
 class AutamaViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
-    queryset = AutamaProfile.objects.all().order_by('autamaID')
+    queryset = Autama.objects.all().order_by('autamaID')
     serializer_class = AutamaSerializer
 
 
+# view  all autama for testing
+# class AllAutamaViewSet(viewsets.ModelViewSet):
+#     permission_classes = [IsAuthenticated]
+#
+#     queryset = Autama.objects.all().order_by('autamaID')
+#     serializer_class = AutamaSerializer
+
+
 # TODO: Add filters if needed
-class MatchViewSet(viewsets.ModelViewSet):
+class MatchesViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     queryset = Matches.objects.all().order_by('userID')
@@ -39,8 +55,8 @@ class MatchViewSet(viewsets.ModelViewSet):
 
 
 # TODO: add request autama id parameter to filter results
-class MessageViewSet(viewsets.ModelViewSet):
+class MessagesViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     queryset = Messages.objects.all().order_by('timeStamp')
-    serializer_class = MessageSerializer
+    serializer_class = MessagesSerializer

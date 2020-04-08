@@ -54,15 +54,15 @@
 {% endblock %}
 
 {% block js %}
+
+    <script defer src="js/login.js"></script>
 <script>
-var imgs =["background-login01.jpg", "background-login02.jpg"];       
+//var imgs =["background-login01.jpg", "background-login02.jpg"];      
+        let imgs =["a0.png", "a1.png"];      
         function time(){
-               var i = Math.floor(Math.random()*(2+0)+0); 
-               document.getElementById("div_first").src ="/Images/Images/"+imgs[i];  
-
-             
-        }setInterval("time()",1500); 
-
-       
+               let i = Math.floor(Math.random()*(2+0)+0);
+               document.getElementById("div_first").src ="/Images/"+imgs[i];
+        }setInterval("time()",1500);     
 </script>
+
 {% endblock %}

@@ -26,7 +26,7 @@ class User(AbstractUser):
 
 
 # autama model info
-class AutamaProfile(models.Model):
+class Autama(models.Model):
     autamaID = models.CharField(max_length=100, default="0")
     creator = models.CharField(max_length=100, default='Team Autama OGs')
     picture = models.ImageField(upload_to='Images', blank=True)
@@ -57,11 +57,13 @@ class AutamaProfile(models.Model):
 
 
 # user-autama matches model
+# TODO: Set matchID to primary_key
 # needs to return a list of autamaIDs the user is matched with -- one-to-many ret
 class Matches(models.Model):
     matchID = models.IntegerField(primary_key=True, default=None)
-    userID = models.ForeignKey(User, on_delete=models.CASCADE,)
-    autamaID = models.ForeignKey(AutamaProfile, on_delete=models.CASCADE,)
+    # matchID = models.IntegerField()
+    userID = models.ForeignKey('User', on_delete=models.CASCADE,)
+    autamaID = models.ForeignKey('Autama', on_delete=models.CASCADE,)
     # matchID = models.IntegerField(primary_key=True)  # pk
     # userID = models.ForeignKey('User', on_delete=CASCADE)
     # autamaID = models.ForeignKey('AutamaProfile', on_delete=CASCADE)
@@ -83,7 +85,7 @@ class Messages(models.Model):
 
     matchID = models.ForeignKey('Matches', on_delete=models.CASCADE)
     userID = models.ForeignKey('User', on_delete=models.CASCADE)  # del later?
-    autamaID = models.ForeignKey('AutamaProfile', on_delete=models.CASCADE)  # del later?
+    autamaID = models.ForeignKey('Autama', on_delete=models.CASCADE)  # del later?
     timeStamp = models.DateTimeField(auto_now_add=True)
     sender = models.CharField(max_length=6, choices=SENDER_CHOICES)
     messageTxt = models.TextField()

@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'api.apps.ApiConfig',
+    #'api.apps.ApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Autama',
-    #'api',
+    'api',
     'rest_framework',
     'rest_framework.authtoken',
 ]
@@ -145,7 +145,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'Images')
 # AUTHENTICATION_BACKENDS = ('user_profile.views.CustomBackend',)
 
 # User Model
-AUTH_USER_MODEL = 'api.User'
+AUTH_USER_MODEL = 'api.User'  # can't use api.UserInfo bc need auth.User here.
+# Note: In api/urls.py/urlpatterns specifies:
+# path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+# path('login', obtain_auth_token, name='login'),
 
 # Rest Framework Settings
 REST_FRAMEWORK = {

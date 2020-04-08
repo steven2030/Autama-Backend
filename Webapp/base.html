@@ -68,13 +68,13 @@
                 <ul class="navbar-nav nav">
                     {% if not request.user.is_authenticated  %}
                     <li><a href="/login/">Login</a></li>
-                    <li><a href="/accounts/register/">Register</a></li>
+                    <li><a href="/register/">Register</a></li>
                     {% endif %}
 
                     {% if request.user.is_authenticated  %}
                     <li><a href="/FindMatches/">FindMatches</a></li>
                     <li><a href="/MyMatches/">MyMatches</a></li>
-                    <li><a href="/AutamaProfiles/robot/">Autama</a></li>
+                    <li><a href="/AutamaProfile/">Autama</a></li>
                         <li><a href="/Chat/">Chat</a></li>
                 </ul>
 
