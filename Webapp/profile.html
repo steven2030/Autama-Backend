@@ -70,8 +70,16 @@
                         </div>
                        <div class="list-group-item">
                            <span>Gender:</span>
-                           <label style="width: 60px;margin-left: 10px"><input name="sex" type="radio" value="0" {% if request.user.sex == 0 %} checked {% endif %}/>male </label>
-                           <label><input name="sex" type="radio" value="1" {% if request.user.sex == 1 %} checked {% endif %}/>female </label>
+                           <label style="width: 60px;margin-left: 10px"><input name="gender" type="radio" value="0"
+                                   {% if request.user.gender == 0 %} checked {% endif %}/>Rather Not Say </label>
+                           <label><input name="gender" type="radio" value="1"
+                                   {% if request.user.gender == 1 %} checked {% endif %}/>Male </label>
+                           <label><input name="gender" type="radio" value="2"
+                                   {% if request.user.gender == 2 %} checked {% endif %}/>Female </label>
+                           <label><input name="gender" type="radio" value="3"
+                                   {% if request.user.gender == 3 %} checked {% endif %}/>Non-Conforming </label>
+                           <label><input name="gender" type="radio" value="4"
+                                   {% if request.user.gender == 4 %} checked {% endif %}/>Other </label>
                        </div>
                        <div class="list-group-item">
                            <span>email:</span>&nbsp&nbsp<input name="email" value="{{ request.user.email |format_none }}">
