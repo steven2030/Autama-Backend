@@ -13,6 +13,22 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'username', 'password', 'first_name', 'last_name', 'email', 'gender',
                   'interest1', 'interest2', 'interest3', 'interest4', 'interest5']
 
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            gender=validated_data['gender'],
+            interest1=validated_data['interest1'],
+            interest2=validated_data['interest2'],
+            interest3=validated_data['interest3'],
+            interest4=validated_data['interest4'],
+            interest5=validated_data['interest5'],
+        )
+        return user
+
 
 class AutamaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
