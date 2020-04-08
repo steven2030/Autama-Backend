@@ -135,9 +135,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'Images')
 
 # TODO: Do we need this?
 # URL REDIRECTS
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/FindMatches/'
-LOGOUT_REDIRECT_URL = '/login/'
+# LOGIN_URL = '/login/'
+# LOGIN_REDIRECT_URL = '/FindMatches/'
+# LOGOUT_REDIRECT_URL = '/login/'
 
 # Authentication
 # AUTHENTICATION_BACKENDS = ('user_profile.views.CustomBackend',)
@@ -145,11 +145,13 @@ LOGOUT_REDIRECT_URL = '/login/'
 # User Model
 AUTH_USER_MODEL = 'api.User'
 
-
+# Rest Framework Settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication'
     ]
 }
+
+

@@ -7,19 +7,18 @@ from .models import *
 
 class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-
-    # TODO: Get this users id and return ONLY.
     queryset = User.objects.all().order_by('username')
     serializer_class = UserSerializer
 
-    # queryset = User.objects.all()
-    # def get_object(self):
-    #     pk = self.kwargs.get('pk')
-    #     if pk == "current":
-    #         return self.request.user
+    # Override get_queryset and filter for only the current user.
+    # uses pk Primary Key from the DG and users id.
+    def get_queryset(self):
+        if self.action == 'list':
+            return self.queryset.filter(pk=self.request.user.pk)
+        return self.queryset
 
 
-
+# TODO: Add request.autama id parameter to filter results
 class AIViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
@@ -27,6 +26,7 @@ class AIViewSet(viewsets.ModelViewSet):
     serializer_class = AutamaSerializer
 
 
+# TODO: add request autama id parameter to filter results
 class MessageViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 

@@ -44,6 +44,7 @@ class AutamaProfile(models.Model):
     first = models.CharField(max_length=100)
     last = models.CharField(max_length=100)
     nummatches = models.CharField(max_length=100, default='0000000', editable=False)
+    # TODO: change owner to User.ForeignKey
     owner = models.CharField(max_length=100, default='FREE')
     pickle = models.CharField(max_length=100, default='PICKLE')
     interest1 = models.CharField(max_length=100)

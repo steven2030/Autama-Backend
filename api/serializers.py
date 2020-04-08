@@ -10,8 +10,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         # TODO: Is this a valid concern?
         # Not passing user ID to prevent return from being modified
-        fields = ['username', 'first_name', 'last_name', 'email', 'sex', 'interest1',
-                  'interest2', 'interest3', 'interest4', 'interest5']
+        fields = ['id', 'username', 'password', 'first_name', 'last_name', 'email', 'sex',
+                  'interest1', 'interest2', 'interest3', 'interest4', 'interest5']
 
 
 class AutamaSerializer(serializers.HyperlinkedModelSerializer):
