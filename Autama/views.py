@@ -3,11 +3,11 @@
 
 import json, simplejson
 from django.shortcuts import render, reverse, get_object_or_404, redirect
-from api.models import User, Messages, AutamaProfile, Matches
+from api.models import UserInfo, Messages, AutamaInfo, Matches
 
 from django import forms
 from django.db.models import Q
-# from django.views import View
+from django.views import View
 from api.views import *
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.backends import ModelBackend
@@ -17,26 +17,26 @@ from django.core.files.base import ContentFile
 from django.utils import timezone
 
 
-class CustomBackend(ModelBackend):
-    def authenticate(self, request, username=None, password=None, **kwargs):
-        try:
-            username = request.POST.get("username", "")
-            password = request.POST.get("password", "")
-            user = User.objects.get(Q(username=username) | Q(email=username))
-            if user.check_password(password):
-                return user
-        except Exception as e:
-            return None
+# class CustomBackend(ModelBackend):
+#     def authenticate(self, request, username=None, password=None, **kwargs):
+#         try:
+#             username = request.POST.get("username", "")
+#             password = request.POST.get("password", "")
+#             user = UserInfo.objects.get(Q(username=username) | Q(email=username))
+#             if user.check_password(password):
+#                 return user
+#         except Exception as e:
+#             return None
+#
 
-
-class LoginRequiredMixin(object):
-    """
-    """
-    @classmethod
-    def as_view(cls, **initkwargs):
-        view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
-        return login_required(view, login_url='/login/')
-
+# class LoginRequiredMixin(object):
+#     """
+#     """
+#     @classmethod
+#     def as_view(cls, **initkwargs):
+#         view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
+#         return login_required(view, login_url='/login/')
+#
 
 class HomeView(View):
     def get(self, request):
@@ -189,8 +189,8 @@ class MessageForm(forms.Form):
 class Chat(LoginRequiredMixin, View):
 
     def get(self, request, pk):
-        user = User.objects.get(pk=request.user.id)
-        autama = AutamaProfile.objects.get(pk=pk)
+        user = UserInfo.objects.get(pk=request.user.id)
+        autama = AutamaInfo.objects.get(pk=pk)
         form = MessageForm()
 
         # Search for a message chain in the database order by utc timestamp
@@ -200,8 +200,8 @@ class Chat(LoginRequiredMixin, View):
                                              'message_chain': message_chain})
 
     def post(self, request, pk):
-        user = User.objects.get(pk=request.user.id)
-        autama = AutamaProfile.objects.get(pk=pk)  # Check the validity of Autama id.
+        user = UserInfo.objects.get(pk=request.user.id)
+        autama = AutamaInfo.objects.get(pk=pk)  # Check the validity of Autama id.
         form = MessageForm(request.POST)
         autama_response = "This is a response."
 
