@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ROBOT</title>
+    <title>BASE</title>
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -75,12 +75,11 @@
                     <li><a href="/FindMatches/">FindMatches</a></li>
                     <li><a href="/MyMatches/">MyMatches</a></li>
                     <li><a href="/AutamaProfile/">Autama</a></li>
-                        <li><a href="/Chat/">Chat</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
                     <li><a class="navbar-link" href="/logout">Logout</a></li>
-                    <li><a class="navbar-link" href="/accounts/profile/">{{ request.user }}</a></li>
+                    <li><a class="navbar-link" href="/profile/">{{ request.user }}</a></li>
                 </ul>
 
                     {% endif %}

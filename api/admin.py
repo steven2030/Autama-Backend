@@ -3,7 +3,7 @@ from .models import AutamaInfo, UserInfo
 from .models import Matches, Messages
 
 
-# Register your models here
+# Import and Register your models here
 admin.site.register(AutamaInfo)
 admin.site.register(UserInfo)
 admin.site.register(Matches)

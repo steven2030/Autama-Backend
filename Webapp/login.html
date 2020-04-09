@@ -1,68 +1,98 @@
-{% extends 'base.html' %}
-{% block csstyle %}
-   <style>
-    .div1{
-	position:relative;
-	margin:0 auto;
-	width:100%;
-	height:100%;
-    }
+<html>
+<head>
 
-    .div2{
-        overflow:auto;
-        height:100vh;
-    }
+    <script
+        defer
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script defer src="index.js"></script>
 
-    img{
-    position:absolute;
-      left:0px;
-      top:0px;
-      z-index:-1;
-    width:100%!important;
-    height:100%!important;
-    }
-   </style>
-{%  endblock %}
-
-{% block content %}
-    <div class="div1">
-    <!-- TODO: Add images -->
-        <img id="div_first" src="/Images/Images/background-login01.jpg">
-        <div class="div2" style="width: 80%;margin: auto;margin-top: 50px;">
-            <h2> login </h2>
-            <form action="/login/" method="post">
-              <div class="form-group">
-                <label for="username">username</label>
-                <input type="text" class="form-control" id="username" placeholder="username or email" name="username" style="width:50%">
-              </div>
-              <div class="form-group">
-                <label for="password">password</label>
-                <input type="password" class="form-control" id="password" placeholder="password" name="password"  style="width:50%">
-              </div>
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" name="is_remember_me"> remember me
-                </label>
-              </div>
-
-              <button style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" type="submit" class="btn btn-default">login</button>
-                {% csrf_token %}
-            </form>
-            <div style="color: red;font-size: 14px">{{ error }}</div>
-        </div>
+    <title>Autama</title>
+</head>
+<body>
+    <div id="login">
+        <input id="login-username" type="text" name="username" />
+        <input id="login-password" type="password" name="password" />
+        <input id="submit" type="submit" name="submit" />
     </div>
-{% endblock %}
+    <div id="page">
+    </div>
+</body>
 
-{% block js %}
+</html>
 
-    <script defer src="js/login.js"></script>
-<script>
-//var imgs =["background-login01.jpg", "background-login02.jpg"];      
-        let imgs =["a0.png", "a1.png"];      
-        function time(){
-               let i = Math.floor(Math.random()*(2+0)+0);
-               document.getElementById("div_first").src ="/Images/"+imgs[i];
-        }setInterval("time()",1500);     
-</script>
 
-{% endblock %}
+
+
+
+
+
+{#{% extends 'base.html' %}#}
+{#{% block csstyle %}#}
+{#   <style>#}
+{#    .div1{#}
+{#	position:relative;#}
+{#	margin:0 auto;#}
+{#	width:100%;#}
+{#	height:100%;#}
+{#    }#}
+{##}
+{#    .div2{#}
+{#        overflow:auto;#}
+{#        height:100vh;#}
+{#    }#}
+{##}
+{#    img{#}
+{#    position:absolute;#}
+{#      left:0px;#}
+{#      top:0px;#}
+{#      z-index:-1;#}
+{#    width:100%!important;#}
+{#    height:100%!important;#}
+{#    }#}
+{#   </style>#}
+{#{%  endblock %}#}
+{##}
+{#{% block content %}#}
+{#    <div class="div1">#}
+{#    <!-- TODO: Add images -->#}
+{#        <img id="div_first" src="/Images/Images/background-login01.jpg">#}
+{#        <div class="div2" style="width: 80%;margin: auto;margin-top: 50px;">#}
+{#            <h2> login </h2>#}
+{#            <form action="/login/" method="post">#}
+{#              <div class="form-group">#}
+{#                <label for="username">username</label>#}
+{#                <input type="text" class="form-control" id="username" placeholder="username or email" name="username" style="width:50%">#}
+{#              </div>#}
+{#              <div class="form-group">#}
+{#                <label for="password">password</label>#}
+{#                <input type="password" class="form-control" id="password" placeholder="password" name="password"  style="width:50%">#}
+{#              </div>#}
+{#              <div class="checkbox">#}
+{#                <label>#}
+{#                  <input type="checkbox" name="is_remember_me"> remember me#}
+{#                </label>#}
+{#              </div>#}
+{##}
+{#              <button style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" type="submit" class="btn btn-default">login</button>#}
+{#                {% csrf_token %}#}
+{#            </form>#}
+{#            <div style="color: red;font-size: 14px">{{ error }}</div>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}
+{##}
+{#{% block js %}#}
+{##}
+{#    <script defer src="js/login.js"></script>#}
+{#<script>#}
+{#//var imgs =["background-login01.jpg", "background-login02.jpg"];      #}
+{#        let imgs =["a0.png", "a1.png"];      #}
+{#        function time(){#}
+{#               let i = Math.floor(Math.random()*(2+0)+0);#}
+{#               document.getElementById("div_first").src ="/Images/"+imgs[i];#}
+{#        }setInterval("time()",1500);     #}
+{#</script>#}
+{##}
+{#{% endblock %}#}
