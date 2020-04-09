@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User  # needed? are we overloading class User(below)?
 from .models import User, Autama, Matches, Messages
-# TODO: Do we need to separate from individual messages and history?
-# from .models import Messages
 
 
 # NOTE: serializers turn models into json data to send thru service
@@ -48,6 +46,7 @@ class AutamaSerializer(serializers.HyperlinkedModelSerializer):
 
 
 # return Message object as data
+# TODO: Do we need to separate from individual messages and history?
 class MessagesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Messages

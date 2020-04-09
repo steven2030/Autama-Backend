@@ -13,9 +13,8 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('username')
     serializer_class = UserSerializer
 
-    # alternative? User.objects.filter(pk)
     # Override get_queryset and filter for only the current user.
-    # uses pk Primary Key from the DG and users id.
+    # uses pk, Primary Key from the DG and users id.
     def get_queryset(self):
         if self.request.user.is_staff:
             return self.queryset
@@ -24,29 +23,12 @@ class UserViewSet(viewsets.ModelViewSet):
         return self.queryset
 
 
-# view all users for testing
-# Handled above in UserViewSet by checking permission level.
-# class AllUserViewSet(viewsets.ModelViewSet):
-#     permission_classes = [IsAdminUser]
-#
-#     queryset = User.objects.all().order_by('username')
-#     serializer_class = UserSerializer
-
-
 # TODO: Add request.autama id parameter to filter results
 class AutamaViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     queryset = Autama.objects.all().order_by('autamaID')
     serializer_class = AutamaSerializer
-
-
-# view  all autama for testing
-# class AllAutamaViewSet(viewsets.ModelViewSet):
-#     permission_classes = [IsAuthenticated]
-#
-#     queryset = Autama.objects.all().order_by('autamaID')
-#     serializer_class = AutamaSerializer
 
 
 # TODO: Add filters if needed
