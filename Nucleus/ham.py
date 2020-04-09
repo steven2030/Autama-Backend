@@ -9,7 +9,10 @@ from Nucleus.tools import read_json
 
 
 class Ham:
+    # just an idea
+    #def __init__(self, name: str, personality: list, nucleus):
     def __init__(self, name: str, personality: list):
+        #self.__nucleus = nucleus
         self.__nucleus = Nucleus()
         self.__name = name
         #self.__file_name = autama_id + ".json"
