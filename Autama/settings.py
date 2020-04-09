@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'api',  # 'api.apps.ApiConfig',
     'rest_framework',
     'rest_framework.authtoken',
-    'corsheaders'   # #
+    ##'corsheaders'   # #
 ]
 
 
@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware'  # #
+    ##'corsheaders.middleware.CorsMiddleware'  # #
 ]
 
 ROOT_URLCONF = 'Autama.urls'
@@ -132,7 +132,7 @@ USE_TZ = True
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # <- absolute path to dir to collect static files for deployment
 # '/var/www/example.com/static/'
 # STATIC_URL = '/static/'  # <- has to end in a / if set to non-empty value
-STATIC_ROOT = os.path.join(BASE_DIR, "Webapp")  # idk if Webapp or static for these
+STATIC_ROOT = os.path.join(BASE_DIR, "Webapp/")  # idk if Webapp or static for these
 STATIC_URL = '/Webapp/'
 
 STATICFILES_DIRS = [
@@ -165,6 +165,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-CORS_ORIGIN_ALLOW_ALL = True  # #
+##CORS_ORIGIN_ALLOW_ALL = True  # #
 
 

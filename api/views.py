@@ -24,7 +24,15 @@ class UserViewSet(viewsets.ModelViewSet):
         return self.queryset
 
 
-# Accepts paramter on get request and returns autama profile with matching primary key.
+# view All users info -- for testing
+class AllUsersViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
+    queryset = UserInfo.objects.all().order_by('username')
+    serializer_class = UserSerializer
+
+
+# Accepts parameter on get request and returns autama profile with matching primary key.
 # If user is a super user returns a list of all autama.
 # example: ../Autama?aid=1 would return autama profile #1.
 class AutamaViewSet(viewsets.ModelViewSet):
@@ -42,6 +50,15 @@ class AutamaViewSet(viewsets.ModelViewSet):
             return self.queryset.filter(pk=a_id)
 
 
+# view All Autamas info -- for testing
+class AllAutamasViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
+    queryset = AutamaInfo.objects.all().order_by('autamaID')
+    serializer_class = AutamaSerializer
+
+
+# view all matches
 class MatchesViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
