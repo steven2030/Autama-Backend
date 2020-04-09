@@ -24,19 +24,21 @@ class UserViewSet(viewsets.ModelViewSet):
         return self.queryset
 
 
-# TODO: Add request.autama id parameter to filter results
+# Accepts paramter on get request and returns autama profile with matching primary key.
+# If user is a super user returns a list of all autama.
 class AutamaViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     queryset = AutamaInfo.objects.all().order_by('autamaID')
     serializer_class = AutamaSerializer
 
-    # Override get_queryset and filter for only the current Autama.
-    # uses pk Primary Key from the DG and autama id.
     def get_queryset(self):
+        a_id = self.request.query_params.get('aid')
+
+        if self.request.user.is_superuser:
+            return self.queryset
         if self.action == 'list':
-            return self.queryset.filter(pk=self.request.user.pk)   # TODO: will user work here?
-        return self.queryset
+            return self.queryset.filter(pk=a_id)
 
 
 class MatchesViewSet(viewsets.ModelViewSet):
