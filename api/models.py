@@ -6,12 +6,12 @@ from django.shortcuts import reverse
 
 
 # user model info
-# TODO: Useful to add num_matches trait? email? password?
+# TODO: Would it be useful to add num_matches trait? (email&password created @ api/serializers.py)
 class UserInfo(AbstractUser):
     gender = models.IntegerField(verbose_name="gender",
                                  choices=((0, 'Rather Not Say'), (1, 'Male'), (2, 'Female'),
                                           (3, 'Non-Conforming'), (4, 'Other')), default=0)
-    image = models.ImageField(max_length=1000, upload_to='avatar', verbose_name=u'picture', null=True, blank=True)
+    image = models.ImageField(max_length=1000, upload_to='user_pics', null=True, blank=True)  # removed verbose_name=u'picture'
     interest1 = models.TextField()
     interest2 = models.TextField()
     interest3 = models.TextField()
@@ -29,13 +29,11 @@ class UserInfo(AbstractUser):
 class AutamaInfo(models.Model):
     autamaID = models.CharField(max_length=100, default="0")
     creator = models.CharField(max_length=100, default='Team Autama OGs')
-    # TODO: this is actually uploading images, do we want that?
-    picture = models.ImageField(upload_to='Images', blank=True)
+    picture = models.ImageField(max_length=1000, upload_to='autama_pics', blank=True)  # this is uploading a pic
     first = models.CharField(max_length=100)
     last = models.CharField(max_length=100)
     num_matches = models.CharField(max_length=100, default='0000000', editable=False)
-    # TODO: owner field  might  still need tweaking later
-    owner = models.ForeignKey(get_user_model(),  on_delete=models.PROTECT, default="")
+    owner = models.ForeignKey(get_user_model(),  on_delete=models.PROTECT, default="UNCLAIMED")  # owner can change
     pickle = models.CharField(max_length=100, default='PICKLE')  # do we still need this?
     interest1 = models.CharField(max_length=100)
     interest2 = models.CharField(max_length=100)
@@ -63,6 +61,7 @@ class Matches(models.Model):
     userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE,)
     autamaID = models.ForeignKey('AutamaInfo', on_delete=models.CASCADE,)
 
+    # TODO: Make sure when a match is created(matchID != None) increment autama num_matches somewhere
     # overrides method in model
     # def __str__(self):
     #     return '{userID} {autamaID}'.format(userID=self.userID, autamaID=self.autamaID)
@@ -77,8 +76,8 @@ class Messages(models.Model):
         (USER, 'User'),
         (AUTAMA, 'Autama'),
     ]
-
-    matchID = models.ForeignKey('Matches', on_delete=models.CASCADE)
+    # TODO: Add a way to pull matchID in from Matches
+    matchID = models.ForeignKey('Matches', on_delete=models.CASCADE, default=None)
     userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE)  # del later?
     autamaID = models.ForeignKey('AutamaInfo', on_delete=models.CASCADE)  # del later?
     timeStamp = models.DateTimeField(auto_now_add=True)
