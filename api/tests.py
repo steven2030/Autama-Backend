@@ -1,20 +1,26 @@
+from rest_framework.test import APIRequestFactory
+
+
 from django.test import TestCase
-from .models import *
-#from .models import UserInfo, AutamaInfo, Matches, Messages
+from django.db import models
+from django.contrib.auth import get_user_model
+from .models import UserInfo, AutamaInfo
+# from .models import UserInfo, AutamaInfo, Matches, Messages
+# from .models import *
+# from django.contrib.auth.models import AbstractUser
 
-from django.contrib.auth.models import AbstractUser
 
-# Create test for views
-# Create test for models -AutamaInfo UserInfo Matches Messages
-# Create test for serialization?
+# Create tests for models: AutamaInfo UserInfo Matches Messages
+# Create tests for views
+# Create tests for serialization
 
-# UserInfo: ['id', 'username', 'password', 'first_name', 'last_name', 'email', 'gender',
-#            'image', 'interest1', 'interest2', 'interest3', 'interest4', 'interest5', 'interest6']
-# AutamaInfo:['autamaID', 'creator', 'picture', 'first', 'last', 'num_matches', 'owner', 'pickle',
-#                   'interest1', 'interest2', 'interest3']
 
 # Create your tests here.
-class TestApi(TestCase):
+factory = APIRequestFactory()
+request = factory.post('/notes/', {'title': 'new idea'})
+
+
+class AccountCreationTestCase(TestCase): # class TestApi(TestCase):
 
     # set up models
     def setUpTestData(self):
@@ -206,7 +212,7 @@ class TestApi(TestCase):
             last_name='span',
             email='anne10@span.com',
             gender='4',
-            image='Images/a11',  # just a test
+            image=models.ImageField('user_pics/a0'),  # just a test
             interest1='anne-droid',
             interest2='anne-teek',
             interest3='anne-chovies',
@@ -221,21 +227,202 @@ class TestApi(TestCase):
         AutamaInfo.objects.create(
             autamaID='01testHAL',
             creator='The Autama Team OGs',
-            picture=models.ImageField(upload_to='Images', verbose_name=u'picture', blank=True),  # how do I add a photo
+            picture=models.ImageField(upload_to='autama_pics', blank=True),  # testing what is added here
             first='01HAL',
             last='LEE',
             num_matches=0000000,
-            owner=models.,
-            pickle='',
-            interest1='',
-            interest2='',
-            interest2='',
-            interest2='',
-            interest2='',
-            interest2='',
+            owner=models.ForeignKey(get_user_model(), on_delete=models.PROTECT, default="UNCLAIMED"),  # owner can change
+            pickle='01testHAL-PICKLE',
+            interest1='HAL-LO',
+            interest2='HAL-ITOSIS',
+            interest3='HAL-BERD',
+            interest4='HAL-LELUJAH',
+            interest5='HAL-DO',
+            interest6='HAL-LEE',
         )
-        # owner = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, default="")
-        # image = models.ImageField(max_length=1000, upload_to='avatar', verbose_name=u'picture', null=True, blank=True)
-        # picture = models.ImageField(upload_to='Images', blank=True)
+
+        AutamaInfo.objects.create(
+            autamaID='02testHAL',
+            creator='The Autama Team OGs',
+            picture=models.ImageField(name='autama_pics/a02'),  # another test
+            first='02HAL',
+            last='LEE',
+            num_matches=0000000,
+            owner=models.ForeignKey(get_user_model(), on_delete=models.PROTECT, default="UNCLAIMED"),
+            pickle='02testHAL-PICKLE',
+            interest1='HAL-LO',
+            interest2='HAL-ITOSIS',
+            interest3='HAL-BERD',
+            interest4='HAL-LELUJAH',
+            interest5='HAL-DO',
+            interest6='HAL-LEE',
+        )
+
+        AutamaInfo.objects.create(
+            autamaID='03testHAL',
+            creator='The Autama Team OGs',
+            picture='autama_pics/a03',         # another test
+            first='03HAL',
+            last='LEE',
+            num_matches=0000000,
+            owner=models.ForeignKey(get_user_model(), on_delete=models.PROTECT, default="UNCLAIMED"),
+            pickle='03testHAL-PICKLE',
+            interest1='HAL-LO',
+            interest2='HAL-ITOSIS',
+            interest3='HAL-BERD',
+            interest4='HAL-LELUJAH',
+            interest5='HAL-DO',
+            interest6='HAL-LEE',
+        )
+
+        AutamaInfo.objects.create(
+            autamaID='04testHAL',
+            creator='The Autama Team OGs',
+            picture='',
+            first='04HAL',
+            last='LEE',
+            num_matches=0000000,
+            owner=models.ForeignKey(get_user_model(), on_delete=models.PROTECT, default="UNCLAIMED"),
+            pickle='04testHAL-PICKLE',
+            interest1='HAL-LO',
+            interest2='HAL-ITOSIS',
+            interest3='HAL-BERD',
+            interest4='HAL-LELUJAH',
+            interest5='HAL-DO',
+            interest6='HAL-LEE',
+        )
+
+        AutamaInfo.objects.create(
+            autamaID='05testHAL',
+            creator='The Autama Team OGs',
+            picture='',
+            first='05HAL',
+            last='LEE',
+            num_matches=0000000,
+            owner=models.ForeignKey(get_user_model(), on_delete=models.PROTECT, default="UNCLAIMED"),
+            pickle='05testHAL-PICKLE',
+            interest1='HAL-LO',
+            interest2='HAL-ITOSIS',
+            interest3='HAL-BERD',
+            interest4='HAL-LELUJAH',
+            interest5='HAL-DO',
+            interest6='HAL-LEE',
+        )
+
+        AutamaInfo.objects.create(
+            autamaID='06testHAL',
+            creator='The Autama Team OGs',
+            picture='',
+            first='06HAL',
+            last='LEE',
+            num_matches=0000000,
+            owner=models.ForeignKey(get_user_model(), on_delete=models.PROTECT, default="UNCLAIMED"),
+            pickle='06testHAL-PICKLE',
+            interest1='HAL-LO',
+            interest2='HAL-ITOSIS',
+            interest3='HAL-BERD',
+            interest4='HAL-LELUJAH',
+            interest5='HAL-DO',
+            interest6='HAL-LEE',
+        )
+
+        AutamaInfo.objects.create(
+            autamaID='07testHAL',
+            creator='The Autama Team OGs',
+            picture='',
+            first='07HAL',
+            last='LEE',
+            num_matches=0000000,
+            owner=models.ForeignKey(get_user_model(), on_delete=models.PROTECT, default="UNCLAIMED"),
+            pickle='07testHAL-PICKLE',
+            interest1='HAL-LO',
+            interest2='HAL-ITOSIS',
+            interest3='HAL-BERD',
+            interest4='HAL-LELUJAH',
+            interest5='HAL-DO',
+            interest6='HAL-LEE',
+        )
+
+        AutamaInfo.objects.create(
+            autamaID='08testHAL',
+            creator='The Autama Team OGs',
+            picture='',
+            first='08HAL',
+            last='LEE',
+            num_matches=0000000,
+            owner=models.ForeignKey(get_user_model(), on_delete=models.PROTECT, default="UNCLAIMED"),
+            pickle='08testHAL-PICKLE',
+            interest1='HAL-LO',
+            interest2='HAL-ITOSIS',
+            interest3='HAL-BERD',
+            interest4='HAL-LELUJAH',
+            interest5='HAL-DO',
+            interest6='HAL-LEE',
+        )
+
+        AutamaInfo.objects.create(
+            autamaID='09testHAL',
+            creator='The Autama Team OGs',
+            picture='',
+            first='09HAL',
+            last='LEE',
+            num_matches=0000000,
+            owner=models.ForeignKey(get_user_model(), on_delete=models.PROTECT, default="UNCLAIMED"),
+            pickle='09testHAL-PICKLE',
+            interest1='HAL-LO',
+            interest2='HAL-ITOSIS',
+            interest3='HAL-BERD',
+            interest4='HAL-LELUJAH',
+            interest5='HAL-DO',
+            interest6='HAL-LEE',
+        )
+
+        AutamaInfo.objects.create(
+            autamaID='10testHAL',
+            creator='The Autama Team OGs',
+            picture='',
+            first='10HAL',
+            last='LEE',
+            num_matches=0000000,
+            owner=models.ForeignKey(get_user_model(), on_delete=models.PROTECT, default="UNCLAIMED"),
+            pickle='10testHAL-PICKLE',
+            interest1='HAL-LO',
+            interest2='HAL-ITOSIS',
+            interest3='HAL-BERD',
+            interest4='HAL-LELUJAH',
+            interest5='HAL-DO',
+            interest6='HAL-LEE',
+        )
 
 
+# Stuff to  delete later
+
+# UserInfo: ['id', 'username', 'password', 'first_name', 'last_name', 'email', 'gender',
+#            'image', 'interest1', 'interest2', 'interest3', 'interest4', 'interest5', 'interest6']
+# AutamaInfo:['autamaID', 'creator', 'picture', 'first', 'last', 'num_matches', 'owner', 'pickle',
+#                   'interest1', 'interest2', 'interest3']
+# Matches:
+# Messages:
+
+# questions about picture load/uploads
+# owner = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, default="")
+# image = models.ImageField(max_length=1000, upload_to='avatar', verbose_name=u'picture', null=True, blank=True)
+# picture = models.ImageField(upload_to='Images', blank=True)
+
+
+# from django.urls import reverse
+# from rest_framework import status
+# from rest_framework.test import APITestCase
+# from api.apps.core.models import Account
+#
+# class AccountTests(APITestCase):
+#     def test_create_account(self):
+#         """
+#         Ensure we can create a new account object.
+#         """
+#         url = reverse('account-list')
+#         data = {'name': 'DabApps'}
+#         response = self.client.post(url, data, format='json')
+#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+#         self.assertEqual(Account.objects.count(), 1)
+#         self.assertEqual(Account.objects.get().name, 'DabApps')
