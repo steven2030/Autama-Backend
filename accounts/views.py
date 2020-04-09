@@ -29,6 +29,13 @@ class RegisterView(View):
         email = request.POST.get('email')
         password = request.POST.get('password')
         rePassword = request.POST.get('rePassword')
+        interests1 = request.POST.get('interest1')
+        interests2 = request.POST.get('interest2')
+        interests3 = request.POST.get('interest3')
+        interests4 = request.POST.get('interest4')
+        interests5 = request.POST.get('interest5')
+        interests6 = request.POST.get('interest6')
+
         if password != rePassword:
             return render(request, '../templates/register.html', {'error': 'Inconsistent passwords'})
 
@@ -38,6 +45,12 @@ class RegisterView(View):
 
         obj = User.objects.create(username=username, first_name=firstname,last_name=lastname, email=email)
         obj.set_password(password)
+        obj.interests1 = interests1
+        obj.interests2 = interests2
+        obj.interests3 = interests3
+        obj.interests4 = interests4
+        obj.interests5 = interests5
+        obj.interests6 = interests6
         obj.save()
         return HttpResponseRedirect(reverse('login'))
 

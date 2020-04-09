@@ -55,27 +55,43 @@
                         My Profile
                     </div>
                     <div style="margin-top: 45%">
-                       <p>ACCOUNT SETTINGS</p>
-                       <div class="list-group-item" style="border-top: 1px solid #C0C0C0;">
+                        <p>ACCOUNT SETTINGS</p>
+                        <div class="list-group-item" style="border-top: 1px solid #C0C0C0;">
                            <span>User ID:</span>&nbsp&nbsp&nbsp<span>u{{ user.id }}</span>
-                       </div>
-                       <div class="list-group-item">
+                        </div>
+                        <div class="list-group-item">
                            <span>Username:</span>&nbsp&nbsp&nbsp<span>{{ user.username | format_none}}</span>
-                       </div>
-                       <div class="list-group-item">
-                           <span>Interest1:</span>&nbsp&nbsp&nbsp<input name="interest1" value="{{ user.interest | format_none }}">
-                       </div>
+                        </div>
+                        <div class="list-group-item">
+                           <span>Interest1:</span>&nbsp&nbsp&nbsp<input name="interest1" value="{{user.interests1 | format_none }}">
+                        </div>
+                        <div class="list-group-item">
+                           <span>Interest2:</span>&nbsp&nbsp&nbsp<input name="interest2" value="{{user.interests2 | format_none }}">
+                        </div>
+                        <div class="list-group-item">
+                           <span>Interest3:</span>&nbsp&nbsp&nbsp<input name="interest3" value="{{user.interests3 | format_none }}">
+                        </div>
+                        <div class="list-group-item">
+                           <span>Interest4:</span>&nbsp&nbsp&nbsp<input name="interest4" value="{{user.interests4 | format_none }}">
+                        </div>
+                        <div class="list-group-item">
+                           <span>Interest5:</span>&nbsp&nbsp&nbsp<input name="interest5" value="{{user.interests5 | format_none }}">
+                        </div>
+                        <div class="list-group-item">
+                           <span>Interest6:</span>&nbsp&nbsp&nbsp<input name="interest6" value="{{user.interests6 | format_none }}">
+                        </div>
+
                         <div class="list-group-item">
                             <span>Name: {{ request.user.first_name }} {{request.user.last_name }}</span>
                         </div>
-                       <div class="list-group-item">
+                        <div class="list-group-item">
                            <span>Gender:</span>
                            <label style="width: 60px;margin-left: 10px"><input name="sex" type="radio" value="0" {% if request.user.sex == 0 %} checked {% endif %}/>male </label>
                            <label><input name="sex" type="radio" value="1" {% if request.user.sex == 1 %} checked {% endif %}/>female </label>
-                       </div>
-                       <div class="list-group-item">
+                        </div>
+                        <div class="list-group-item">
                            <span>email:</span>&nbsp&nbsp<input name="email" value="{{ request.user.email |format_none }}">
-                       </div>
+                        </div>
 
                         {% if myself %}
                         <div class="list-group-item" >
@@ -87,9 +103,9 @@
                         {% endif %}
 
                         {% if myself %}
-                       <div class="list-group-item" style="border: none;position: relative;height: 94px;">
+                        <div class="list-group-item" style="border: none;position: relative;height: 94px;">
                            <input style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">
-                       </div>
+                        </div>
                        {% endif %}
 
                     </div>
@@ -105,9 +121,9 @@
                         <input type="file" name="photo" style="display: none;" id="upload-img"/>
 
                        {% if myself %}
-                       <button type="button"  style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none; display:block; margin:0 auto" class="btn btn-info" id="upload-img-btn" >
+                        <button type="button"  style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none; display:block; margin:0 auto" class="btn btn-info" id="upload-img-btn" >
                            Change Picture
-                       </button>
+                        </button>
                        {% endif %}
 
                     </div>
