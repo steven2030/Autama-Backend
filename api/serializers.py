@@ -11,12 +11,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'username', 'password', 'first_name', 'last_name', 'email', 'gender',
                   'image', 'interest1', 'interest2', 'interest3', 'interest4', 'interest5', 'interest6']
 
-        # TODO: Is this a valid concern?
-        # Not passing user ID to prevent return from being modified
-        # TODO: Where to Add Image?
-        # Image would be added under the avatar update, they do not have one at
-        # the time of registration.
-
+    # (Overrides method in ModelSerializer)
     # Override create event to correctly encrypt password.
     def create(self, validated_data):
         user = UserInfo.objects.create_user(
@@ -41,15 +36,12 @@ class AutamaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = AutamaInfo   # added  autamaID & pickle
         fields = ['autamaID', 'creator', 'picture', 'first', 'last', 'num_matches', 'owner', 'pickle',
-                  'interest1', 'interest2', 'interest3', 'interest4', 'interest5', 'interest6']
+                  'interest1', 'interest2', 'interest3']
         # not returning interest4, interest5, interest6 for some personality intrigue/mystery
         # and do we need slug ret here?
 
 
 # return Message object as data
-# TODO: Do we need to separate from individual messages and history?
-# Individual messages will be sent back by a different handler, this
-# should be for returning the whole message history.
 class MessagesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Messages   # added matchID, userID, autamaID

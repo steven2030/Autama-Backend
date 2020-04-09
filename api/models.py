@@ -6,7 +6,7 @@ from django.shortcuts import reverse
 
 
 # user model info
-# TODO: Useful to add num_matches trait? email? password?
+# TODO: Useful to add num_matches trait? (email&password created @ api/serializers.py)
 class UserInfo(AbstractUser):
     gender = models.IntegerField(verbose_name="gender",
                                  choices=((0, 'Rather Not Say'), (1, 'Male'), (2, 'Female'),
@@ -35,7 +35,8 @@ class AutamaInfo(models.Model):
     last = models.CharField(max_length=100)
     num_matches = models.CharField(max_length=100, default='0000000', editable=False)
     # TODO: owner field  might  still need tweaking later
-    owner = models.ForeignKey(get_user_model(),  on_delete=models.PROTECT, default="")
+    owner  = models.ForeignKey(max_length=100, default="UNCLAIMED")
+    #owner = models.ForeignKey(get_user_model(),  on_delete=models.PROTECT, default="")
     pickle = models.CharField(max_length=100, default='PICKLE')  # do we still need this?
     interest1 = models.CharField(max_length=100)
     interest2 = models.CharField(max_length=100)
@@ -78,7 +79,7 @@ class Messages(models.Model):
         (AUTAMA, 'Autama'),
     ]
 
-    matchID = models.ForeignKey('Matches', on_delete=models.CASCADE)
+    matchID = models.ForeignKey('Matches', on_delete=models.CASCADE, default=None)
     userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE)  # del later?
     autamaID = models.ForeignKey('AutamaInfo', on_delete=models.CASCADE)  # del later?
     timeStamp = models.DateTimeField(auto_now_add=True)
