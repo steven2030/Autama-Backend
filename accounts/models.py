@@ -10,8 +10,9 @@ class User(AbstractUser):
     interests3 = models.TextField()
     interests4 = models.TextField()
     interests5 = models.TextField()
+    interests6 = models.TextField()
 
-
+    
 class Messages(models.Model):
     # Constants used for enum in sender
     USER = 'User'
