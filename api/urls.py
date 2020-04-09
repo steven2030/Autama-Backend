@@ -33,5 +33,5 @@ router.register(r'Messages', views.MessagesViewSet)  # Messages between user and
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('login', obtain_auth_token, name='login'),
+    path('login/', obtain_auth_token, name='login'),  # 'login' or 'login/' ? also,  Webapp/login/
 ]
