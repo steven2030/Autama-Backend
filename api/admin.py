@@ -1,7 +1,11 @@
 from django.contrib import admin
-from .models import AutamaProfile, User, Messages
+from .models import Autama, User
+from .models import Matches, Messages
 
 
-admin.site.register(AutamaProfile)
+# Register your models here
+admin.site.register(Autama)
 admin.site.register(User)
+admin.site.register(Matches)
 admin.site.register(Messages)
+

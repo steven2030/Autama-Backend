@@ -1,25 +1,20 @@
-from django.http import HttpResponse
-from accounts.models import User
-from AutamaProfiles.models import AutamaProfile
-import simplejson
-from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
+# TODO: Needs lots of editing to fit with new api -- move to api/views.py and webapp/pages.js
 
-import json
-from django.shortcuts import render,reverse
-from django.contrib.auth.backends import ModelBackend
-from django.contrib.auth import authenticate, login, logout
-from accounts.models import User, Messages
+
+import json, simplejson
+from django.shortcuts import render, reverse, get_object_or_404, redirect
+from api.models import User, Messages, AutamaProfile, Matches
+
 from django import forms
 from django.db.models import Q
-from django.views import View
+# from django.views import View
+from api.views import *
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.contrib.auth.backends import ModelBackend
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
-from AutamaProfiles.models import AutamaProfile
 from django.utils import timezone
-
 
 
 class CustomBackend(ModelBackend):
@@ -67,7 +62,7 @@ class RegisterView(View):
         if user:
             return render(request, 'register.html', {'error': 'email or account already existed'})
 
-        obj = User.objects.create(username=username, first_name=firstname,last_name=lastname, email=email)
+        obj = User.objects.create(username=username, first_name=firstname, last_name=lastname, email=email)
         obj.set_password(password)
         obj.save()
         return HttpResponseRedirect(reverse('login'))
