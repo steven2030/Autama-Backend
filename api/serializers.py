@@ -13,7 +13,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'username', 'password', 'first_name', 'last_name', 'email', 'gender',
                   'interest1', 'interest2', 'interest3', 'interest4', 'interest5']
 
-    # Overide create event to correctly encrypt password.
+    # Override create event to correctly encrypt password.
     def create(self, validated_data):
         user = User.objects.create_user(
             username=validated_data['username'],
