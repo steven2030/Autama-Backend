@@ -24,7 +24,7 @@ SECRET_KEY = '0jx6nply=59sv85ii0*r9abdg$sf+awn1vjwelfzc7pxfaek-3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['34.221.163.101']
 
 
 # Application definition
@@ -125,6 +125,7 @@ USE_TZ = True
 
 # TODO: Check path
 STATIC_URL = '/Webapp/'
+STATIC_ROOT = os.path.join(BASE_DIR, "Webapp/")
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'Images'),
