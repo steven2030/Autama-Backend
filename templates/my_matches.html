@@ -75,23 +75,24 @@
     <br>
 
     <!-- aligning images with text: https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_img_align -->
-    <h1>Messages (3)</h1>
+    <h1>Messages {{ user_conversations.count }}</h1>
 
 
     <br>
     <div class="column">
-        <div class="row">
-            <a href="http://127.0.0.1:8000/Autama/aid=00005/chat" class="image">
-                <div class="circular--landscape">
-                    <img src="https://ae01.alicdn.com/img/pb/448/474/811/811474448_120.jpg" alt="Avatar" align="left"/>
-                </div>
-            </a>
-            <h2>Spongebob: Is this Patrick? Let's go find Squidward!</h2>
-        </div>
+
+        {% for a_profile in user_conversations %}
 
         <div class="row">
-            <!-- anotha one -->
+            <a href="{% url 'Chat' pk=a_profile.pk %}" class="image">
+                <div class="circular--portrait">
+                    <img src="{{ a_profile.picture.url }}" alt="Avatar" align="left"/>
+                </div>
+            </a>
         </div>
+
+        {% endfor %}
+
     </div>
 </div>
 {% endblock %}

@@ -180,7 +180,14 @@ class MyMatches(LoginRequiredMixin, View):
     def get(self, request):
         user = User.objects.get(pk=request.user.id)
         user_matches = Matches.objects.all().filter(userID=user.pk).order_by('timeStamp')
-        context = {'user_matches': user_matches}
+        # Autama the user is talking to.
+
+        #id_list = Log.objects.order_by('-date').values_list('project_id').distinct()[:4]
+        autama_id_list = Messages.objects.all().filter(userID=user.pk).order_by('timeStamp').values_list('autamaID').distinct()
+        #entries = Log.objects.filter(id__in=id_list)
+        user_conversations = AutamaProfile.objects.all().filter(id__in=autama_id_list)
+
+        context = {'user_matches': user_matches, 'user_conversations': user_conversations}
         return render(request, 'my_matches.html', context)
 
 
