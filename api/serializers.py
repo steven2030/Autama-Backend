@@ -41,7 +41,7 @@ class AutamaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = AutamaInfo   # added  autamaID & pickle
         fields = ['autamaID', 'creator', 'picture', 'first', 'last', 'num_matches', 'owner', 'pickle',
-                  'interest1', 'interest2', 'interest3']
+                  'interest1', 'interest2', 'interest3', 'interest4', 'interest5', 'interest6']
         # not returning interest4, interest5, interest6 for some personality intrigue/mystery
         # and do we need slug ret here?
 

@@ -17,7 +17,7 @@ class UserViewSet(viewsets.ModelViewSet):
     # Override get_queryset and filter for only the current user.
     # uses pk, Primary Key from the DG and users id.
     def get_queryset(self):
-        if self.request.user.is_staff:
+        if self.request.user.is_superuser:
             return self.queryset
         if self.action == 'list':
             return self.queryset.filter(pk=self.request.user.pk)

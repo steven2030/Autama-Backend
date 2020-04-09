@@ -29,6 +29,7 @@ class UserInfo(AbstractUser):
 class AutamaInfo(models.Model):
     autamaID = models.CharField(max_length=100, default="0")
     creator = models.CharField(max_length=100, default='Team Autama OGs')
+    # TODO: this is actually uploading images, do we want that?
     picture = models.ImageField(upload_to='Images', blank=True)
     first = models.CharField(max_length=100)
     last = models.CharField(max_length=100)
