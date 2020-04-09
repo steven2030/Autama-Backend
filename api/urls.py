@@ -28,7 +28,7 @@ router.register(r'Matches', views.MatchesViewSet)  # all matches
 router.register(r'Messages', views.MessagesViewSet)  # all messages from user and Autama
 # ^^ can filter things using matchID?
 # for testing
-#router.register(r'AllUser', views.AllUserViewSet)  # all users
+# router.register(r'AllUser', views.AllUserViewSet)  # all users
 #router.register(r'AllAutama', views.AllAutamaViewSet)  # all autama
 
 # Wire up our API using automatic URL routing.

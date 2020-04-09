@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from .serializers import *
 from .models import *
 
@@ -17,14 +17,17 @@ class UserViewSet(viewsets.ModelViewSet):
     # Override get_queryset and filter for only the current user.
     # uses pk Primary Key from the DG and users id.
     def get_queryset(self):
+        if self.request.user.is_staff:
+            return self.queryset
         if self.action == 'list':
             return self.queryset.filter(pk=self.request.user.pk)
         return self.queryset
 
 
 # view all users for testing
+# Handled above in UserViewSet by checking permission level.
 # class AllUserViewSet(viewsets.ModelViewSet):
-#     permission_classes = [IsAuthenticated]
+#     permission_classes = [IsAdminUser]
 #
 #     queryset = User.objects.all().order_by('username')
 #     serializer_class = UserSerializer
