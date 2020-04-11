@@ -1,14 +1,6 @@
 {% extends 'base.html' %}
 
-{% block head %}
-<title>My Matches</title>
-{% endblock %}
-
-{% block content %}
-<div class="container">
-    <br>
-    <h1>Matches {{ user_matches.count }}</h1>
-
+{% block csstyle %}
     <!-- https://stackoverflow.com/questions/16998947/putting-text-and-images-on-same-line-within-a-list-item-html-css -->
     <!-- Turning landscape images into circular squares: https://www.webfx.com/blog/web-design/circular-images-css/ -->
     <!-- Display images side by side (in a row): https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_images_side_by_side -->
@@ -38,7 +30,21 @@
                 clear: both;
                 display: table;
             }
+
+            div.container {
+                margin-top: 50px;
+            }
+
         </style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <title>My Matches</title>
+    <br>
+    <h1>Matches {{ user_matches.count }}</h1>
 
     <div class="row">
         {% for a_profile in user_matches %}
