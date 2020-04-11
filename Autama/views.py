@@ -20,6 +20,7 @@ from django.core.files.base import ContentFile
 from AutamaProfiles.models import AutamaProfile
 from django.utils import timezone
 
+from Nucleus.ham import Ham
 
 
 class CustomBackend(ModelBackend):
@@ -219,11 +220,17 @@ class Chat(LoginRequiredMixin, View):
         user = User.objects.get(pk=request.user.id)
         autama = AutamaProfile.objects.get(pk=pk)  # Check the validity of Autama id.
         form = MessageForm(request.POST)
-        autama_response = "This is a response."
 
         a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[0],
                                             message=form['x'].value())
         a_message.save()
+
+        # The test_name and test_personality are just for testing. They will be replaced.
+        test_name = "Happy Slackers"
+        test_personality = [[249, 921, 4861, 500, 547, 1890, 11737, 481, 4238, 239], [249, 2413, 246, 1875, 1267, 239], [249, 1129, 589, 481, 720, 239], [547, 3633, 1129, 556, 510, 239]]
+
+        ham = Ham(test_name, test_personality)
+        autama_response = ham.converse(user_input=form['x'].value())
 
         a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[1],
                                             message=autama_response)

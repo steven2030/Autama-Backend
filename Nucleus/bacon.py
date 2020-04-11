@@ -5,7 +5,6 @@ This file contains a class to handle generating and saving an Autama's personali
 """
 
 from Nucleus.nucleus import Nucleus
-from Nucleus.tools import write_json
 
 
 class Bacon:
@@ -17,4 +16,4 @@ class Bacon:
         personality = self.__nucleus.generate_personality()
         self.__nucleus.display_personality(personality)
         file = autama_id + self.__extension
-        write_json(file, personality)
+        return personality
