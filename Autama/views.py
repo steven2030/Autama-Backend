@@ -179,16 +179,30 @@ def about(request):
 class MyMatches(LoginRequiredMixin, View):
 
     def get(self, request):
-        user = User.objects.get(pk=request.user.id)
-        user_matches = Matches.objects.all().filter(userID=user.pk).order_by('timeStamp')
-        # Autama the user is talking to.
+        user               = User.objects.get(pk=request.user.id)
+        user_matches       = Matches.objects.all().filter(userID=user.pk).order_by('timeStamp')
+        autama_id_list     = Messages.objects.all().filter(userID=user.pk).order_by('timeStamp').values_list('autamaID').distinct()
+        user_conversations = AutamaProfile.objects.all().filter(id__in=autama_id_list)
+        context            = {'user_matches': user_matches, 'user_conversations': user_conversations}
 
-        #id_list = Log.objects.order_by('-date').values_list('project_id').distinct()[:4]
-        autama_id_list = Messages.objects.all().filter(userID=user.pk).order_by('timeStamp').values_list('autamaID').distinct()
-        #entries = Log.objects.filter(id__in=id_list)
+        return render(request, 'my_matches.html', context)
+
+    def post(self, request):
+        query_string = request.POST.get('search_bar')
+        if not query_string:
+            self.get(request)
+
+        user               = User.objects.get(pk=request.user.id)
+        user_matches       = Matches.objects.all().filter(userID=user.pk).order_by('timeStamp')
+        user_matches       = [a_match for a_match in user_matches if query_string in a_match.autamaID.first + " " + a_match.autamaID.last]
+
+        autama_id_list     = Messages.objects.all().filter(userID=user.pk).order_by('timeStamp')
+        autama_id_list     = [an_id.autamaID.pk for an_id in autama_id_list if query_string in an_id.message or query_string in an_id.autamaID.first + " " + an_id.autamaID.last]
+        autama_id_list     = list(set(autama_id_list))
         user_conversations = AutamaProfile.objects.all().filter(id__in=autama_id_list)
 
-        context = {'user_matches': user_matches, 'user_conversations': user_conversations}
+        context            = {'user_matches': user_matches, 'user_conversations': user_conversations}
+
         return render(request, 'my_matches.html', context)
 
 
