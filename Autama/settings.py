@@ -78,7 +78,11 @@ TEMPLATES = [
     },
 ]
 
+# WSGI - web server gateway interface - only serves static pages
 WSGI_APPLICATION = 'Autama.wsgi.application'
+
+# ASGI - Asynchronous Server Gateway Interface
+# ASGI_APPLICATION = 'Autama.asgi.application'
 
 
 # Database
