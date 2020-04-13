@@ -23,7 +23,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('api.urls')),
+    path('api/', include('api.urls')),
     # path('', AllUserViewSet.as_view(), name='all_users'),  # ? nope
     # error msg: The `actions` argument must be provided when calling `.as_view()` on a ViewSet.
     # For example `.as_view({'get': 'list'})`
