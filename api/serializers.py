@@ -30,6 +30,22 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         )
         return user
 
+    def update(self, instance, validated_data):
+        instance.username = validated_data['username']
+        instance.email = validated_data['email']
+        instance.first_name = validated_data['first_name']
+        instance.last_name = validated_data['last_name']
+        instance.gender = validated_data['gender']
+        instance.interest1 = validated_data['interest1']
+        instance.interest2 = validated_data['interest2']
+        instance.interest3 = validated_data['interest3']
+        instance.interest4 = validated_data['interest4']
+        instance.interest5 = validated_data['interest5']
+        instance.interest6 = validated_data['interest6']
+        instance.set_password(validated_data['password'])
+        instance.save()
+        return instance
+
 
 # return Autama object as data(json)
 class AutamaSerializer(serializers.HyperlinkedModelSerializer):

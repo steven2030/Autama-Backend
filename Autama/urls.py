@@ -18,26 +18,21 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
-# from api.views import AllUserViewSet  # ?
-
+# need these for += urlpatterns below
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns  #
+from django.conf import settings  #
+from django.conf.urls.static import static   #
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
-    # path('', AllUserViewSet.as_view(), name='all_users'),  # ? nope
-    # error msg: The `actions` argument must be provided when calling `.as_view()` on a ViewSet.
-    # For example `.as_view({'get': 'list'})`
+    path('admin/', admin.site.urls, name='admin'),
+    path('api/', include('api.urls'), name='api'),
 ]
 
 
+
 # OLD STUFF
-# from django.contrib import admin
-# from django.urls import path, include
 # from . import views as main_page_views  # from directory: Autama import view (the views.py file in this directory)
-# from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-# from django.conf.urls.static import static
-# from django.conf import settings
-# from django.conf.urls import url
+# from django.conf.urls import url  #
 # from django.contrib.auth import views as auth_views
 #
 #
@@ -58,6 +53,3 @@ urlpatterns = [
 #     path('AutamaProfiles/', include('AutamaProfiles.urls')),
 # ]
 #
-# TODO: Is This Important?
-# urlpatterns += staticfiles_urlpatterns()
-# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -24,7 +24,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return self.queryset
 
 
-# Accepts paramter on get request and returns autama profile with matching primary key.
+# Accepts parameter on get request and returns autama profile with matching primary key.
 # If user is a super user returns a list of all autama.
 # example: ../Autama?aid=1 would return autama profile #1.
 class AutamaViewSet(viewsets.ModelViewSet):
@@ -42,6 +42,7 @@ class AutamaViewSet(viewsets.ModelViewSet):
             return self.queryset.filter(pk=a_id)
 
 
+# view all matches
 class MatchesViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 

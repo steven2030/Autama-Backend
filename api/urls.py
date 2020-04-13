@@ -28,10 +28,11 @@ router.register(r'Matches', views.MatchesViewSet)  # Matches
 router.register(r'Messages', views.MessagesViewSet)  # Messages between user and Autama
 # TODO: filter things using matchID, from the Matches model ^^
 
+
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('login', obtain_auth_token, name='login'),
+    path('login/', obtain_auth_token, name='login'),  # 'login' or 'login/' ? also,  Webapp/login/
 ]
