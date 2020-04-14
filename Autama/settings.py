@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Autama',
-    'api',  # 'api.apps.ApiConfig',
+    'api',
     'rest_framework',
     'rest_framework.authtoken',
-    ##'corsheaders'   # #
+    'corsheaders'
 ]
 
 
@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    ##'corsheaders.middleware.CorsMiddleware'  # #
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'Autama.urls'
@@ -165,6 +165,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-##CORS_ORIGIN_ALLOW_ALL = True  # #
+CORS_ORIGIN_ALLOW_ALL = True
 
 

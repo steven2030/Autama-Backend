@@ -1,11 +1,47 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-{% block head %}
-    <title>Find Matches</title>
-{% endblock %}
+</head>
+<body>
+    <div id="nav-placeholder"></div>
 
-{% block content %}
-    <div style="margin-top: 50px;" class="container">
-        <h1>Find Matches!</h1>
+    <div class="container">
+        <div id="photo">
+        </div>
     </div>
-{% endblock %}
+
+    <template>
+        <sectino class="container">
+            <div class="fixed-center">
+                <Vue2InteractDraggable
+                    :interact-out-of-sight-x-coordinate="500"
+                    :interact-max-rotation="15"
+                    :interact-x-threshold="200"
+                    :interact-y-threshold="200"
+                    class="rounded-borders shadow-10 card">
+                    <div class="card__main">
+                    </div>
+                </Vue2InteractDraggable>
+            </div>
+        </sectino>
+    </template>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+
+    <!--load the navbar-->
+    <script>
+        $(function(){$("#nav-placeholder").load("nav.html");
+        });
+
+        $.ajax({
+            'type': 'GET',
+            'url': 'http://127.0.0.1:8000/api/Autama?aid=1',
+            'success': function(data) {
+                console.log(data)
+            }
+
+        });
+    </script>
+</body>
+</html>
