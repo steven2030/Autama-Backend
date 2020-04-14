@@ -29,11 +29,6 @@ router.register(r'Messages', views.MessagesViewSet)  # Messages between user and
 # TODO: filter things using matchID, from the Matches model ^^
 
 
-# added for testing
-router.register('AllUsers', views.AllUsersViewSet)  # All User info
-router.register('AllAutamas', views.AllAutamasViewSet)  # All Autama info
-
-
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
