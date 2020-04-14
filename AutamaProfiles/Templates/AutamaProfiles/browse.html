@@ -1,15 +1,45 @@
 {% extends 'base.html' %}
 
+{% block csstyle %}
+    <style>
+    .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+    h1 {
+        background: linear-gradient(to right bottom, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    span{
+        margin-left: 70px;
+        font-family: "Open Sans", "Helvetica", sans-serif;
+        font-weight: bold;
+        font-size: xx-large;
+        background: linear-gradient(to right, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+    </style>
+
+{% endblock %}
 
 {% block content %}
-<body>
+<body style=" margin-left: 27px; margin-top: 70px;">
     <h1>Meet the Autamas</h1>
-    <div class="profiles">
+    <div class="profiles, container">
         {% for profile in profiles %}
 
-            <div class="profiles">
-                <h2> <a href="{% url 'AutamaProfiles:profile' pk=profile.pk slug=profile.get_slug %}"> {{ profile.first }} {{profile.last}} </a> </h2>
-                <img src="{{ profile.picture.url }}" width="276" height="210">
+            <div class="profiles" style="padding: 10px; margin: 1px">
+                <a href="{% url 'AutamaProfiles:profile' pk=profile.pk slug=profile.get_slug %}">
+                    <img class="img-responsive" src="{{ profile.picture.url }}" width="276" height="210">
+                </a>
+                <span> {{ profile.pk }} {{ profile.first }} {{profile.last}} </span>
             </div>
 
         {% endfor %}
