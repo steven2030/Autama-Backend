@@ -10,7 +10,7 @@ import json
 from django.shortcuts import render,reverse
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import authenticate, login, logout
-from accounts.models import User, Messages, Matches
+from accounts.models import User, Messages, Matches, Claims
 from django import forms
 from django.db.models import Q
 from django.views import View
@@ -21,6 +21,25 @@ from AutamaProfiles.models import AutamaProfile
 from django.utils import timezone
 
 from Nucleus.ham import Ham
+
+
+def claim_autama(user_pk, autama_pk):
+    autama = AutamaProfile.objects.get(pk=autama_pk) # Validation needed here
+    user = User.objects.get(pk=user_pk)
+    ret = True
+
+    if Claims.objects.filter(autamaID=autama).exists():
+        ret = False
+
+    else:
+        # you can claim this, so claim it
+        new_claim = Claims(autamaID=autama, userID=user)
+        new_claim.save()
+
+    return ret
+
+
+#def unclaim_autama(user_pk, autama_pk):
 
 
 class CustomBackend(ModelBackend):

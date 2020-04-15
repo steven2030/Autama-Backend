@@ -12,6 +12,12 @@ class User(AbstractUser):
     interests5 = models.TextField()
     interests6 = models.TextField()
 
+
+class Claims(models.Model):
+    autamaID = models.OneToOneField('AutamaProfiles.AutamaProfile', on_delete=models.CASCADE)
+    userID = models.ForeignKey('User', on_delete=models.CASCADE)
+    timeStamp = models.DateTimeField(auto_now_add=True)
+
     
 class Messages(models.Model):
     # Constants used for enum in sender
