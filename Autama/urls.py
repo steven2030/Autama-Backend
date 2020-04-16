@@ -38,6 +38,8 @@ urlpatterns = [
     path('Chat/<int:pk>/', main_page_views.Chat.as_view(), name="Chat"),
     path('logout/', main_page_views.LogoutView.as_view(), name="logout"),
     path('AutamaProfiles/', include('AutamaProfiles.urls')),
+    path('MyClaims/', main_page_views.MyClaims.as_view(), name="MyClaims"),
+    path('MyClaims/<int:pk>/', main_page_views.MyClaims.as_view(), name="unclaim"),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

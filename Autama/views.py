@@ -39,7 +39,20 @@ def claim_autama(user_pk, autama_pk):
     return ret
 
 
-#def unclaim_autama(user_pk, autama_pk):
+def unclaim_autama(user_pk, autama_pk):
+    autama = AutamaProfile.objects.get(pk=autama_pk) # Validation needed here
+    user = User.objects.get(pk=user_pk)
+    ret = True
+
+    if Claims.objects.filter(userID=user).filter(autamaID=autama).exists():
+        # remove claim
+        Claims.objects.filter(autamaID=autama).delete()
+
+    else:
+        # there is nothing to unclaim.
+        ret = False
+
+    return ret
 
 
 class CustomBackend(ModelBackend):
@@ -193,6 +206,20 @@ class FindMatches(LoginRequiredMixin, View):
 def about(request):
     # return HttpResponse('about')
     return render(request, 'about.html')
+
+
+class MyClaims(LoginRequiredMixin, View):
+
+    def get(self, request):
+        user = User.objects.get(pk=request.user.id)
+        claims = Claims.objects.filter(userID=user).order_by('timeStamp')
+        context = {'claims': claims}
+        return render(request, 'my_claims.html', context)
+
+    def post(self, request, pk):
+        unclaim_autama(request.user.id, pk)
+        return redirect('MyClaims')
+        #return HttpResponse('Hello!')
 
 
 class MyMatches(LoginRequiredMixin, View):
