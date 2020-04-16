@@ -55,6 +55,36 @@ def unclaim_autama(user_pk, autama_pk):
     return ret
 
 
+def match(user_pk, autama_pk):
+    autama = AutamaProfile.objects.get(pk=autama_pk)
+    user = User.objects.get(pk=user_pk)
+    ret = True
+
+    if Matches.objects.filter(userID=user).filter(autamaID=autama).exists():
+        ret = False
+
+    else:
+        new_match = Matches(userID=user, autamaID=autama)
+        new_match.save()
+
+    return ret
+
+
+def unmatch(user_pk, autama_pk):
+    user = User.objects.get(pk=user_pk)
+    autama = AutamaProfile.objects.get(pk=autama_pk)
+    ret = True
+
+    if Matches.objects.filter(userID=user).filter(autamaID=autama).exists():
+        # unmatch
+        Matches.objects.filter(userID=user).filter(autamaID=autama).delete()
+
+    else:
+        ret = False
+
+    return ret
+
+
 class CustomBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         try:
