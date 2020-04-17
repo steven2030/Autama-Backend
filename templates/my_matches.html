@@ -39,6 +39,18 @@
                 margin-top: 20px;
             }
 
+           #searchInput {
+               background-image: url('/css/searchicon.png');
+               background-position: 10px 12px;
+               background-repeat: no-repeat;
+               width: 100%;
+               font-size: 16px;
+               padding: 12px 20px 12px 40px;
+               border: 1px solid #ddd;
+               margin-top: 24px;
+               margin-bottom: 12px;
+           }
+
         </style>
 {% endblock %}
 
@@ -48,16 +60,8 @@
 
 <div class="container">
 
-    <div class="search--bar">
-        <form class="form-inline" action="{% url 'MyMatches' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="search_bar">Search:</label>
-                <input type="text"  id="search_bar" name="search_bar">
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-    </div>
+    <!-- From https://www.w3schools.com/howto/howto_js_filter_lists.asp -->
+    <input type="text" id="searchInput" onkeyup="dynamicSearch()" placeholder="Search for matches..." title="Type in a name">
 
     <title>My Matches</title>
     <br>
@@ -78,6 +82,25 @@
         {% endfor %}
 
     </div>
+
+    <!-- From https://www.w3schools.com/howto/howto_js_filter_lists.asp -->
+    <script>
+        function dynamicSearch() {
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("myUL");
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 
     <br>
     <br>
