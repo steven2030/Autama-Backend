@@ -246,9 +246,9 @@ class MyClaims(LoginRequiredMixin, View):
         context = {'claims': claims}
         return render(request, 'my_claims.html', context)
 
-    def post(self, request, pk):
+    def post(self, request, pk, redirect_page):
         unclaim_autama(request.user.id, pk)
-        return redirect('MyClaims')
+        return redirect(redirect_page)
         #return HttpResponse('Hello!')
 
 
