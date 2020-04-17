@@ -14,14 +14,17 @@ Add description here.
 
 ### To Run:
   * pip install -r requirements.txt
-  * python build.py
+  * If this is the first run, create a DB and a Nucleus
   * python manage.py runserver
   * in a web browser go to: 127.0.0.1:8000 (This should be displayed during server startup)
 
-### To Recreate the DB: 
+### To Create the DB: 
   * Python manage.py makemigrations accounts
   * Python manage.py makemigrations AutamaProfiles
   * Python manage.py migrate
+
+### To Create a Nucleus: 
+  * python build.py
 
 
 ## Bugs, Defects, Failing Tests, etc
