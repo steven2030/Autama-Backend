@@ -40,6 +40,7 @@ urlpatterns = [
     path('AutamaProfiles/', include('AutamaProfiles.urls')),
     path('MyClaims/', main_page_views.MyClaims.as_view(), name="MyClaims"),
     path('MyClaims/<int:pk>/', main_page_views.MyClaims.as_view(), name="unclaim"),
+    path('unclaim_from_chat/<int:pk>/', main_page_views.unclaim_from_chat, name="unclaim_from_chat"),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

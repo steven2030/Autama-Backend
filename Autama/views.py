@@ -238,6 +238,11 @@ def about(request):
     return render(request, 'about.html')
 
 
+def unclaim_from_chat(request, pk):
+    unclaim_autama(request.user.id, pk)
+    return redirect('Chat', pk=pk)
+
+
 class MyClaims(LoginRequiredMixin, View):
 
     def get(self, request):
@@ -246,9 +251,9 @@ class MyClaims(LoginRequiredMixin, View):
         context = {'claims': claims}
         return render(request, 'my_claims.html', context)
 
-    def post(self, request, pk, redirect_page):
+    def post(self, request, pk):
         unclaim_autama(request.user.id, pk)
-        return redirect(redirect_page)
+        return redirect('MyClaims')
         #return HttpResponse('Hello!')
 
 
