@@ -259,9 +259,23 @@ class MyClaims(LoginRequiredMixin, View):
 
 class MyMatches(LoginRequiredMixin, View):
 
+    def get_matches(self, user, query_string=None):
+        have_chatted = Messages.objects.filter(userID=user).values_list('autamaID', flat=True)
+        not_chatted = Matches.objects.filter(userID=user.pk).exclude(autamaID__in=have_chatted)
+        have_chatted = Matches.objects.filter(userID=user.pk).filter(autamaID__in=have_chatted)  # In case we want to display matches have chatted with
+        #user_matches = Matches.objects.all().filter(userID=user.pk).order_by('timeStamp')  # gets all matches
+        user_matches = not_chatted
+
+        if query_string:
+            user_matches = [a_match for a_match in not_chatted if
+                            query_string in a_match.autamaID.first + " " + a_match.autamaID.last]
+
+        return user_matches
+
+
     def get(self, request):
         user               = User.objects.get(pk=request.user.id)
-        user_matches       = Matches.objects.all().filter(userID=user.pk).order_by('timeStamp')
+        user_matches       = self.get_matches(user=user)
         autama_id_list     = Messages.objects.all().filter(userID=user.pk).order_by('timeStamp').values_list('autamaID').distinct()
         user_conversations = AutamaProfile.objects.all().filter(id__in=autama_id_list)
         context            = {'user_matches': user_matches, 'user_conversations': user_conversations}
@@ -274,8 +288,7 @@ class MyMatches(LoginRequiredMixin, View):
             self.get(request)
 
         user               = User.objects.get(pk=request.user.id)
-        user_matches       = Matches.objects.all().filter(userID=user.pk).order_by('timeStamp')
-        user_matches       = [a_match for a_match in user_matches if query_string in a_match.autamaID.first + " " + a_match.autamaID.last]
+        user_matches       = self.get_matches(user, query_string)
 
         autama_id_list     = Messages.objects.all().filter(userID=user.pk).order_by('timeStamp')
         autama_id_list     = [an_id.autamaID.pk for an_id in autama_id_list if query_string in an_id.message or query_string in an_id.autamaID.first + " " + an_id.autamaID.last]
