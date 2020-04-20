@@ -4,7 +4,6 @@ from django.shortcuts import reverse
 
 
 class AutamaProfile(models.Model):
-    autamaid = models.CharField(max_length=100, default="0")
     creator = models.CharField(max_length=100)
     picture = models.ImageField(upload_to='Images', blank=False)
     first = models.CharField(max_length=100)

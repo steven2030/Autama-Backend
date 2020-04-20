@@ -5,7 +5,31 @@
 {% endblock %}
 
 {% block content %}
-    <div style="margin-top: 50px;" class="container">
-        <h1>Find Matches!</h1>
+    <div id="board">
+        <div class="card"></div>
     </div>
+    <style>
+        html, body {
+            height: 100%;
+            min-height: 100%;
+        }
+        #board {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            overflow: hidden;
+            /* Just for testing */
+            background-color: lightslategrey;
+        }
+        .card {
+            margin: auto;
+            margin-top: 100px;
+            position: relative;
+            height: 320px;
+            width: 320px;
+            border-radius: 1%;
+            box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+    </style>
 {% endblock %}

@@ -19,7 +19,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from AutamaProfiles.models import AutamaProfile
 from django.utils import timezone
-
 from Nucleus.ham import Ham
 
 
@@ -229,7 +228,14 @@ class FindMatches(LoginRequiredMixin, View):
     #     }
     #     return JsonResponse(data)
     def get(self, request):
-        return render(request, 'find_matches.html')
+        a_id = request.GET.get('AID')
+
+        # Returns the base HTML.
+        if a_id is None:
+            return render(request, 'find_matches.html')
+
+        # Returns JSON with Autama Profile data
+        return HttpResponse(a_id)
 
 
 # TODO: Do we want this as part of login? Fix to view if keeping.
@@ -345,5 +351,8 @@ class Chat(LoginRequiredMixin, View):
         a_message.save()
 
         return redirect('Chat', pk=pk)
+
+
+
 
 
