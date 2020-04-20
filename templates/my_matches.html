@@ -69,34 +69,33 @@
 
     <div class="row">
         {% for a_profile in user_matches %}
-        <div class="column">
-            <a href="{% url 'Chat' pk=a_profile.autamaID.pk %}" class="image">
-                <div class="circular--portrait">
-                    <img src="{{ a_profile.autamaID.picture.url }}" alt="Avatar"/>
+            <div class="column userLink">
+                <a href="{% url 'Chat' pk=a_profile.autamaID.pk %}" class="image">
+                    <div class="circular--portrait">
+                        <img src="{{ a_profile.autamaID.picture.url }}" alt="Avatar"/>
+                    </div>
+                </a>
+                <div class="content">
+                    <h3 class="profilename">{{a_profile.autamaID.first}} {{a_profile.autamaID.last}}</h3>
                 </div>
-            </a>
-            <div class="content">
-                <h3>{{a_profile.autamaID.first}} {{a_profile.autamaID.last}}</h3>
             </div>
-        </div>
         {% endfor %}
-
     </div>
 
-    <!-- From https://www.w3schools.com/howto/howto_js_filter_lists.asp -->
     <script>
         function dynamicSearch() {
-            var input, filter, ul, li, a, i, txtValue;
-            input = document.getElementById("searchInput");
-            filter = input.value.toUpperCase();
-            ul = document.getElementById("myUL");
-            for (i = 0; i < li.length; i++) {
-                a = li[i].getElementsByTagName("a")[0];
-                txtValue = a.textContent || a.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    li[i].style.display = "";
+            matches = document.getElementsByClassName("userLink");
+            var input, filter;
+            input = document.getElementById('searchInput');
+            filter = input.value.toLowerCase();
+
+            for (const element of matches) {
+                t = element.getElementsByClassName("profilename")[0].innerText;
+
+                if (t.toLowerCase().indexOf(filter) == -1) {
+                    element.style.display = 'none';
                 } else {
-                    li[i].style.display = "none";
+                    element.style.display = 'inline-block';
                 }
             }
         }
