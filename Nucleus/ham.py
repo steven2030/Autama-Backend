@@ -22,7 +22,7 @@ class Ham:
         # Autama's identifiers
         self.__name = name
         self.__personality = personality
-        self.__identity = personality
+        self.__identity = self.__tokenize_and_encode(personality)
         self.__history = []
 
     # A method that returns Autama's output by taking in user's input

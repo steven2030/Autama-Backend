@@ -341,9 +341,15 @@ class Chat(LoginRequiredMixin, View):
 
         # The test_name and test_personality are just for testing. They will be replaced.
         test_name = "Happy Slackers"
-        test_personality = [[249, 921, 4861, 500, 547, 1890, 11737, 481, 4238, 239], [249, 2413, 246, 1875, 1267, 239], [249, 1129, 589, 481, 720, 239], [547, 3633, 1129, 556, 510, 239]]
+        trait1 = autama.interest1
+        trait2 = autama.interest2
+        trait3 = autama.interest3
+        trait4 = autama.interest4
+        trait5 = autama.interest5
+        trait6 = autama.interest6
+        personality = [trait1, trait2, trait3, trait4, trait5, trait6]
 
-        ham = Ham(test_name, test_personality)
+        ham = Ham(test_name, personality)
         autama_response = ham.converse(user_input=form['x'].value())
 
         a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[1],
