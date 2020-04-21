@@ -42,19 +42,99 @@
         margin-top: 30px;
     }
 
+    #bo{
+       margin-top: 45%;
+    }
+
+    #upload-img-btn
+             {
+                background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none; display:block; margin:0 auto
+             }
+     @media only screen and (max-width: 766px) {
+
+
+         #a1 {
+             position: absolute;
+             top: 150px;
+             height: 300px;
+             width: 100%;
+         }
+
+         #bo {
+             margin-top: 320px;
+             display: none;
+         }
+
+         div.profile {
+             height: 300px;
+             margin: 0px;
+             box-shadow: none;
+             display: block;
+             margin: auto;
+             width: 60%;
+             border-radius: 0;
+             border: none;
+             text-align: center;
+         }
+
+         div.profile > img {
+             height: 200px;
+             width: 200px;
+             border-radius: 100px;
+             display: block;
+             margin: auto;
+
+         }
+
+         div.profile > span {
+             margin-top: 10px;
+             display: inline-block;
+         }
+
+         div.profile > div {
+             margin-top: 10px;
+         }
+
+         #upload-img-btn {
+             display: inline;
+         }
+
+         div.profile > div > button:nth-child(4) {
+             float: right;
+             height: 34px;
+             background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%);
+             border-style: none;
+             display: block;
+             margin: 0 auto;
+             color: white;
+         }
+
+         div.profile > div > button:nth-child(2) {
+             float: right;
+             height: 34px;
+             background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%);
+             border-style: none;
+             display: block;
+             margin: 0 auto;
+             color: white;
+         }
+     }
+
+
+
     </style>
 
 {%  endblock %}
 {% block content %}
 
     <div class="container" style="margin-top: 50px; margin-left: 2px">
-        <div class="row">
+        <div class="row" id="parant">
             <div class="col-sm-4">
                 <div class="list-group side-bar" >
-                    <div class="h3" style="height:45px; border-radius: 3px; background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); text-align: center; vertical-align: center">
+                    <div class="h3" style="height:45px; border-radius: 3px; background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); text-align: center; vertical-align: center" id="profile">
                         My Profile
                     </div>
-                    <div style="margin-top: 45%">
+                    <div id="bo">
                         <p>ACCOUNT SETTINGS</p>
                         <div class="list-group-item" style="border-top: 1px solid #C0C0C0;">
                            <span>User ID:</span>&nbsp&nbsp&nbsp<span>u{{ user.id }}</span>
@@ -103,7 +183,15 @@
                         {% endif %}
 
                         {% if myself %}
-                        <div class="list-group-item" style="border: none;position: relative;height: 94px;">
+                        <div class="" style="margin-bottom: 50px; margin-left: 15px">
+                            <button type="button"  style=" float:left; background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none; " class="btn btn-info" id="upload-img-btn" >
+                                Change Picture
+                            </button>
+                        </div>
+                       {% endif %}
+
+                        {% if myself %}
+                        <div class="list-group-item" style="border: none;position: relative;height: 94px; border-top: 1px solid #C0C0C0;">
                            <input style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">
                         </div>
                        {% endif %}
@@ -112,20 +200,16 @@
                 </div>
             </div>
             <div class="centerdiv"></div>
-            <div class="col-sm-8 ">
+            <div class="col-sm-8 " id="a1">
                 <div class="profile ">
 
                     <img {% if request.user.image %}src="{{ request.user.image.url }}" {% endif %} id="avatar">
                     <span style="font-weight: bold; font-size: x-large;">{{ request.user.first_name }}</span>
                     <div>
                         <input type="file" name="photo" style="display: none;" id="upload-img"/>
+                        <button style="float: left; margin-left: 25px; background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" class="btn btn-info" id="b2">Setting</button>
 
-                       {% if myself %}
-                        <button type="button"  style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none; display:block; margin:0 auto" class="btn btn-info" id="upload-img-btn" >
-                           Change Picture
-                        </button>
-                       {% endif %}
-
+                        <button style="float: right; margin-right: 25px; background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" class="btn btn-info" id="claim_1">my claim</button>
                     </div>
 
                 </div>
@@ -159,6 +243,31 @@
           });
 
     }
+
+
+    function Show_Hidden(obj)
+    {
+        if(obj.style.display=="block")
+    {
+        obj.style.display='none';
+    }
+    else
+    {
+        obj.style.display='block';
+    }
+    }
+
+    window.onload=function()
+    {
+        var olink=document.getElementById("b2");
+        var odiv=document.getElementById("bo");
+        olink.onclick=function()
+        {
+            Show_Hidden(odiv);
+            return false;
+        }
+    }
+
 
     function fileLoad(ele){
         var formData = new FormData();

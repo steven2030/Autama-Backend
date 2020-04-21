@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 from AutamaProfiles.models import AutamaProfile
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+import json
 
 
 class AutamaForm(ModelForm):
@@ -32,6 +34,15 @@ def profile(request, pk, slug):
 def browse(request):
     profiles = AutamaProfile.objects.all()
     return render(request, 'AutamaProfiles/browse.html', {'profiles': profiles})
+
+def claim(request):
+    a = request.POST.get("autama_id")
+    profile = AutamaProfile.objects.get(pk=a)
+    #profile.nummatches += 1
+    profile.save()
+    data = {'creator': profile.creator,
+            'match_num': profile.nummatches}
+    return HttpResponse(content=json.dumps(data),content_type='json/application')
 
 def testfunc():
     return None
