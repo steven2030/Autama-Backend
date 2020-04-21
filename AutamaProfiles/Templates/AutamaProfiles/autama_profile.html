@@ -70,20 +70,71 @@
                 Autama ID: {{ profile.autamaid }}
             </div>
             <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
-                Interests: {{ profile.interest1 }}, {{ profile.interest2 }}, {{ profile.interest3 }},
-                            , {{ profile.interest4 }}, {{ profile.interest5 }}, {{ profile.interest6 }}
+                Interests: {{ profile.interest1 }}, {{ profile.interest2 }}, {{ profile.interest3 }}
             </div>
             <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
                 Owner: {{ profile.owner }}
             </div>
-            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
-                Creator: {{ profile.creator }}
-            </div>
+
             <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
                 Pickle: {{ profile.pickle }}
             </div>
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px" id="creator">
+                Creator: {{ profile.creator }}
+            </div>
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px" id="match_number">
+                Match number: {{ profile.nummatches }}
+            </div>
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
+                <button class="btn btn-default btn-lg" style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%);" onclick="match_robot()">Claim</button>
+                <button class="btn btn-default btn-lg" style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%);" onclick="share_robot()">Share</button>
+            </div>
+
 
         </div>
 
     </div>
+
+{% endblock %}
+
+{% block js %}
+    <script type="application/javascript">
+     $("#creator").hide();
+     $("#match_number").hide();
+    function copyText(text) {
+        var textarea = document.createElement("input");
+        var currentFocus = document.activeElement;
+        document.body.appendChild(textarea);
+        textarea.value = text;
+        textarea.focus();
+        if(textarea.setSelectionRange)
+            textarea.setSelectionRange(0, textarea.value.length);
+        else
+            textarea.select();
+        try {
+            var flag = document.execCommand("copy");
+        } catch(eo) {
+            var flag = false;
+        }
+        document.body.removeChild(textarea);
+        currentFocus.focus();
+        return flag;
+    }
+
+    function match_robot() {
+        $.post("/AutamaProfiles/claim/", {'autama_id': {{profile.autamaid}},"csrfmiddlewaretoken": "{{ csrf_token }}"},function(result){
+            $("#creator").html("creator:"+ result['creator']);
+            $("#creator").show();
+            $("#match_number").html("match_number:"+result['match_num']);
+            $("#match_number").show();
+
+          });
+    }
+    function share_robot() {
+
+        var s = "http://127.0.0.1:8000/AutamaProfiles/{{ profile.autamaid }}-{{ profile.first }}-{{ profile.last }}/";
+        copyText(s);
+        alert("Copy successful！");
+    }
+    </script>
 {% endblock %}
