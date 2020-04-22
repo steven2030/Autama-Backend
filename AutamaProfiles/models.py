@@ -18,6 +18,7 @@ class AutamaProfile(models.Model):
     interest5 = models.CharField(max_length=100)
     interest6 = models.CharField(max_length=100)
     slug = models.SlugField(max_length=250, null=True, blank=True, default='')
+    report_count = models.IntegerField(default=0)
 
     def __str__(self):
         return '{pk} {first} {last}'.format(pk=self.pk, first=self.first, last=self.last)
