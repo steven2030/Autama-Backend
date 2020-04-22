@@ -31,6 +31,8 @@ Add description here.
 
 Bugs, Defects, and Failing Test information goes here as needed.
 
+  * If you get a transformers.activations error while talking with an Autama, just recreate a nucleus
+
 
 ## License
 
