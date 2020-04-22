@@ -48,7 +48,7 @@ class Bacon:
     # A method that takes an existing personality and fills it up until it has the required amount of traits
     def __fill_up(self, personality: list):
         required = self.__required_amount
-        copy_personality = personality
+        copy_personality = personality[:]
         amount = len(copy_personality)
 
         # Loop until personality has the required amount or more
