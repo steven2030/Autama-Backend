@@ -3,8 +3,7 @@ This file contains useful functions to cut down copying and pasting similar code
 """
 
 import pickle
-
-from Nucleus.nucleus import Nucleus
+import json
 
 
 # A function to write an object as a pickle file
@@ -22,17 +21,16 @@ def read_pickle(file_name):
     return item
 
 
-# A function to generate a nucleus.pickle file
-def build_nucleus():
-    pickle_file = "nucleus.pickle"
-    py_file = "build.py"
-    directory = "Autama-Backend"
+# A function to write an object as a json file
+def write_json(file_name: str, item):
+    json_out = open(file_name, "w")
+    json.dump(item, json_out)
+    json_out.close()
 
-    nucleus = Nucleus()
-    write_pickle(pickle_file, nucleus)
 
-    sentence1 = 'A file called "' + pickle_file + '" should have been generated. '
-    sentence2 = 'Make sure it is in the same directory "' + py_file + '" is in. '
-    sentence3 = 'Both "' + pickle_file + '" and "' + py_file + '" should be in the "' + directory + '" directory. '
-    sentence4 = "Give it a few seconds if you don't see it right away."
-    print(sentence1 + sentence2 + sentence3 + sentence4)
+# A function to read in a json file
+def read_json(file_name: str):
+    json_in = open(file_name, "r")
+    item = json.load(json_in)
+    json_in.close()
+    return item
