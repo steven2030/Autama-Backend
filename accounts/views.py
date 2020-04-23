@@ -56,12 +56,12 @@ class RegisterView(View):
         obj.interests6 = interests6
         obj.save()
 
-        """When a new user is created, new Autama profiles will be created too."""
-        bacon = Bacon()
+        """When a new user is created, two new Autama profiles based off the new user will be created too."""
+        bacon = Bacon() # For handling personality generating
 
         # A method to create a new Autama by taking in its personality
         def create_new_autama(personality: list):
-            pancake = Pancake()
+            pancake = Pancake() # For handling name generating
             REQUIRED = 6 # The required amount of traits
             amount = len(personality)
 
