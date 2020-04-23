@@ -12,6 +12,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from .models import User
+from AutamaProfiles.models import AutamaProfile
+from Nucleus.bacon import Bacon
+from Nucleus.pancake import Pancake
 
 
 class RegisterView(View):
@@ -52,6 +55,27 @@ class RegisterView(View):
         obj.interests5 = interests5
         obj.interests6 = interests6
         obj.save()
+
+        # Creating a hybrid freak Autama
+        bacon = Bacon()
+        pancake = Pancake()
+        user_personality = [interests1, interests2, interests3, interests4, interests5, interests6]
+        hybrid_personality = bacon.make_hybrid_freak(user_personality)
+
+        creator = "Happy Slackers"
+        picture = "Images/a0.png"
+        first = pancake.generate_male_name()
+        last = "last name"
+        interest1 = hybrid_personality[0]
+        interest2 = hybrid_personality[1]
+        interest3 = hybrid_personality[2]
+        interest4 = hybrid_personality[3]
+        interest5 = hybrid_personality[4]
+        interest6 = hybrid_personality[5]
+
+        hybrid_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last, interest1=interest1, interest2=interest2, interest3=interest3, interest4=interest4, interest5=interest5, interest6=interest6)
+        hybrid_autama.save()
+
         return HttpResponseRedirect(reverse('login'))
 
 
