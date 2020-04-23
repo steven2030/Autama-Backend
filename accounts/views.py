@@ -56,25 +56,40 @@ class RegisterView(View):
         obj.interests6 = interests6
         obj.save()
 
-        # Creating a hybrid freak Autama
+        """When a new user is created, new Autama profiles will be created too."""
         bacon = Bacon()
-        pancake = Pancake()
+
+        # A method to create a new Autama by taking in its personality
+        def create_new_autama(personality: list):
+            pancake = Pancake()
+            REQUIRED = 6 # The required amount of traits
+            amount = len(personality)
+
+            # Make sure personality has the required amount of traits
+            if amount == REQUIRED:
+                creator = "Happy Slackers"
+                picture = "Images/a0.png"
+                first = pancake.generate_male_name()
+                last = "last name"
+                interest1 = personality[0]
+                interest2 = personality[1]
+                interest3 = personality[2]
+                interest4 = personality[3]
+                interest5 = personality[4]
+                interest6 = personality[5]
+
+                hybrid_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last,
+                                                             interest1=interest1, interest2=interest2,
+                                                             interest3=interest3, interest4=interest4,
+                                                             interest5=interest5, interest6=interest6)
+                hybrid_autama.save()
+
+        # A list of the new user's interests
         user_personality = [interests1, interests2, interests3, interests4, interests5, interests6]
+
+        # Creating hybrid personality Autama
         hybrid_personality = bacon.make_hybrid_freak(user_personality)
-
-        creator = "Happy Slackers"
-        picture = "Images/a0.png"
-        first = pancake.generate_male_name()
-        last = "last name"
-        interest1 = hybrid_personality[0]
-        interest2 = hybrid_personality[1]
-        interest3 = hybrid_personality[2]
-        interest4 = hybrid_personality[3]
-        interest5 = hybrid_personality[4]
-        interest6 = hybrid_personality[5]
-
-        hybrid_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last, interest1=interest1, interest2=interest2, interest3=interest3, interest4=interest4, interest5=interest5, interest6=interest6)
-        hybrid_autama.save()
+        create_new_autama(hybrid_personality)
 
         return HttpResponseRedirect(reverse('login'))
 
