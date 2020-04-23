@@ -29,6 +29,12 @@ class Bacon:
         personality = self.__choose_some(personality)
         return self.__fill_up(personality)
 
+    # A method to format a personality
+    def format_personality(self, user_personality: list):
+        personality = user_personality
+        personality = [trait.lower() for trait in personality]
+        return personality
+
     # A method to generate a random personality. It returns a list of personality trait strings.
     def __generate_personality(self):
         encoded_personality = self.__generate_encoded_personality()

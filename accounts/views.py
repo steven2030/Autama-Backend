@@ -91,6 +91,10 @@ class RegisterView(View):
         hybrid_personality = bacon.make_hybrid_freak(user_personality)
         create_new_autama(hybrid_personality)
 
+        # Creating an Autama with the same interests as the user
+        formatted_personality = bacon.format_personality(user_personality)
+        create_new_autama(formatted_personality)
+
         return HttpResponseRedirect(reverse('login'))
 
 
