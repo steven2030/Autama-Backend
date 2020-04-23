@@ -5,7 +5,7 @@ This file contains a class to handle generating an Autama's personality.
 """
 
 from itertools import chain
-from random import choice
+from random import choice, randint, seed
 from Nucleus.utils import get_dataset
 from Nucleus.tools import read_pickle
 
@@ -22,9 +22,12 @@ class Bacon:
         personality = self.__generate_personality()
         return self.__fill_up(personality)
 
-    # A method to generate a personality based on a new user
-    def remix_personality(self):
-        pass
+    # A method to generate a personality with half of a new user's personality and half random
+    def make_hybrid_freak(self, user_personality: list):
+        personality = user_personality
+        personality = [trait.lower() for trait in personality]
+        personality = self.__choose_some(personality)
+        return self.__fill_up(personality)
 
     # A method to generate a random personality. It returns a list of personality trait strings.
     def __generate_personality(self):
@@ -72,3 +75,17 @@ class Bacon:
             amount = amount - 1
 
         return copy_personality
+
+    # A method that chooses some of the user's traits
+    def __choose_some(self, user_personality: list):
+        personality = user_personality[:]
+        amount = len(personality)
+        half = int(amount / 2)
+        seed()
+
+        for i in range(half):
+            amount = amount - 1
+            index = randint(0, amount)
+            personality.pop(index)
+
+        return personality
