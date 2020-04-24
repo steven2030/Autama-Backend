@@ -243,6 +243,8 @@ def about(request):
     # return HttpResponse('about')
     return render(request, 'about.html')
 
+def PrivacyPolicy(request):
+    return render(request, 'privacy_policy.html')
 
 def unclaim_from_chat(request, pk):
     unclaim_autama(request.user.id, pk)
