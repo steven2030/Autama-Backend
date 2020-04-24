@@ -52,6 +52,7 @@
 
     </style>
 
+    <!-- Tutorial: creating a simple cookie consent pop-up: https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
     <style>
         .cookie-banner {
             position: fixed;
@@ -68,7 +69,7 @@
             box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
         }
 
-        .close {
+        .close_banner {
              height: 20px;
              background-color: #777;
              border: none;
@@ -116,11 +117,12 @@
         </div>
     </nav>
 
+    <!-- Tutorial: creating a simple cookie consent pop-up: https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
     <div class="cookie-banner" style="display: none">
         <p>By using our website, you agree to our
             <a href="http://127.0.0.1:8000/PrivacyPolicy/">privacy policy</a>
         </p>
-        <button class="close">&times;</button>
+        <button class="close_banner">&times;</button>
     </div>
 
     <script>
@@ -129,7 +131,7 @@
         //    localStorage.setItem('cookieSeen', 'shown')
         //};
 
-        $('.close').click(function() {
+        $('.close_banner').click(function() {
           $('.cookie-banner').fadeOut();
         })
     </script>
