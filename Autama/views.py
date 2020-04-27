@@ -212,33 +212,28 @@ class ResetPasswordView(LoginRequiredMixin, View):
 # Webpage should be of the type:
 # /FindMatches/?AID=#
 class FindMatches(LoginRequiredMixin, View):
-    # def get(self, request):
-    #     a_id = request.GET['AID']
-    #     autama =  AutamaProfile.objects.get(pk=a_id)
-    #     data = {
-    #         'autama_id': autama.id,
-    #         'creator': autama.creator,
-    #         'picture': autama.picture,
-    #         'first': autama.first,
-    #         'last': autama.last,
-    #         'matches': autama.nummatches,
-    #         'owner': autama.owner,
-    #         'interest1': autama.interest1,
-    #         'interest2': autama.interest2,
-    #         'interest3': autama.interest3,
-    #     }
-    #     return JsonResponse(data)
     def get(self, request):
         a_id = request.GET.get('AID')
 
         # Returns the base HTML.
         if a_id is None:
             user = User.objects.get(id=request.user.id)
-
             return render(request, 'find_matches.html', {'autama_id': user.currentAutama})
 
         # Returns JSON with Autama Profile data
-        return HttpResponse(a_id)
+        autama = AutamaProfile.objects.get(pk=a_id)
+        data = {
+            'autama_id': autama.id,
+            'creator': autama.creator,
+            'first': autama.first,
+            'last': autama.last,
+            'matches': autama.nummatches,
+            'owner': autama.owner,
+            'interest1': autama.interest1,
+            'interest2': autama.interest2,
+            'interest3': autama.interest3,
+        }
+        return JsonResponse(data)
 
 
 # TODO: Do we want this as part of login? Fix to view if keeping.
