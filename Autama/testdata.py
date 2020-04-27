@@ -17,6 +17,7 @@ def add_test_data():
     user.interests5 = "Int5"
     user.interests6 = "Int6"
     user.set_password('testuser')
+    user.currentAutama = 0
     user.save()
 
     ai_prof = AutamaProfile()

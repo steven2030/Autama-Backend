@@ -11,6 +11,7 @@ class User(AbstractUser):
     interests4 = models.TextField()
     interests5 = models.TextField()
     interests6 = models.TextField()
+    currentAutama = models.IntegerField(default=0)
 
 
 class Claims(models.Model):

@@ -233,7 +233,9 @@ class FindMatches(LoginRequiredMixin, View):
 
         # Returns the base HTML.
         if a_id is None:
-            return render(request, 'find_matches.html')
+            user = User.objects.get(id=request.user.id)
+
+            return render(request, 'find_matches.html', {'autama_id': user.currentAutama})
 
         # Returns JSON with Autama Profile data
         return HttpResponse(a_id)
