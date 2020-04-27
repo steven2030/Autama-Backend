@@ -82,7 +82,13 @@
     {%  endblock %}
 
 </ftehead>
-<body>
+<script>
+function matchNotifications() {
+    var x = "0";
+    document.getElementById("myText").innerHTML = x;
+}
+</script>
+<body onload="matchNotifications()">
     <nav class="nav navbar-inverse navbar-default navbar-fixed-top" role="navgation">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -102,7 +108,7 @@
 
                     {% if request.user.is_authenticated  %}
                     <li><a href="/FindMatches/">FindMatches</a></li>
-                    <li><a href="/MyMatches/">MyMatches</a></li>
+                        <li><a href="/MyMatches/">MyMatches (<span id="myText"></span>)</a></li>
                     <li><a href="/MyClaims/">MyClaims</a></li>
                 </ul>
 
@@ -126,13 +132,13 @@
     </div>
 
     <script>
-        //if (localStorage.getItem('cookieSeen') != 'shown') {
+        if (localStorage.getItem('privacyCookieSeen') !== 'accepted') {
             $('.cookie-banner').delay(1000).fadeIn();
-        //    localStorage.setItem('cookieSeen', 'shown')
-        //};
+        }
 
         $('.close_banner').click(function() {
           $('.cookie-banner').fadeOut();
+          localStorage.setItem('privacyCookieSeen', 'accepted');
         })
     </script>
 

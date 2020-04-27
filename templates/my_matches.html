@@ -58,7 +58,7 @@
 {% block content %}
 
 
-<div class="container">
+<div class="container" onload="matchNotifications()">
 
     <!-- From https://www.w3schools.com/howto/howto_js_filter_lists.asp -->
     <input type="text" id="searchInput" onkeyup="dynamicSearch()" placeholder="Search for matches..." title="Type in a name">
@@ -124,5 +124,6 @@
         {% endfor %}
 
     </div>
+
 </div>
 {% endblock %}
