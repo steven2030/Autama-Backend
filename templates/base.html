@@ -102,34 +102,35 @@ function matchNotifications() {
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav nav">
                     {% if not request.user.is_authenticated  %}
-                    <li><a href="/login/">Login</a></li>
-                    <li><a href="/accounts/register/">Register</a></li>
+                        <li><a href="/login/">Login</a></li>
+                        <li><a href="/accounts/register/">Register</a></li>
                     {% endif %}
 
                     {% if request.user.is_authenticated  %}
-                    <li><a href="/FindMatches/">FindMatches</a></li>
+                        <li><a href="/FindMatches/">FindMatches</a></li>
                         <li><a href="/MyMatches/">MyMatches (<span id="myText"></span>)</a></li>
-                    <li><a href="/MyClaims/">MyClaims</a></li>
-                </ul>
+                        <li><a href="/MyClaims/">MyClaims</a></li>
+                        </ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a class="navbar-link" href="/logout">Logout</a></li>
-                    <li><a class="navbar-link" href="/accounts/profile/">{{ request.user }}</a></li>
-                </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a class="navbar-link" href="/logout">Logout</a></li>
+                            <li><a class="navbar-link" href="/accounts/profile/">{{ request.user }}</a></li>
+                        </ul>
+
+
+                        <!-- Tutorial: creating a simple cookie consent pop-up: https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
+                        <div class="cookie-banner" style="display: none">
+                            <p>By using our website, you agree to our
+                                <a href="http://127.0.0.1:8000/PrivacyPolicy/">privacy policy</a>
+                            </p>
+                            <button class="close_banner">&times;</button>
+                        </div>
 
                     {% endif %}
 
             </div>
         </div>
     </nav>
-
-    <!-- Tutorial: creating a simple cookie consent pop-up: https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
-    <div class="cookie-banner" style="display: none">
-        <p>By using our website, you agree to our
-            <a href="http://127.0.0.1:8000/PrivacyPolicy/">privacy policy</a>
-        </p>
-        <button class="close_banner">&times;</button>
-    </div>
 
     <script>
         if (localStorage.getItem('privacyCookieSeen') !== 'accepted') {
