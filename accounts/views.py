@@ -54,6 +54,7 @@ class RegisterView(View):
         obj.interests4 = interests4
         obj.interests5 = interests5
         obj.interests6 = interests6
+        obj.currentAutama = 0
         obj.save()
 
         """When a new user is created, two new Autama profiles based off the new user will be created too."""

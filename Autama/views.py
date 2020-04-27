@@ -12,6 +12,7 @@ from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import authenticate, login, logout
 from accounts.models import User, Messages, Matches, Claims
 from django import forms
+from django.db import IntegrityError
 from django.db.models import Q
 from django.views import View
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
@@ -211,31 +212,41 @@ class ResetPasswordView(LoginRequiredMixin, View):
 # Webpage should be of the type:
 # /FindMatches/?AID=#
 class FindMatches(LoginRequiredMixin, View):
-    # def get(self, request):
-    #     a_id = request.GET['AID']
-    #     autama =  AutamaProfile.objects.get(pk=a_id)
-    #     data = {
-    #         'autama_id': autama.id,
-    #         'creator': autama.creator,
-    #         'picture': autama.picture,
-    #         'first': autama.first,
-    #         'last': autama.last,
-    #         'matches': autama.nummatches,
-    #         'owner': autama.owner,
-    #         'interest1': autama.interest1,
-    #         'interest2': autama.interest2,
-    #         'interest3': autama.interest3,
-    #     }
-    #     return JsonResponse(data)
     def get(self, request):
         a_id = request.GET.get('AID')
 
         # Returns the base HTML.
         if a_id is None:
-            return render(request, 'find_matches.html')
+            user = User.objects.get(id=request.user.id)
+            return render(request, 'find_matches.html', {'autama_id': user.currentAutama})
 
         # Returns JSON with Autama Profile data
-        return HttpResponse(a_id)
+        autama = AutamaProfile.objects.get(pk=a_id)
+        data = {
+            'autama_id': autama.id,
+            'creator': autama.creator,
+            'first': autama.first,
+            'last': autama.last,
+            'matches': autama.nummatches,
+            'owner': autama.owner,
+            'interest1': autama.interest1,
+            'interest2': autama.interest2,
+            'interest3': autama.interest3,
+        }
+        return JsonResponse(data)
+
+    def post(self, request):
+        data = request.POST.copy()
+        ret = True
+        if data.get('match') == 1:
+            ret = match(request.user.id, data.get('AID'))
+        user = User.objects.get(pk=request.user.id)
+        user.currentAutama += 1
+        user.save()
+        if ret:
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=500)
 
 
 # TODO: Do we want this as part of login? Fix to view if keeping.
@@ -361,6 +372,14 @@ class Chat(LoginRequiredMixin, View):
         return redirect('Chat', pk=pk)
 
 
-
+def testdata(request):
+    if request.user.is_superuser or request.user.is_staff:
+        try:
+            from Autama.testdata import add_test_data
+            add_test_data()
+            return HttpResponse("Test Data Added")
+        except IntegrityError as e:
+            if 'UNIQUE constraint' in str(e.args):
+                return HttpResponse("Already Added")
 
 
