@@ -41,4 +41,38 @@
         </div>
     </div>
 
+
+    <style>
+        .report_box {
+            display: none;
+        }
+    </style>
+
+    <script>
+        function showReport() {
+            div = document.getElementById("report").style.display="block";
+        }
+
+        function hideReport() {
+            div = document.getElementById("report").style.display="none";
+        }
+    </script>
+
+    <!-- <button onclick="showReport()" class="btn btn-info">Report</button> -->
+    <input onclick="showReport()" style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="report" value="Report">
+
+    <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
+    <div class="report_box" id="report">
+        <!-- <form action="???" method="post"> -->
+        <!-- include csrf_token here -->
+        <form>
+            <br>
+            <h3>Report Autama</h3>
+            <textarea rows ="5" cols="60" name="description" placeholder="Please describe the issue(s) with this Autama."></textarea>
+            <br>
+            <input type="submit" value="Submit"/>
+            <button onclick="hideReport()"/>Close</button>
+        </form>
+    </div>
+
 {% endblock %}
