@@ -12,6 +12,7 @@ from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import authenticate, login, logout
 from accounts.models import User, Messages, Matches, Claims
 from django import forms
+from django.db import IntegrityError
 from django.db.models import Q
 from django.views import View
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
@@ -361,6 +362,14 @@ class Chat(LoginRequiredMixin, View):
         return redirect('Chat', pk=pk)
 
 
-
+def testdata(request):
+    if request.user.is_superuser or request.user.is_staff:
+        try:
+            from Autama.testdata import add_test_data
+            add_test_data()
+            return HttpResponse("Test Data Added")
+        except IntegrityError as e:
+            if 'UNIQUE constraint' in str(e.args):
+                return HttpResponse("Already Added")
 
 
