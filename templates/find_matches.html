@@ -274,6 +274,14 @@
                         this.topCard.style.transform =
                             'translateX(' + posX + 'px) translateY(' + posY + 'px) rotate(' + deg + 'deg)'
 
+                        $.post('',
+                            { csrfmiddlewaretoken: "{{ csrf_token }}", 'AID': this.topCard.autamaID, 'match': dirX},
+                            // This is the return function of submitting a match
+                            function(data, status) {
+
+                        });
+                        console.log({'AID': this.topCard.autamaID, 'match': dirX});
+
                         // wait transition end
                         setTimeout(() => {
                             // remove swiped card
@@ -344,6 +352,7 @@
                 textbox3.appendChild(p3);
 
                 // Get Random Background Image
+                card.autamaID = this.currAutama;
                 card.style.backgroundImage =
                     "url(../Images/a" + this.currAutama + ".png)";
                 $.get("?AID=" + this.currAutama, function(data) {

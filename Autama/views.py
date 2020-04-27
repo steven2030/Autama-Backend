@@ -235,6 +235,19 @@ class FindMatches(LoginRequiredMixin, View):
         }
         return JsonResponse(data)
 
+    def post(self, request):
+        data = request.POST.copy()
+        ret = False
+        if data.get('match') == 1:
+            ret = match(request.user.id, data.get('AID'))
+        user = User.objects.get(pk=request.user.id)
+        user.currentAutama += 1
+        user.save()
+        if ret:
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=500)
+
 
 # TODO: Do we want this as part of login? Fix to view if keeping.
 def about(request):
