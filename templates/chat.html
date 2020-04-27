@@ -4,15 +4,88 @@
     <title>Chat</title>
 {% endblock %}
 
+<!-- https://www.w3schools.com/howto/howto_js_popup_form.asp -->
+<style>
+    /* button to open the report form, fixed at bottom of page */
+    .open-button {
+        background-color: #FC4F6C;
+        color: white;
+        padding: 16px 20 px;
+        border: none;
+        cursor: pointer;
+        opacity: 0.8;
+        position: fixed;
+        bottom: 23px;
+        right: 28px;
+        width: 280px;
+    }
+
+    /* the popup form, hidden by default */
+    .form-popup {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        right: 15 px;
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+    }
+
+    /* add styles to the form container */
+    .form-container {
+        max-width: 300px;
+        padding: 10px;
+        background-color: white;
+    }
+
+    /* full-width input fields */
+    .form-container input[type=text], .form-container input[type=password] {
+        width: 100%;
+        padding: 15 px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+    }
+
+    /* when the inputs get focus, do something */
+    .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+
+    /* set a style for the submit button */
+    .form-container .btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 10px;
+        opacity: 0.8;
+    }
+
+    /* add red background to the cancel button */
+    .form-container .cancel {
+        background-color: red;
+    }
+
+    /* add hover effects to buttons */
+    .form-container .btn:hover, .open-button:hover {
+        opacity: 1;
+    }
+</style>
+
 {% block content %}
+    <br>
+    <br>
     <div class="container">
         <h1>Chat!</h1>
     </div>
 
     <div>
-        <p>The all the data in autama and user model are available for the frontend dev.
-        <p>For example the autamas name is {{autama.first}} {{autama.last}}.
-        <p>While the user name is {{user.get_username}}.
+        <p>All of the data in autama and user model are available for the frontend dev.
+        <p>For example, the autama's name is {{autama.first}} {{autama.last}}.
+        <p>While the user's name is {{user.get_username}}.
         <p>Do note that since the user model inherits from AbstractUser. So to get the user name use the associated
            function in the AbstractUser class.
     </div>
@@ -37,8 +110,19 @@
                 <input style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="unclaim" value="Unclaim">
             </form>
         </div>
+    </div>
 
+    <div>
+        <button class="open-button" onclick="openForm()">Report</button>
 
+        <div class="form-popup" id="myForm">
+            <form action="/action_page.php" class ="form-container">
+                <h1>Report</h1>
+                <!-- Include: user.get_username -->
+                <!-- Include: autama.pk(?) -->
+                
+            </form>
+        </div>
     </div>
 
 {% endblock %}
