@@ -71,7 +71,7 @@ class RegisterView(View):
                 picture = "Images/a0.png"
                 first = pancake.generate_male_name()
                 last = "last name"
-                pickle = username
+                pickle = username # Who the Autama is based off
                 interest1 = personality[0]
                 interest2 = personality[1]
                 interest3 = personality[2]
