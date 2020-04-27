@@ -22,6 +22,7 @@ class AutamaProfileAdmin(admin.ModelAdmin):
         bacon = Bacon() # For generating personality
         pancake = Pancake() # For generating name
         amount = 2 # Amount of Autama profiles to create
+        username = str(request.user) # Username of user who presses the mass produce button
 
         for i in range(amount):
             personality = bacon.generate_full_personality()
@@ -29,10 +30,11 @@ class AutamaProfileAdmin(admin.ModelAdmin):
 
             # Make sure personality has the required amount of traits
             if trait_amount == REQUIRED:
-                creator = "Happy Slackers"
+                creator = username
                 picture = "Images/a0.png"
                 first = pancake.generate_male_name()
                 last = "last name"
+                pickle = "Happy Slackers"
                 interest1 = personality[0]
                 interest2 = personality[1]
                 interest3 = personality[2]
@@ -40,7 +42,7 @@ class AutamaProfileAdmin(admin.ModelAdmin):
                 interest5 = personality[4]
                 interest6 = personality[5]
 
-                hybrid_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last,
+                hybrid_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last, pickle=pickle,
                                                              interest1=interest1, interest2=interest2,
                                                              interest3=interest3, interest4=interest4,
                                                              interest5=interest5, interest6=interest6)
