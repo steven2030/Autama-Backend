@@ -237,7 +237,7 @@ class FindMatches(LoginRequiredMixin, View):
 
     def post(self, request):
         data = request.POST.copy()
-        ret = False
+        ret = True
         if data.get('match') == 1:
             ret = match(request.user.id, data.get('AID'))
         user = User.objects.get(pk=request.user.id)
