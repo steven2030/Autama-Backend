@@ -5,7 +5,7 @@ from django.http import HttpResponse
 
 def add_test_data():
     user = User()
-    user.username = "testuser2000"
+    user.username = "testuser"
     user.first_name = "test"
     user.last_name = "user"
     user.email = "test@user.com"
@@ -17,7 +17,7 @@ def add_test_data():
     user.interests5 = "Int5"
     user.interests6 = "Int6"
     user.set_password('testuser')
-    user.currentAutama = 0
+    user.currentAutama = 1
     user.save()
 
     ai_prof = AutamaProfile()
