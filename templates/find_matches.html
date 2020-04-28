@@ -26,7 +26,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            height: 320px;
+            height: 380px;
             width: 320px;
             background-size: 320px 320px;
             background-repeat: no-repeat;
@@ -34,6 +34,8 @@
             box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.1);
             background-color: white;
             transform: translateX(-50%) translateY(-50%) scale(0.95);
+            overflow-x: auto;
+            overflow-wrap: break-spaces;
         }
         .like {
             position: absolute;
@@ -59,7 +61,7 @@
             display: block;
             position: absolute;
             width: 90%;
-            bottom: 44px;
+            bottom: 104px;
             left: 8px;
             font-size: 18px;
             text-shadow: 2px 2px black;
@@ -68,7 +70,7 @@
             display: block;
             position: absolute;
             width: 90%;
-            bottom: 22px;
+            bottom: 82px;
             left: 8px;
             font-size: 18px;
             text-shadow: 2px 2px black;
@@ -77,7 +79,7 @@
             display: block;
             position: absolute;
             width: 90%;
-            bottom: 0px;
+            bottom: 60px;
             left: 8px;
             font-size: 18px;
             text-shadow: 2px 2px black;
@@ -88,6 +90,15 @@
         }
         .rightalign {
             float: right;
+        }
+        .interests {
+            float: left;
+            position: absolute;
+            top: 338px;
+            left: 8px;
+            font-size: 18;
+            overflow-x: auto;
+            overflow-wrap: break-spaces;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
@@ -103,8 +114,6 @@
                 // add first two cards programmatically
                 this.push()
                 this.push()
-
-
 
                 // handle gestures
                 this.handle()
@@ -330,6 +339,7 @@
                 let p1 = document.createElement('p');
                 let p2 = document.createElement('p');
                 let p3 = document.createElement('p');
+                let textbox4 = document.createElement('div');
 
                 likeOverlay.classList.add('like');
                 likeOverlay.id = 'like';
@@ -338,6 +348,8 @@
                 textbox1.classList.add('btmtext');
                 textbox2.classList.add('btmtext2');
                 textbox3.classList.add('btmtext3');
+                textbox4.id='interests';
+                textbox4.classList.add('interests');
                 p1.classList.add('leftalign');
                 p2.classList.add('leftalign');
                 p3.classList.add('leftalign');
@@ -347,6 +359,7 @@
                 card.appendChild(textbox1);
                 card.appendChild(textbox2);
                 card.appendChild(textbox3);
+                card.appendChild(textbox4);
                 textbox1.appendChild(p1);
                 textbox2.appendChild(p2);
                 textbox3.appendChild(p3);
@@ -359,6 +372,8 @@
                     p1.innerText = data.first + " " + data.last;
                     p2.innerText = "Followers: " + data.matches;
                     p3.innerText = "Creator: " + data.creator;
+                    textbox4.innerText = "Interests: " + data.interest1 + " "
+                    + data.interest2 + " " + data.interest3
                 });
 
                 this.currAutama++;

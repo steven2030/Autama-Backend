@@ -9,3 +9,4 @@ AutamaProfiles/migrations/0*
 *.DS_Store
 Nucleus/__*
 *.pyc
+nucleus.pickle
