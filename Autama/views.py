@@ -295,13 +295,18 @@ class MyMatches(LoginRequiredMixin, View):
 
 
     def get(self, request):
-        user               = User.objects.get(pk=request.user.id)
-        user_matches       = self.get_matches(user=user)
+        user               = User.objects.get(pk=request.user.id)  # get user
+        user_matches       = self.get_matches(user=user)  # get all user matches
+        # get ids of all autama user messaged
         autama_id_list     = Messages.objects.all().filter(userID=user.pk).order_by('timeStamp').values_list('autamaID').distinct()
+        # get references to all autama user messaged
         user_conversations = AutamaProfile.objects.all().filter(id__in=autama_id_list)
-        context            = {'user_matches': user_matches, 'user_conversations': user_conversations}
+        messages           = [Messages.objects.all().filter(userID=user.pk).filter(autamaID=an_id).order_by('timeStamp').reverse()[0].message for an_id in autama_id_list]
 
-        return render(request, 'my_matches.html', context)
+        context            = {'user_matches': user_matches, 'user_conversations': user_conversations, 'last_messages': messages}  # last message.
+
+        return JsonResponse(context)
+        #return render(request, 'my_matches.html', context)
 
     def post(self, request):
         query_string = request.POST.get('search_bar')
@@ -350,7 +355,7 @@ class Chat(LoginRequiredMixin, View):
         autama = AutamaProfile.objects.get(pk=pk)  # Check the validity of Autama id.
         form = MessageForm(request.POST)
 
-        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[0],
+        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[0][1],
                                             message=form['x'].value())
         a_message.save()
 
@@ -367,7 +372,7 @@ class Chat(LoginRequiredMixin, View):
         ham = Ham(test_name, personality)
         autama_response = ham.converse(user_input=form['x'].value())
 
-        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[1],
+        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[1][1],
                                             message=autama_response)
         a_message.save()
 

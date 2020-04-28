@@ -21,7 +21,7 @@
 
     <div>
         {% for a_message in message_chain %}
-            <p>Message: {{a_message.message}} Sent on: {{ a_message.timeStamp }}</p>  <!-- timezone is in UTC -->
+            <p>Message: {{a_message.message}} Sent on: {{ a_message.timeStamp }} Sender: {{ a_message.sender }}</p>  <!-- timezone is in UTC -->
         {% endfor %}
     </div>
 
