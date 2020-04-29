@@ -333,7 +333,7 @@ def chat_main_page(request):
 
 
 class MessageForm(forms.Form):
-    x = forms.CharField(label='some text')
+    x = forms.CharField(widget=forms.Textarea(attrs={'class':'special'}),label="")
 
 
 # TODO: make sure a user can only chat with an autama they have matched with.
