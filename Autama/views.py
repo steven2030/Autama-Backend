@@ -320,8 +320,8 @@ class MyMatches(LoginRequiredMixin, View):
     def post(self, request):
         query_string  = request.POST.get('search_bar')
         user          = User.objects.get(pk=request.user.id)
-        user_matches  = self.get_matches(user, query_string)
-        user_messages = self.get_messages(user, query_string)
+        user_matches  = self.get_matches(user=user, query_string=query_string)
+        user_messages = self.get_messages(user=user, query_string=query_string)
         context       = {'user_matches': user_matches,'num_matches': len(user_matches),
                          'user_messages': user_messages, 'num_messages': len(user_messages)}
 
