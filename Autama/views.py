@@ -282,9 +282,7 @@ class MyMatches(LoginRequiredMixin, View):
 
     def get_matches(self, user, query_string=None):
         have_chatted = Messages.objects.filter(userID=user).values_list('autamaID', flat=True)
-        not_chatted = Matches.objects.filter(userID=user.pk).exclude(autamaID__in=have_chatted)
-        have_chatted = Matches.objects.filter(userID=user.pk).filter(autamaID__in=have_chatted)  # In case we want to display matches have chatted with
-        #user_matches = Matches.objects.all().filter(userID=user.pk).order_by('timeStamp')  # gets all matches
+        not_chatted  = Matches.objects.filter(userID=user.pk).exclude(autamaID__in=have_chatted)
         user_matches = not_chatted
 
         if query_string:
@@ -293,35 +291,39 @@ class MyMatches(LoginRequiredMixin, View):
 
         return user_matches
 
+    def get_messages(self, user, query_string=None):
+        # get ids of all autama user messaged
+        autama_id_list = Messages.objects.all().filter(userID=user.pk).order_by('timeStamp')\
+                                                                      .values_list('autamaID', flat=True)
+
+        if query_string:
+            autama_id_list = [an_id.autamaID.pk for an_id in autama_id_list if
+                              query_string in an_id.message or
+                              query_string in an_id.autamaID.first + " " + an_id.autamaID.last]
+
+        autama_id_list = list(set(autama_id_list))
+        user_messages  = AutamaProfile.objects.all().filter(id__in=autama_id_list)
+        messages       = [Messages.objects.all().filter(userID=user).filter(autamaID=an_id).order_by('timeStamp')
+                                                                    .reverse()[0].message for an_id in autama_id_list]
+
+        return list(zip(user_messages, messages))
 
     def get(self, request):
-        user               = User.objects.get(pk=request.user.id)  # get user
-        user_matches       = self.get_matches(user=user)  # get all user matches
-        # get ids of all autama user messaged
-        autama_id_list     = Messages.objects.all().filter(userID=user.pk).order_by('timeStamp').values_list('autamaID').distinct()
-        # get references to all autama user messaged
-        user_conversations = AutamaProfile.objects.all().filter(id__in=autama_id_list)
-        messages           = [Messages.objects.all().filter(userID=user.pk).filter(autamaID=an_id).order_by('timeStamp').reverse()[0].message for an_id in autama_id_list]
+        user          = User.objects.get(pk=request.user.id)  # get user
+        user_matches  = self.get_matches(user=user)  # get all user matches
+        user_messages = self.get_messages(user=user)
+        context       = {'user_matches': user_matches,'num_matches': len(user_matches),
+                         'user_messages': user_messages, 'num_messages': len(user_messages)}
 
-        context            = {'user_matches': user_matches, 'user_conversations': user_conversations, 'last_messages': messages}  # last message.
-
-        return JsonResponse(context)
-        #return render(request, 'my_matches.html', context)
+        return render(request, 'my_matches.html', context)
 
     def post(self, request):
-        query_string = request.POST.get('search_bar')
-        if not query_string:
-            self.get(request)
-
-        user               = User.objects.get(pk=request.user.id)
-        user_matches       = self.get_matches(user, query_string)
-
-        autama_id_list     = Messages.objects.all().filter(userID=user.pk).order_by('timeStamp')
-        autama_id_list     = [an_id.autamaID.pk for an_id in autama_id_list if query_string in an_id.message or query_string in an_id.autamaID.first + " " + an_id.autamaID.last]
-        autama_id_list     = list(set(autama_id_list))
-        user_conversations = AutamaProfile.objects.all().filter(id__in=autama_id_list)
-
-        context            = {'user_matches': user_matches, 'user_conversations': user_conversations}
+        query_string  = request.POST.get('search_bar')
+        user          = User.objects.get(pk=request.user.id)
+        user_matches  = self.get_matches(user, query_string)
+        user_messages = self.get_messages(user, query_string)
+        context       = {'user_matches': user_matches,'num_matches': len(user_matches),
+                         'user_messages': user_messages, 'num_messages': len(user_messages)}
 
         return render(request, 'my_matches.html', context)
 
