@@ -1,53 +1,114 @@
-{% extends 'base.html' %}
 
 {% block head %}
     <title>Chat</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/11d06f2f9f.js" crossorigin="anonymous"></script>
+
 {% endblock %}
 
-{% block content %}
-    <br>
-    <br>
-    <div class="container">
-        <h1>Chat!</h1>
-    </div>
-
-    <div>
-        <p>All of the data in autama and user model are available for the frontend dev.
-        <p>For example, the autama's name is {{autama.first}} {{autama.last}}.
-        <p>While the user's name is {{user.get_username}}.
-        <p>Do note that since the user model inherits from AbstractUser. So to get the user name use the associated
-           function in the AbstractUser class.
-    </div>
-
-    <div>
-        {% for a_message in message_chain %}
-            <p>Message: {{a_message.message}} Sent on: {{ a_message.timeStamp }} Sender: {{ a_message.sender }}</p>  <!-- timezone is in UTC -->
-        {% endfor %}
-    </div>
-
-    <div>
-        <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Submit">
-        </form>
-
-
-        <div class="list-group-item" style="border: none;position: relative;height: 94px;">
-            <form action="{% url 'unclaim_from_chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="unclaim" value="Unclaim">
-            </form>
-        </div>
-    </div>
-
-
+{% block csstyle %}
     <style>
-        .report_box {
-            display: none;
-        }
+
+
+    .lite-chatbox{padding:0;width:100%;position:relative;overflow-y:auto;overflow-x:hidden;font:18px Helvetica,"PingFang SC","Microsoft YaHei",sans-serif}
+    .lite-chatbox .cmsg{position:relative;margin:4px 7px;min-height:50px;border:0}
+    .lite-chatbox .cright{text-align:right;margin-left:64px}
+    .lite-chatbox .cleft{text-align:left;margin-right:64px}
+    .lite-chatbox img.headIcon{width:34px;height:34px;top:9px;position:absolute;border:1px solid #c5d4c4}
+    .lite-chatbox .name{color:#8b8b8b;font-size:12px;display:block;line-height:18px}
+    .lite-chatbox .name .htitle{display:inline-block;padding:0 3px;background-color:#ccc;color:#fff;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;margin-right:4px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;max-width:50px}
+    .lite-chatbox .content{word-break:break-all;word-wrap:break-word;text-align:left;position:relative;display:inline-block;font-size:15px;padding:10px 15px;line-height:20px;min-width:9px;min-height:18px}.lite-chatbox .content img{width:100%;height:auto}.lite-chatbox .content a{color:#0072C1;margin:0 5px;cursor:hand}
+    .lite-chatbox .tips{margin:12px;text-align:center;font-size:12px}.lite-chatbox .tips span{display:inline-block;padding:4px;background-color:#ccc;color:#fff;-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px}
+    .lite-chatbox img.radius{-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%}.lite-chatbox .cright img.headIcon{right:0}.lite-chatbox .cleft img.headIcon{left:0}
+    .lite-chatbox .cright .name{margin:0 48px 2px 0}
+    .lite-chatbox .cleft .name{margin:0 0 2px 48px}
+    .lite-chatbox .cright .content{margin:0 0 0 0;-webkit-border-radius:20px 0 20px 20px;border-radius:20px 0 20px 20px;color:#fff;background:-webkit-linear-gradient(70deg,#3FD1E1 0%,#44D7CD 100%);background: #B93FA3;-webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15)}
+    .lite-chatbox .cleft .content{margin:0 0 0 48px;-webkit-border-radius:0 20px 20px 20px;border-radius:0 20px 20px 20px;color:#666;border:1px solid rgba(0,0,0,0.05);background:#FFF;-webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.1);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.1)}
+    .lite-chatbox .cright .content:after{right:-12px;top:8px}
+    .lite-chatbox .cleft .content:after{left:-12px;top:8px}
+    .lite-chatbox .tips .tips-primary{background-color:#3986c8}
+    .lite-chatbox .tips .tips-success{background-color:#49b649}
+    .lite-chatbox .tips .tips-info{background-color:#5bb6d1}
+    .lite-chatbox .tips .tips-warning{background-color:#eea948}
+    .lite-chatbox .tips .tips-danger{background-color:#e24d48}
+    .lite-chatbox .name .admin{background-color:#72D6A0}
+    .lite-chatbox .name .owner{background-color:#F2BF25}
+
+    .special{
+        border-radius:5px;
+        border: 0;
+        background-color:rgba(241,241,241,.98);
+        resize: none;
+        width: 100%;
+        height: 70px;
+        overflow-y: auto;
+    }
+    .content1{
+        padding-top: 20px;
+    }
+
+    .butt3{
+        float: right;
+        margin-right: 10px;
+    }
+
+
+    .navbar {
+             background-image: linear-gradient(#54B4EB, #2FA4E7 60%, #1D9CE5);
+             background-repeat: no-repeat;
+             border-bottom: 1px solid #178ACC;
+             box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
+             border-radius: 0px;
+            }
+
+            .navbar-default {
+             background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+             border-style: none;;
+             border-color: #FC4F6C;
+            }
+
+            .navbar-default .navbar-brand,
+            .navbar-default .navbar-brand:hover,
+            .navbar-default .navbar-brand:focus ,
+            .navbar-default .navbar-nav > li > a {
+             color: #FFF;
+            }
+
+            .navbar-default .navbar-nav > li > a:hover,
+            .navbar-default .navbar-nav > li > a:focus {
+             color: #FFF;
+             background-color: #FC8909;
+            }
+
+            .navbar-default .navbar-toggle:hover,
+            .navbar-default .navbar-toggle:focus {
+            background-color: #FC8909;
+            }
+
+            .navbar-default .navbar-toggle {
+            border-color: #FC8909;
+            }
+
+            .navbar-default .navbar-toggle .icon-bar {
+            background-color: #FFF;
+            }
+
+    .fas{
+        color: white;
+    }
+
+    .report_box {
+    display: none;
+    }
+
     </style>
 
+{% endblock %}
+
+
+{% block js %}
     <script>
         function showReport() {
             div = document.getElementById("report").style.display="block";
@@ -58,21 +119,93 @@
         }
     </script>
 
-    <!-- <button onclick="showReport()" class="btn btn-info">Report</button> -->
-    <input onclick="showReport()" style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="report" value="Report">
+{% endblock %}
+
+{% block content %}
+    <div style="margin-top: 50px">
+
+         <nav class="nav navbar-inverse navbar-default navbar-fixed-top" role="navgation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav nav">
+                    {% if request.user.is_authenticated  %}
+                    <li><a href="/MyMatches/"><i class="fas fa-chevron-left" aria-hidden="true"></i> </a></li>
+                </ul>
+                    {% endif %}
+
+            </div>
+        </div>
+    </nav>
+
+
+        <div class="lite-chatbox">
+            <div>
+                {% for a_message in message_chain %}
+                    {% if a_message.sender == 'User' %}
+                    <div class="cright cmsg">
+                        <span class="content">{{a_message.message}} Sent on: {{ a_message.timeStamp }}</span>  <!-- timezone is in UTC -->
+                    </div>
+                    {% else %}
+                    <div class="cleft cmsg">
+                        <a href="/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
+                            <img class="headIcon radius" ondragstart="return false;" oncontextmenu="return false;" src="{{ autama.picture.url }}">
+                        </a>
+                        <span class="name">{{ autama.first }}</span>
+                        <span class="content">{{a_message.message}} Sent on: {{ a_message.timeStamp }}</span>
+                    </div>
+
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div>
+            <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <div class="butt3" style="margin-top: 10px">
+                    <input type="submit" value="send" class="btn btn-info" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);">
+                </div>
+            </form>
+
+
+            <div  style="border: none;position: relative;height: 94px; margin-left: 10px">
+                <form action="{% url 'unclaim_from_chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="unclaim" value="Unclaim">
+                </form>
+            </div>
+
+
+        </div>
+
+        <input onclick="showReport()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="report" value="Report">
 
     <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
-    <div class="report_box" id="report">
-        <!-- <form action="???" method="post"> -->
-        <!-- include csrf_token here -->
-        <form>
-            <br>
-            <h3>Report Autama</h3>
-            <textarea rows ="5" cols="60" name="description" placeholder="Please describe the issue(s) with this Autama."></textarea>
-            <br>
-            <input type="submit" value="Submit"/>
-            <button onclick="hideReport()"/>Close</button>
-        </form>
+        <div class="report_box" id="report">
+            <!-- <form action="???" method="post"> -->
+            <!-- include csrf_token here -->
+            <form>
+                <br>
+                <h3>Report Autama</h3>
+                <textarea rows ="5" cols="60" name="description" placeholder="Please describe the issue(s) with this Autama."></textarea>
+                <br>
+                <input type="submit" value="Submit"/>
+                <button onclick="hideReport()"/>Close</button>
+            </form>
+        </div>
+
     </div>
 
 {% endblock %}
+
+
