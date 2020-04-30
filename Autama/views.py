@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
 import json
-from django.shortcuts import render,reverse
+from django.shortcuts import render, reverse
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import authenticate, login, logout
 from accounts.models import User, Messages, Matches, Claims
@@ -24,7 +24,7 @@ from Nucleus.ham import Ham
 
 
 def claim_autama(user_pk, autama_pk):
-    autama = AutamaProfile.objects.get(pk=autama_pk) # Validation needed here
+    autama = AutamaProfile.objects.get(pk=autama_pk)  # Validation needed here
     user = User.objects.get(pk=user_pk)
     ret = True
 
@@ -40,7 +40,7 @@ def claim_autama(user_pk, autama_pk):
 
 
 def unclaim_autama(user_pk, autama_pk):
-    autama = AutamaProfile.objects.get(pk=autama_pk) # Validation needed here
+    autama = AutamaProfile.objects.get(pk=autama_pk)  # Validation needed here
     user = User.objects.get(pk=user_pk)
     ret = True
 
@@ -100,6 +100,7 @@ class CustomBackend(ModelBackend):
 class LoginRequiredMixin(object):
     """
     """
+
     @classmethod
     def as_view(cls, **initkwargs):
         view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
@@ -130,7 +131,7 @@ class RegisterView(View):
         if user:
             return render(request, 'register.html', {'error': 'email or account already existed'})
 
-        obj = User.objects.create(username=username, first_name=firstname,last_name=lastname, email=email)
+        obj = User.objects.create(username=username, first_name=firstname, last_name=lastname, email=email)
         obj.set_password(password)
         obj.save()
         return HttpResponseRedirect(reverse('login'))
@@ -197,7 +198,7 @@ class ChangeAvatarView(LoginRequiredMixin, View):
         pic = ContentFile(request.FILES['file'].read())
         obj.image.save(request.FILES['file'].name, pic)
         obj.save()
-        return HttpResponse(json.dumps({'code':0, "avatar": obj.image.url}))
+        return HttpResponse(json.dumps({'code': 0, "avatar": obj.image.url}))
 
 
 class ResetPasswordView(LoginRequiredMixin, View):
@@ -206,7 +207,7 @@ class ResetPasswordView(LoginRequiredMixin, View):
         password = request.POST.get("password")
         obj.set_password(password)
         obj.save()
-        return HttpResponse(json.dumps({'code':0, "avatar": obj.image.url}), content_type="application/json")
+        return HttpResponse(json.dumps({'code': 0, "avatar": obj.image.url}), content_type="application/json")
 
 
 # Webpage should be of the type:
@@ -256,8 +257,10 @@ def about(request):
     # return HttpResponse('about')
     return render(request, 'about.html')
 
+
 def PrivacyPolicy(request):
     return render(request, 'privacy_policy.html')
+
 
 def unclaim_from_chat(request, pk):
     unclaim_autama(request.user.id, pk)
@@ -275,14 +278,14 @@ class MyClaims(LoginRequiredMixin, View):
     def post(self, request, pk):
         unclaim_autama(request.user.id, pk)
         return redirect('MyClaims')
-        #return HttpResponse('Hello!')
+        # return HttpResponse('Hello!')
 
 
 class MyMatches(LoginRequiredMixin, View):
 
     def get_matches(self, user, query_string=None):
         have_chatted = Messages.objects.filter(userID=user).values_list('autamaID', flat=True)
-        not_chatted  = Matches.objects.filter(userID=user.pk).exclude(autamaID__in=have_chatted)
+        not_chatted = Matches.objects.filter(userID=user.pk).exclude(autamaID__in=have_chatted)
         user_matches = not_chatted
 
         if query_string:
@@ -293,8 +296,8 @@ class MyMatches(LoginRequiredMixin, View):
 
     def get_messages(self, user, query_string=None):
         # get ids of all autama user messaged
-        autama_id_list = Messages.objects.all().filter(userID=user.pk).order_by('timeStamp')\
-                                                                      .values_list('autamaID', flat=True)
+        autama_id_list = Messages.objects.all().filter(userID=user.pk).order_by('timeStamp') \
+            .values_list('autamaID', flat=True)
 
         if query_string:
             autama_id_list = [an_id.autamaID.pk for an_id in autama_id_list if
@@ -302,28 +305,34 @@ class MyMatches(LoginRequiredMixin, View):
                               query_string in an_id.autamaID.first + " " + an_id.autamaID.last]
 
         autama_id_list = list(set(autama_id_list))
-        user_messages  = AutamaProfile.objects.all().filter(id__in=autama_id_list)
-        messages       = [Messages.objects.all().filter(userID=user).filter(autamaID=an_id).order_by('timeStamp')
-                                                                    .reverse()[0].message for an_id in autama_id_list]
+        user_messages = AutamaProfile.objects.all().filter(id__in=autama_id_list)
+        messages = [Messages.objects.all().filter(userID=user).filter(autamaID=an_id).order_by('timeStamp')
+                        .reverse()[0].message for an_id in autama_id_list]
 
-        return list(zip(user_messages, messages))
+        message_chain = [" ".join([a_message.message for a_message in Messages.objects.all()
+                                  .filter(userID=user.pk)
+                                  .filter(autamaID=aid)
+                                  .order_by('timeStamp')])
+                         for aid in autama_id_list]
+
+        return list(zip(user_messages, messages, message_chain))  # (ProfileList, a single last message)
 
     def get(self, request):
-        user          = User.objects.get(pk=request.user.id)  # get user
-        user_matches  = self.get_matches(user=user)  # get all user matches
+        user = User.objects.get(pk=request.user.id)  # get user
+        user_matches = self.get_matches(user=user)  # get all user matches
         user_messages = self.get_messages(user=user)
-        context       = {'user_matches': user_matches,'num_matches': len(user_matches),
-                         'user_messages': user_messages, 'num_messages': len(user_messages)}
+        context = {'user_matches': user_matches, 'num_matches': len(user_matches),
+                   'user_messages': user_messages, 'num_messages': len(user_messages)}
 
         return render(request, 'my_matches.html', context)
 
     def post(self, request):
-        query_string  = request.POST.get('search_bar')
-        user          = User.objects.get(pk=request.user.id)
-        user_matches  = self.get_matches(user=user, query_string=query_string)
+        query_string = request.POST.get('search_bar')
+        user = User.objects.get(pk=request.user.id)
+        user_matches = self.get_matches(user=user, query_string=query_string)
         user_messages = self.get_messages(user=user, query_string=query_string)
-        context       = {'user_matches': user_matches,'num_matches': len(user_matches),
-                         'user_messages': user_messages, 'num_messages': len(user_messages)}
+        context = {'user_matches': user_matches, 'num_matches': len(user_matches),
+                   'user_messages': user_messages, 'num_messages': len(user_messages)}
 
         return render(request, 'my_matches.html', context)
 
@@ -333,7 +342,7 @@ def chat_main_page(request):
 
 
 class MessageForm(forms.Form):
-    x = forms.CharField(widget=forms.Textarea(attrs={'class':'special'}),label="")
+    x = forms.CharField(widget=forms.Textarea(attrs={'class': 'special'}), label="")
 
 
 # TODO: make sure a user can only chat with an autama they have matched with.
@@ -391,5 +400,3 @@ def testdata(request):
         except IntegrityError as e:
             if 'UNIQUE constraint' in str(e.args):
                 return HttpResponse("Already Added")
-
-
