@@ -309,25 +309,20 @@ class MyMatches(LoginRequiredMixin, View):
         messages = [Messages.objects.all().filter(userID=user).filter(autamaID=an_id).order_by('timeStamp')
                         .reverse()[0].message for an_id in autama_id_list]
 
-        return list(zip(user_messages, messages))  # (ProfileList, a single last message)
+        message_chain = [" ".join([a_message.message for a_message in Messages.objects.all()
+                                  .filter(userID=user.pk)
+                                  .filter(autamaID=aid)
+                                  .order_by('timeStamp')])
+                         for aid in autama_id_list]
+
+        return list(zip(user_messages, messages, message_chain))  # (ProfileList, a single last message)
 
     def get(self, request):
         user = User.objects.get(pk=request.user.id)  # get user
         user_matches = self.get_matches(user=user)  # get all user matches
         user_messages = self.get_messages(user=user)
-
-        autama_ids = Messages.objects.all().filter(userID=user.pk).order_by('timeStamp') \
-            .values_list('autamaID', flat=True)
-        autama_ids = list(set(autama_ids))
-
-        message_chain = [" ".join([a_message.message for a_message in Messages.objects.all()
-                                  .filter(userID=user.pk)
-                                  .filter(autamaID=aid)
-                                  .order_by('timeStamp')])
-                         for aid in autama_ids]
-
         context = {'user_matches': user_matches, 'num_matches': len(user_matches),
-                   'user_messages': user_messages, 'num_messages': len(user_messages), 'message_chain': message_chain}
+                   'user_messages': user_messages, 'num_messages': len(user_messages)}
 
         return render(request, 'my_matches.html', context)
 
