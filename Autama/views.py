@@ -362,7 +362,8 @@ class Chat(LoginRequiredMixin, View):
         a_message.save()
 
         # The test_name and test_personality are just for testing. They will be replaced.
-        test_name = "Happy Slackers"
+        first_name = "Happy Slackers"
+        last_name = "Autama"
         trait1 = autama.interest1
         trait2 = autama.interest2
         trait3 = autama.interest3
@@ -371,7 +372,7 @@ class Chat(LoginRequiredMixin, View):
         trait6 = autama.interest6
         personality = [trait1, trait2, trait3, trait4, trait5, trait6]
 
-        ham = Ham(test_name, personality)
+        ham = Ham(first_name, last_name, personality)
         autama_response = ham.converse(user_input=form['x'].value())
 
         a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[1][1],
