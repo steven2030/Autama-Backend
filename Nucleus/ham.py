@@ -12,7 +12,7 @@ from Nucleus.tools import read_pickle
 
 
 class Ham:
-    def __init__(self, name: str, personality: list):
+    def __init__(self, first_name: str, last_name: str, personality: list):
         # For creating a conversation environment
         self.__nucleus = read_pickle("nucleus.pickle")
         self.__args = self.__nucleus.get_args()
@@ -20,8 +20,11 @@ class Ham:
         self.__model = self.__nucleus.get_model()
         self.__tokenizer = self.__nucleus.get_tokenizer()
         # Autama's identifiers
-        self.__name = name
+        self.__first_name = first_name
+        self.__last_name = last_name
+        self.__full_name = first_name + " " + last_name
         self.__personality = personality
+        # An identity is a list containing a name and a personality
         self.__identity = self.__tokenize_and_encode(personality)
         self.__history = []
 
@@ -38,9 +41,9 @@ class Ham:
     # A method that checks for name before conversing
     def check_converse(self, user_input: str):
         if "what is your name" in user_input or "your name?" in user_input:
-            return "my name is " + self.__name
+            return "my name is " + self.__first_name
         elif "who are you" in user_input or "who dis" in user_input:
-            return "i'm " + self.__name
+            return "i'm " + self.__first_name
         else:
             return self.converse(user_input)
 
