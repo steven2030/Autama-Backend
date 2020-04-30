@@ -65,7 +65,7 @@
 
     <title>My Matches</title>
     <br>
-    <h1>Matches {{ user_matches.count }}</h1>
+    <h1>New Matches {{num_matches}}</h1>
 
     <div class="row">
         {% for a_profile in user_matches %}
@@ -105,13 +105,16 @@
     <br>
 
     <!-- aligning images with text: https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_img_align -->
-    <h1>Messages {{ user_conversations.count }}</h1>
+    <h1>Messages {{num_messages}}</h1>
 
 
     <br>
+
+
     <div class="column">
 
-        {% for a_profile in user_conversations %}
+        {% for a_profile, a_message, a_chain in user_messages %}
+
 
         <div class="row">
             <a href="{% url 'Chat' pk=a_profile.pk %}" class="image">
@@ -119,11 +122,17 @@
                     <img src="{{ a_profile.picture.url }}" alt="Avatar" align="left"/>
                 </div>
             </a>
+            {{a_message}}
         </div>
+
 
         {% endfor %}
 
+
+
     </div>
+
+
 
 </div>
 {% endblock %}
