@@ -37,7 +37,8 @@ class Bacon:
     # A method to generate a random personality. It returns a list of personality trait strings.
     def __generate_personality(self):
         encoded_personality = self.__generate_encoded_personality()
-        return self.__decode_personality(encoded_personality)
+        decoded_personality = self.__decode_personality(encoded_personality)
+        return self.__remove_name_trait(decoded_personality)
 
     # A method for generating one encoded personality
     def __generate_encoded_personality(self):
@@ -100,3 +101,14 @@ class Bacon:
         personality = user_personality[:]
         personality = [trait.lower() for trait in personality]
         return personality
+
+    # A method to check and remove Convai generated names (any traits with "my name is")
+    def __remove_name_trait(self, personality: list):
+        revised_personality = []
+
+        # Loop and keep traits that do not contain "my name is"
+        for trait in personality:
+            if "my name is" not in trait:
+                revised_personality.append(trait)
+
+        return revised_personality
