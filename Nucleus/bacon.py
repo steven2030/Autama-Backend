@@ -25,6 +25,7 @@ class Bacon:
     # A method to generate a personality with half of a new user's personality and half random
     def make_hybrid_freak(self, user_personality: list):
         personality = self.__format_personality(user_personality)
+        personality = self.__remove_name_trait(personality)
         personality = self.__choose_some(personality)
         return self.__fill_up(personality)
 
