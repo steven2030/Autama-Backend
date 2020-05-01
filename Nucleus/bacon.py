@@ -29,11 +29,11 @@ class Bacon:
         personality = self.__choose_some(personality)
         return self.__fill_up(personality)
 
-    # A method to format a personality
-    def format_personality(self, user_personality: list):
-        personality = user_personality
-        personality = [trait.lower() for trait in personality]
-        return personality
+    # A method to check and remove name traits from user's personality when copying the personality to a new Autama
+    def check_personality(self, user_personality: list):
+        personality = self.__format_personality(user_personality)
+        personality = self.__remove_name_trait(personality)
+        return self.__fill_up(personality)
 
     # A method to generate a random personality. It returns a list of personality trait strings.
     def __generate_personality(self):

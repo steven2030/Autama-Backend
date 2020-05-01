@@ -68,8 +68,8 @@ class RegisterView(View):
         create_new_autama(personality=hybrid_personality, origin=username)
 
         # Creating an Autama with the same interests as the user
-        formatted_personality = bacon.format_personality(user_personality)
-        create_new_autama(personality=formatted_personality, origin=username)
+        same_personality = bacon.check_personality(user_personality)
+        create_new_autama(personality=same_personality, origin=username)
 
         return HttpResponseRedirect(reverse('login'))
 
