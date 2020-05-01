@@ -103,6 +103,19 @@
     display: none;
     }
 
+    
+    .to {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -43px;
+        margin-top: -43px;
+        background-color: white;
+}
+
     </style>
 
 {% endblock %}
@@ -142,6 +155,14 @@
                     {% endif %}
 
             </div>
+
+        
+            <div>
+                <a href="/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
+                    <img  style="position: relative; " class="to" alt="aaa" src="{{ autama.picture.url }}">
+                </a>
+             </div>
+
         </div>
     </nav>
 
