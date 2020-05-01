@@ -22,7 +22,7 @@ def add_test_data():
 
     ai_prof = AutamaProfile()
     ai_prof.creator = 'Bob'
-    ai_prof.picture = 'Images/a1.png'
+    ai_prof.picture = 'a1.png'
     ai_prof.first = 'Bob'
     ai_prof.last = 'TheBuilder'
     ai_prof.nummatches = 0
@@ -38,7 +38,7 @@ def add_test_data():
 
     ai_prof2 = AutamaProfile()
     ai_prof2.creator = "Malefcient"
-    ai_prof.picture = 'Images/a2.png'
+    ai_prof2.picture = 'a2.png'
     ai_prof2.first = "Cinderella"
     ai_prof2.last = "Princess"
     ai_prof2.nummatches = 0
@@ -54,7 +54,7 @@ def add_test_data():
 
     ai_prof3 = AutamaProfile()
     ai_prof3.creator = 'Mufasa'
-    ai_prof3.picture = 'Images/a3.png'
+    ai_prof3.picture = 'a3.png'
     ai_prof3.first = 'Simba'
     ai_prof3.last = 'Lion'
     ai_prof3.nummatches = 0
@@ -70,7 +70,7 @@ def add_test_data():
 
     ai_prof4 = AutamaProfile()
     ai_prof4.creator = 'Disney'
-    ai_prof4.picture = 'Images/a4.png'
+    ai_prof4.picture = 'a4.png'
     ai_prof4.first = 'Benny'
     ai_prof4.last = 'TheCab'
     ai_prof4.nummatches = 0
@@ -86,7 +86,7 @@ def add_test_data():
 
     ai_prof5 = AutamaProfile()
     ai_prof5.creator = 'Disney'
-    ai_prof5.picture = 'Images/a5.png'
+    ai_prof5.picture = 'a5.png'
     ai_prof5.first = 'Ariel'
     ai_prof5.last = 'Mermaid'
     ai_prof5.nummatches = 0
@@ -102,7 +102,7 @@ def add_test_data():
 
     ai_prof6 = AutamaProfile()
     ai_prof6.creator = 'Disney'
-    ai_prof6.picture = 'Images/a6.png'
+    ai_prof6.picture = 'a6.png'
     ai_prof6.first = 'Ursula'
     ai_prof6.last = 'Octopus'
     ai_prof6.nummatches = 0
@@ -118,7 +118,7 @@ def add_test_data():
 
     ai_prof7 = AutamaProfile()
     ai_prof7.creator = 'Disney'
-    ai_prof7.picture = 'Images/a7.png'
+    ai_prof7.picture = 'a7.png'
     ai_prof7.first = 'Louis'
     ai_prof7.last = 'Chef'
     ai_prof7.nummatches = 0
@@ -134,7 +134,7 @@ def add_test_data():
 
     ai_prof8 = AutamaProfile()
     ai_prof8.creator = 'Disney'
-    ai_prof8.picture = 'Images/a8.png'
+    ai_prof8.picture = 'a8.png'
     ai_prof8.first = 'LeFou'
     ai_prof8.last = ''
     ai_prof8.nummatches = 0
