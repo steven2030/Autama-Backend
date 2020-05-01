@@ -1,10 +1,27 @@
 {% extends 'base.html' %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{% block head %}
+<title>About Us</title>
+{% endblock %}
 
 {% block content %}
-    <br>
-    <br>
-    <h1>Meet the team</h1>
+<div id="header">
+    <!--Adjust to nav bar.-->
+</div>
+<style>
+    .wrapper {
+        margin-top: 50px;
+    }
+</style>
+
+
+<div class="wrapper" style="position: absolute;">
+    <article class="team-info">
+        <h1 class="title">Meet the team</h1>
         <p>Let knowledge serve the city.</p>
-        <img src="/Images/teamphoto.png" height="210" width="276">
+    </article>
+    <img src="/Images/teamphoto.png" height="210" width="276" alt="team photo">
+</div>
 
 {% endblock %}
