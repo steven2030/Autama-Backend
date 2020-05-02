@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 
 {% block head %}
@@ -9,20 +10,40 @@
 <style>
     .wrapper {
         margin-top: 50px;
-        display: flex;
-        justify-center: center;
         text-align: center;
-        }
+    }
+
+    .wrapper div {
+        display: inline-block;
+        text-align: left;
+    }
+
 </style>
 
 
 <body>
     <div class="wrapper">
-        <article class="team-info">
-            <h1 class="title">Meet the team</h1>
+        <div id="about-team">
+            <h1>Meet the team</h1>
             <p>Let knowledge serve the city.</p>
-        </article>
-        <img class="team-photo" src="/Images/teamphoto.png" height="210" width="276" alt="team photo"/>
+        </div>
+
+        <div id="team-photo">
+            <img src="/Images/teamphoto.png" height="210" width="276" alt="team photo"/>
+        </div>
+
+        <div id="feedback-cell">
+            <!-- Feed back stuff -->
+        </div>
+
+        <div id="team-roster">
+            <div id="team-member">
+                <p>name</p>
+                {%load static%}<img src="{% static 'Aaron.png'%}"/>
+                <p>Im a butt</p>
+            </div>
+        </div>
+
     </div>
 </body>
 

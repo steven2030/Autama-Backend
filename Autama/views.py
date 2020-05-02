@@ -254,7 +254,6 @@ class FindMatches(LoginRequiredMixin, View):
 
 # TODO: Do we want this as part of login? Fix to view if keeping.
 def about(request):
-    # return HttpResponse('about')
     return render(request, 'about.html')
 
 
