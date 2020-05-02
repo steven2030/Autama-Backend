@@ -14,17 +14,17 @@ Add description here.
 
 ### To Run:
   * pip install -r requirements.txt
-  * If this is the first run, create a DB, download the pre-trained language model, and create a Nucleus
+  * If this is the first run, create a DB, download a personality dataset, and create a Nucleus
   * python manage.py runserver
   * in a web browser go to: 127.0.0.1:8000 (This should be displayed during server startup)
 
 ### To Create the DB: 
-  * Python manage.py makemigrations accounts
-  * Python manage.py makemigrations AutamaProfiles
-  * Python manage.py migrate
+  * python manage.py makemigrations accounts
+  * python manage.py makemigrations AutamaProfiles
+  * python manage.py migrate
 
-### To Download the Pre-Trained Language Model: 
-  * python language.py
+### To Download a personality dataset: 
+  * python dataset.py
   
 ### To Create a Nucleus: 
   * python build.py
