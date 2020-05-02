@@ -130,6 +130,10 @@
         function hideReport() {
             div = document.getElementById("report").style.display="none";
         }
+
+        function alertFeedback() {
+            
+        }
     </script>
 
 {% endblock %}
@@ -166,7 +170,8 @@
         </div>
     </nav>
 
-
+    <br>
+    <br>
         <div class="lite-chatbox">
             <div>
                 {% for a_message in message_chain %}
@@ -210,16 +215,23 @@
 
         <input onclick="showReport()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="report" value="Report">
 
-    <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
+        <!-- TODO: change text box to a "check all that apply" list -->
+        <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
         <div class="report_box" id="report">
             <!-- <form action="???" method="post"> -->
             <!-- include csrf_token here -->
-            <form>
-                <br>
-                <h3>Report Autama</h3>
-                <textarea rows ="5" cols="60" name="description" placeholder="Please describe the issue(s) with this Autama."></textarea>
-                <br>
-                <input type="submit" value="Submit"/>
+            <br>
+            <h1>Report Autama</h1>
+            <form action="TODO">
+                <input type="checkbox" id="option1" name="option1" value="Option 1">
+                <label for="option1"> Inappropriate content</label><br>
+                <input type="checkbox" id="option2" name="option2" value="Option 2">
+                <label for="option2"> Incorrect responses</label><br>
+                <input type="checkbox" id="option3" name="option3" value="Option 3">
+                <label for="option3"> Doesn't respond</label><br>
+                <input type="checkbox" id="option4" name="option4" value="Option 4">
+                <label for="option4"> Other</label><br><br>
+                <input type="submit" value="Submit" onclick="alertFeedback()">
                 <button onclick="hideReport()"/>Close</button>
             </form>
         </div>
