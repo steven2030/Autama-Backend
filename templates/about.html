@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 
 {% block head %}
 <title>About Us</title>
@@ -8,43 +7,140 @@
 
 {% block content %}
 <style>
-    .wrapper {
+    body {
         margin-top: 50px;
-        text-align: center;
+        padding-left: 30px;
+        margin-bottom: 50px;
     }
 
-    .wrapper div {
+    .info-container {
+        text-align: left;
+        margin-right: 0px;
+        margin-left: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-top: 3%;
+    }
+
+    .info-container div {
         display: inline-block;
         text-align: left;
     }
+
+
 
 </style>
 
 
 <body>
-    <div class="wrapper">
-        <div id="about-team">
+    <!-- Team -->
+    <div class="info-container">
+        <div class="photo">
+            <img src="/static/teamphoto.png" height="210" width="276" alt="team photo"/>
+        </div>
+
+        <div class="text">
             <h1>Meet the team</h1>
             <p>Let knowledge serve the city.</p>
         </div>
 
-        <div id="team-photo">
-            <img src="/Images/teamphoto.png" height="210" width="276" alt="team photo"/>
+    </div>
+
+    <div id="feedback-cell">
+        <!-- Feed back stuff -->
+    </div>
+
+    <!-- Aaron -->
+    <div class="info-container">
+        <div class="photo">
+            <img src="/static/Aaron.png"/>
         </div>
 
-        <div id="feedback-cell">
-            <!-- Feed back stuff -->
-        </div>
-
-        <div id="team-roster">
-            <div id="team-member">
-                <p>name</p>
-                {%load static%}<img src="{% static 'Aaron.png'%}"/>
-                <p>Im a butt</p>
-            </div>
+        <div class="text">
+            <h1>name</h1>
+            <p>I have details.</p>
         </div>
 
     </div>
+
+    <!-- Hao -->
+    <div class="info-container">
+        <div class="photo">
+            <img src="/static/Hao.png"/>
+        </div>
+
+        <div class="text">
+            <h1>name</h1>
+            <p>I have details.</p>
+        </div>
+
+    </div>
+
+    <!-- Kevin -->
+    <div class="info-container">
+        <div class="photo">
+            <img src="/static/Kevin.png"/>
+        </div>
+
+        <div class="text">
+            <h1>name</h1>
+            <p>I have details.</p>
+        </div>
+
+    </div>
+
+    <!-- Michael -->
+    <div class="info-container">
+        <div class="photo">
+            <img src="/static/Michael.png"/>
+        </div>
+
+        <div class="text">
+            <h1>name</h1>
+            <p>I have details.</p>
+        </div>
+
+    </div>
+
+    <!-- Nick -->
+    <div class="info-container">
+        <div class="photo">
+            <img src="/static/Nick.png"/>
+        </div>
+
+        <div class="text">
+            <h1>name</h1>
+            <p>I have details.</p>
+        </div>
+
+    </div>
+
+    <!-- Ryan -->
+    <div class="info-container">
+        <div class="photo">
+            <img src="/static/Ryan.png"/>
+        </div>
+
+        <div class="text">
+            <h1>name</h1>
+            <p>I have details.</p>
+        </div>
+
+    </div>
+
+    <!-- Sharice -->
+    <div class="info-container">
+        <div class="photo">
+            <img src="/static/Sharice.png"/>
+        </div>
+
+        <div class="text">
+            <h1>name</h1>
+            <p>I have details.</p>
+        </div>
+
+    </div>
+
 </body>
 
 {% endblock %}
