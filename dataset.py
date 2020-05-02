@@ -1,5 +1,5 @@
 """
-This file contains code to download and cache a pre-trained language model
+This file contains code to download and cache a personality dataset
 from HuggingFace Inc.
 """
 
@@ -7,7 +7,7 @@ from Nucleus.bacon import Bacon
 
 
 def main():
-    print("Downloading and caching the pre-trained language could take 20 minutes or more.")
+    print("Downloading and caching the pre-trained language could take 15 minutes or more.")
     bacon = Bacon()
     personality = bacon.generate_full_personality()
     print("The process is done.")
