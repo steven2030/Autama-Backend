@@ -23,7 +23,7 @@ Add description here.
   * python manage.py makemigrations AutamaProfiles
   * python manage.py migrate
 
-### To Download a personality dataset: 
+### To Download a Personality Dataset: 
   * python dataset.py
   
 ### To Create a Nucleus: 
