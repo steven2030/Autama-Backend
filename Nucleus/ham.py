@@ -37,7 +37,7 @@ class Ham:
         nucleus_output = self.__tokenizer.decode(out_ids, skip_special_tokens=True)
         return nucleus_output
 
-    # A method that checks for name before conversing
+    # A method that checks if the user asks for the Autama's name
     def check_converse(self, user_input: str):
         name = self.__first_name
         response = self.converse(user_input)
