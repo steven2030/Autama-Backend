@@ -5,7 +5,6 @@
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/11d06f2f9f.js" crossorigin="anonymous"></script>
-
 {% endblock %}
 
 {% block csstyle %}
@@ -131,8 +130,8 @@
             div = document.getElementById("report").style.display="none";
         }
 
-        function alertFeedback() {
-
+        function promptFeedback() {
+            alert("Working on implementing jQuery dialog with link to /about here");
         }
     </script>
 
@@ -215,14 +214,48 @@
 
         <input onclick="showReport()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="report" value="Report">
 
-        <!-- TODO: change text box to a "check all that apply" list -->
+
+        <!-- jQuery dialog code here -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+        <div id="dialog-confirm" title="Report submitted, thank you!">
+            <p>Would you like to provide additional feedback?</p>
+        </div>
+
+        <script>
+            $(function() {
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: 180,
+                    autoOpen: false,
+                    width: 330,
+                    modal: true,
+                    buttons: {
+                        "Yes": function() {
+                            $('#reportform').submit();
+                        },
+                        No: function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+
+                $('#submitReport').on('click', function(e) {
+                    $("#dialog-confirm").dialog('open');
+                });
+            });
+        </script>
+
         <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
         <div class="report_box" id="report">
             <!-- <form action="???" method="post"> -->
             <!-- include csrf_token here -->
             <br>
             <h1>Report Autama</h1>
-            <form action="TODO">
+            <form id="reportform">
                 <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option1" name="option1" value="Option 1">
                 <label for="option1"> Inappropriate content</label><br>
                 <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option2" name="option2" value="Option 2">
@@ -231,7 +264,11 @@
                 <label for="option3"> Doesn't respond</label><br>
                 <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option4" name="option4" value="Option 4">
                 <label for="option4"> Other</label><br><br>
-                <input type="submit" value="Submit" onclick="alertFeedback()">
+
+                <!-- jQuery dialog-confirm code -->
+                <input type="hidden" name="submitReport" value="Submit"/>
+                <input type="button" id="submitReport" value="Submit"/>
+
                 <button onclick="hideReport()"/>Close</button>
             </form>
         </div>
