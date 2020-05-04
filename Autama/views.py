@@ -254,7 +254,6 @@ class FindMatches(LoginRequiredMixin, View):
 
 # TODO: Do we want this as part of login? Fix to view if keeping.
 def about(request):
-    # return HttpResponse('about')
     return render(request, 'about.html')
 
 
@@ -358,7 +357,7 @@ class Chat(LoginRequiredMixin, View):
         # Search for a message chain in the database order by utc timestamp
         message_chain = Messages.objects.all().filter(userID=user.pk).filter(autamaID=autama.pk).order_by('timeStamp')
 
-        return render(request, 'Chat.html', {'autama': autama, 'user': user, 'form': form,
+        return render(request, 'chat.html', {'autama': autama, 'user': user, 'form': form,
                                              'message_chain': message_chain})
 
     def post(self, request, pk):
