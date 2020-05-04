@@ -121,7 +121,6 @@
      }
 
 
-
     </style>
 
 {%  endblock %}
@@ -134,6 +133,20 @@
                     <div class="h3" style="height:45px; border-radius: 3px; background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); text-align: center; vertical-align: center" id="profile">
                         My Profile
                     </div>
+
+
+                    <script>
+                        function goToFeedback() {
+                            window.location.replace("http://127.0.0.1:8000/about/");
+                        }
+                    </script>
+
+                    <div id="feedback">
+                        <br><br>
+                        <input onclick="goToFeedback()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="feedback" value="Feedback">
+                    </div>
+
+
                     <div id="bo">
                         <p>ACCOUNT SETTINGS</p>
                         <div class="list-group-item" style="border-top: 1px solid #C0C0C0;">
