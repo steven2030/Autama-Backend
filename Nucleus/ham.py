@@ -68,19 +68,17 @@ class Ham:
         return personality
 
     # A method to create a list of introduction phrases
-    def __create_intro(self):
-        lower_first_name = self.__first_name.lower()
-        lower_full_name = self.__full_name
-        introduction1 = "my name is " + lower_full_name + "."
-        introduction2 = 'i am ' + lower_full_name + "."
-        introduction3 = "my name is " + lower_first_name + "."
-        introduction4 = "i am " + lower_first_name + "."
-        introduction_list = [introduction1, introduction2, introduction3, introduction4]
+    def __create_intro(self, name: str):
+        lower_name = name.lower()
+        introduction1 = "my name is " + lower_name + "."
+        introduction2 = 'i am ' + lower_name + "."
+        introduction_list = [introduction1, introduction2]
         return introduction_list
 
     # A method to create an identity
     def __create_identity(self):
-        introduction = self.__create_intro()
+        full_introduction = self.__create_intro(self.__full_name)
+        introduction = self.__create_intro(self.__first_name)
         personality = self.__format_personality()
-        identity = introduction + personality
+        identity = full_introduction + introduction + personality
         return self.__tokenize_and_encode(identity)
