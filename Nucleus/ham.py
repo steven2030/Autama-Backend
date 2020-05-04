@@ -16,7 +16,6 @@ class Ham:
         # For creating a conversation environment
         self.__nucleus = read_pickle("nucleus.pickle")
         self.__args = self.__nucleus.get_args()
-        self.__logger = self.__nucleus.get_logger()
         self.__model = self.__nucleus.get_model()
         self.__tokenizer = self.__nucleus.get_tokenizer()
         # Autama's identifiers
@@ -25,7 +24,7 @@ class Ham:
         self.__full_name = first_name + " " + last_name
         self.__personality = personality
         # An identity is a list containing a name and a personality
-        self.__identity = self.__tokenize_and_encode(personality)
+        self.__identity = self.__create_identity()
         self.__history = []
 
     # A method that returns Autama's output by taking in user's input
@@ -61,3 +60,27 @@ class Ham:
             return list(tokenize(o) for o in obj)
 
         return tokenize(identity)
+
+    # A method to make sure all traits in personality are lower case
+    def __format_personality(self):
+        personality = self.__personality[:]
+        personality = [trait.lower() for trait in personality]
+        return personality
+
+    # A method to create a list of introduction phrases
+    def __create_intro(self):
+        lower_first_name = self.__first_name.lower()
+        lower_full_name = self.__full_name
+        introduction1 = "my name is " + lower_full_name + "."
+        introduction2 = 'i am ' + lower_full_name + "."
+        introduction3 = "my name is " + lower_first_name + "."
+        introduction4 = "i am " + lower_first_name + "."
+        introduction_list = [introduction1, introduction2, introduction3, introduction4]
+        return introduction_list
+
+    # A method to create an identity
+    def __create_identity(self):
+        introduction = self.__create_intro()
+        personality = self.__format_personality()
+        identity = introduction + personality
+        return self.__tokenize_and_encode(identity)
