@@ -39,12 +39,20 @@ class Ham:
 
     # A method that checks for name before conversing
     def check_converse(self, user_input: str):
+        name = self.__first_name
+        response = self.converse(user_input)
         if "what is your name" in user_input or "your name?" in user_input:
-            return "my name is " + self.__first_name
+            if name in response:
+                return response
+            else:
+                return "my name is " + name
         elif "who are you" in user_input or "who dis" in user_input:
-            return "i'm " + self.__first_name
+            if name in response:
+                return response
+            else:
+                return "i'm " + name
         else:
-            return self.converse(user_input)
+            return response
 
     # A method to display the Autama's identity
     def display_identity(self):
