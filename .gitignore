@@ -3,6 +3,8 @@ venv
 Autama/__pycache__/
 accounts/__pycache__/
 accounts/migrations/__pycache__/
+*.pyc
+*__pycache__*
 db.sqlite3
 accounts/migrations/0*
 AutamaProfiles/migrations/0*
@@ -10,4 +12,8 @@ AutamaProfiles/migrations/0*
 Nucleus/__*
 *.pyc
 nucleus.pickle
+<<<<<<< HEAD
 dataset_cache_OpenAIGPTTokenizer
+=======
+
+>>>>>>> beta-dev
