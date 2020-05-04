@@ -25,7 +25,8 @@ SECRET_KEY = '0jx6nply=59sv85ii0*r9abdg$sf+awn1vjwelfzc7pxfaek-3'
 DEBUG = False
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', '3.16.189.148']
-ALLOWED_HOSTS = ['3.16.189.148'] #, '172.31.47.53'] #server ip address
+ALLOWED_HOSTS = ['3.16.189.148', 'autama.org'] #, '172.31.47.53'] #server ip address
+#ALLOWED_HOSTS = ['3.16.189.148'] #, '172.31.47.53'] #server ip address
 
 
 # Application definition
@@ -127,7 +128,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
-
+    # os.path.join(BASE_DIR, 'templates')
 )
 
 MEDIA_URL = '/Images/'
