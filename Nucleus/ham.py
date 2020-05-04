@@ -22,9 +22,9 @@ class Ham:
         self.__first_name = first_name
         self.__last_name = last_name
         self.__full_name = first_name + " " + last_name
-        self.__personality = personality
+        self.__personality = personality # A list of interests
         # An identity is a list containing a name and a personality
-        self.__identity = self.__create_identity()
+        self.__identity = self.__create_identity() # A list of name and personality combined
         self.__history = []
 
     # A method that returns Autama's output by taking in user's input
