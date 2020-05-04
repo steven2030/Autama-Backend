@@ -369,9 +369,9 @@ class Chat(LoginRequiredMixin, View):
                                             message=form['x'].value())
         a_message.save()
 
-        # The test_name and test_personality are just for testing. They will be replaced.
-        first_name = "Happy Slackers"
-        last_name = "Autama"
+        # Using HAM to get a response from Autama
+        first_name = autama.first
+        last_name = autama.last
         trait1 = autama.interest1
         trait2 = autama.interest2
         trait3 = autama.interest3
