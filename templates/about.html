@@ -34,9 +34,20 @@
 
     .feedback-container {
         padding-top: 3%;
+        display: none;
     }
 
 </style>
+
+<script>
+    function showFeedback() {
+        div = document.getElementById("feedback").style.display="block";
+    }
+
+    function hideFeedback() {
+        div = document.getElementById("feedback").style.display="none";
+    }
+</script>
 
 
 <body>
@@ -52,13 +63,19 @@
         </div>
     </div>
 
-    <div class="feedback-container">
-        <!-- Feed back stuff -->
-        <div class="text">
-            <p>Care to give us some feedback? Click <a href="#">here</a>.</p>
-        </div>
 
+    <br>
+    <input onclick="showFeedback()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="feedback" value="Feedback">
+
+    <div class="feedback-container" id="feedback">
+        <form id="feedbackform">
+            <textarea id="userFeedback" rows="5" cols="60" placeholder="Any comments, concerns, or suggestsions?"></textarea>
+            <br>
+            <input type="submit" name="Submit" value="Submit">
+            <button onclick="hideFeedback()">Close</button>
+        </form>
     </div>
+
 
     <!-- Aaron -->
     <div class="info-container">
