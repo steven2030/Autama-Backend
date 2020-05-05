@@ -27,7 +27,7 @@
 {% block content %}
     <div class="div1">
         <img id="div_first" src="/Images/Images/background-login01.jpg">
-        <div class="div2" style="width: 80%;margin: auto;margin-top: 50px;">
+        <div class="div2" style="width: 80%;margin: auto;margin-top: 50px; color: white">
             <h2> login </h2>
             <form action="/login/" method="post">
               <div class="form-group">
@@ -56,11 +56,11 @@
 <script>
 var imgs =["background-login01.jpg", "background-login02.jpg"];       
         function time(){
-               var i = Math.floor(Math.random()*(2+0)+0); 
-               document.getElementById("div_first").src ="/Images/Images/"+imgs[i];  
-
+              let i = Math.floor(Math.random()*100);
+              /// document.getElementById("div_first").src ="../Images/"+imgs[i]; 
+            document.getElementById("div_first").src = "../Images/a" + i + ".png";
              
-        }setInterval("time()",1500); 
+        }setInterval("time()",5000); 
 
        
 </script>

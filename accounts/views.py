@@ -12,6 +12,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from .models import User
+from AutamaProfiles.models import AutamaProfile
+from Nucleus.bacon import Bacon
+from AutamaProfiles.models import create_new_autama
 
 
 class RegisterView(View):
@@ -29,6 +32,13 @@ class RegisterView(View):
         email = request.POST.get('email')
         password = request.POST.get('password')
         rePassword = request.POST.get('rePassword')
+        interests1 = request.POST.get('interest1')
+        interests2 = request.POST.get('interest2')
+        interests3 = request.POST.get('interest3')
+        interests4 = request.POST.get('interest4')
+        interests5 = request.POST.get('interest5')
+        interests6 = request.POST.get('interest6')
+
         if password != rePassword:
             return render(request, '../templates/register.html', {'error': 'Inconsistent passwords'})
 
@@ -38,7 +48,29 @@ class RegisterView(View):
 
         obj = User.objects.create(username=username, first_name=firstname,last_name=lastname, email=email)
         obj.set_password(password)
+        obj.interests1 = interests1
+        obj.interests2 = interests2
+        obj.interests3 = interests3
+        obj.interests4 = interests4
+        obj.interests5 = interests5
+        obj.interests6 = interests6
+        obj.currentAutama = 0
         obj.save()
+
+        """When a new user is created, two new Autama profiles based off the new user will be created too."""
+        #bacon = Bacon() # For handling personality generating
+
+        # A list of the new user's interests
+        user_personality = [interests1, interests2, interests3, interests4, interests5, interests6]
+
+        # Creating hybrid personality Autama
+        #hybrid_personality = bacon.make_hybrid_freak(user_personality)
+        #create_new_autama(personality=hybrid_personality, origin=username)
+
+        # Creating an Autama with the same interests as the user
+        #same_personality = bacon.check_personality(user_personality)
+        #create_new_autama(personality=same_personality, origin=username)
+
         return HttpResponseRedirect(reverse('login'))
 
 

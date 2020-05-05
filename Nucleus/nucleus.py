@@ -1,22 +1,21 @@
 """
-This file contains a class to build and chat with an autama. This file borrows some
-code from HuggingFace Inc.'s open source project. The code can be found here:
+This file contains a class for initializing the fields needed for generating and conversing. There
+are four fields from this class that are needed in the BACON and HAM classes. They are args,
+logger, model, and tokenizer. There are four get methods to return those fields. This file
+borrows codes from HuggingFace Inc.'s open source project. The code can be found here:
 https://github.com/huggingface/transfer-learning-conv-ai/blob/master/interact.py
 """
 
 import logging
 import random
 from argparse import ArgumentParser
-from itertools import chain
 from pprint import pformat
 
 import torch
 
 from transformers import OpenAIGPTLMHeadModel, OpenAIGPTTokenizer, GPT2LMHeadModel, GPT2Tokenizer
 from Nucleus.train import add_special_tokens_
-from Nucleus.utils import get_dataset, download_pretrained_model
-
-from Nucleus.interact import sample_sequence
+from Nucleus.utils import download_pretrained_model
 
 
 class Nucleus:
@@ -24,7 +23,6 @@ class Nucleus:
         self.__temperature = temperature
         self.__top_k = top_k
         self.__top_p = top_p
-        self.__history = [] # For conversation
 
         parser = ArgumentParser()
         parser.add_argument("--dataset_path", type=str, default="",
@@ -73,42 +71,18 @@ class Nucleus:
         self.__model.to(self.__args.device)
         add_special_tokens_(self.__model, self.__tokenizer)
 
-    # A method for generating one personality at a time
-    def generate_personality(self):
-        self.__logger.info("Sample a personality")
-        dataset = get_dataset(self.__tokenizer, self.__args.dataset_path, self.__args.dataset_cache)
-        personalities = [dialog["personality"] for dataset in dataset.values() for dialog in dataset]
-        personality = random.choice(personalities)
-        return personality
+    # A method to return args
+    def get_args(self):
+        return self.__args
 
-    # A method for decoding an encoded personality
-    def decode_personality(self, encoded_personality: list):
-        encoded_personality_string = self.__tokenizer.decode(chain(*encoded_personality))
-        decoded_personality_list = [i + "." for i in encoded_personality_string.split(".")]
-        decoded_personality_list.pop()
-        return decoded_personality_list
+    # A method to return logger
+    def get_logger(self):
+        return self.__logger
 
-    # A method to tokenize and encode an identity
-    def tokenize_and_encode(self, identity: list):
-        def tokenize(obj):
-            if isinstance(obj, str):
-                return self.__tokenizer.convert_tokens_to_ids(self.__tokenizer.tokenize(obj))
-            if isinstance(obj, dict):
-                return dict((n, tokenize(o)) for n, o in obj.items())
-            return list(tokenize(o) for o in obj)
+    # A method to return model
+    def get_model(self):
+        return self.__model
 
-        return tokenize(identity)
-
-    # A method to display personality
-    def display_personality(self, personality: list):
-        self.__logger.info("Selected personality: %s", self.__tokenizer.decode(chain(*personality)))
-
-    # A method to converse with an Autama by taking in Autama's personality and user's input
-    def converse_with(self, personality: list, user_input: str):
-        self.__history.append(self.__tokenizer.encode(user_input))
-        with torch.no_grad():
-            out_ids = sample_sequence(personality, self.__history, self.__tokenizer, self.__model, self.__args)
-        self.__history.append(out_ids)
-        self.__history = self.__history[-(2 * self.__args.max_history + 1):]
-        nucleus_output = self.__tokenizer.decode(out_ids, skip_special_tokens=True)
-        return nucleus_output
+    # A method to return tokenizer
+    def get_tokenizer(self):
+        return self.__tokenizer

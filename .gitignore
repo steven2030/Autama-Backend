@@ -6,6 +6,9 @@ accounts/migrations/__pycache__/
 db.sqlite3
 accounts/migrations/0*
 AutamaProfiles/migrations/0*
-
-SharicesChanges
 *.DS_Store
+Nucleus/__*
+*.pyc
+nucleus.pickle
+dataset_cache_OpenAIGPTTokenizer
+Autama.sock

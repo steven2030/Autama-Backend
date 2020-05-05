@@ -38,7 +38,13 @@ urlpatterns = [
     path('Chat/<int:pk>/', main_page_views.Chat.as_view(), name="Chat"),
     path('logout/', main_page_views.LogoutView.as_view(), name="logout"),
     path('AutamaProfiles/', include('AutamaProfiles.urls')),
+    path('MyClaims/', main_page_views.MyClaims.as_view(), name="MyClaims"),
+    path('MyClaims/<int:pk>/', main_page_views.MyClaims.as_view(), name="unclaim"),
+    path('unclaim_from_chat/<int:pk>/', main_page_views.unclaim_from_chat, name="unclaim_from_chat"),
+    path('PrivacyPolicy/', main_page_views.PrivacyPolicy, name="PrivacyPolicy"),
+    path('testdata/', main_page_views.testdata,),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

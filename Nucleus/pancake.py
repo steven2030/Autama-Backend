@@ -15,8 +15,8 @@ from random import choice, seed
 
 class Pancake:
     def __init__(self):
-        self.__female_names_file = "female_names.txt"
-        self.__male_names_file = "male_names.txt"
+        self.__female_names_file = "Nucleus/female_names.txt"
+        self.__male_names_file = "Nucleus/male_names.txt"
         self.__female_names_list = open(self.__female_names_file).read().splitlines()
         self.__male_names_list = open(self.__male_names_file).read().splitlines()
 
