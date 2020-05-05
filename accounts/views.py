@@ -58,18 +58,18 @@ class RegisterView(View):
         obj.save()
 
         """When a new user is created, two new Autama profiles based off the new user will be created too."""
-        bacon = Bacon() # For handling personality generating
+        #bacon = Bacon() # For handling personality generating
 
         # A list of the new user's interests
         user_personality = [interests1, interests2, interests3, interests4, interests5, interests6]
 
         # Creating hybrid personality Autama
-        hybrid_personality = bacon.make_hybrid_freak(user_personality)
-        create_new_autama(personality=hybrid_personality, origin=username)
+        #hybrid_personality = bacon.make_hybrid_freak(user_personality)
+        #create_new_autama(personality=hybrid_personality, origin=username)
 
         # Creating an Autama with the same interests as the user
-        same_personality = bacon.check_personality(user_personality)
-        create_new_autama(personality=same_personality, origin=username)
+        #same_personality = bacon.check_personality(user_personality)
+        #create_new_autama(personality=same_personality, origin=username)
 
         return HttpResponseRedirect(reverse('login'))
 
