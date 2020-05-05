@@ -11,3 +11,4 @@ Nucleus/__*
 *.pyc
 nucleus.pickle
 dataset_cache_OpenAIGPTTokenizer
+Autama.sock
