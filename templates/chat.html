@@ -9,7 +9,6 @@
 {% block csstyle %}
     <style>
 
-
         .lite-chatbox{padding:0;width:100%;position:relative;overflow-y:auto;overflow-x:hidden;font:18px Helvetica,"PingFang SC","Microsoft YaHei",sans-serif}
         .lite-chatbox .cmsg{position:relative;margin:4px 7px;min-height:50px;border:0}
         .lite-chatbox .cright{text-align:right;margin-left:64px}
@@ -43,6 +42,7 @@
             height: 70px;
             overflow-y: auto;
         }
+
         .content1{
             padding-top: 20px;
         }
@@ -51,7 +51,6 @@
             float: right;
             margin-right: 10px;
         }
-
 
         .navbar {
             background-image: linear-gradient(#54B4EB, #2FA4E7 60%, #1D9CE5);
@@ -101,7 +100,6 @@
             display: none;
         }
 
-
         .to {
             width: 40px;
             height: 40px;
@@ -115,9 +113,7 @@
         }
 
     </style>
-
 {% endblock %}
-
 
 {% block js %}
     <script>
@@ -129,7 +125,6 @@
             div = document.getElementById("report").style.display="none";
         }
     </script>
-
 {% endblock %}
 
 {% block content %}
@@ -151,16 +146,13 @@
                             <li><a href="/MyMatches/"><i class="fas fa-chevron-left" aria-hidden="true"></i> </a></li>
                             </ul>
                         {% endif %}
-
                 </div>
-
 
                 <div>
                     <a href="/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
                         <img  style="position: relative; " class="to" alt="aaa" src="{{ autama.picture.url }}">
                     </a>
                 </div>
-
             </div>
         </nav>
 
@@ -181,12 +173,10 @@
                             <span class="name">{{ autama.first }}</span>
                             <span class="content">{{a_message.message}} Sent on: {{ a_message.timeStamp }}</span>
                         </div>
-
                     {% endif %}
                 {% endfor %}
             </div>
         </div>
-
 
         <div>
             <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
