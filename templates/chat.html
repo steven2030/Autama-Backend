@@ -190,16 +190,7 @@
             </form>
         </div>
 
-        <div>
-            <form action="{% url 'unclaim_from_chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="unclaim" value="Unclaim">
-            </form>
-        </div>
-
-        <br><br><br>
         <input onclick="showReport()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="report" value="Report">
-
 
         <!-- jQuery dialog code here: https://stackoverflow.com/questions/40939099/jquery-form-submit-with-confirmation-in-a-modal -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
