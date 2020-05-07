@@ -34,36 +34,56 @@
 
     .feedback-container {
         padding-top: 3%;
+        display: none;
     }
 
 </style>
+
+<script>
+    function showFeedback() {
+        div = document.getElementById("feedback").style.display="block";
+    }
+
+    function hideFeedback() {
+        div = document.getElementById("feedback").style.display="none";
+    }
+</script>
+
 
 <body>
     <!-- Team -->
     <div class="info-container">
         <div class="photo">
-            <img src="/static/teamphoto.png"/>
+            <img src="/Images/Team/teamphoto.png"/>
         </div>
-
         <div class="text">
             <h1>Meet the team</h1>
             <p>Let knowledge serve the city.</p>
         </div>
-
-    </div>
-
-    <!-- Feedback -->
-    <div class="feedback-container">
-        <div class="text">
-            <p>Care to give us some feedback? Click <a href="#">here</a>.</p>
+        <br>
+        <div class="photo">
+            <img src="/static/teamphoto.png"/>
         </div>
-
     </div>
+
+
+    <br>
+    <input onclick="showFeedback()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="feedback" value="Feedback">
+
+    <div class="feedback-container" id="feedback">
+        <form id="feedbackform">
+            <textarea id="userFeedback" rows="5" cols="60" placeholder="Any comments, concerns, or suggestsions?"></textarea>
+            <br>
+            <input type="submit" name="Submit" value="Submit">
+            <button onclick="hideFeedback()">Close</button>
+        </form>
+    </div>
+
 
     <!-- Aaron -->
     <div class="info-container">
         <div class="photo">
-            <img src="/static/Aaron.png"/>
+            <img src="/Images/Team/Aaron.png"/>
         </div>
 
         <div class="text">
@@ -76,7 +96,7 @@
     <!-- Hao -->
     <div class="info-container">
         <div class="photo">
-            <img src="/static/Hao.png"/>
+            <img src="/Images/Team/Hao.png"/>
         </div>
 
         <div class="text">
@@ -89,7 +109,7 @@
     <!-- Kevin -->
     <div class="info-container">
         <div class="photo">
-            <img src="/static/Kevin.png"/>
+            <img src="/Images/Team/Kevin.png"/>
         </div>
 
         <div class="text">
@@ -102,7 +122,7 @@
     <!-- Michael -->
     <div class="info-container">
         <div class="photo">
-            <img src="/static/Michael.png"/>
+            <img src="/Images/Team/Michael.png"/>
         </div>
 
         <div class="text">
@@ -115,7 +135,7 @@
     <!-- Nick -->
     <div class="info-container">
         <div class="photo">
-            <img src="/static/Nick.png"/>
+            <img src="/Images/Team/Nick.png"/>
         </div>
 
         <div class="text">
@@ -128,7 +148,7 @@
     <!-- Ryan -->
     <div class="info-container">
         <div class="photo">
-            <img src="/static/Ryan.png"/>
+            <img src="/Images/Team/Ryan.png"/>
         </div>
 
         <div class="text">
@@ -141,7 +161,7 @@
     <!-- Sharice -->
     <div class="info-container">
         <div class="photo">
-            <img src="/static/Sharice.png"/>
+            <img src="/Images/Team/Sharice.png"/>
         </div>
 
         <div class="text">

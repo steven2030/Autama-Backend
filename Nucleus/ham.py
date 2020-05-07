@@ -16,16 +16,15 @@ class Ham:
         # For creating a conversation environment
         self.__nucleus = read_pickle("nucleus.pickle")
         self.__args = self.__nucleus.get_args()
-        self.__logger = self.__nucleus.get_logger()
         self.__model = self.__nucleus.get_model()
         self.__tokenizer = self.__nucleus.get_tokenizer()
         # Autama's identifiers
         self.__first_name = first_name
         self.__last_name = last_name
         self.__full_name = first_name + " " + last_name
-        self.__personality = personality
+        self.__personality = personality # A list of interests
         # An identity is a list containing a name and a personality
-        self.__identity = self.__tokenize_and_encode(personality)
+        self.__identity = self.__create_identity() # A list of name and personality combined
         self.__history = []
 
     # A method that returns Autama's output by taking in user's input
@@ -38,14 +37,22 @@ class Ham:
         nucleus_output = self.__tokenizer.decode(out_ids, skip_special_tokens=True)
         return nucleus_output
 
-    # A method that checks for name before conversing
+    # A method that checks if the user asks for the Autama's name and helps answer that question if needed
     def check_converse(self, user_input: str):
+        name = self.__first_name
+        response = self.converse(user_input)
         if "what is your name" in user_input or "your name?" in user_input:
-            return "my name is " + self.__first_name
+            if name in response:
+                return response
+            else:
+                return "my name is " + name
         elif "who are you" in user_input or "who dis" in user_input:
-            return "i'm " + self.__first_name
+            if name in response:
+                return response
+            else:
+                return "i'm " + name
         else:
-            return self.converse(user_input)
+            return response
 
     # A method to display the Autama's identity
     def display_identity(self):
@@ -61,3 +68,25 @@ class Ham:
             return list(tokenize(o) for o in obj)
 
         return tokenize(identity)
+
+    # A method to make sure all traits in personality are lower case
+    def __format_personality(self):
+        personality = self.__personality[:]
+        personality = [trait.lower() for trait in personality]
+        return personality
+
+    # A method to create a list of introduction phrases
+    def __create_intro(self, name: str):
+        lower_name = name.lower()
+        introduction1 = "my name is " + lower_name + "."
+        introduction2 = 'i am ' + lower_name + "."
+        introduction_list = [introduction1, introduction2]
+        return introduction_list
+
+    # A method to create an identity
+    def __create_identity(self):
+        full_introduction = self.__create_intro(self.__full_name)
+        introduction = self.__create_intro(self.__first_name)
+        personality = self.__format_personality()
+        identity = full_introduction + introduction + personality
+        return self.__tokenize_and_encode(identity)

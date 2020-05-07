@@ -24,7 +24,7 @@ SECRET_KEY = '0jx6nply=59sv85ii0*r9abdg$sf+awn1vjwelfzc7pxfaek-3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['autama.org','localhost', '127.0.0.1', '18.236.187.114']
 
 
 # Application definition

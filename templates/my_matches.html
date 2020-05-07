@@ -5,53 +5,53 @@
     <!-- Turning landscape images into circular squares: https://www.webfx.com/blog/web-design/circular-images-css/ -->
     <!-- Display images side by side (in a row): https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_images_side_by_side -->
     <style>
-           .circular--portrait {
-                position: relative;
-                width: 200px;
-                height: 200px;
-                overflow: hidden;
-                border-radius: 50%;
-           }
+        .circular--portrait {
+            position: relative;
+            width: 70%;
+            padding: 0.5%;
+            overflow: hidden;
+            border-radius: 50%;
+        }
 
-           .circular--portrait img {
-                width: 100%;
-                height: auto;
-           }
+        .circular--portrait img {
+            max-width: 100%;
+            height: auto;
+        }
 
-           .column {
-                float: left;
-                width: 33.33%;
-                padding: 5px;
-           }
+        .column {
+            float: left;
+            width: 33.33%;
+            padding: 5px;
+        }
 
-            /* Clearfix (clear floats) */
-            .row::after {
-                content: "";
-                clear: both;
-                display: table;
-            }
+        /* Clearfix (clear floats) */
+        .matches::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
 
-            div.container {
-                margin-top: 50px;
-            }
+        div.container {
+            margin-top: 50px;
+        }
 
-            div.search--bar {
-                margin-top: 20px;
-            }
+        div.search--bar {
+            margin-top: 20px;
+        }
 
-           #searchInput {
-               background-image: url("/Images/Images/search.png");
-               background-position: 10px 12px;
-               background-repeat: no-repeat;
-               width: 100%;
-               font-size: 16px;
-               padding: 12px 20px 12px 40px;
-               border: 1px solid #ddd;
-               margin-top: 24px;
-               margin-bottom: 12px;
-           }
+        #searchInput {
+            background-image: url("/Images/Images/search.png");
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
 
-        </style>
+    </style>
 {% endblock %}
 
 
@@ -67,7 +67,7 @@
     <br>
     <h1>New Matches {{num_matches}}</h1>
 
-    <div class="row">
+    <div class="matches">
         {% for a_profile in user_matches %}
             <div class="column userLink">
                 <a href="{% url 'Chat' pk=a_profile.autamaID.pk %}" class="image">

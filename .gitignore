@@ -10,3 +10,5 @@ AutamaProfiles/migrations/0*
 Nucleus/__*
 *.pyc
 nucleus.pickle
+dataset_cache_OpenAIGPTTokenizer
+Autama.sock
