@@ -8,6 +8,8 @@ and it contains the top 1000 female names from 2018. The other file
 is called male_names.txt, and it contains the top 1000 male names
 from 2018. The names are from the Social Security' site which could
 be found here: https://www.ssa.gov/cgi-bin/popularnames.cgi
+The last names are from the US Census Bureau's site which can be
+found here: https://www.census.gov/topics/population/genealogy/data/2010_surnames.html
 """
 
 from random import choice, seed, shuffle
