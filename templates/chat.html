@@ -8,8 +8,27 @@
 
 {% block csstyle %}
     <style>
+        body{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
 
-        .lite-chatbox{padding:0;width:100%;position:relative;overflow-y:auto;overflow-x:hidden;font:18px Helvetica,"PingFang SC","Microsoft YaHei",sans-serif}
+        .chatbox_view{
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .lite-chatbox{
+            padding: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 100%;
+            width: 100%;
+        }
+
         .lite-chatbox .cmsg{position:relative;margin:4px 7px;min-height:50px;border:0}
         .lite-chatbox .cright{text-align:right;margin-left:64px}
         .lite-chatbox .cleft{text-align:left;margin-right:64px}
@@ -171,8 +190,8 @@
         <!--create some space between nav and chat box-->
         <section><div style="margin-top: 50px;"></div></section>
 
-        <div class="lite-chatbox">
-            <div>
+        <div class="chat_view">
+            <div class="lite-chatbox">
                 {% for a_message in message_chain %}
                     {% if a_message.sender == 'User' %}
                         <div class="cright cmsg">
