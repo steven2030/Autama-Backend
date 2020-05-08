@@ -122,7 +122,11 @@
 {% block js %}
     <script>
         function showReport() {
-            div = document.getElementById("report").style.display="block";
+            if (document.getElementById("report").style.display == "none") {
+                div = document.getElementById("report").style.display="block";
+            } else {
+                div = document.getElementById("report").style.display="none";
+            }
         }
 
         function hideReport() {
@@ -236,6 +240,7 @@
                         },
                         No: function() {
                             $(this).dialog("close");
+                            hideReport();
                         }
                     }
                 });
