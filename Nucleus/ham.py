@@ -28,6 +28,7 @@ class Ham:
         self.__history = []
 
     # A method that returns Autama's output by taking in user's input
+    # https://github.com/huggingface/transfer-learning-conv-ai/blob/master/interact.py
     def converse(self, user_input: str):
         self.__history.append(self.__tokenizer.encode(user_input))
         with torch.no_grad():
@@ -59,6 +60,7 @@ class Ham:
         print("Identity: " + self.__tokenizer.decode(chain(*self.__identity)))
 
     # A method to tokenize and encode an identity
+    # https://github.com/huggingface/transfer-learning-conv-ai/blob/master/utils.py
     def __tokenize_and_encode(self, identity: list):
         def tokenize(obj):
             if isinstance(obj, str):

@@ -8,8 +8,47 @@
 
 {% block csstyle %}
     <style>
+        body{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            display: table;
+            position: fixed;
+            bottom: 0px;
+        }
 
-        .lite-chatbox{padding:0;width:100%;position:relative;overflow-y:auto;overflow-x:hidden;font:18px Helvetica,"PingFang SC","Microsoft YaHei",sans-serif}
+        /* The following link shows how to create css tables:
+        https://stackoverflow.com/questions/90178/make-a-div-fill-the-height-of-the-remaining-screen-space */
+        section{
+            display: table-row;
+            background: yellow;
+        }
+
+        section + section{
+            /* Do not delete section + section. It's to build a css table. */
+            background: red;
+        }
+
+        section + section + section{
+            /* Do not delete section + section + section. It's to build a css table. */
+            background: blue;
+        }
+
+        .chatbox_view{
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .lite-chatbox{
+            padding: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 100%;
+            width: 100%;
+        }
+
         .lite-chatbox .cmsg{position:relative;margin:4px 7px;min-height:50px;border:0}
         .lite-chatbox .cright{text-align:right;margin-left:64px}
         .lite-chatbox .cleft{text-align:left;margin-right:64px}
@@ -32,6 +71,18 @@
         .lite-chatbox .tips .tips-danger{background-color:#e24d48}
         .lite-chatbox .name .admin{background-color:#72D6A0}
         .lite-chatbox .name .owner{background-color:#F2BF25}
+
+        .lite-chatbox .time_stamp{
+            color:#8b8b8b;font-size:12px;display:block;line-height:18px;
+        }
+
+        .lite-chatbox .cright .time_stamp{
+            margin:4px 28px 8px 0;
+        }
+
+        .lite-chatbox .cleft .time_stamp{
+            margin:4px 0 8px 72px;
+        }
 
         .special{
             border-radius:5px;
@@ -128,7 +179,7 @@
 {% endblock %}
 
 {% block content %}
-    <div style="margin-top: 50px">
+    <body>
 
         <nav class="nav navbar-inverse navbar-default navbar-fixed-top" role="navgation">
             <div class="container-fluid">
@@ -156,41 +207,48 @@
             </div>
         </nav>
 
-        <br>
-        <br>
-        <div class="lite-chatbox">
-            <div>
+        <!--create some space between nav and chat box-->
+        <section><div style="margin-top: 50px;"></div></section>
+
+        <section class="chatbox_view">
+            <div class="lite-chatbox">
                 {% for a_message in message_chain %}
                     {% if a_message.sender == 'User' %}
                         <div class="cright cmsg">
-                            <span class="content">{{a_message.message}} Sent on: {{ a_message.timeStamp }}</span>  <!-- timezone is in UTC -->
+                            <span class="content">{{a_message.message}}</span>  <!-- timezone is in UTC -->
+                            <span class="time_stamp">{{a_message.timeStamp}}</span>
                         </div>
                     {% else %}
                         <div class="cleft cmsg">
                             <a href="/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
                                 <img class="headIcon radius" ondragstart="return false;" oncontextmenu="return false;" src="{{ autama.picture.url }}">
                             </a>
-                            <span class="name">{{ autama.first }}</span>
-                            <span class="content">{{a_message.message}} Sent on: {{ a_message.timeStamp }}</span>
+                            <span class="name">{{autama.first}}</span>
+                            <span class="content">{{a_message.message}}</span>
+                            <span class="time_stamp">Sent on: {{ a_message.timeStamp }}</span>
                         </div>
                     {% endif %}
                 {% endfor %}
             </div>
-        </div>
+        </section>
 
-        <div>
+        <!-- Input/button area -->
+        <section>
             <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form }}
+                <div style="padding: 10px">
+                    <div>
+                        {{ form }}
+                    </div>
 
-                <div class="butt3" style="margin-top: 10px">
-                    <input type="submit" value="send" class="btn btn-info" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);">
+                    <div class="butt3" style="margin-top: 10px">
+                        <input type="submit" value="Send" class="btn btn-info" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); width: 500px; height: 250px">
+                    </div>
                 </div>
-
             </form>
-        </div>
 
-        <input onclick="showReport()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="report" value="Report">
+            <input onclick="showReport()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="report" value="Report">
+        </section>
 
         <!-- jQuery dialog code here: https://stackoverflow.com/questions/40939099/jquery-form-submit-with-confirmation-in-a-modal -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -250,8 +308,7 @@
             </form>
         </div>
 
-    </div>
-
+    </body>
 {% endblock %}
 
 
