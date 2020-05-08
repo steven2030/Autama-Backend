@@ -53,12 +53,14 @@
 
           </div>
 
-            <input type="button" value="Add another text input" onClick="addFields('essentials-container');">
+            <br>
+            <button style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="button" class="btn btn-info" onclick="addFields('essentials-container')" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">More fields</button>
 
             <input hidden name="id" value="{{ user.id }}">
           <button style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">register</button>
             {% csrf_token %}
         </form>
+        <br>
         <div style="color: red;font-size: 14px">{{ error }}</div>
     </div>
 {% endblock %}
