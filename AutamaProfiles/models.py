@@ -13,7 +13,7 @@ def create_new_autama(personality: list, creator: str = "Happy Slackers", origin
     # Make sure personality has the required amount of traits
     if amount == REQUIRED:
         picture = "a1.png"
-        first = pancake.generate_male_name()
+        first = pancake.generate_first_name()
         last = "last name"
         interest1 = personality[0]
         interest2 = personality[1]
