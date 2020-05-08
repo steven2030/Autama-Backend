@@ -13,6 +13,26 @@
             padding: 0;
             height: 100%;
             width: 100%;
+            display: table;
+            position: fixed;
+            bottom: 0px;
+        }
+
+        /* The following link shows how to create css tables:
+        https://stackoverflow.com/questions/90178/make-a-div-fill-the-height-of-the-remaining-screen-space */
+        section{
+            display: table-row;
+            background: yellow;
+        }
+
+        section + section{
+            /* Do not delete section + section. It's to build a css table. */
+            background: red;
+        }
+
+        section + section + section{
+            /* Do not delete section + section + section. It's to build a css table. */
+            background: blue;
         }
 
         .chatbox_view{
@@ -190,7 +210,7 @@
         <!--create some space between nav and chat box-->
         <section><div style="margin-top: 50px;"></div></section>
 
-        <div class="chat_view">
+        <section class="chatbox_view">
             <div class="lite-chatbox">
                 {% for a_message in message_chain %}
                     {% if a_message.sender == 'User' %}
@@ -210,9 +230,10 @@
                     {% endif %}
                 {% endfor %}
             </div>
-        </div>
+        </section>
 
-        <div>
+        <!-- Input/button area -->
+        <section>
             <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form }}
@@ -222,9 +243,9 @@
                 </div>
 
             </form>
-        </div>
 
-        <input onclick="showReport()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="report" value="Report">
+            <input onclick="showReport()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="report" value="Report">
+        </section>
 
         <!-- jQuery dialog code here: https://stackoverflow.com/questions/40939099/jquery-form-submit-with-confirmation-in-a-modal -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
