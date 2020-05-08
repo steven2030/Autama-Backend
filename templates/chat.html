@@ -169,7 +169,7 @@
 {% block js %}
     <script>
         function showReport() {
-            if (document.getElementById("report").style.display == "none") {
+            if (document.getElementById("report").style.display != "block") {
                 div = document.getElementById("report").style.display="block";
             } else {
                 div = document.getElementById("report").style.display="none";
