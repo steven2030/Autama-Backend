@@ -236,12 +236,15 @@
         <section>
             <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form }}
+                <div style="padding: 10px">
+                    <div>
+                        {{ form }}
+                    </div>
 
-                <div class="butt3" style="margin-top: 10px">
-                    <input type="submit" value="send" class="btn btn-info" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);">
+                    <div class="butt3" style="margin-top: 10px">
+                        <input type="submit" value="send" class="btn btn-info" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);">
+                    </div>
                 </div>
-
             </form>
 
             <input onclick="showReport()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="report" value="Report">
