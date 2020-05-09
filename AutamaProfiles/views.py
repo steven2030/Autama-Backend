@@ -56,10 +56,15 @@ def create_autama_profile(personality: list, creator: str = "Happy Slackers", or
     pancake = Pancake()  # For handling name generating
     REQUIRED = 6  # The required amount of traits
     amount = len(personality)
+    # Get meta data on Autama Images and generate path for current autama picture
+    meta_autama = AutamaGeneral.objects.get(pk=0)
+    filename = "a" + meta_autama.currentCount + ".png"
+    meta_autama.currentCount += 1
+    meta_autama.save()
 
     # Make sure personality has the required amount of traits
     if amount == REQUIRED:
-        picture = "a1.png"
+        picture = filename
         first = pancake.generate_first_name()
         last = pancake.generate_last_name()
         interest1 = personality[0]
