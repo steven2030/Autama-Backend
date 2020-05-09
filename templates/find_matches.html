@@ -366,14 +366,15 @@
 
                 // Get Random Background Image
                 card.autamaID = this.currAutama;
-                card.style.backgroundImage =
-                    "url(../Images/a" + this.currAutama + ".png)";
                 $.get("?AID=" + this.currAutama, function(data) {
                     p1.innerText = data.first + " " + data.last;
                     p2.innerText = "Followers: " + data.matches;
                     p3.innerText = "Creator: " + data.creator;
                     textbox4.innerText = "Interests: " + data.interest1 + " "
-                    + data.interest2 + " " + data.interest3
+                    + data.interest2 + " " + data.interest3;
+                    console.log(data.picture);
+                    card.style.backgroundImage =
+                        "url(" + data.picture + ")";
                 });
 
                 this.currAutama++;
