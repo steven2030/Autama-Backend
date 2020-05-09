@@ -3,6 +3,14 @@ from django.utils.text import slugify
 from django.shortcuts import reverse
 
 
+class AutamaGeneral(models.Model):
+    currentCount = models.IntegerField()
+    totalCount = models.IntegerField()
+
+    def __str__(self):
+        return '{currentCount} {totalCount}'.format(currentCount=self.currentCount, totalCount=self.totalCount)
+
+
 class AutamaProfile(models.Model):
     creator = models.CharField(max_length=100)
     picture = models.ImageField(upload_to='Images', blank=False)

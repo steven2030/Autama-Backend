@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
-from AutamaProfiles.models import AutamaProfile
+from AutamaProfiles.models import AutamaProfile, AutamaGeneral
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 import json
@@ -75,3 +75,7 @@ def create_autama_profile(personality: list, creator: str = "Happy Slackers", or
                                                      interest3=interest3, interest4=interest4,
                                                      interest5=interest5, interest6=interest6)
         hybrid_autama.save()
+
+
+
+
