@@ -47,8 +47,9 @@ def claim(request):
     return HttpResponse(content=json.dumps(data),content_type='json/application')
 
 
-def testfunc():
-    return None
+def testfunc(request):
+    meta_autama = AutamaGeneral.objects.get(pk=1)
+    return HttpResponse(meta_autama.currentCount)
 
 
 # A function to create a new Autama profile. origin is the username of the user the Autama was based off
@@ -57,8 +58,8 @@ def create_autama_profile(personality: list, creator: str = "Happy Slackers", or
     REQUIRED = 6  # The required amount of traits
     amount = len(personality)
     # Get meta data on Autama Images and generate path for current autama picture
-    meta_autama = AutamaGeneral.objects.get(pk=0)
-    filename = "a" + meta_autama.currentCount + ".png"
+    meta_autama = AutamaGeneral.objects.get(pk=1)
+    filename = "a" + str(meta_autama.currentCount) + ".png"
     meta_autama.currentCount += 1
     meta_autama.save()
 
