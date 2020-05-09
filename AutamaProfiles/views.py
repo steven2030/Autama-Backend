@@ -61,7 +61,7 @@ def create_autama_profile(personality: list, creator: str = "Happy Slackers", or
     if amount == REQUIRED:
         picture = "a1.png"
         first = pancake.generate_first_name()
-        last = "last name"
+        last = pancake.generate_last_name()
         interest1 = personality[0]
         interest2 = personality[1]
         interest3 = personality[2]
