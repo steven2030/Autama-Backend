@@ -220,7 +220,7 @@
                     {% if a_message.sender == 'User' %}
                         <div class="cright cmsg">
                             <span class="content">{{a_message.message}}</span>  <!-- timezone is in UTC -->
-                            <span class="time_stamp">{{a_message.timeStamp}}</span>
+                            <span class="time_stamp">{{ a_message.timeStamp }}</span>
                         </div>
                     {% else %}
                         <div class="cleft cmsg">
@@ -229,7 +229,7 @@
                             </a>
                             <span class="name">{{autama.first}}</span>
                             <span class="content">{{a_message.message}}</span>
-                            <span class="time_stamp">Sent on: {{ a_message.timeStamp }}</span>
+                            <span class="time_stamp">{{ a_message.timeStamp }}</span>
                         </div>
                     {% endif %}
                 {% endfor %}
