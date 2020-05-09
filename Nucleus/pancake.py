@@ -23,9 +23,11 @@ class Pancake:
     def __init__(self):
         self.__female_names_file = "Nucleus/female_names.txt"
         self.__male_names_file = "Nucleus/male_names.txt"
+        self.__last_names_file = "Nucleus/last_names.txt"
         self.__female_names_list = open(self.__female_names_file).read().splitlines()
         self.__male_names_list = open(self.__male_names_file).read().splitlines()
         self.__first_names_list = self.__female_names_list + self.__male_names_list
+        self.__last_names_list = open(self.__last_names_file).read().splitlines()
 
     # A method to generate a random female name
     def generate_female_name(self):
@@ -43,7 +45,13 @@ class Pancake:
         shuffle(self.__first_names_list)
         return choice(self.__first_names_list)
 
+    # A method to generate a random last name
+    def generate_last_name(self):
+        seed()
+        return choice(self.__last_names_list)
+
     """Methods for testing."""
+    """All they do is just print the full lists."""
 
     # A method to print female names list
     def print_female_names(self):
@@ -56,3 +64,7 @@ class Pancake:
     # A method to print first names list
     def print_first_names(self):
         print(self.__first_names_list)
+
+    # A method to print last names list
+    def print_last_names(self):
+        print(self.__last_names_list)
