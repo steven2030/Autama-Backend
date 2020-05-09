@@ -1,63 +1,79 @@
 {% extends 'base.html' %}
+
+{% block js %}
+    <script>
+        function addFields() {
+            parentDiv = document.getElementById('essentials-container');
+            all_fields = ["firstname","lastname","interest","interest2","interest3","interest4","interest5","interest6"];
+
+            for (i = 0; i < all_fields.length; i++) {
+                var currField = all_fields[i];
+
+                var textbox = document.createElement('input');
+                textbox.type = 'text';
+                textbox.className = 'form-control';
+                textbox.id = currField;
+                textbox.placeholder = currField;
+                textbox.name = currField;
+
+                var label = document.createElement('label');
+                label.htmlFor = currField;
+                label.appendChild(document.createTextNode(currField));
+
+                parentDiv.appendChild(document.createElement('br'));
+                parentDiv.appendChild(label);
+                parentDiv.appendChild(textbox);
+            }
+
+            document.getElementById("expand-fields-button").remove();
+            document.getElementById("call-to-action").remove();
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
-    <div style="width: 80%;margin: auto">
+    <div style="width: 80%;margin: auto; padding-top: 3%;">
         <h2> Create an account</h2>
         <form action="/accounts/register/" method="post">
-          <div class="form-group">
-            <label for="username">username</label>
-            <input type="text" class="form-control" id="username" placeholder="username" name="username">
-          </div>
-            <div class="form-group">
-            <label for="firstname">firstname</label>
-            <input type="text" class="form-control" id="firstname" placeholder="firstname" name="firstname">
-          </div>
-            <div class="form-group">
-            <label for="lastname">lastname</label>
-            <input type="text" class="form-control" id="lastname" placeholder="lastname" name="lastname">
-          </div>
-            <div class="form-group">
-            <label for="email">email</label>
-            <input type="email" class="form-control" id="email" placeholder="email" name="email">
-          </div>
+            <div id="essentials-container">
+                <div class="form-group">
+                    <label for="username">username</label>
+                    <input type="text" class="form-control" id="username" placeholder="username" name="username">
+                </div>
 
-          <div class="form-group">
-            <label for="interest1">interest1</label>
-            <input type="text" class="form-control" id="interest1" placeholder="interest 1" name="interest1">
-          </div>
-          <div class="form-group">
-            <label for="interest2">interest2</label>
-            <input type="text" class="form-control" id="interest2" placeholder="interest 2" name="interest2">
-          </div>
-          <div class="form-group">
-            <label for="interest3">interest3</label>
-            <input type="text" class="form-control" id="interest3" placeholder="interest 3" name="interest3">
-          </div>
-          <div class="form-group">
-            <label for="interest4">interest4</label>
-            <input type="text" class="form-control" id="interest4" placeholder="interest 4" name="interest4">
-          </div>
-          <div class="form-group">
-            <label for="interest5">interest5</label>
-            <input type="text" class="form-control" id="interest5" placeholder="interest 5" name="interest5">
-          </div>
-          <div class="form-group">
-             <label for="interest6">interest6</label>
-            <input type="text" class="form-control" id="interest6" placeholder="interest 6" name="interest6">
-          </div>
+                <div class="form-group">
+                    <label for="password">password</label>
+                    <input type="password" class="form-control" id="password" placeholder="password" name="password">
+                </div>
 
-          <div class="form-group">
-            <label for="password">password</label>
-            <input type="password" class="form-control" id="password" placeholder="password" name="password">
-          </div>
-          <div class="form-group">
-            <label for="rePassword">confirmed Password</label>
-            <input type="password" class="form-control" id="rePassword" placeholder="rePassword" name="rePassword">
-          </div>
+                <div class="form-group">
+                    <label for="rePassword">confirmed Password</label>
+                    <input type="password" class="form-control" id="rePassword" placeholder="rePassword" name="rePassword">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">email</label>
+                    <input type="email" class="form-control" id="email" placeholder="email" name="email">
+                </div>
+
+            </div> <!-- end essentials-container -->
+
+            <!-- Asking for more information. -->
+            <div id="call-to-action">
+                <p style="font-size: 18px;">Hey! Care to help us expand our collection of Autama? Click on the button "More fields" to create one.</p>
+            </div>
+
+            <!-- Expanding entry fields button. -->
+            <br>
+            <button id="expand-fields-button" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="button" class="btn btn-info" onclick="addFields()" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">More fields</button>
+
+            <!-- Register account button. -->
             <input hidden name="id" value="{{ user.id }}">
-
-          <button style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" type="submit" class="btn btn-default">register</button>
+            <button style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">register</button>
             {% csrf_token %}
         </form>
+        <br>
         <div style="color: red;font-size: 14px">{{ error }}</div>
+
     </div>
 {% endblock %}

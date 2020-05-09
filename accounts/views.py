@@ -14,7 +14,7 @@ from django.core.files.base import ContentFile
 from .models import User
 from AutamaProfiles.models import AutamaProfile
 from Nucleus.bacon import Bacon
-from AutamaProfiles.models import create_new_autama
+from AutamaProfiles.views import create_autama_profile
 
 
 class RegisterView(View):
@@ -65,11 +65,11 @@ class RegisterView(View):
 
         # Creating hybrid personality Autama
         #hybrid_personality = bacon.make_hybrid_freak(user_personality)
-        #create_new_autama(personality=hybrid_personality, origin=username)
+        #create_autama_profile(personality=hybrid_personality, origin=username)
 
         # Creating an Autama with the same interests as the user
         #same_personality = bacon.check_personality(user_personality)
-        #create_new_autama(personality=same_personality, origin=username)
+        #create_autama_profile(personality=same_personality, origin=username)
 
         return HttpResponseRedirect(reverse('login'))
 
