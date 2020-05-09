@@ -1,13 +1,19 @@
 """
 PANCAKE = Preparing Autama's Name Carefully And Kinda Equally
 
-This file contains a class to handle generating random name. The class
-reads in names from two files, and then randomly picks one to
-generate as the name. One of the files is called female_names.txt,
-and it contains the top 1000 female names from 2018. The other file
-is called male_names.txt, and it contains the top 1000 male names
-from 2018. The names are from the Social Security' site which could
-be found here: https://www.ssa.gov/cgi-bin/popularnames.cgi
+This file contains a class to handle generating random names both first and last.
+The class reads in names from two files, and then randomly picks one to generate
+as the first name. One of the files is called female_names.txt, and it contains the
+top 1000 female names from 2018. The other file is called male_names.txt, and it
+contains the top 1000 male names from 2018. This class also reads in from a third
+for generating last names. It reads in the names from the file, and then picks one
+randomly to generate as the last name. This file is called last_names.txt, and it
+contains the top 1000 last names from the 2010 census.
+
+The first names are from the Social Security' site which could be found here:
+https://www.ssa.gov/cgi-bin/popularnames.cgi
+The last names are from the US Census Bureau's site which can be found here:
+https://www.census.gov/topics/population/genealogy/data/2010_surnames.html
 """
 
 from random import choice, seed, shuffle
