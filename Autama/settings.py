@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'Autama',
     'AutamaProfiles',
     'accounts.templatetags',
+    'tastypie',
+    'API_tastypy',
 ]
 
 # Dev Only, need to configure for production
