@@ -15,7 +15,12 @@ from .models import User
 from AutamaProfiles.models import AutamaProfile
 from Nucleus.bacon import Bacon
 from AutamaProfiles.views import create_autama_profile
-from django.core.validators import validate_email, ValidationError
+#from email_validator import validate_email, EmailNotValidError
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+
+
+
 
 
 class RegisterView(View):
@@ -43,17 +48,30 @@ class RegisterView(View):
         interests6 = request.POST.get('interest6')
 
         if password != rePassword:
-            return render(request, '../templates/register.html', {'error': 'Inconsistent passwords'})
+            return render(request, '../templates/register.html', {'error': 'Passowrds don\'t match.'})
+
+        '''
+        try:
+            # Validate.
+            valid = validate_email(email)
+
+            # Update with the normalized form.
+            email = valid.email
+        except EmailNotValidError as e:
+            return render(request, '../templates/register.html', {'error': 'Invalid email address.'})
+            # email is not valid, exception message is human-readable
+            print(str(e))
+        '''
+
 
         try:
-            validate_email(username)
-            valid_email = True
+            validate_email(email)
         except ValidationError:
-            valid_email = False
+            return render(request, '../templates/register.html', {'error': 'Invalid email address.'})
 
-        user = User.objects.filter(Q(username=username) | Q(email=email))
-        if valid_email:  #if user:
-            return render(request, '../templates/register.html', {'error': 'email or account already existed'})
+
+        #if User.objects.filter(username=username).filter(email=email):
+         #   return render(request, '../templates/register.html', {'error': 'Username or email already exists.'})
 
         obj = User.objects.create(username=username, email=email)
         obj.set_password(password)
