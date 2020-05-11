@@ -22,17 +22,17 @@
         https://stackoverflow.com/questions/90178/make-a-div-fill-the-height-of-the-remaining-screen-space */
         section{
             display: table-row;
-            background: yellow;
+            /*background: yellow;*/
         }
 
         section + section{
             /* Do not delete section + section. It's to build a css table. */
-            background: red;
+            /*background: red;*/
         }
 
         section + section + section{
             /* Do not delete section + section + section. It's to build a css table. */
-            background: blue;
+            /*background: blue;*/
         }
 
         .chatbox_view{
@@ -179,6 +179,20 @@
         function hideReport() {
             div = document.getElementById("report").style.display="none";
         }
+        
+        /*
+        A little smashed up of the two links below to create a function for submitting with the enter key.
+        https://www.formget.com/submit-data-from-textarea-on-enter-key/
+        https://stackoverflow.com/questions/155188/trigger-a-button-click-with-javascript-on-the-enter-key-in-a-text-box
+        */
+        $(document).ready(function() {
+            $('form').keydown(function() {
+                if (event.keyCode == 13) {
+                    document.getElementById("send_button").click();
+                    return false;
+                }
+            });
+        });        
     </script>
 {% endblock %}
 
@@ -246,7 +260,7 @@
                     </div>
 
                     <div class="butt3" style="margin-top: 10px">
-                        <input type="submit" value="Send" class="btn btn-info" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); width: 500px; height: 250px">
+                        <input id="send_button" type="submit" value="Send" class="btn btn-info" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); width: 100px; height: 50px;">
                     </div>
                 </div>
             </form>
