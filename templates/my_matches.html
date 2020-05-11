@@ -68,10 +68,6 @@
             align-items: center;
         }
 
-        a {
-            flex: 0 0 0;
-        }
-
     </style>
 {% endblock %}
 
@@ -82,7 +78,7 @@
         function dynamicSearch() {
             matches = document.getElementsByClassName("some-match");
             messages = document.getElementsByClassName("some-msg-box");
-            var input, filter, name, msg;
+            var input, filter, name, msg, convo;
             input = document.getElementById('search-input');
             filter = input.value.toLowerCase();
 
@@ -98,9 +94,9 @@
 
             for (const some_msg of messages) {
                 name = some_msg.getElementsByClassName("profilename")[0].innerText;
-                msg = some_msg.getElementsByClassName("some-recent-msg")[0].innerText;
+                convo = some_msg.getElementsByClassName("some-conversation")[0].innerText;
 
-                if (name.toLowerCase().indexOf(filter) === -1 && msg.toLowerCase().indexOf(filter) === -1) {
+                if (name.toLowerCase().indexOf(filter) === -1 && convo.toLowerCase().indexOf(filter) === -1) {
                     some_msg.style.display = 'none';
                 } else {
                     some_msg.style.display = 'flex';
@@ -146,6 +142,9 @@
         {% for a_profile, a_message, a_chain in user_messages %}
 
             <div class="flexbox-wrapper some-msg-box">
+                <!-- tag a_chain for use in dynamicSearch() -->
+                <div class="some-conversation" style="display: none;">{{ a_chain }}</div>
+
                 <div class="flexbox-image">
                     <a href="{% url 'Chat' pk=a_profile.pk %}" class="image">
                         <div class="circular--portrait">
