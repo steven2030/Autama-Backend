@@ -20,9 +20,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 
 
-
-
-
+# TODO: Need to implement email ping validation complete or remove stub.
 class RegisterView(View):
     def get(self, request):
         if not request.user.is_authenticated:
@@ -63,15 +61,13 @@ class RegisterView(View):
             print(str(e))
         '''
 
-
         try:
             validate_email(email)
         except ValidationError:
             return render(request, '../templates/register.html', {'error': 'Invalid email address.'})
 
-
-        #if User.objects.filter(username=username).filter(email=email):
-         #   return render(request, '../templates/register.html', {'error': 'Username or email already exists.'})
+        if not User.objects.filter(username=username) or not User.objects.filter(email=email):
+            return render(request, '../templates/register.html', {'error': 'Username or email already exists.'})
 
         obj = User.objects.create(username=username, email=email)
         obj.set_password(password)
