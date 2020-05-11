@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 
 {% block js %}
+
+
     <script>
+
         function addFields() {
             parentDiv = document.getElementById('essentials-container');
-            all_fields = ["firstname","lastname","interest","interest2","interest3","interest4","interest5","interest6"];
+            all_fields = ["firstname","lastname","interest1","interest2","interest3","interest4","interest5","interest6"];
 
             for (i = 0; i < all_fields.length; i++) {
                 var currField = all_fields[i];
@@ -15,6 +18,7 @@
                 textbox.id = currField;
                 textbox.placeholder = currField;
                 textbox.name = currField;
+                textbox.required = true;
 
                 var label = document.createElement('label');
                 label.htmlFor = currField;
@@ -28,6 +32,10 @@
             document.getElementById("expand-fields-button").remove();
             document.getElementById("call-to-action").remove();
         }
+
+
+
+
     </script>
 {% endblock %}
 
@@ -38,22 +46,22 @@
             <div id="essentials-container">
                 <div class="form-group">
                     <label for="username">username</label>
-                    <input type="text" class="form-control" id="username" placeholder="username" name="username">
+                    <input type="text" class="form-control" id="username" placeholder="username" name="username" required>
                 </div>
 
                 <div class="form-group">
                     <label for="password">password</label>
-                    <input type="password" class="form-control" id="password" placeholder="password" name="password">
+                    <input type="password" class="form-control" id="password" placeholder="password" name="password" required>
                 </div>
 
                 <div class="form-group">
                     <label for="rePassword">confirmed Password</label>
-                    <input type="password" class="form-control" id="rePassword" placeholder="rePassword" name="rePassword">
+                    <input type="password" class="form-control" id="rePassword" placeholder="rePassword" name="rePassword" required>
                 </div>
 
                 <div class="form-group">
                     <label for="email">email</label>
-                    <input type="email" class="form-control" id="email" placeholder="email" name="email">
+                    <input type="email" class="form-control" id="email" placeholder="email" name="email" required>
                 </div>
 
             </div> <!-- end essentials-container -->

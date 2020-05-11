@@ -11,7 +11,7 @@ class User(AbstractUser):
     interests4 = models.TextField()
     interests5 = models.TextField()
     interests6 = models.TextField()
-    currentAutama = models.IntegerField(default=1)
+    currentAutama = models.IntegerField(default=1)  # Used for find matches stack tracing.
 
 
 class Claims(models.Model):
