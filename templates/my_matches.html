@@ -40,7 +40,7 @@
             margin-top: 20px;
         }
 
-        #searchInput {
+        #search-input {
             background-image: url("/Images/Images/search.png");
             background-position: 10px 12px;
             background-repeat: no-repeat;
@@ -52,8 +52,20 @@
             margin-bottom: 12px;
         }
 
+        .flexbox-wrapper {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .flexbox-image {
+            width: 32%;
+            padding: 0.5%;
+        }
+
         .recent-msg {
-            display: inline-block;
+            justify-content: center;
+            align-items: center;
         }
 
     </style>
@@ -62,11 +74,42 @@
 
 {% block content %}
 
+    <script>
+        function dynamicSearch() {
+            matches = document.getElementsByClassName("some-match");
+            messages = document.getElementsByClassName("some-msg-box");
+            var input, filter, name, msg, convo;
+            input = document.getElementById('search-input');
+            filter = input.value.toLowerCase();
+
+            for (const match of matches) {
+                name = match.getElementsByClassName("profilename")[0].innerText;
+
+                if (name.toLowerCase().indexOf(filter) === -1) {
+                    match.style.display = 'none';
+                } else {
+                    match.style.display = 'inline-block';
+                }
+            }
+
+            for (const some_msg of messages) {
+                name = some_msg.getElementsByClassName("profilename")[0].innerText;
+                convo = some_msg.getElementsByClassName("some-conversation")[0].innerText;
+
+                if (name.toLowerCase().indexOf(filter) === -1 && convo.toLowerCase().indexOf(filter) === -1) {
+                    some_msg.style.display = 'none';
+                } else {
+                    some_msg.style.display = 'flex';
+                }
+            }
+        }
+    </script>
+
 
     <div class="container" onload="matchNotifications()">
 
         <!-- From https://www.w3schools.com/howto/howto_js_filter_lists.asp -->
-        <input type="text" id="searchInput" onkeyup="dynamicSearch()" placeholder="Search for matches..." title="Type in a name">
+        <input type="text" id="search-input" onkeyup="dynamicSearch()" placeholder="Search for matches..." title="Type in a name">
 
         <title>My Matches</title>
         <br>
@@ -74,7 +117,7 @@
 
         <div class="row">
             {% for a_profile in user_matches %}
-                <div class="column userLink">
+                <div class="column some-match">
                     <a href="{% url 'Chat' pk=a_profile.autamaID.pk %}" class="image">
                         <div class="circular--portrait">
                             <img src="{{ a_profile.autamaID.picture.url }}" alt="Avatar"/>
@@ -87,24 +130,6 @@
             {% endfor %}
         </div>
 
-        <script>
-            function dynamicSearch() {
-                matches = document.getElementsByClassName("userLink");
-                var input, filter;
-                input = document.getElementById('searchInput');
-                filter = input.value.toLowerCase();
-
-                for (const element of matches) {
-                    t = element.getElementsByClassName("profilename")[0].innerText;
-
-                    if (t.toLowerCase().indexOf(filter) == -1) {
-                        element.style.display = 'none';
-                    } else {
-                        element.style.display = 'inline-block';
-                    }
-                }
-            }
-        </script>
 
         <br>
         <br>
@@ -113,24 +138,28 @@
         <h1>Messages {{num_messages}}</h1>
 
         <br>
-        <div class="column">
-            {% for a_profile, a_message, a_chain in user_messages %}
 
-                <div class="row">
+        {% for a_profile, a_message, a_chain in user_messages %}
+
+            <div class="flexbox-wrapper some-msg-box">
+                <!-- tag a_chain for use in dynamicSearch() -->
+                <div class="some-conversation" style="display: none;">{{ a_chain }}</div>
+
+                <div class="flexbox-image">
                     <a href="{% url 'Chat' pk=a_profile.pk %}" class="image">
-                        <div class="circular--portrait" style="height: 50%;width:50%">
+                        <div class="circular--portrait">
                             <img src="{{ a_profile.picture.url }}" alt="Avatar" align="left"/>
                         </div>
                     </a>
-                    <h3>{{a_profile.first}} {{a_profile.last}}</h3>
-                    <div class="recent-msg">
-                        {{a_message}}
-                    </div>
                 </div>
-                <br>
+                <div class="recent-msg">
+                    <br>
+                    <h3 class="profilename">{{ a_profile.first }} {{ a_profile.last }} </h3>
+                    <p class="some-recent-msg">{{ a_message }}</p>
+                </div>
+            </div>
 
-            {% endfor %}
-        </div>
+        {% endfor %}
 
     </div>
 {% endblock %}
