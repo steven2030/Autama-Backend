@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AutamaProfile
+from .models import AutamaProfile, AutamaGeneral
 from django.urls import path
 from django.http import HttpResponseRedirect
 from Nucleus.bacon import Bacon
@@ -29,3 +29,6 @@ class AutamaProfileAdmin(admin.ModelAdmin):
 
         self.message_user(request, "Mass-production completed.")
         return HttpResponseRedirect("../")
+
+
+admin.site.register(AutamaGeneral)

@@ -179,6 +179,20 @@
         function hideReport() {
             div = document.getElementById("report").style.display="none";
         }
+        
+        /*
+        A little smashed up of the two links below to create a function for submitting with the enter key.
+        https://www.formget.com/submit-data-from-textarea-on-enter-key/
+        https://stackoverflow.com/questions/155188/trigger-a-button-click-with-javascript-on-the-enter-key-in-a-text-box
+        */
+        $(document).ready(function() {
+            $('form').keydown(function() {
+                if (event.keyCode == 13) {
+                    document.getElementById("send_button").click();
+                    return false;
+                }
+            });
+        });        
     </script>
 {% endblock %}
 
@@ -220,7 +234,7 @@
                     {% if a_message.sender == 'User' %}
                         <div class="cright cmsg">
                             <span class="content">{{a_message.message}}</span>  <!-- timezone is in UTC -->
-                            <span class="time_stamp">{{a_message.timeStamp}}</span>
+                            <span class="time_stamp">{{ a_message.timeStamp }}</span>
                         </div>
                     {% else %}
                         <div class="cleft cmsg">
@@ -229,7 +243,7 @@
                             </a>
                             <span class="name">{{autama.first}}</span>
                             <span class="content">{{a_message.message}}</span>
-                            <span class="time_stamp">Sent on: {{ a_message.timeStamp }}</span>
+                            <span class="time_stamp">{{ a_message.timeStamp }}</span>
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -246,7 +260,7 @@
                     </div>
 
                     <div class="butt3" style="margin-top: 10px">
-                        <input type="submit" value="Send" class="btn btn-info" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); width: 500px; height: 250px">
+                        <input id="send_button" type="submit" value="Send" class="btn btn-info" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); width: 100px; height: 50px;">
                     </div>
                 </div>
             </form>

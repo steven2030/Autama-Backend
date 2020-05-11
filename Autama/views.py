@@ -233,6 +233,7 @@ class FindMatches(LoginRequiredMixin, View):
             'interest1': autama.interest1,
             'interest2': autama.interest2,
             'interest3': autama.interest3,
+            'picture': autama.picture.url,
         }
         return JsonResponse(data)
 

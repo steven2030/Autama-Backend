@@ -15,6 +15,7 @@ from .models import User
 from AutamaProfiles.models import AutamaProfile
 from Nucleus.bacon import Bacon
 from AutamaProfiles.views import create_autama_profile
+from django.core.validators import validate_email, ValidationError
 
 
 class RegisterView(View):
@@ -27,11 +28,13 @@ class RegisterView(View):
 
     def post(self, request):
         username = request.POST.get('username')
-        firstname = request.POST.get('firstname')
-        lastname = request.POST.get('lastname')
         email = request.POST.get('email')
         password = request.POST.get('password')
         rePassword = request.POST.get('rePassword')
+
+        # Neither of the users names are being used for Autama generation.
+        firstname = request.POST.get('firstname')
+        lastname = request.POST.get('lastname')
         interests1 = request.POST.get('interest1')
         interests2 = request.POST.get('interest2')
         interests3 = request.POST.get('interest3')
@@ -42,34 +45,35 @@ class RegisterView(View):
         if password != rePassword:
             return render(request, '../templates/register.html', {'error': 'Inconsistent passwords'})
 
+        try:
+            validate_email(username)
+            valid_email = True
+        except ValidationError:
+            valid_email = False
+
         user = User.objects.filter(Q(username=username) | Q(email=email))
-        if user:
+        if valid_email:  #if user:
             return render(request, '../templates/register.html', {'error': 'email or account already existed'})
 
-        obj = User.objects.create(username=username, first_name=firstname,last_name=lastname, email=email)
+        obj = User.objects.create(username=username, email=email)
         obj.set_password(password)
-        obj.interests1 = interests1
-        obj.interests2 = interests2
-        obj.interests3 = interests3
-        obj.interests4 = interests4
-        obj.interests5 = interests5
-        obj.interests6 = interests6
+        if interests1:
+            obj.interests1 = interests1
+            obj.interests2 = interests2
+            obj.interests3 = interests3
+            obj.interests4 = interests4
+            obj.interests5 = interests5
+            obj.interests6 = interests6
+
+            bacon = Bacon()  # For handling personality generating
+            # A list of the new user's interests
+            user_personality = [interests1, interests2, interests3, interests4, interests5, interests6]
+            # Creating an Autama with the same interests as the user
+            same_personality = bacon.check_personality(user_personality)
+            create_autama_profile(personality=same_personality, creator=username, origin=username)
+
         obj.currentAutama = 0
         obj.save()
-
-        """When a new user is created, two new Autama profiles based off the new user will be created too."""
-        #bacon = Bacon() # For handling personality generating
-
-        # A list of the new user's interests
-        user_personality = [interests1, interests2, interests3, interests4, interests5, interests6]
-
-        # Creating hybrid personality Autama
-        #hybrid_personality = bacon.make_hybrid_freak(user_personality)
-        #create_autama_profile(personality=hybrid_personality, origin=username)
-
-        # Creating an Autama with the same interests as the user
-        #same_personality = bacon.check_personality(user_personality)
-        #create_autama_profile(personality=same_personality, origin=username)
 
         return HttpResponseRedirect(reverse('login'))
 
