@@ -52,8 +52,20 @@
             margin-bottom: 12px;
         }
 
+        .flexbox-wrapper {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .flexbox-image {
+            width: 32%;
+            padding: 0.5%;
+        }
+
         .recent-msg {
-            display: inline-block;
+            justify-content: center;
+            align-items: center;
         }
 
     </style>
@@ -113,6 +125,8 @@
         <h1>Messages {{num_messages}}</h1>
 
         <br>
+
+        <!-- old code (before flexbox)
         <div class="column">
             {% for a_profile, a_message, a_chain in user_messages %}
 
@@ -122,15 +136,35 @@
                             <img src="{{ a_profile.picture.url }}" alt="Avatar" align="left"/>
                         </div>
                     </a>
-                    <h3>{{a_profile.first}} {{a_profile.last}}</h3>
                     <div class="recent-msg">
-                        {{a_message}}
+                        <h3 align="right">{{a_profile.first}} {{a_profile.last}}</h3>
+                        <p align="right"> {{a_message}} </p>
                     </div>
                 </div>
                 <br>
 
             {% endfor %}
         </div>
+        -->
+
+        {% for a_profile, a_message, a_chain in user_messages %}
+
+            <div class="flexbox-wrapper">
+                <div class="flexbox-image">
+                    <a href="{% url 'Chat' pk=a_profile.pk %}" class="image">
+                        <div class="circular--portrait">
+                            <img src="{{ a_profile.picture.url }}" alt="Avatar" align="left"/>
+                        </div>
+                    </a>
+                </div>
+                <div class="recent-msg">
+                    <br>
+                    <h3>{{ a_profile.first }} {{ a_profile.last }} </h3>
+                    {{ a_message }}
+                </div>
+            </div>
+
+        {% endfor %}
 
     </div>
 {% endblock %}
