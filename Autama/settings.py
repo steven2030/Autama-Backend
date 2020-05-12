@@ -14,6 +14,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SESSION_COOKIE_SECURE = True;
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -24,7 +25,7 @@ SECRET_KEY = '0jx6nply=59sv85ii0*r9abdg$sf+awn1vjwelfzc7pxfaek-3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['autama.org','localhost', '127.0.0.1', '18.236.187.114']
+ALLOWED_HOSTS = ['autama.org','localhost', '127.0.0.1', 'autama-dev.ipq.co','52.32.28.117', '18.236.187.114','10.0.2.2']
 
 
 # Application definition
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
     'Autama',
     'AutamaProfiles',
     'accounts.templatetags',
+    #'tastypie', Holding this back till its more safe
+    #'API_tastypy',
 ]
 
 # Dev Only, need to configure for production

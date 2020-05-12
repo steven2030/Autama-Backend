@@ -16,7 +16,7 @@ class AutamaProfile(models.Model):
     picture = models.ImageField(upload_to='Images', blank=False)
     first = models.CharField(max_length=100)
     last = models.CharField(max_length=100)
-    nummatches = models.CharField(max_length=100, default='0000000', editable=False)
+    nummatches = models.IntegerField(default=0, editable=False)
     owner = models.CharField(max_length=100, default='FREE')
     pickle = models.CharField(max_length=100, default='PICKLE')
     interest1 = models.CharField(max_length=100)
