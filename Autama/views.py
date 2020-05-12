@@ -18,7 +18,7 @@ from django.views import View
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
-from AutamaProfiles.models import AutamaProfile
+from AutamaProfiles.models import AutamaProfile, AutamaGeneral
 from django.utils import timezone
 from Nucleus.ham import Ham
 
@@ -214,6 +214,8 @@ class ResetPasswordView(LoginRequiredMixin, View):
 # /FindMatches/?AID=#
 class FindMatches(LoginRequiredMixin, View):
     def get(self, request):
+        user = User.objects.get(pk=request.user.id)
+        ag = AutamaGeneral.objects.get(pk=1)
         a_id = request.GET.get('AID')
 
         # Returns the base HTML.
@@ -221,8 +223,27 @@ class FindMatches(LoginRequiredMixin, View):
             user = User.objects.get(id=request.user.id)
             return render(request, 'find_matches.html', {'autama_id': user.currentAutama})
 
+        if user.currentAutama > ag.currentCount + 1:
+            data = {
+                'redirect': '/SeenAll/',
+            }
+            return JsonResponse(data)
+
         # Returns JSON with Autama Profile data
-        autama = AutamaProfile.objects.get(pk=a_id)
+        while True:
+            try:
+                autama = AutamaProfile.objects.get(pk=a_id)
+                break
+            except AutamaProfile.DoesNotExist:
+                a_id = str(int(a_id) + 1)
+                user.currentAutama += 1
+                user.save()
+                if user.currentAutama > ag.currentCount + 1:
+                    data = {
+                        'redirect': '/SeenAll/',
+                    }
+                    return JsonResponse(data)
+
         data = {
             'autama_id': autama.id,
             'creator': autama.creator,
@@ -241,16 +262,51 @@ class FindMatches(LoginRequiredMixin, View):
         data = request.POST.copy()
         ret = False
 
-        AID = data.get('AID')
+        aid = data.get('AID')
+
         if data.get('match') == '1':
-            ret = match(request.user.id, AID)
+            ret = match(request.user.id, aid)
+            if ret:
+                autama = AutamaProfile.objects.get(pk=aid)
+                autama.nummatches += 1
+                autama.save()
+        else:
+            ret = unmatch(request.user.id, aid)
+
         user = User.objects.get(pk=request.user.id)
         user.currentAutama += 1
         user.save()
+
+        # Test to see if past current Autama Limit
+        ag = AutamaGeneral.objects.get(pk=1)
+        if user.currentAutama > ag.currentCount + 1:
+            return redirect('SeenAll')
+
         if ret:
             return HttpResponse(status=200)
         else:
-            return JsonResponse({"user": request.user.id, "Autama": AID})
+            return JsonResponse({"user": request.user.id, "Autama": aid})
+
+
+# Handle the case of a user seeing all Autama in the DB.
+# Options are to start over at Autama 1 or leave as is and
+# redirects to MyMatches page.
+class SeenAll(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'seenall.html')
+
+    def post(self, request):
+        data = request.POST.copy()
+        retval = data.get('id')
+        # User elects to restart from Autama 1
+        user = User.objects.get(pk=request.user.id)
+        ag = AutamaGeneral.objects.get(pk=1)
+        if retval == "again":
+            user.currentAutama = 1
+        else:
+            user.currentAutama = ag.currentCount + 1;
+        user.save()
+        return HttpResponse(status=200)
 
 
 # TODO: Do we want this as part of login? Fix to view if keeping.
