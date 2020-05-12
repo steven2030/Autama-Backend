@@ -18,7 +18,7 @@ from django.views import View
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
-from AutamaProfiles.models import AutamaProfile
+from AutamaProfiles.models import AutamaProfile, AutamaGeneral
 from django.utils import timezone
 from Nucleus.ham import Ham
 
@@ -214,6 +214,10 @@ class ResetPasswordView(LoginRequiredMixin, View):
 # /FindMatches/?AID=#
 class FindMatches(LoginRequiredMixin, View):
     def get(self, request):
+        user = User.objects.get(pk=request.user.id)
+        ag = AutamaGeneral.objects.get(pk=1)
+        if user.currentAutama > ag.currentCount:
+            return redirect('SeenAll')
         a_id = request.GET.get('AID')
 
         # Returns the base HTML.
@@ -247,10 +251,36 @@ class FindMatches(LoginRequiredMixin, View):
         user = User.objects.get(pk=request.user.id)
         user.currentAutama += 1
         user.save()
+
+        # Test to see if past current Autama Limit
+        ag = AutamaGeneral.objects.get(pk=1)
+        if user.currentAutama > ag.currentCount:
+            return redirect('SeenAll')
+
         if ret:
             return HttpResponse(status=200)
         else:
             return JsonResponse({"user": request.user.id, "Autama": AID})
+
+
+# Handle the case of a user seeing all Autama in the DB.
+# Options are to start over at Autama 1 or leave as is and
+# redirects to MyMatches page.
+class SeenAll(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'seenall.html')
+
+    def post(self, request):
+        data = request.POST.copy()
+        retval = data.get('id')
+        # User elects to restart from Autama 1
+        if retval == "again":
+            user = User.objects.get(pk=request.user.id)
+            user.currentAutama = 1
+            user.save()
+        else:
+            pass
+        return HttpResponse(status=200)
 
 
 # TODO: Do we want this as part of login? Fix to view if keeping.

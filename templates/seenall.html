@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div style="margin-bottom: 80px"></div>
+    <div style="margin-left: 8px">
+        <p style="margin: auto">You've seen all of the Autama currently generated.</p>
+        <button id="again">Show me them again</button>
+        <button id="stay">I'll wait for more</button>
+    </div>
+    <script>
+    $("button").click(function(e) {
+        $.ajax({
+            type: "POST",
+            url: "/SeenAll/",
+            data: {
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+                id: e.target.id,
+            },
+            success: function(msg) {
+                if (e.target.id === "again") {
+                    window.location.href = '/FindMatches/'
+                } else {
+                    window.location.href = '/MyMatches/'
+                }
+            }
+        });
+    });
+    </script>
+{% endblock %}
