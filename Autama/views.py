@@ -224,7 +224,7 @@ class FindMatches(LoginRequiredMixin, View):
             user = User.objects.get(id=request.user.id)
             return render(request, 'find_matches.html', {'autama_id': user.currentAutama})
 
-        if user.currentAutama > ag.currentCount + 1:
+        if user.currentAutama > ag.currentCount + 2:
             data = {
                 'redirect': '/SeenAll/',
             }
@@ -239,7 +239,7 @@ class FindMatches(LoginRequiredMixin, View):
                 a_id = str(int(a_id) + 1)
                 user.currentAutama += 1
                 user.save()
-                if user.currentAutama > ag.currentCount + 1:
+                if user.currentAutama > ag.currentCount + 2:
                     data = {
                         'redirect': '/SeenAll/',
                     }
@@ -280,7 +280,7 @@ class FindMatches(LoginRequiredMixin, View):
 
         # Test to see if past current Autama Limit
         ag = AutamaGeneral.objects.get(pk=1)
-        if user.currentAutama > ag.currentCount + 1:
+        if user.currentAutama > ag.currentCount + 2:
             return redirect('SeenAll')
 
         if ret:
