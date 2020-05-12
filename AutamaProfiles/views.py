@@ -47,8 +47,9 @@ def claim(request):
     return HttpResponse(content=json.dumps(data),content_type='json/application')
 
 
-def testfunc():
-    return None
+def testfunc(request):
+    meta_autama = AutamaGeneral.objects.get(pk=1)
+    return HttpResponse(meta_autama.currentCount)
 
 
 # A function to create a new Autama profile. origin is the username of the user the Autama was based off
