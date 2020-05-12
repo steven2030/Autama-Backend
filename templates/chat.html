@@ -169,13 +169,10 @@
 
 {% block js %}
     <script>
+        /* function to convert iso utc time from the DB to local time in the browser */
         function convertTime(timestamp) {
-            console.log(moment.utc(timestamp).local())
-            return moment.utc(timestamp).local().format('MMM Do YY hmma')
+            return moment.utc(timestamp).local().format('MMM D YYYY, h:ma');
         }
-        $('.time_stamp').text(function(index, text) {
-            convertTime(text)
-        });
         function showReport() {
             if (document.getElementById("report").style.display != "block") {
                 div = document.getElementById("report").style.display="block";
@@ -242,7 +239,7 @@
                     {% if a_message.sender == 'User' %}
                         <div class="cright cmsg">
                             <span class="content">{{a_message.message}}</span>  <!-- timezone is in UTC -->
-                            <span class="time_stamp">{{ a_message.timeStamp }}</span>
+                            <span class="time_stamp">{{ a_message.timeStamp.isoformat }}</span>
                         </div>
                     {% else %}
                         <div class="cleft cmsg">
@@ -251,7 +248,7 @@
                             </a>
                             <span class="name">{{autama.first}}</span>
                             <span class="content">{{a_message.message}}</span>
-                            <span class="time_stamp">{{ a_message.timeStamp }}</span>
+                            <span class="time_stamp">{{ a_message.timeStamp.isoformat }}</span>
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -287,6 +284,11 @@
         </div>
 
         <script>
+            /* After page load go to all time_stamp class fields and update to local time */
+            $('.time_stamp').text(function(index, text) {
+                return convertTime(text);
+            });
+
             $(function() {
                 $("#dialog-confirm").dialog({
                     resizable: false,
