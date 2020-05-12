@@ -6,4 +6,4 @@ pytorch-ignite
 transformers==2.5.1
 tensorboardX==1.8
 tensorflow  # for tensorboardX
-#django-tastypie holding this back till more safe
+django-tastypie holding this back till more safe
