@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'Autama',
     'AutamaProfiles',
     'accounts.templatetags',
-    #'tastypie',
+    #'tastypie', Holding this back till its more safe
     #'API_tastypy',
 ]
 
