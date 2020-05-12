@@ -379,6 +379,9 @@
                     card.style.backgroundImage =
                         "url(" + data.picture + ")";
                     card.autamaID = data.autama_id;
+                    if (data.redirect) {
+                        window.location.replace(data.redirect);
+                    }
                 });
 
                 this.currAutama = card.autamaID + 1;

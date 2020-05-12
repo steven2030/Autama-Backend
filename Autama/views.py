@@ -216,14 +216,18 @@ class FindMatches(LoginRequiredMixin, View):
     def get(self, request):
         user = User.objects.get(pk=request.user.id)
         ag = AutamaGeneral.objects.get(pk=1)
-        if user.currentAutama > ag.currentCount:
-            return redirect('SeenAll')
         a_id = request.GET.get('AID')
 
         # Returns the base HTML.
         if a_id is None:
             user = User.objects.get(id=request.user.id)
             return render(request, 'find_matches.html', {'autama_id': user.currentAutama})
+
+        if a_id >= str(ag.currentCount) or user.currentAutama > ag.currentCount + 1:
+            data = {
+                'redirect': '/SeenAll/',
+            }
+            return JsonResponse(data)
 
         # Returns JSON with Autama Profile data
         while True:
@@ -255,9 +259,15 @@ class FindMatches(LoginRequiredMixin, View):
         data = request.POST.copy()
         ret = False
 
-        AID = data.get('AID')
+        aid = data.get('AID')
+
         if data.get('match') == '1':
-            ret = match(request.user.id, AID)
+            ret = match(request.user.id, aid)
+            if ret:
+                autama = AutamaProfile.objects.get(pk=aid)
+                autama.nummatches += 1
+                autama.save()
+
         user = User.objects.get(pk=request.user.id)
         user.currentAutama += 1
         user.save()
@@ -270,7 +280,7 @@ class FindMatches(LoginRequiredMixin, View):
         if ret:
             return HttpResponse(status=200)
         else:
-            return JsonResponse({"user": request.user.id, "Autama": AID})
+            return JsonResponse({"user": request.user.id, "Autama": aid})
 
 
 # Handle the case of a user seeing all Autama in the DB.
@@ -284,12 +294,13 @@ class SeenAll(LoginRequiredMixin, View):
         data = request.POST.copy()
         retval = data.get('id')
         # User elects to restart from Autama 1
+        user = User.objects.get(pk=request.user.id)
+        ag = AutamaGeneral.objects.get(pk=1)
         if retval == "again":
-            user = User.objects.get(pk=request.user.id)
             user.currentAutama = 1
-            user.save()
         else:
-            pass
+            user.currentAutama = ag.currentCount + 1;
+        user.save()
         return HttpResponse(status=200)
 
 
