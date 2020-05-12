@@ -66,7 +66,7 @@ class RegisterView(View):
         except ValidationError:
             return render(request, '../templates/register.html', {'error': 'Invalid email address.'})
 
-        if not User.objects.filter(username=username) or not User.objects.filter(email=email):
+        if User.objects.filter(username=username) or User.objects.filter(email=email):
             return render(request, '../templates/register.html', {'error': 'Username or email already exists.'})
 
         obj = User.objects.create(username=username, email=email)
