@@ -227,6 +227,16 @@ class FindMatches(LoginRequiredMixin, View):
 
         # Returns JSON with Autama Profile data
         autama = AutamaProfile.objects.get(pk=a_id)
+        index = 1
+        # Test for deleted autama
+        while not autama:
+            autama = AutamaProfile.objects.get(pk=(a_id+index))
+            index += 1
+            user.currentAutama += 1
+            user.save()
+            if user.currentAutama > ag.currentCount:
+                return redirect('SeenAll')
+
         data = {
             'autama_id': autama.id,
             'creator': autama.creator,
