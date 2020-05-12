@@ -1,14 +1,10 @@
 from accounts.models import User, Claims, Messages, Matches
 from AutamaProfiles.models import AutamaProfile, AutamaGeneral
+from AutamaProfiles.views import get_meta
 from django.http import HttpResponse
 
 
 def add_test_data():
-    gen = AutamaGeneral()
-    gen.currentCount = 1
-    gen.totalCount = 100
-    gen.save()
-
     user = User()
     user.username = "testuser"
     user.first_name = "test"
@@ -152,5 +148,9 @@ def add_test_data():
     ai_prof8.interest5 = 'Gaston'
     ai_prof8.interest6 = 'Gaston'
     ai_prof8.save()
+
+    ag = get_meta()
+    ag.currentCount = 8
+    ag.save()
 
     return HttpResponse('Test Data Added')

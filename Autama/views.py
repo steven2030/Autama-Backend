@@ -19,6 +19,7 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from AutamaProfiles.models import AutamaProfile, AutamaGeneral
+from AutamaProfiles.views import get_meta
 from django.utils import timezone
 from Nucleus.ham import Ham
 
@@ -215,7 +216,7 @@ class ResetPasswordView(LoginRequiredMixin, View):
 class FindMatches(LoginRequiredMixin, View):
     def get(self, request):
         user = User.objects.get(pk=request.user.id)
-        ag = AutamaGeneral.objects.get(pk=1)
+        ag = get_meta()
         a_id = request.GET.get('AID')
 
         # Returns the base HTML.
