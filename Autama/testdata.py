@@ -35,10 +35,10 @@ def add_test_data():
     ai_prof.pickle = 'PICKLE'
     ai_prof.interest1 = 'Building'
     ai_prof.interest2 = 'Architecture'
-    ai_prof.interest3 = 'Interest3'
-    ai_prof.interest4 = 'Interest4'
-    ai_prof.interest5 = 'Interest5'
-    ai_prof.interest6 = 'Interest6'
+    ai_prof.interest3 = 'Castles'
+    ai_prof.interest4 = 'Ladders and Shutes'
+    ai_prof.interest5 = 'Hard hats'
+    ai_prof.interest6 = 'Taking over the world'
     ai_prof.save()
 
     ai_prof2 = AutamaProfile()
