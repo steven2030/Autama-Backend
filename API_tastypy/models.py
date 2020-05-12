@@ -19,7 +19,7 @@ class AccountsResource(ModelResource):
         resource_name = 'accounts'
         fields = ['id', 'username', 'password', 'first_name', 'last_name', 'email', 'interest1', 'interest2', 'interest3',
                   'interest4', 'interest5', 'interest6']
-        authorization = Authorization()
+        #authorization = Authorization()
 
 
 
