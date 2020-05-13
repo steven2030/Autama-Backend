@@ -12,3 +12,8 @@ Nucleus/__*
 nucleus.pickle
 dataset_cache_OpenAIGPTTokenizer
 Autama.sock
+
+
+autama.pem
+Sharice.pem
+
