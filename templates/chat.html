@@ -3,7 +3,6 @@
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/11d06f2f9f.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js"></script>
 {% endblock %}
 
@@ -284,13 +283,14 @@
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav nav">
                         {% if request.user.is_authenticated  %}
-                            <li><a href="/MyMatches/"><i class="fas fa-chevron-left" aria-hidden="true"></i> </a></li>
-                            </ul>
+                        <li style="font-size: 25px;"><a href="/MyMatches/"><b><</b></a></li>
                         {% endif %}
-                    
-                    <li><a onclick="showReport()">Report</a></li>
+                    </ul>
 
-                    <li><a>Unmatch</a></li>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a>Unmatch</a></li>
+                        <li><a onclick="showReport()">Report</a></li>
+                    </ul>
                 </div>
 
                 <div>
