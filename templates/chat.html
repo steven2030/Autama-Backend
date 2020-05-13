@@ -38,6 +38,11 @@
 
         section + section + section + section{
             /* Do not delete section + section + section + section. It's to build a css table. */
+            background: pink;
+        }
+        
+        section + section + section + section + section{
+            /* Do not delete section + section + section + section + section. It's to build a css table. */
             background: green;
         }
 
@@ -88,6 +93,22 @@
 
         .lite-chatbox .cleft .time_stamp{
             margin:4px 0 8px 72px;
+        }
+        
+        .text_input{
+            float: left;
+            padding-right: 10px;
+            width: 85%;
+        }
+
+        .send_button{
+            background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+            width: 15%;
+            height:
+            70px;
+            color:white;
+            font-size: 2.5vw;
+            text-align: center;
         }
 
         .special{
@@ -193,12 +214,12 @@
         .autama_description{
             float: left;
             padding-left: 10px;
-            /*width: 90%;*/
+            width: 80%;
         }
 
         .profile_view{
             padding: 0;
-            height: 19%;
+            height: 17%;
             width: 100%;
         }
 
@@ -266,6 +287,10 @@
                             <li><a href="/MyMatches/"><i class="fas fa-chevron-left" aria-hidden="true"></i> </a></li>
                             </ul>
                         {% endif %}
+                    
+                    <li><a onclick="showReport()">Report</a></li>
+
+                    <li><a>Unmatch</a></li>
                 </div>
 
                 <div>
@@ -288,7 +313,7 @@
                 </div>
 
                 <div class="autama_description">
-                    <h4><b>{{ autama.first }} {{ autama.last }} </b></h4>
+                    <h5><b>{{ autama.first }} {{ autama.last }} </b></h5>
                     <p>
                         <b>Interests:</b>
                         {{ autama.interest1 }}
@@ -306,6 +331,9 @@
                 </div>
             </div>
         </section>
+        
+        <!--create some space between Autama profile and chat box-->
+        <section><div style="margin-top: 5px;"></div></section>
 
         <section class="chatbox_view">
             <div class="lite-chatbox">
@@ -333,18 +361,14 @@
         <section>
             <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div style="padding: 10px">
-                    <div>
+                <div style="padding: 10px; height: 77px;">
+                    <div class="text_input">
                         {{ form }}
                     </div>
 
-                    <div class="butt3" style="margin-top: 10px">
-                        <input id="send_button" type="submit" value="Send" class="btn btn-info" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); width: 100px; height: 50px;">
-                    </div>
+                    <input id="send_button" type="submit" value="Send" class="send_button">
                 </div>
             </form>
-
-            <input onclick="showReport()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="report" value="Report">
         </section>
 
         <!-- jQuery dialog code here: https://stackoverflow.com/questions/40939099/jquery-form-submit-with-confirmation-in-a-modal -->
