@@ -14,9 +14,13 @@ from django.core.files.base import ContentFile
 from .models import User
 from AutamaProfiles.models import AutamaProfile
 from Nucleus.bacon import Bacon
-from AutamaProfiles.models import create_new_autama
+from AutamaProfiles.views import create_autama_profile
+#from email_validator import validate_email, EmailNotValidError
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 
+# TODO: Need to implement email ping validation complete or remove stub.
 class RegisterView(View):
     def get(self, request):
         if not request.user.is_authenticated:
@@ -27,11 +31,13 @@ class RegisterView(View):
 
     def post(self, request):
         username = request.POST.get('username')
-        firstname = request.POST.get('firstname')
-        lastname = request.POST.get('lastname')
         email = request.POST.get('email')
         password = request.POST.get('password')
         rePassword = request.POST.get('rePassword')
+
+        # Neither of the users names are being used for Autama generation.
+        firstname = request.POST.get('firstname')
+        lastname = request.POST.get('lastname')
         interests1 = request.POST.get('interest1')
         interests2 = request.POST.get('interest2')
         interests3 = request.POST.get('interest3')
@@ -40,36 +46,48 @@ class RegisterView(View):
         interests6 = request.POST.get('interest6')
 
         if password != rePassword:
-            return render(request, '../templates/register.html', {'error': 'Inconsistent passwords'})
+            return render(request, '../templates/register.html', {'error': 'Passowrds don\'t match.'})
 
-        user = User.objects.filter(Q(username=username) | Q(email=email))
-        if user:
-            return render(request, '../templates/register.html', {'error': 'email or account already existed'})
+        '''
+        try:
+            # Validate.
+            valid = validate_email(email)
 
-        obj = User.objects.create(username=username, first_name=firstname,last_name=lastname, email=email)
+            # Update with the normalized form.
+            email = valid.email
+        except EmailNotValidError as e:
+            return render(request, '../templates/register.html', {'error': 'Invalid email address.'})
+            # email is not valid, exception message is human-readable
+            print(str(e))
+        '''
+
+        try:
+            validate_email(email)
+        except ValidationError:
+            return render(request, '../templates/register.html', {'error': 'Invalid email address.'})
+
+        if User.objects.filter(username=username) or User.objects.filter(email=email):
+            return render(request, '../templates/register.html', {'error': 'Username or email already exists.'})
+
+        obj = User.objects.create(username=username, email=email)
         obj.set_password(password)
-        obj.interests1 = interests1
-        obj.interests2 = interests2
-        obj.interests3 = interests3
-        obj.interests4 = interests4
-        obj.interests5 = interests5
-        obj.interests6 = interests6
+        if interests1:
+            obj.interests1 = interests1
+            obj.interests2 = interests2
+            obj.interests3 = interests3
+            obj.interests4 = interests4
+            obj.interests5 = interests5
+            obj.interests6 = interests6
+
+            bacon = Bacon()  # For handling personality generating
+            # A list of the new user's interests
+            user_personality = [interests1, interests2, interests3, interests4, interests5, interests6]
+            # Creating an Autama with the same interests as the user
+            same_personality = bacon.check_personality(user_personality)
+            create_autama_profile(personality=same_personality, creator=username, origin=username)
+
         obj.currentAutama = 0
         obj.save()
-
-        """When a new user is created, two new Autama profiles based off the new user will be created too."""
-        #bacon = Bacon() # For handling personality generating
-
-        # A list of the new user's interests
-        user_personality = [interests1, interests2, interests3, interests4, interests5, interests6]
-
-        # Creating hybrid personality Autama
-        #hybrid_personality = bacon.make_hybrid_freak(user_personality)
-        #create_new_autama(personality=hybrid_personality, origin=username)
-
-        # Creating an Autama with the same interests as the user
-        #same_personality = bacon.check_personality(user_personality)
-        #create_new_autama(personality=same_personality, origin=username)
 
         return HttpResponseRedirect(reverse('login'))
 

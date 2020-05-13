@@ -96,7 +96,7 @@
             position: absolute;
             top: 338px;
             left: 8px;
-            font-size: 18;
+            font-size: 18px;
             overflow-x: auto;
             overflow-wrap: break-spaces;
         }
@@ -289,8 +289,11 @@
                             function(data, status) {
 
                         });
-                        console.log({'AID': this.topCard.autamaID, 'match': dirX});
 
+                        // Attempt to handle multiple requests for same card
+                        if (this.topCard.autamaID >= this.currAutama) {
+                            this.currAutama = this.topCard.autamaID + 1;
+                        }
                         // wait transition end
                         setTimeout(() => {
                             // remove swiped card
@@ -366,17 +369,22 @@
 
                 // Get Random Background Image
                 card.autamaID = this.currAutama;
-                card.style.backgroundImage =
-                    "url(../Images/a" + this.currAutama + ".png)";
                 $.get("?AID=" + this.currAutama, function(data) {
                     p1.innerText = data.first + " " + data.last;
                     p2.innerText = "Followers: " + data.matches;
                     p3.innerText = "Creator: " + data.creator;
                     textbox4.innerText = "Interests: " + data.interest1 + " "
-                    + data.interest2 + " " + data.interest3
+                    + data.interest2 + " " + data.interest3;
+                    console.log(data.picture);
+                    card.style.backgroundImage =
+                        "url(" + data.picture + ")";
+                    card.autamaID = data.autama_id;
+                    if (data.redirect) {
+                        window.location.replace(data.redirect);
+                    }
                 });
 
-                this.currAutama++;
+                this.currAutama = card.autamaID + 1;
 
                 if (this.board.firstChild) {
                     this.board.insertBefore(card, this.board.firstChild)

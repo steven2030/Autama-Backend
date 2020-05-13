@@ -5,134 +5,161 @@
     <!-- Turning landscape images into circular squares: https://www.webfx.com/blog/web-design/circular-images-css/ -->
     <!-- Display images side by side (in a row): https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_images_side_by_side -->
     <style>
-           .circular--portrait {
-                position: relative;
-                width: 200px;
-                height: 200px;
-                overflow: hidden;
-                border-radius: 50%;
-           }
+        .circular--portrait {
+            position: relative;
+            width: 70%;
+            height: auto;
+            overflow: hidden;
+            border-radius: 50%;
+            display: inline-block;
+        }
 
-           .circular--portrait img {
-                width: 100%;
-                height: auto;
-           }
+        .circular--portrait img {
+            max-width: 100%;
+            height: auto;
+        }
 
-           .column {
-                float: left;
-                width: 33.33%;
-                padding: 5px;
-           }
+        .column {
+            float: left;
+            width: 33.33%;
+            padding: 5px;
+        }
 
-            /* Clearfix (clear floats) */
-            .row::after {
-                content: "";
-                clear: both;
-                display: table;
-            }
+        /* Clearfix (clear floats) */
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
 
-            div.container {
-                margin-top: 50px;
-            }
+        div.container {
+            margin-top: 50px;
+        }
 
-            div.search--bar {
-                margin-top: 20px;
-            }
+        div.search--bar {
+            margin-top: 20px;
+        }
 
-           #searchInput {
-               background-image: url("/Images/Images/search.png");
-               background-position: 10px 12px;
-               background-repeat: no-repeat;
-               width: 100%;
-               font-size: 16px;
-               padding: 12px 20px 12px 40px;
-               border: 1px solid #ddd;
-               margin-top: 24px;
-               margin-bottom: 12px;
-           }
+        #search-input {
+            background-image: url("/Images/Images/search.png");
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
 
-        </style>
+        .flexbox-wrapper {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .flexbox-image {
+            width: 32%;
+            padding: 0.5%;
+        }
+
+        .recent-msg {
+            justify-content: center;
+            align-items: center;
+        }
+
+    </style>
 {% endblock %}
 
 
 {% block content %}
 
-
-<div class="container" onload="matchNotifications()">
-
-    <!-- From https://www.w3schools.com/howto/howto_js_filter_lists.asp -->
-    <input type="text" id="searchInput" onkeyup="dynamicSearch()" placeholder="Search for matches..." title="Type in a name">
-
-    <title>My Matches</title>
-    <br>
-    <h1>New Matches {{num_matches}}</h1>
-
-    <div class="row">
-        {% for a_profile in user_matches %}
-            <div class="column userLink">
-                <a href="{% url 'Chat' pk=a_profile.autamaID.pk %}" class="image">
-                    <div class="circular--portrait">
-                        <img src="{{ a_profile.autamaID.picture.url }}" alt="Avatar"/>
-                    </div>
-                </a>
-                <div class="content">
-                    <h3 class="profilename">{{a_profile.autamaID.first}} {{a_profile.autamaID.last}}</h3>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
     <script>
         function dynamicSearch() {
-            matches = document.getElementsByClassName("userLink");
-            var input, filter;
-            input = document.getElementById('searchInput');
+            matches = document.getElementsByClassName("some-match");
+            messages = document.getElementsByClassName("some-msg-box");
+            var input, filter, name, msg, convo;
+            input = document.getElementById('search-input');
             filter = input.value.toLowerCase();
 
-            for (const element of matches) {
-                t = element.getElementsByClassName("profilename")[0].innerText;
+            for (const match of matches) {
+                name = match.getElementsByClassName("profilename")[0].innerText;
 
-                if (t.toLowerCase().indexOf(filter) == -1) {
-                    element.style.display = 'none';
+                if (name.toLowerCase().indexOf(filter) === -1) {
+                    match.style.display = 'none';
                 } else {
-                    element.style.display = 'inline-block';
+                    match.style.display = 'inline-block';
+                }
+            }
+
+            for (const some_msg of messages) {
+                name = some_msg.getElementsByClassName("profilename")[0].innerText;
+                convo = some_msg.getElementsByClassName("some-conversation")[0].innerText;
+
+                if (name.toLowerCase().indexOf(filter) === -1 && convo.toLowerCase().indexOf(filter) === -1) {
+                    some_msg.style.display = 'none';
+                } else {
+                    some_msg.style.display = 'flex';
                 }
             }
         }
     </script>
 
-    <br>
-    <br>
 
-    <!-- aligning images with text: https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_img_align -->
-    <h1>Messages {{num_messages}}</h1>
+    <div class="container" onload="matchNotifications()">
 
+        <!-- From https://www.w3schools.com/howto/howto_js_filter_lists.asp -->
+        <input type="text" id="search-input" onkeyup="dynamicSearch()" placeholder="Search for matches..." title="Type in a name">
 
-    <br>
-
-
-    <div class="column">
-
-        {% for a_profile, a_message, a_chain in user_messages %}
-
+        <title>My Matches</title>
+        <br>
+        <h1>New Matches {{num_matches}}</h1>
 
         <div class="row">
-            <a href="{% url 'Chat' pk=a_profile.pk %}" class="image">
-                <div class="circular--portrait">
-                    <img src="{{ a_profile.picture.url }}" alt="Avatar" align="left"/>
+            {% for a_profile in user_matches %}
+                <div class="column some-match">
+                    <a href="{% url 'Chat' pk=a_profile.autamaID.pk %}" class="image">
+                        <div class="circular--portrait">
+                            <img src="{{ a_profile.autamaID.picture.url }}" alt="Avatar"/>
+                        </div>
+                    </a>
+                    <div class="content">
+                        <h3 class="profilename">{{a_profile.autamaID.first}} {{a_profile.autamaID.last}}</h3>
+                    </div>
                 </div>
-            </a>
-            {{a_message}}
+            {% endfor %}
         </div>
 
 
+        <br>
+        <br>
+
+        <!-- aligning images with text: https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_img_align -->
+        <h1>Messages {{num_messages}}</h1>
+
+        <br>
+
+        {% for a_profile, a_message, a_chain in user_messages %}
+
+            <div class="flexbox-wrapper some-msg-box">
+                <!-- tag a_chain for use in dynamicSearch() -->
+                <div class="some-conversation" style="display: none;">{{ a_chain }}</div>
+
+                <div class="flexbox-image">
+                    <a href="{% url 'Chat' pk=a_profile.pk %}" class="image">
+                        <div class="circular--portrait">
+                            <img src="{{ a_profile.picture.url }}" alt="Avatar" align="left"/>
+                        </div>
+                    </a>
+                </div>
+                <div class="recent-msg">
+                    <br>
+                    <h3 class="profilename">{{ a_profile.first }} {{ a_profile.last }} </h3>
+                    <p class="some-recent-msg">{{ a_message }}</p>
+                </div>
+            </div>
+
         {% endfor %}
 
-
-
     </div>
-
-
-
-</div>
 {% endblock %}

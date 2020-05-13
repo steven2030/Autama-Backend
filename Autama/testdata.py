@@ -1,5 +1,6 @@
 from accounts.models import User, Claims, Messages, Matches
-from AutamaProfiles.models import AutamaProfile
+from AutamaProfiles.models import AutamaProfile, AutamaGeneral
+from AutamaProfiles.views import get_meta
 from django.http import HttpResponse
 
 
@@ -30,10 +31,10 @@ def add_test_data():
     ai_prof.pickle = 'PICKLE'
     ai_prof.interest1 = 'Building'
     ai_prof.interest2 = 'Architecture'
-    ai_prof.interest3 = 'Interest3'
-    ai_prof.interest4 = 'Interest4'
-    ai_prof.interest5 = 'Interest5'
-    ai_prof.interest6 = 'Interest6'
+    ai_prof.interest3 = 'Castles'
+    ai_prof.interest4 = 'Ladders and Shutes'
+    ai_prof.interest5 = 'Hard hats'
+    ai_prof.interest6 = 'Taking over the world'
     ai_prof.save()
 
     ai_prof2 = AutamaProfile()
@@ -147,5 +148,9 @@ def add_test_data():
     ai_prof8.interest5 = 'Gaston'
     ai_prof8.interest6 = 'Gaston'
     ai_prof8.save()
+
+    ag = get_meta()
+    ag.currentCount = 8
+    ag.save()
 
     return HttpResponse('Test Data Added')

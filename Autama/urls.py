@@ -43,6 +43,8 @@ urlpatterns = [
     path('unclaim_from_chat/<int:pk>/', main_page_views.unclaim_from_chat, name="unclaim_from_chat"),
     path('PrivacyPolicy/', main_page_views.PrivacyPolicy, name="PrivacyPolicy"),
     path('testdata/', main_page_views.testdata,),
+    path('api/', include('API_tastypy.urls')),
+    path('SeenAll/', main_page_views.SeenAll.as_view(), name="SeenAll"),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

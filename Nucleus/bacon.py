@@ -42,6 +42,7 @@ class Bacon:
         return self.__remove_name_trait(decoded_personality)
 
     # A method for generating one encoded personality
+    # https://github.com/huggingface/transfer-learning-conv-ai/blob/master/interact.py
     def __generate_encoded_personality(self):
         dataset = get_dataset(self.__tokenizer, self.__args.dataset_path, self.__args.dataset_cache)
         personalities = [dialog["personality"] for dataset in dataset.values() for dialog in dataset]
