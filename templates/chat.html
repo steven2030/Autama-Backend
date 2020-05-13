@@ -23,17 +23,22 @@
         https://stackoverflow.com/questions/90178/make-a-div-fill-the-height-of-the-remaining-screen-space */
         section{
             display: table-row;
-            /*background: yellow;*/
+            background: yellow;
         }
 
         section + section{
             /* Do not delete section + section. It's to build a css table. */
-            /*background: red;*/
+            background: red;
         }
 
         section + section + section{
             /* Do not delete section + section + section. It's to build a css table. */
-            /*background: blue;*/
+            background: blue;
+        }
+
+        section + section + section + section{
+            /* Do not delete section + section + section + section. It's to build a css table. */
+            background: green;
         }
 
         .chatbox_view{
@@ -164,6 +169,47 @@
             background-color: white;
         }
 
+        .flexbox-image {
+            width: 100px;
+            float: left;
+            padding-top: 10px;
+            padding-left: 10px;
+        }
+
+        .circular--portrait {
+            /*position: relative;*/
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .circular--portrait img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .autama_description{
+            float: left;
+            padding-left: 10px;
+            /*width: 90%;*/
+        }
+
+        .profile_view{
+            padding: 0;
+            height: 19%;
+            width: 100%;
+        }
+
+        .profile_box{
+            padding: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 100%;
+            width: 100%;
+        }
+
     </style>
 {% endblock %}
 
@@ -232,6 +278,34 @@
 
         <!--create some space between nav and chat box-->
         <section><div style="margin-top: 50px;"></div></section>
+
+        <section class="profile_view">
+            <div class="profile_box">
+                <div class="flexbox-image">
+                    <div class="circular--portrait">
+                        <img src="{{ autama.picture.url }}" alt="Avatar"/>
+                    </div>
+                </div>
+
+                <div class="autama_description">
+                    <h4><b>{{ autama.first }} {{ autama.last }} </b></h4>
+                    <p>
+                        <b>Interests:</b>
+                        {{ autama.interest1 }}
+                        {{ autama.interest2 }}
+                        {{ autama.interest3 }}
+                    </p>
+                    <p>
+                        <b>Creator:</b>
+                        {{ autama.creator }}
+                    </p>
+                    <p>
+                        <b>Followers:</b>
+                        {{ autama.nummatches }}
+                    </p>
+                </div>
+            </div>
+        </section>
 
         <section class="chatbox_view">
             <div class="lite-chatbox">
@@ -339,5 +413,4 @@
 
     </body>
 {% endblock %}
-
 
