@@ -57,15 +57,15 @@ def create_autama_profile(personality: list, creator: str = "Happy Slackers", or
     pancake = Pancake()  # For handling name generating
     REQUIRED = 6  # The required amount of traits
     amount = len(personality)
-    # Get meta data on Autama Images and generate path for current autama picture
-    meta_autama = get_meta()
-    filename = "a" + str(meta_autama.currentCount) + ".png"
-    meta_autama.currentCount += 1
-    meta_autama.save()
 
     # Make sure personality has the required amount of traits
     if amount == REQUIRED:
-        picture = filename
+        # Get meta data on Autama Images and generate path for current autama picture
+        meta_autama = get_meta()
+        picture = "a" + str(meta_autama.currentCount) + ".png"
+        meta_autama.currentCount += 1
+        meta_autama.save()
+        
         first = pancake.generate_first_name()
         last = pancake.generate_last_name()
         interest1 = personality[0]
@@ -75,12 +75,12 @@ def create_autama_profile(personality: list, creator: str = "Happy Slackers", or
         interest5 = personality[4]
         interest6 = personality[5]
 
-        hybrid_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last,
+        new_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last,
                                                      pickle=origin,
                                                      interest1=interest1, interest2=interest2,
                                                      interest3=interest3, interest4=interest4,
                                                      interest5=interest5, interest6=interest6)
-        hybrid_autama.save()
+        new_autama.save()
 
 
 # A function to get meta data on Autama Images by first checking if it exists and then creating one if it doesn't
