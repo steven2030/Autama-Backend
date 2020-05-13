@@ -238,7 +238,7 @@
     <script>
         /* function to convert iso utc time from the DB to local time in the browser */
         function convertTime(timestamp) {
-            return moment.utc(timestamp).local().format('MMM D YYYY, h:ma');
+            return moment.utc(timestamp).local().format('MMM D YYYY, h:mma');
         }
         function showReport() {
             if (document.getElementById("report").style.display != "block") {
