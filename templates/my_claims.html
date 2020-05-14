@@ -1,81 +1,92 @@
 {% extends 'base.html' %}
 
+
+{% block csstyle %}
+
+    <style>
+           .circular--portrait {
+                display: inline-block;
+                position: relative;
+                width: 200px;
+                height: 200px;
+                overflow: hidden;
+                border-radius: 50%;
+           }
+
+           .circular--portrait img {
+                width: 100%;
+                height: auto;
+           }
+
+           .column {
+                float: left;
+                width: 33.33%;
+                padding: 5px;
+           }
+
+            /* Clearfix (clear floats) */
+            .row::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+
+            div.container {
+                margin-top: 50px;
+            }
+
+            div.profile-container {
+                text-align: center;
+            }
+
+
+
+
+    </style>
+
+{%  endblock %}
+
+
 {% block content %}
-    <div style="width: 80%;margin: auto; padding-top: 50px;">
-        <h1>My Autama</h1>
 
-        {% if 0 == user.my_Autama %}
-            <div>
-                <br>
-                <p>It looks like you haven't created an Autama yet.</p>
-                <p>If you like to create an Autama, just fill out the form below and hit the "Create" button.</p>
-                <br>
+<div class="container">
+    <title>My Claimed Autama</title>
+    <br>
+    <h1>Claimed ({{ claims.count }})</h1>
+
+    <div class="row">
+        {% for a_claim in claims %}
+        <div class="column">
+
+            <div class="profile-container">
+
+            <a href="{% url 'Chat' pk=a_claim.autamaID.pk %}" class="image">
+                <div class="circular--portrait">
+                    <img src="{{ a_claim.autamaID.picture.url }}" alt="Avatar"/>
+                </div>
+            </a>
+
+            <div class="name">
+                <h3>{{a_claim.autamaID.first}} {{a_claim.autamaID.last}}</h3>
             </div>
-        
-            <div style="color: red;font-size: 14px">{{ error }}</div>
-            <br>
 
-            <form action="MyAutama/" method="post">
-                <div class="form-group">
-                    <label for="firstname">firstname</label>
-                    <input type="text" class="form-control" id="firstname" placeholder="firstname" name="firstname">
+                <div class="list-group-item" style="border: none;position: relative;height: 94px;">
+                    <form action="{% url 'unclaim' pk=a_claim.autamaID.pk %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="unclaim" value="Unclaim">
+                    </form>
                 </div>
 
-                <div class="form-group">
-                    <label for="lastname">lastname</label>
-                    <input type="text" class="form-control" id="lastname" placeholder="lastname" name="lastname">
-                </div>
-
-                <div class="form-group">
-                    <label for="interest1">interest1</label>
-                    <input type="text" class="form-control" id="interest1" placeholder="interest 1" name="interest1">
-                </div>
-
-                <div class="form-group">
-                    <label for="interest2">interest2</label>
-                    <input type="text" class="form-control" id="interest2" placeholder="interest 2" name="interest2">
-                </div>
-
-                <div class="form-group">
-                    <label for="interest3">interest3</label>
-                    <input type="text" class="form-control" id="interest3" placeholder="interest 3" name="interest3">
-                </div>
-
-                <div class="form-group">
-                    <label for="interest4">interest4</label>
-                    <input type="text" class="form-control" id="interest4" placeholder="interest 4" name="interest4">
-                </div>
-
-                <div class="form-group">
-                    <label for="interest5">interest5</label>
-                    <input type="text" class="form-control" id="interest5" placeholder="interest 5" name="interest5">
-                </div>
-
-                <div class="form-group">
-                    <label for="interest6">interest6</label>
-                    <input type="text" class="form-control" id="interest6" placeholder="interest 6" name="interest6">
-                </div>
-
-                <input hidden name="id" value="{{ user.id }}">
-                <button style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">Create</button>
-
-                {% csrf_token %}
-            </form>
-        {% else %}
-            <div>
-                After creating one
-                <!--{% for a_profile in autamaprofile %}
-                    <div class="flexbox-wrapper some-msg-box">
-                        <div class="flexbox-image">
-                            <a href="{% url 'Chat' pk=a_profile.pk %}" class="image">
-                                <div class="circular--portrait">
-                                    <img src="{{ a_profile.picture.url }}" alt="Avatar"/>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                {% endfor %}-->
             </div>
-        {% endif %}
+
+        </div>
+        {% endfor %}
+
     </div>
+</div>
+
+{% endblock %}
+
+
+{% block js %}
 {% endblock %}
