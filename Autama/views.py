@@ -19,7 +19,7 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from AutamaProfiles.models import AutamaProfile, AutamaGeneral
-from AutamaProfiles.views import get_meta
+from AutamaProfiles.views import get_meta, get_picture_name
 from django.utils import timezone
 from Nucleus.ham import Ham
 
@@ -327,6 +327,42 @@ def PrivacyPolicy(request):
 def unclaim_from_chat(request, pk):
     unclaim_autama(request.user.id, pk)
     return redirect('Chat', pk=pk)
+
+
+class MyAutamas(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'my_autamas.html')
+
+    def post(self, request):
+        first = request.POST.get('firstname')
+        last = request.POST.get('lastname')
+        interest1 = request.POST.get('interest1')
+        interest2 = request.POST.get('interest2')
+        interest3 = request.POST.get('interest3')
+        interest4 = request.POST.get('interest4')
+        interest5 = request.POST.get('interest5')
+        interest6 = request.POST.get('interest6')
+
+        if not first or not last or not interest1 or not interest2 or not interest3 or not interest4 or not interest5 or not interest6:
+            return render(request, '../templates/my_autamas.html', {'error': 'Please fill in everything.'})
+
+        creator = str(request.user)
+        origin = creator
+        picture = get_picture_name()
+
+        new_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last,
+                                                  pickle=origin,
+                                                  interest1=interest1, interest2=interest2,
+                                                  interest3=interest3, interest4=interest4,
+                                                  interest5=interest5, interest6=interest6)
+        new_autama.save()
+
+        # Update user's my Autama count
+        current_user = User.objects.get(pk=request.user.pk)
+        current_user.my_Autama += 1
+        current_user.save()
+
+        return HttpResponseRedirect(reverse('MyAutamas'))
 
 
 class MyClaims(LoginRequiredMixin, View):
