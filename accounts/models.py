@@ -12,6 +12,7 @@ class User(AbstractUser):
     interests5 = models.TextField()
     interests6 = models.TextField()
     currentAutama = models.IntegerField(default=1)  # Used for find matches stack tracing.
+    my_Autama = models.IntegerField(default=0) # Use for tracking the amount of Autamas the user created
 
 
 class Claims(models.Model):
