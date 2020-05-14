@@ -79,6 +79,11 @@ def unmatch(user_pk, autama_pk):
     if Matches.objects.filter(userID=user).filter(autamaID=autama).exists():
         # unmatch
         Matches.objects.filter(userID=user).filter(autamaID=autama).delete()
+        
+        # Go and delete their messages
+        message_chain = Messages.objects.all().filter(userID=user.pk).filter(autamaID=autama.pk)
+        for message in message_chain:
+            message.delete()
 
     else:
         ret = False
