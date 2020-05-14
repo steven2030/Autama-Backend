@@ -17,9 +17,6 @@ class AutamaForm(ModelForm):
 
 class CustomAutamaView(View):
     def post(self, request):
-        creator = str(request.user)
-        origin = creator
-        picture = get_picture_name()
         first = request.POST.get('firstname')
         last = request.POST.get('lastname')
         interest1 = request.POST.get('interest1')
@@ -31,6 +28,10 @@ class CustomAutamaView(View):
         
         if not first or not last or not interest1 or not interest2 or not interest3 or not interest4 or not interest5 or not interest6:
             return render(request, '../templates/my_claims.html', {'error': 'Please fill in everything.'})
+        
+        creator = str(request.user)
+        origin = creator
+        picture = get_picture_name()
 
         new_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last,
                                                   pickle=origin,
