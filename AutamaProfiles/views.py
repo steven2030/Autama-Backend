@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.forms import ModelForm
 from AutamaProfiles.models import AutamaProfile, AutamaGeneral
+from accounts.models import User
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views import View
 import json
 from Nucleus.pancake import Pancake
 
@@ -11,6 +13,34 @@ class AutamaForm(ModelForm):
     class Meta:
         model = AutamaProfile
         fields = ['creator', 'picture', 'first', 'last', 'interest1', 'interest2', 'interest3', 'interest4', 'interest5', 'interest6']  # interests did exist here.
+
+
+class CustomAutamaView(View):
+    def post(self, request):
+        creator = str(request.user)
+        origin = creator
+        picture = get_picture_name()
+        first = request.POST.get('firstname')
+        last = request.POST.get('lastname')
+        interest1 = request.POST.get('interest1')
+        interest2 = request.POST.get('interest2')
+        interest3 = request.POST.get('interest3')
+        interest4 = request.POST.get('interest4')
+        interest5 = request.POST.get('interest5')
+        interest6 = request.POST.get('interest6')
+
+        new_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last,
+                                                  pickle=origin,
+                                                  interest1=interest1, interest2=interest2,
+                                                  interest3=interest3, interest4=interest4,
+                                                  interest5=interest5, interest6=interest6)
+        new_autama.save()
+
+        current_user = User.objects.get(pk=request.user.pk)
+        current_user.my_Autama += 1
+        current_user.save()
+
+        return HttpResponseRedirect(reverse('MyClaims'))
 
 
 @login_required
@@ -61,10 +91,7 @@ def create_autama_profile(personality: list, creator: str = "Happy Slackers", or
     # Make sure personality has the required amount of traits
     if amount == REQUIRED:
         # Get meta data on Autama Images and generate path for current autama picture
-        meta_autama = get_meta()
-        picture = "a" + str(meta_autama.currentCount) + ".png"
-        meta_autama.currentCount += 1
-        meta_autama.save()
+        picture = get_picture_name()
         
         first = pancake.generate_first_name()
         last = pancake.generate_last_name()
@@ -95,3 +122,12 @@ def get_meta():
     # Get and return meta data
     meta_autama = AutamaGeneral.objects.first()
     return meta_autama
+
+
+# A function to get a file name for a picture
+def get_picture_name():
+    meta_autama = get_meta()
+    file_name = "a" + str(meta_autama.currentCount) + ".png"
+    meta_autama.currentCount += 1
+    meta_autama.save()
+    return file_name
