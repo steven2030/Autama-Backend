@@ -22,27 +22,27 @@
         https://stackoverflow.com/questions/90178/make-a-div-fill-the-height-of-the-remaining-screen-space */
         section{
             display: table-row;
-            background: yellow;
+            /*background: yellow;*/
         }
 
         section + section{
             /* Do not delete section + section. It's to build a css table. */
-            background: red;
+            /*background: red;*/
         }
 
         section + section + section{
             /* Do not delete section + section + section. It's to build a css table. */
-            background: blue;
+            /*background: blue;*/
         }
 
         section + section + section + section{
             /* Do not delete section + section + section + section. It's to build a css table. */
-            background: pink;
+            /*background: pink;*/
         }
         
         section + section + section + section + section{
             /* Do not delete section + section + section + section + section. It's to build a css table. */
-            background: green;
+            /*background: green;*/
         }
 
         .chatbox_view{
@@ -218,7 +218,7 @@
 
         .profile_view{
             padding: 0;
-            height: 17%;
+            height: 20%;
             width: 100%;
         }
 
@@ -237,8 +237,9 @@
     <script>
         /* function to convert iso utc time from the DB to local time in the browser */
         function convertTime(timestamp) {
-            return moment.utc(timestamp).local().format('MMM D YYYY, h:mma');
+            return moment.utc(timestamp).local().format('MMM D YYYY, h:mm a');
         }
+        
         function showReport() {
             if (document.getElementById("report").style.display != "block") {
                 div = document.getElementById("report").style.display="block";
@@ -263,6 +264,15 @@
                     return false;
                 }
             });
+        });
+        
+        /*
+        The following link shows how to auto scroll to button:
+        https://stackoverflow.com/questions/24772491/auto-scroll-to-bottom-div/24772646
+        */
+        /* A function to go to the latest message in the chat box */
+        $(document).ready(function(){
+            $('.lite-chatbox').animate({scrollTop: $('.lite-chatbox')[0].scrollHeight}, 0);
         });        
     </script>
 {% endblock %}
