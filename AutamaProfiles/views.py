@@ -28,6 +28,9 @@ class CustomAutamaView(View):
         interest4 = request.POST.get('interest4')
         interest5 = request.POST.get('interest5')
         interest6 = request.POST.get('interest6')
+        
+        if not first or not last or not interest1 or not interest2 or not interest3 or not interest4 or not interest5 or not interest6:
+            return render(request, '../templates/my_claims.html', {'error': 'Please fill in everything.'})
 
         new_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last,
                                                   pickle=origin,
