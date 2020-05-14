@@ -34,6 +34,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('FindMatches/', main_page_views.FindMatches.as_view(), name="FindMatches"),
     path('MyMatches/', main_page_views.MyMatches.as_view(), name="MyMatches"),
+    path('UnMatch/<int:pk>/', main_page_views.unmatch_autama, name="UnMatch"),
     path('Chat/', main_page_views.chat_main_page, name="Chat_homepage"),
     path('Chat/<int:pk>/', main_page_views.Chat.as_view(), name="Chat"),
     path('logout/', main_page_views.LogoutView.as_view(), name="logout"),

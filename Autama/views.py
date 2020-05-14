@@ -402,6 +402,17 @@ class MessageForm(forms.Form):
     x = forms.CharField(widget=forms.Textarea(attrs={'class': 'special'}), label="")
 
 
+def unmatch_autama(request, pk):
+    user = User.objects.get(pk=request.user.id)  # grab user instance
+
+    if AutamaProfile.objects.filter(pk=pk).exists():  # Check that the autama exists.
+        the_autama = AutamaProfile.objects.get(pk=pk)  # Grab autama instance
+        if Matches.objects.filter(userID=user.pk).filter(autamaID=pk).exists():  # See if match exists.
+            unmatch(user.pk, the_autama.pk)
+
+    return redirect('FindMatches')
+
+
 # TODO: make sure a user can only chat with an autama they have matched with.
 # TODO: make sure autama id exists.
 # TODO: validate all user input.

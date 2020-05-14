@@ -298,7 +298,11 @@
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a>Unmatch</a></li>
+                        <li><a href="{% url 'UnMatch' pk=autama.pk %}">
+                            {% csrf_token %}
+                            Unmatch
+                        </a></li>
+
                         <li><a onclick="showReport()">Report</a></li>
                     </ul>
                 </div>
