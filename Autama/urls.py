@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
+from AutamaProfiles import views as AutamaProfile_views
 
 
 urlpatterns = [
@@ -46,6 +47,7 @@ urlpatterns = [
     path('testdata/', main_page_views.testdata,),
     path('api/', include('API_tastypy.urls')),
     path('SeenAll/', main_page_views.SeenAll.as_view(), name="SeenAll"),
+    path('MyClaims/MyAutama/', AutamaProfile_views.CustomAutamaView.as_view(), name='custom_autama'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
