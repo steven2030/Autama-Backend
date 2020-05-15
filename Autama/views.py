@@ -329,9 +329,9 @@ def unclaim_from_chat(request, pk):
     return redirect('Chat', pk=pk)
 
 
-class MyAutamas(LoginRequiredMixin, View):
+class CreateAutama(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'my_autamas.html')
+        return render(request, 'create_autama.html')
 
     def post(self, request):
         first = request.POST.get('firstname')
@@ -344,7 +344,7 @@ class MyAutamas(LoginRequiredMixin, View):
         interest6 = request.POST.get('interest6')
 
         if not first or not last or not interest1 or not interest2 or not interest3 or not interest4 or not interest5 or not interest6:
-            return render(request, '../templates/my_autamas.html', {'error': 'Please fill in everything.'})
+            return render(request, '../templates/create_autama.html', {'error': 'Please fill in everything.'})
 
         creator = str(request.user)
         origin = creator
@@ -363,6 +363,14 @@ class MyAutamas(LoginRequiredMixin, View):
         current_user.save()
 
         return HttpResponseRedirect(reverse('MyAutamas'))
+
+
+class MyAutamas(LoginRequiredMixin, View):
+    def get(self, request):
+        user = User.objects.get(pk=request.user.id)
+        autama_profiles = AutamaProfile.objects.filter(creator=user)
+        my_autamas = {'my_autamas': autama_profiles}
+        return render(request, 'my_autamas.html', my_autamas)
 
 
 class MyClaims(LoginRequiredMixin, View):
