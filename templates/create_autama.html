@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div style="width: 80%;margin: auto; padding-top: 50px;">
+        <h1>Create an Autama</h1>
+        <br>
+
+        {% if 0 == user.my_Autama %}
+            <div>
+                <p>You can create your own custom Autama here.</p>
+                <p>Just fill out the form below and hit the "Create" button.</p>
+                <p>It's that easy.</p>
+                <br>
+            </div>
+
+            <div style="color: red;font-size: 14px">
+                {{ error }}
+            </div>
+
+            <form action="/CreateAutama/" method="post">
+                <div class="form-group">
+                    <label for="firstname">firstname</label>
+                    <input type="text" class="form-control" id="firstname" placeholder="firstname" name="firstname">
+                </div>
+
+                <div class="form-group">
+                    <label for="lastname">lastname</label>
+                    <input type="text" class="form-control" id="lastname" placeholder="lastname" name="lastname">
+                </div>
+
+                <div class="form-group">
+                    <label for="interest1">interest1</label>
+                    <input type="text" class="form-control" id="interest1" placeholder="interest 1" name="interest1">
+                </div>
+
+                <div class="form-group">
+                    <label for="interest2">interest2</label>
+                    <input type="text" class="form-control" id="interest2" placeholder="interest 2" name="interest2">
+                </div>
+
+                <div class="form-group">
+                    <label for="interest3">interest3</label>
+                    <input type="text" class="form-control" id="interest3" placeholder="interest 3" name="interest3">
+                </div>
+
+                <div class="form-group">
+                    <label for="interest4">interest4</label>
+                    <input type="text" class="form-control" id="interest4" placeholder="interest 4" name="interest4">
+                </div>
+
+                <div class="form-group">
+                    <label for="interest5">interest5</label>
+                    <input type="text" class="form-control" id="interest5" placeholder="interest 5" name="interest5">
+                </div>
+
+                <div class="form-group">
+                    <label for="interest6">interest6</label>
+                    <input type="text" class="form-control" id="interest6" placeholder="interest 6" name="interest6">
+                </div>
+
+                <input hidden name="id" value="{{ user.id }}">
+                <button style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">Create</button>
+
+                {% csrf_token %}
+            </form>
+        {% else %}
+            <div>
+                <p>Sorry</p>
+                <p>It looks like you have created the maximum amount of Autamas allowed.</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
