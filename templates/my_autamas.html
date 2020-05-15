@@ -4,12 +4,13 @@
     <style>
         .send_button{
             background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
-            height: 200px;
+            height: 100%;
+            width: 100%;
             padding: 20px;
             color:white;
-            font-size: 1.5vw;
+            font-size: 5vw;
             text-align: center;
-            border-radius: 50%;
+            border-radius: 14px;
         }
 
         .flexbox-wrapper {
@@ -50,15 +51,17 @@
 
 {% block content %}
     <div style="width: 80%;margin: auto; padding-top: 50px;">
-        <h1>My Autama</h1>
+        <h1>My Autamas</h1>
         <br>
 
-        <form action="/CreateAutama/">
-            <input type="submit" value="Create an Autama" class="send_button"/>
-        </form>
+        {% if 0 == user.my_Autama %}
+            <form action="/CreateAutama/">
+                <input type="submit" value="Create an Autama" class="send_button"/>
+            </form>
 
-        <br>
-        <br>
+            <br>
+            <br>
+        {% endif %}
 
         <div>
             {% for autama in my_autamas %}
