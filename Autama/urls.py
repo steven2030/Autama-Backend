@@ -47,6 +47,7 @@ urlpatterns = [
     path('api/', include('API_tastypy.urls')),
     path('SeenAll/', main_page_views.SeenAll.as_view(), name="SeenAll"),
     path('MyAutamas/', main_page_views.MyAutamas.as_view(), name='MyAutamas'),
+    path('CreateAutama/', main_page_views.CreateAutama.as_view(), name='CreateAutama'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
