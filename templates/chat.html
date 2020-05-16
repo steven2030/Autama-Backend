@@ -279,8 +279,16 @@
         The following link shows how to go back to previous page:
         https://www.w3schools.com/jsref/met_his_back.asp
         */
-        function goBack() {
+        function goBackOne() {
           window.history.back();
+        }
+        
+        /*
+        The following link shows how to go back multiple pages:
+        https://www.w3schools.com/jsref/met_his_go.asp
+        */
+        function goBack(pages) {
+          window.history.go(-pages);
         }
     </script>
 {% endblock %}
@@ -301,7 +309,9 @@
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav nav">
                         {% if request.user.is_authenticated  %}
-                        <li style="font-size: 25px;"><a onclick="goBack()"><b><</b></a></li>
+                            <!-- Commented it out because goBackOne() only goes back one page. Not working correctly. -->
+                            <!--<li style="font-size: 25px;"><a onclick="goBackOne()"><b><</b></a></li>-->
+                            <li style="font-size: 25px;"><a href="/MyMatches/"><b><</b></a></li>
                         {% endif %}
                     </ul>
 
