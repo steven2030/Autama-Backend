@@ -65,10 +65,8 @@ def create_autama_profile(personality: list, creator: str = "Happy Slackers", or
 def create_custom_autama(creator: str, first: str, last: str, origin: str, personality: list):
     REQUIRED = 6  # The required amount of traits
     bacon = Bacon()
-    
     # Make sure personality does not have "my name is" traits
     checked_personality = bacon.check_personality(personality)
-    
     amount = len(checked_personality)
 
     # Make sure personality has the required amount of traits
@@ -126,3 +124,10 @@ def get_picture_name():
     meta_autama.currentCount += 1
     meta_autama.save()
     return file_name
+
+
+# A function to get the value of the maximum amount of Autamas an user can create
+def get_my_autama_limit():
+    meta_autama = get_meta()
+    limit = meta_autama.autamaLimit
+    return limit
