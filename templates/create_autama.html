@@ -8,7 +8,7 @@
         {% if user.my_Autama < my_autama_limit %}
             <div>
                 <p>You can create your own custom Autama here.</p>
-                <p>Just fill out the form below and hit the "Create" button.</p>
+                <p>Just fill out everything on the form below and hit the "Create" button.</p>
                 <p>It's that easy.</p>
                 <br>
             </div>
@@ -26,6 +26,21 @@
                 <div class="form-group">
                     <label for="lastname">lastname</label>
                     <input type="text" class="form-control" id="lastname" placeholder="lastname" name="lastname">
+                </div>
+                
+                <div>
+                    <br>
+                    <p>Other users can see the first three interests.</p>
+                    <p>An interest is something that describes who the Autama is.</p>
+                    <p>Below are some example interests:</p>
+                    <ul>
+                        <li>I like cars.</li>
+                        <li>I work at a factory.</li>
+                        <li>I live in the mountains.</li>
+                        <li>I am a student.</li>
+                        <li>My favorite color is purple.</li>
+                    </ul>
+                    <br>
                 </div>
 
                 <div class="form-group">
@@ -57,9 +72,19 @@
                     <label for="interest6">interest6</label>
                     <input type="text" class="form-control" id="interest6" placeholder="interest 6" name="interest6">
                 </div>
+                
+                <div>
+                    <br>
+                    <p>A random picture will be generated for your Autama.</p>
+                    <p>Thank you for creating a custom Autama.</p>
+                    <br>
+                </div>
 
                 <input hidden name="id" value="{{ user.id }}">
                 <button style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">Create</button>
+                
+                <br>
+                <br>
 
                 {% csrf_token %}
             </form>
