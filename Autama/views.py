@@ -366,7 +366,9 @@ class MyAutamas(LoginRequiredMixin, View):
         user = User.objects.get(pk=request.user.id)
         autama_profiles = AutamaProfile.objects.filter(creator=user)
         my_autama_limit = get_my_autama_limit()
-        my_autamas = {'my_autamas': autama_profiles, 'my_autama_limit': my_autama_limit}
+        current_my_autama_count = user.my_Autama
+        difference = my_autama_limit - current_my_autama_count
+        my_autamas = {'my_autamas': autama_profiles, 'my_autama_limit': my_autama_limit, 'difference': difference}
         return render(request, 'my_autamas.html', my_autamas)
 
 
