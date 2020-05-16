@@ -346,7 +346,9 @@ class CreateAutama(LoginRequiredMixin, View):
         interest6 = request.POST.get('interest6')
 
         if not first or not last or not interest1 or not interest2 or not interest3 or not interest4 or not interest5 or not interest6:
-            return render(request, '../templates/create_autama.html', {'error': 'Please fill in everything.'})
+            my_autama_limit = get_my_autama_limit()
+            limit = {'my_autama_limit': my_autama_limit, 'error': 'Please fill in everything.'}
+            return render(request, '../templates/create_autama.html', limit)
 
         creator = str(request.user)
         origin = creator
