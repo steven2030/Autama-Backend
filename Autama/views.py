@@ -463,6 +463,16 @@ def unmatch_autama(request, pk):
     return redirect('FindMatches')
 
 
+def match_autama(request, pk):
+    user = User.objects.get(pk=request.user.id)  # grab user instance
+
+    if AutamaProfile.objects.filter(pk=pk).exists():  # Check that the autama exists.
+        the_autama = AutamaProfile.objects.get(pk=pk)  # Grab autama instance
+        match(user.pk, the_autama.pk)
+
+    return redirect('Chat', pk=pk)
+
+
 # TODO: make sure a user can only chat with an autama they have matched with.
 # TODO: make sure autama id exists.
 # TODO: validate all user input.
@@ -476,8 +486,11 @@ class Chat(LoginRequiredMixin, View):
         # Search for a message chain in the database order by utc timestamp
         message_chain = Messages.objects.all().filter(userID=user.pk).filter(autamaID=autama.pk).order_by('timeStamp')
 
+        # See if the user is already matched with the Autama
+        is_matched = Matches.objects.filter(userID=user.pk).filter(autamaID=autama.pk).exists()
+
         return render(request, 'chat.html', {'autama': autama, 'user': user, 'form': form,
-                                             'message_chain': message_chain})
+                                             'message_chain': message_chain, 'is_matched': is_matched})
 
     def post(self, request, pk):
         user = User.objects.get(pk=request.user.id)
