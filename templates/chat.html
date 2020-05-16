@@ -298,10 +298,17 @@
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{% url 'UnMatch' pk=autama.pk %}">
-                            {% csrf_token %}
-                            Unmatch
-                        </a></li>
+                        {% if is_matched %}
+                            <li><a href="{% url 'UnMatch' pk=autama.pk %}">
+                                {% csrf_token %}
+                                Unmatch
+                            </a></li>
+                        {% else %}
+                            <li><a href="{% url 'Match' pk=autama.pk %}">
+                                {% csrf_token %}
+                                Match
+                            </a></li>
+                        {% endif %}
 
                         <li><a onclick="showReport()">Report</a></li>
                     </ul>
