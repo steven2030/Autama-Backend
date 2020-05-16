@@ -19,7 +19,7 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from AutamaProfiles.models import AutamaProfile, AutamaGeneral
-from AutamaProfiles.views import get_meta, create_custom_autama
+from AutamaProfiles.views import get_meta, create_custom_autama, get_my_autama_limit
 from django.utils import timezone
 from Nucleus.ham import Ham
 
@@ -331,7 +331,9 @@ def unclaim_from_chat(request, pk):
 
 class CreateAutama(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'create_autama.html')
+        my_autama_limit = get_my_autama_limit()
+        limit = {'my_autama_limit': my_autama_limit}
+        return render(request, 'create_autama.html', limit)
 
     def post(self, request):
         first = request.POST.get('firstname')
@@ -363,7 +365,8 @@ class MyAutamas(LoginRequiredMixin, View):
     def get(self, request):
         user = User.objects.get(pk=request.user.id)
         autama_profiles = AutamaProfile.objects.filter(creator=user)
-        my_autamas = {'my_autamas': autama_profiles}
+        my_autama_limit = get_my_autama_limit()
+        my_autamas = {'my_autamas': autama_profiles, 'my_autama_limit': my_autama_limit}
         return render(request, 'my_autamas.html', my_autamas)
 
 
