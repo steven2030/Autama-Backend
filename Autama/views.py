@@ -19,7 +19,7 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from AutamaProfiles.models import AutamaProfile, AutamaGeneral
-from AutamaProfiles.views import get_meta, get_picture_name
+from AutamaProfiles.views import get_meta, create_custom_autama
 from django.utils import timezone
 from Nucleus.ham import Ham
 
@@ -348,14 +348,8 @@ class CreateAutama(LoginRequiredMixin, View):
 
         creator = str(request.user)
         origin = creator
-        picture = get_picture_name()
-
-        new_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last,
-                                                  pickle=origin,
-                                                  interest1=interest1, interest2=interest2,
-                                                  interest3=interest3, interest4=interest4,
-                                                  interest5=interest5, interest6=interest6)
-        new_autama.save()
+        personality = [interest1, interest2, interest3, interest4, interest5, interest6]
+        create_custom_autama(creator, first, last, origin, personality)
 
         # Update user's my Autama count
         current_user = User.objects.get(pk=request.user.pk)
