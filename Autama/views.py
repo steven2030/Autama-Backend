@@ -366,6 +366,8 @@ class CreateAutama(LoginRequiredMixin, View):
 class MyAutamas(LoginRequiredMixin, View):
     def get(self, request):
         user = User.objects.get(pk=request.user.id)
+        user.last_page = "/MyAutamas/" # User is now at the MyAutamas page
+        user.save()
         autama_profiles = AutamaProfile.objects.filter(creator=user)
         my_autama_limit = get_my_autama_limit()
         current_my_autama_count = user.my_Autama
@@ -426,6 +428,8 @@ class MyMatches(LoginRequiredMixin, View):
 
     def get(self, request):
         user = User.objects.get(pk=request.user.id)  # get user
+        user.last_page = "/MyMatches/" # User is now at the MyMatches page
+        user.save()
         user_matches = self.get_matches(user=user)  # get all user matches
         user_messages = self.get_messages(user=user)
         context = {'user_matches': user_matches, 'num_matches': len(user_matches),
@@ -489,7 +493,10 @@ class Chat(LoginRequiredMixin, View):
         # See if the user is already matched with the Autama
         is_matched = Matches.objects.filter(userID=user.pk).filter(autamaID=autama.pk).exists()
 
-        return render(request, 'chat.html', {'autama': autama, 'user': user, 'form': form,
+        # Get last page
+        last_page = user.last_page
+
+        return render(request, 'chat.html', {'autama': autama, 'user': user, 'form': form, 'last_page': last_page,
                                              'message_chain': message_chain, 'is_matched': is_matched})
 
     def post(self, request, pk):
