@@ -309,9 +309,7 @@
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav nav">
                         {% if request.user.is_authenticated  %}
-                            <!-- Commented it out because goBackOne() only goes back one page. Not working correctly. -->
-                            <!--<li style="font-size: 25px;"><a onclick="goBackOne()"><b><</b></a></li>-->
-                            <li style="font-size: 25px;"><a href="/MyMatches/"><b><</b></a></li>
+                            <li style="font-size: 25px;"><a href="{{ last_page }}"><b><</b></a></li>
                         {% endif %}
                     </ul>
 
