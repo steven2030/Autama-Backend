@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 import json
 from Nucleus.pancake import Pancake
+from Nucleus.bacon import Bacon
 
 
 class AutamaForm(ModelForm):
@@ -55,29 +56,51 @@ def testfunc(request):
 # A function to create a new Autama profile. origin is the username of the user the Autama was based off
 def create_autama_profile(personality: list, creator: str = "Happy Slackers", origin: str = "Happy Slackers"):
     pancake = Pancake()  # For handling name generating
+    first = pancake.generate_first_name()
+    last = pancake.generate_last_name()
+    create_custom_autama(creator, first, last, origin, personality)
+
+
+# A function to create custom Autama
+def create_custom_autama(creator: str, first: str, last: str, origin: str, personality: list):
     REQUIRED = 6  # The required amount of traits
-    amount = len(personality)
+    bacon = Bacon()
+    # Make sure personality does not have "my name is" traits
+    checked_personality = bacon.check_personality(personality)
+    amount = len(checked_personality)
 
     # Make sure personality has the required amount of traits
     if amount == REQUIRED:
         # Get meta data on Autama Images and generate path for current autama picture
         picture = get_picture_name()
-        
-        first = pancake.generate_first_name()
-        last = pancake.generate_last_name()
-        interest1 = personality[0]
-        interest2 = personality[1]
-        interest3 = personality[2]
-        interest4 = personality[3]
-        interest5 = personality[4]
-        interest6 = personality[5]
+
+        interest1 = add_period(checked_personality[0])
+        interest2 = add_period(checked_personality[1])
+        interest3 = add_period(checked_personality[2])
+        interest4 = add_period(checked_personality[3])
+        interest5 = add_period(checked_personality[4])
+        interest6 = add_period(checked_personality[5])
 
         new_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last,
-                                                     pickle=origin,
-                                                     interest1=interest1, interest2=interest2,
-                                                     interest3=interest3, interest4=interest4,
-                                                     interest5=interest5, interest6=interest6)
+                                                  pickle=origin,
+                                                  interest1=interest1, interest2=interest2,
+                                                  interest3=interest3, interest4=interest4,
+                                                  interest5=interest5, interest6=interest6)
         new_autama.save()
+
+
+# A function to check if an interest ends  with a punctuation mark, and if it does not, it will add a period
+def add_period(interest: str):
+    period = interest.endswith(".")
+    question_mark = interest.endswith("?")
+    exclamation_point = interest.endswith("!")
+
+    # Add period if interest does not end with a punctuation mark
+    if not period and not question_mark and not exclamation_point:
+        revised_interest = interest + "."
+        return revised_interest
+    else:
+        return interest
 
 
 # A function to get meta data on Autama Images by first checking if it exists and then creating one if it doesn't
@@ -101,3 +124,10 @@ def get_picture_name():
     meta_autama.currentCount += 1
     meta_autama.save()
     return file_name
+
+
+# A function to get the value of the maximum amount of Autamas an user can create
+def get_my_autama_limit():
+    meta_autama = get_meta()
+    limit = meta_autama.autamaLimit
+    return limit

@@ -53,12 +53,22 @@
     <div style="width: 80%;margin: auto; padding-top: 50px;">
         <h1>My Autamas</h1>
         <br>
+        
+        <div>
+            <p>Each user is allowed {{ my_autama_limit }} My Autama creations.</p>
+            <p>Remaining My Autama creations: {{ difference }}</p>
+            <br>
+        </div>
 
-        {% if 0 == user.my_Autama %}
+        {% if user.my_Autama < my_autama_limit %}
             <form action="/CreateAutama/">
                 <input type="submit" value="Create an Autama" class="send_button"/>
             </form>
 
+            <br>
+            <br>
+        {% else %}
+            <p>Sorry, you have used up all your My Autama creations.</p>
             <br>
             <br>
         {% endif %}

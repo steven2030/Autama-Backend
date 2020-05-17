@@ -19,7 +19,7 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from AutamaProfiles.models import AutamaProfile, AutamaGeneral
-from AutamaProfiles.views import get_meta, get_picture_name
+from AutamaProfiles.views import get_meta, create_custom_autama, get_my_autama_limit
 from django.utils import timezone
 from Nucleus.ham import Ham
 
@@ -331,7 +331,9 @@ def unclaim_from_chat(request, pk):
 
 class CreateAutama(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'create_autama.html')
+        my_autama_limit = get_my_autama_limit()
+        limit = {'my_autama_limit': my_autama_limit}
+        return render(request, 'create_autama.html', limit)
 
     def post(self, request):
         first = request.POST.get('firstname')
@@ -344,18 +346,14 @@ class CreateAutama(LoginRequiredMixin, View):
         interest6 = request.POST.get('interest6')
 
         if not first or not last or not interest1 or not interest2 or not interest3 or not interest4 or not interest5 or not interest6:
-            return render(request, '../templates/create_autama.html', {'error': 'Please fill in everything.'})
+            my_autama_limit = get_my_autama_limit()
+            limit = {'my_autama_limit': my_autama_limit, 'error': 'Please fill in everything.'}
+            return render(request, '../templates/create_autama.html', limit)
 
         creator = str(request.user)
         origin = creator
-        picture = get_picture_name()
-
-        new_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last,
-                                                  pickle=origin,
-                                                  interest1=interest1, interest2=interest2,
-                                                  interest3=interest3, interest4=interest4,
-                                                  interest5=interest5, interest6=interest6)
-        new_autama.save()
+        personality = [interest1, interest2, interest3, interest4, interest5, interest6]
+        create_custom_autama(creator, first, last, origin, personality)
 
         # Update user's my Autama count
         current_user = User.objects.get(pk=request.user.pk)
@@ -368,8 +366,13 @@ class CreateAutama(LoginRequiredMixin, View):
 class MyAutamas(LoginRequiredMixin, View):
     def get(self, request):
         user = User.objects.get(pk=request.user.id)
+        user.last_page = "/MyAutamas/" # User is now at the MyAutamas page
+        user.save()
         autama_profiles = AutamaProfile.objects.filter(creator=user)
-        my_autamas = {'my_autamas': autama_profiles}
+        my_autama_limit = get_my_autama_limit()
+        current_my_autama_count = user.my_Autama
+        difference = my_autama_limit - current_my_autama_count
+        my_autamas = {'my_autamas': autama_profiles, 'my_autama_limit': my_autama_limit, 'difference': difference}
         return render(request, 'my_autamas.html', my_autamas)
 
 
@@ -425,6 +428,8 @@ class MyMatches(LoginRequiredMixin, View):
 
     def get(self, request):
         user = User.objects.get(pk=request.user.id)  # get user
+        user.last_page = "/MyMatches/" # User is now at the MyMatches page
+        user.save()
         user_matches = self.get_matches(user=user)  # get all user matches
         user_messages = self.get_messages(user=user)
         context = {'user_matches': user_matches, 'num_matches': len(user_matches),
@@ -462,6 +467,16 @@ def unmatch_autama(request, pk):
     return redirect('FindMatches')
 
 
+def match_autama(request, pk):
+    user = User.objects.get(pk=request.user.id)  # grab user instance
+
+    if AutamaProfile.objects.filter(pk=pk).exists():  # Check that the autama exists.
+        the_autama = AutamaProfile.objects.get(pk=pk)  # Grab autama instance
+        match(user.pk, the_autama.pk)
+
+    return redirect('Chat', pk=pk)
+
+
 # TODO: make sure a user can only chat with an autama they have matched with.
 # TODO: make sure autama id exists.
 # TODO: validate all user input.
@@ -475,8 +490,14 @@ class Chat(LoginRequiredMixin, View):
         # Search for a message chain in the database order by utc timestamp
         message_chain = Messages.objects.all().filter(userID=user.pk).filter(autamaID=autama.pk).order_by('timeStamp')
 
-        return render(request, 'chat.html', {'autama': autama, 'user': user, 'form': form,
-                                             'message_chain': message_chain})
+        # See if the user is already matched with the Autama
+        is_matched = Matches.objects.filter(userID=user.pk).filter(autamaID=autama.pk).exists()
+
+        # Get last page
+        last_page = user.last_page
+
+        return render(request, 'chat.html', {'autama': autama, 'user': user, 'form': form, 'last_page': last_page,
+                                             'message_chain': message_chain, 'is_matched': is_matched})
 
     def post(self, request, pk):
         user = User.objects.get(pk=request.user.id)

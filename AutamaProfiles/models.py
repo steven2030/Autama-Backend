@@ -4,8 +4,9 @@ from django.shortcuts import reverse
 
 
 class AutamaGeneral(models.Model):
-    currentCount = models.IntegerField()
-    totalCount = models.IntegerField()
+    currentCount = models.IntegerField() # Index of current picture's spot
+    totalCount = models.IntegerField() # Total amount of pictures
+    autamaLimit = models.IntegerField(default=3) # Maximum autamas allowed for users to create
 
     def __str__(self):
         return '{currentCount} {totalCount}'.format(currentCount=self.currentCount, totalCount=self.totalCount)
