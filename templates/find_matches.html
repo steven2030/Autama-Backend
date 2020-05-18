@@ -112,8 +112,8 @@
                 this.board = element
                 this.currAutama = {{ autama_id }}
                 // add first two cards programmatically
-                this.push()
-                this.push()
+                this.push(0)
+                this.push(1)
 
                 // handle gestures
                 this.handle()
@@ -269,13 +269,15 @@
                         // get left border position
                         posX = - (this.board.clientWidth + this.topCard.clientWidth)
 
-                    } else if (propY < -0.25 && e.direction == Hammer.DIRECTION_UP) {
-
-                        successful = true
-                        // get top border position
-                        posY = - (this.board.clientHeight + this.topCard.clientHeight)
-
                     }
+                    // This was code to move the card "up" for a super match, removed not in our use case.
+                    //else if (propY < -0.25 && e.direction == Hammer.DIRECTION_UP) {
+
+                       // successful = true
+                        // get top border position
+                        //posY = - (this.board.clientHeight + this.topCard.clientHeight)
+
+                    //}
 
                     if (successful) {
 
@@ -300,7 +302,7 @@
                             this.board.removeChild(this.topCard)
 
                             // add new card
-                            this.push()
+                            this.push(1)
                             // handle gestures on new top card
                             this.handle()
                         }, 200)
@@ -329,7 +331,7 @@
 
             }
 
-            push() {
+            push(aid) {
 
                 let card = document.createElement('div');
                 card.classList.add('card');
@@ -368,8 +370,7 @@
                 textbox3.appendChild(p3);
 
                 // Get Random Background Image
-                card.autamaID = this.currAutama;
-                $.get("?AID=" + this.currAutama, function(data) {
+                $.get("?AID=" + aid, function(data) {
                     p1.innerText = data.first + " " + data.last;
                     p2.innerText = "Followers: " + data.matches;
                     p3.innerText = "Creator: " + data.creator;
@@ -383,8 +384,6 @@
                         window.location.replace(data.redirect);
                     }
                 });
-
-                this.currAutama = card.autamaID + 1;
 
                 if (this.board.firstChild) {
                     this.board.insertBefore(card, this.board.firstChild)

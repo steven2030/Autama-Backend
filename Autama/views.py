@@ -224,31 +224,42 @@ class FindMatches(LoginRequiredMixin, View):
         ag = get_meta()
         a_id = request.GET.get('AID')
 
-        # Returns the base HTML.
+        # Returns the base HTML if no AID parameter.
         if a_id is None:
             user = User.objects.get(id=request.user.id)
             return render(request, 'find_matches.html', {'autama_id': user.currentAutama})
 
-        if user.currentAutama > ag.currentCount + 2:
+        # Check if the user has swiped all current Autama.
+        if user.currentAutama > ag.currentCount:
             data = {
                 'redirect': '/SeenAll/',
             }
             return JsonResponse(data)
-
-        # Returns JSON with Autama Profile data
-        while True:
-            try:
-                autama = AutamaProfile.objects.get(pk=a_id)
-                break
-            except AutamaProfile.DoesNotExist:
-                a_id = str(int(a_id) + 1)
-                user.currentAutama += 1
+        autama = None
+        # Return current id
+        if a_id == "0":
+            if autama_id_exist(user.currentAutama):
+                autama = autama_get_profile(user.currentAutama)
+            # id doesn't exist
+            else:
+                user.currentAutama = autama_id_next(user.currentAutama)
+                user.nextAutama = autama_id_next(user.currentAutama)
                 user.save()
-                if user.currentAutama > ag.currentCount + 2:
+                if user.currentAutama > ag.currentCount:
                     data = {
                         'redirect': '/SeenAll/',
                     }
                     return JsonResponse(data)
+
+        # return next id
+        else:
+            if autama_id_exist(user.nextAutama):
+                autama = autama_get_profile(user.nextAutama)
+            # id doesn't exist
+            else:
+                user.nextAutama = autama_id_next(user.currentAutama)
+                user.save()
+                autama = autama_get_profile(user.nextAutama)
 
         data = {
             'autama_id': autama.id,
@@ -266,10 +277,18 @@ class FindMatches(LoginRequiredMixin, View):
 
     def post(self, request):
         data = request.POST.copy()
-        ret = False
+        # handle updating autama position
+        # TODO: Add class method to handle?
+        # DB Lock: with transaction.atomic():
+        user = User.objects.get(pk=request.user.id)
+        user.currentAutama = user.nextAutama
+        user.nextAutama = autama_id_next(user.currentAutama)
+        user.save()
 
+        ret = False
         aid = data.get('AID')
 
+        # Handle matching / unmatching and follower update
         if data.get('match') == '1':
             ret = match(request.user.id, aid)
             if ret:
@@ -278,20 +297,51 @@ class FindMatches(LoginRequiredMixin, View):
                 autama.save()
         else:
             ret = unmatch(request.user.id, aid)
+            if ret:
+                autama = AutamaProfile.objects.get(pk=aid)
+                autama.nummatches -= 1
+                autama.save()
 
-        user = User.objects.get(pk=request.user.id)
-        user.currentAutama += 1
-        user.save()
 
         # Test to see if past current Autama Limit
         ag = AutamaGeneral.objects.get(pk=1)
-        if user.currentAutama > ag.currentCount + 2:
+        if user.currentAutama > ag.currentCount:
             return redirect('SeenAll')
 
         if ret:
             return HttpResponse(status=200)
         else:
             return JsonResponse({"user": request.user.id, "Autama": aid})
+
+
+# Checks if the int id provided matches the primary key of an autama
+# Returns true if exists, false if it does not.
+def autama_id_exist(autama_id):
+    try:
+        autama = AutamaProfile.objects.get(pk=str(autama_id))
+        return True
+    except AutamaProfile.DoesNotExist:
+        return False
+
+
+# Takes an integer ID and returns the next valid autama id.
+# returns int of next valid autama id or -1 if reached end of the list
+def autama_id_next(autama_id):
+    autama_id += 1
+    ag = AutamaGeneral.objects.get(pk=1)
+    while True:
+        if autama_id_exist(autama_id):
+            return autama_id
+        else:
+            autama_id += 1
+            if autama_id > ag.currentCount:
+                return ag.currentCount + 1
+
+
+# get the autama object matching provided int id
+def autama_get_profile(autama_id):
+    autama = AutamaProfile.objects.get(pk=str(autama_id))
+    return autama
 
 
 # Handle the case of a user seeing all Autama in the DB.
@@ -308,7 +358,8 @@ class SeenAll(LoginRequiredMixin, View):
         user = User.objects.get(pk=request.user.id)
         ag = AutamaGeneral.objects.get(pk=1)
         if retval == "again":
-            user.currentAutama = 1
+            user.currentAutama = autama_id_next(0)
+            user.nextAutama = autama_id_next(user.currentAutama)
         else:
             user.currentAutama = ag.currentCount + 1;
         user.save()
