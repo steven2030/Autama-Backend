@@ -112,8 +112,8 @@
                 this.board = element
                 this.currAutama = {{ autama_id }}
                 // add first two cards programmatically
-                this.push()
-                this.push()
+                this.push(0)
+                this.push(1)
 
                 // handle gestures
                 this.handle()
@@ -300,7 +300,7 @@
                             this.board.removeChild(this.topCard)
 
                             // add new card
-                            this.push()
+                            this.push(1)
                             // handle gestures on new top card
                             this.handle()
                         }, 200)
@@ -329,7 +329,7 @@
 
             }
 
-            push() {
+            push(aid) {
 
                 let card = document.createElement('div');
                 card.classList.add('card');
@@ -368,8 +368,7 @@
                 textbox3.appendChild(p3);
 
                 // Get Random Background Image
-                card.autamaID = this.currAutama;
-                $.get("?AID=" + this.currAutama, function(data) {
+                $.get("?AID=" + aid, function(data) {
                     p1.innerText = data.first + " " + data.last;
                     p2.innerText = "Followers: " + data.matches;
                     p3.innerText = "Creator: " + data.creator;
@@ -383,8 +382,6 @@
                         window.location.replace(data.redirect);
                     }
                 });
-
-                this.currAutama = card.autamaID + 1;
 
                 if (this.board.firstChild) {
                     this.board.insertBefore(card, this.board.firstChild)
