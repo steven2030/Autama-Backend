@@ -84,8 +84,8 @@
 </ftehead>
 <script>
 function matchNotifications() {
-    var x = "0";
-    document.getElementById("myText").innerHTML = x;
+    var navbar_num_matches = {{ num_matches }};
+    document.getElementById("myText").innerHTML = navbar_num_matches;
 }
 </script>
 <body onload="matchNotifications()">
