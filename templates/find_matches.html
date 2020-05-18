@@ -269,13 +269,15 @@
                         // get left border position
                         posX = - (this.board.clientWidth + this.topCard.clientWidth)
 
-                    } else if (propY < -0.25 && e.direction == Hammer.DIRECTION_UP) {
-
-                        successful = true
-                        // get top border position
-                        posY = - (this.board.clientHeight + this.topCard.clientHeight)
-
                     }
+                    // This was code to move the card "up" for a super match, removed not in our use case.
+                    //else if (propY < -0.25 && e.direction == Hammer.DIRECTION_UP) {
+
+                       // successful = true
+                        // get top border position
+                        //posY = - (this.board.clientHeight + this.topCard.clientHeight)
+
+                    //}
 
                     if (successful) {
 

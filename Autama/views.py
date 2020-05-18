@@ -259,6 +259,7 @@ class FindMatches(LoginRequiredMixin, View):
             else:
                 user.nextAutama = autama_id_next(user.currentAutama)
                 user.save()
+                autama = autama_get_profile(user.nextAutama)
 
         data = {
             'autama_id': autama.id,
