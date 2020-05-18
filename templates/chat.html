@@ -418,6 +418,10 @@
             <p>Would you like to provide additional feedback?</p>
         </div>
 
+        <div id="additional-feedback" title="Feedback">
+            <p>test</p>
+        </div>
+
         <script>
             /* After page load go to all time_stamp class fields and update to local time */
             $('.time_stamp').text(function(index, text) {
@@ -425,20 +429,41 @@
             });
 
             $(function() {
+                $("#additional-feedback").dialog({
+                    resizable: false,
+                    height: "auto",
+                    autoOpen: false,
+                    width: "auto",
+                    modal: true,
+                    position: {
+                        my: "left",
+                        at: "left",
+                        of: "#reportform"
+                    },
+                });
+
                 $("#dialog-confirm").dialog({
                     resizable: false,
-                    height: 180,
+                    height: "auto",
                     autoOpen: false,
-                    width: 330,
+                    width: "auto",
                     modal: true,
+                    position: {
+                        my: "left",
+                        at: "left",
+                        of: "#reportform"
+                    },
                     buttons: {
                         "Yes": function() {
-                            $('#reportform').submit();
-                            window.location.replace("http://127.0.0.1:8000/about/");
+                            /*$('#reportform').submit();*/
+                            $("#additional-feedback").dialog('open');
+                            $(this).dialog("close");
+                            hideReport();
                         },
                         No: function() {
                             $(this).dialog("close");
                             hideReport();
+                            /*$('#reportform').submit();*/
                         }
                     }
                 });
