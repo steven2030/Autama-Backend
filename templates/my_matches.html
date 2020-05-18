@@ -7,9 +7,13 @@
     <style>
         .circular--portrait {
             position: relative;
-            /* width:70%; */
+            width:70%;
+            height: auto;
+            min-width: 60px;
+            /*
             width: 100px;
-            height: 100px;
+            height: 100 px
+            */
             overflow: hidden;
             border-radius: 50%;
             display: inline-block;
@@ -60,13 +64,19 @@
         }
 
         .flexbox-image {
-            width: 32%;
+            width: 15%;
             padding: 0.5%;
         }
 
         .recent-msg {
-            justify-content: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: left;
             align-items: center;
+        }
+
+        .line-break {
+            width: 100%;
         }
 
         .scrolling-wrapper-flexbox {
@@ -161,8 +171,8 @@
                     </a>
                 </div>
                 <div class="recent-msg">
-                    <br>
                     <h4 class="profilename">{{ a_profile.first }} {{ a_profile.last }} </h4>
+                    <div class="line-break"></div>
                     <p class="some-recent-msg">{{ a_message }}</p>
                 </div>
             </div>
