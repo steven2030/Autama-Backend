@@ -4,6 +4,10 @@ from AutamaProfiles.models import AutamaProfile
 from accounts.models import User
 from tastypie.authorization import Authorization
 from tastypie.models import ApiKey
+from django.urls import path
+from django.conf.urls import url
+from django.db import IntegrityError
+from tastypie.exceptions import BadRequest
 
 
 # Create your models here.
@@ -14,14 +18,31 @@ class AutamaResource(ModelResource):
         fields = ['id', 'creator', 'first', 'last', 'interest1', 'interest2', 'interest3', 'interest4', 'interest5',
                   'interest6']
 
+
 class AccountsResource(ModelResource):
     class Meta:
         queryset = User.objects.all()
         resource_name = 'accounts'
         fields = ['id', 'username', 'password', 'first_name', 'last_name', 'email', 'interest1', 'interest2', 'interest3',
                   'interest4', 'interest5', 'interest6']
-        ##authorization = Authorization()
+        # authorization = Authorization()
 
+
+class RegistrationResource(ModelResource):
+    class Meta:
+        resource_name = 'register'
+        allowed_methods = ['post']
+        object_class = User
+        include_resource_uri = False
+
+    def obj_create(self, bundle, request=None, **kwargs):
+        try:
+            user = User.objects.create(username=bundle.data.get('username'))
+            user.set_password(bundle.data.get('password'))
+            user.save()
+        except IntegrityError:
+            raise BadRequest('That username already exists')
+        return bundle
 
 
 '''

@@ -1,11 +1,12 @@
 from django.conf.urls import url, include
 from django.urls import path
-from .models import AutamaResource, AccountsResource
+from .models import AutamaResource, AccountsResource, RegistrationResource
 from tastypie.api import Api
 
 v1_api = Api(api_name='v1')
 v1_api.register(AutamaResource())
 v1_api.register(AccountsResource())
+v1_api.register(RegistrationResource())
 
 urlpatterns = [
     # The normal jazz here...
