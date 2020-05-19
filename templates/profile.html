@@ -1,241 +1,147 @@
 {% extends 'base.html' %}
-{% load extratags %}
+
+
 {% block csstyle %}
     <style>
-
-    .side-bar .list-group-item {
-        border: 0;
-        margin-bottom: 5px;
-        border-bottom: 1px solid #C0C0C0;
-    }
-
-    .centerdiv{
-        float:left;
-        border-right: 1px solid black;
-        padding-bottom:1600px;
-        margin-bottom:-1600px;
-    }
-
     div.profile{
-        height: 400px;
-        width: 260px;
+        height: 450px;
+        width: 350px;
         border: 2px solid #d4cce0;
         box-shadow: 10px 10px 5px #888888;
         border-radius: 15px;
         float: none;
         display: block;
-        margin-left: 40%;
-        margin-right: 40%;
+        margin-left: auto;
+        margin-right: auto;
         margin-top: 15%;
+        margin-bottom: auto;
+        overflow: scroll;
     }
 
     div.profile > img{
-        height: 300px;
-        width: 260px;
+        height: 370px;
+        width: 350px;
         border-radius: 15px;
     }
 
      div.profile > div:nth-child(1){
         background-color: #9e9e9e59;
     }
+
     div.profile > div:nth-child(2){
         margin-top: 30px;
     }
 
-    #bo{
-       margin-top: 45%;
+    .name{
+        background: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+        -webkit-background-clip: text;
+        color: transparent;
     }
 
-    #upload-img-btn
-             {
-                background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none; display:block; margin:0 auto
-             }
-     @media only screen and (max-width: 766px) {
+    .intro{
+        margin-top: auto;
+        float: left;
+        height:45px;
+        border-radius: 3px;
+        background-image:linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+        text-align: center;
+        vertical-align: center;
+        margin-left: 15px;
+        color: wheat;
 
-
-         #a1 {
-             position: absolute;
-             top: 150px;
-             height: 300px;
-             width: 100%;
-         }
-
-         #bo {
-             margin-top: 320px;
-             display: none;
-         }
-
-         div.profile {
-             height: 300px;
-             margin: 0px;
-             box-shadow: none;
-             display: block;
-             margin: auto;
-             width: 60%;
-             border-radius: 0;
-             border: none;
-             text-align: center;
-         }
-
-         div.profile > img {
-             height: 200px;
-             width: 200px;
-             border-radius: 100px;
-             display: block;
-             margin: auto;
-
-         }
-
-         div.profile > span {
-             margin-top: 10px;
-             display: inline-block;
-         }
-
-         div.profile > div {
-             margin-top: 10px;
-         }
-
-         #upload-img-btn {
-             display: inline;
-         }
-
-         div.profile > div > button:nth-child(4) {
-             float: right;
-             height: 34px;
-             background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%);
-             border-style: none;
-             display: block;
-             margin: 0 auto;
-             color: white;
-         }
-
-         div.profile > div > button:nth-child(2) {
-             float: right;
-             height: 34px;
-             background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%);
-             border-style: none;
-             display: block;
-             margin: 0 auto;
-             color: white;
-         }
-     }
-
+    }
 
     </style>
-
 {%  endblock %}
+
+
 {% block content %}
+    <h2 class="intro" style="margin-top: 50px;">
+        My Profile
+    </h2>
+    <div style="width: 80%;  margin: auto; ">
 
-    <div class="container" style="margin-top: 50px; margin-left: 2px">
-        <div class="row" id="parant">
-            <div class="col-sm-4">
-                <div class="list-group side-bar" >
-                    <div class="h3" style="height:45px; border-radius: 3px; background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); text-align: center; vertical-align: center" id="profile">
-                        My Profile
-                    </div>
+        <div class="profile">
+            <img {% if request.user.image %}src="{{ request.user.image.url }}" {% endif %} id="avatar">
+            <span class="name" style="font-weight: bold; font-size: xx-large; margin-left: 10px">{{ user.first_name }} {{user.last_name }}</span>
 
-
-                    <script>
-                        function goToFeedback() {
-                            window.location.replace("http://127.0.0.1:8000/about/");
-                        }
-                    </script>
-
-                    <div id="feedback">
-                        <br><br>
-                        <input onclick="goToFeedback()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="feedback" value="Feedback">
-                    </div>
-
-
-                    <div id="bo">
-                        <p>ACCOUNT SETTINGS</p>
-                        <div class="list-group-item" style="border-top: 1px solid #C0C0C0;">
-                           <span>User ID:</span>&nbsp&nbsp&nbsp<span>u{{ user.id }}</span>
-                        </div>
-                        <div class="list-group-item">
-                           <span>Username:</span>&nbsp&nbsp&nbsp<span>{{ user.username | format_none}}</span>
-                        </div>
-                        <div class="list-group-item">
-                           <span>Interest1:</span>&nbsp&nbsp&nbsp<input name="interest1" value="{{user.interests1 | format_none }}">
-                        </div>
-                        <div class="list-group-item">
-                           <span>Interest2:</span>&nbsp&nbsp&nbsp<input name="interest2" value="{{user.interests2 | format_none }}">
-                        </div>
-                        <div class="list-group-item">
-                           <span>Interest3:</span>&nbsp&nbsp&nbsp<input name="interest3" value="{{user.interests3 | format_none }}">
-                        </div>
-                        <div class="list-group-item">
-                           <span>Interest4:</span>&nbsp&nbsp&nbsp<input name="interest4" value="{{user.interests4 | format_none }}">
-                        </div>
-                        <div class="list-group-item">
-                           <span>Interest5:</span>&nbsp&nbsp&nbsp<input name="interest5" value="{{user.interests5 | format_none }}">
-                        </div>
-                        <div class="list-group-item">
-                           <span>Interest6:</span>&nbsp&nbsp&nbsp<input name="interest6" value="{{user.interests6 | format_none }}">
-                        </div>
-
-                        <div class="list-group-item">
-                            <span>Name: {{ request.user.first_name }} {{request.user.last_name }}</span>
-                        </div>
-                        <div class="list-group-item">
-                           <span>Gender:</span>
-                           <label style="width: 60px;margin-left: 10px"><input name="sex" type="radio" value="0" {% if request.user.sex == 0 %} checked {% endif %}/>male </label>
-                           <label><input name="sex" type="radio" value="1" {% if request.user.sex == 1 %} checked {% endif %}/>female </label>
-                        </div>
-                        <div class="list-group-item">
-                           <span>email:</span>&nbsp&nbsp<input name="email" value="{{ request.user.email |format_none }}">
-                        </div>
-
-                        {% if myself %}
-                        <div class="list-group-item" >
-                            <input type="password" name="password" id="password">
-                            <button type="button" style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" class="btn btn-info" style="margin-top: 5px" change_password()>
-                               Change Password
-                            </button>
-                        </div>
-                        {% endif %}
-
-                        {% if myself %}
-                        <div class="" style="margin-bottom: 50px; margin-left: 15px">
-                            <button type="button"  style=" float:left; background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none; " class="btn btn-info" id="upload-img-btn" >
-                                Change Picture
-                            </button>
-                        </div>
-                       {% endif %}
-
-                        {% if myself %}
-                        <div class="list-group-item" style="border: none;position: relative;height: 94px; border-top: 1px solid #C0C0C0;">
-                           <input style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">
-                        </div>
-                       {% endif %}
-
-                    </div>
-                </div>
+            <div style="font-size: x-large; color: black; margin-left: 10px; margin-bottom: 5px">
+                Introduce
             </div>
-            <div class="centerdiv"></div>
-            <div class="col-sm-8 " id="a1">
-                <div class="profile ">
-
-                    <img {% if request.user.image %}src="{{ request.user.image.url }}" {% endif %} id="avatar">
-                    <span style="font-weight: bold; font-size: x-large;">{{ request.user.first_name }}</span>
-                    <div>
-                        <input type="file" name="photo" style="display: none;" id="upload-img"/>
-                        <button style="float: left; margin-left: 25px; background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" class="btn btn-info" id="b2">Setting</button>
-
-                        <button style="float: right; margin-right: 25px; background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" class="btn btn-info" id="claim_1">my claim</button>
-                    </div>
-
-                </div>
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
+                User ID: {{ user.id  }}
             </div>
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
+                Username: {{ user.username }}
+            </div>
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
+                <span>Interest1:</span><input name="interest1" value="{{user.interests1 }}">
+            </div>
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
+                <span>Interest2:</span><input name="interest1" value="{{user.interests2 }}">
+            </div>
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
+                <span>Interest3:</span><input name="interest1" value="{{user.interests3 }}">
+            </div>
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
+                <span>Interest4:</span><input name="interest1" value="{{user.interests4 }}">
+            </div>
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
+                <span>Interest5:</span><input name="interest1" value="{{user.interests5 }}">
+            </div>
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
+                <span>Interest6:</span><input name="interest1" value="{{user.interests6 }}">
+            </div>
+
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
+                Email: {{ request.user.email }}
+            </div>
+
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
+                <span>Gender:</span>
+                <label style="width: 60px;margin-left: 10px"><input name="sex" type="radio" value="0" {% if request.user.sex == 0 %} checked {% endif %}/>male </label>
+                <label><input name="sex" type="radio" value="1" {% if request.user.sex == 1 %} checked {% endif %}/>female </label>
+            </div>
+            {% if myself %}
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px; display: block">
+                <input type="password" name="password" id="password">
+                <button type="button" style="display: block; background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="margin-top: 5px" change_password()>
+                   Change Password
+                </button>
+            </div>
+            {% endif %}
+             {% if myself %}
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px; display: block">
+                <input type="file" name="photo" style="display: none;" id="upload-img"/>
+                <button type="button"  style=" float:left; background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none; " class="btn btn-info" id="upload-img-btn" >
+                    Change Picture
+                 </button>
+            </div>
+            {% endif %}
+
+            {% if myself %}
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px; display: inline-block">
+               <input style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">
+            </div>
+             {% endif %}
+
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px; display: block">
+                 <a href="/logout/">
+                    <button type="button"  style=" float:left; background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none; " class="btn btn-info" >
+                        Logout
+                    </button>
+                 </a>
+            </div>
+
         </div>
-    </div>
 
+    </div>
 
 {% endblock %}
 
 {% block js %}
     <script type="application/javascript">
-    $(document).ready(function(){
+        $(document).ready(function(){
         $('#upload-img-btn').click(function(){
             $('#upload-img').click();
         });
@@ -257,29 +163,6 @@
 
     }
 
-
-    function Show_Hidden(obj)
-    {
-        if(obj.style.display=="block")
-    {
-        obj.style.display='none';
-    }
-    else
-    {
-        obj.style.display='block';
-    }
-    }
-
-    window.onload=function()
-    {
-        var olink=document.getElementById("b2");
-        var odiv=document.getElementById("bo");
-        olink.onclick=function()
-        {
-            Show_Hidden(odiv);
-            return false;
-        }
-    }
 
 
     function fileLoad(ele){
@@ -311,7 +194,7 @@
             }
         });
     }
-
-
     </script>
-{% endblock %}>
+{% endblock %}
+
+
