@@ -7,9 +7,16 @@
 
         {% if user.my_Autama < my_autama_limit %}
             <div>
-                <p>You can create your own custom Autama here.</p>
-                <p>Just fill out everything on the form below and hit the "Create" button.</p>
-                <p>It's that easy.</p>
+                {% if user.my_Autama == 0 %}
+                    <p>Hi there!</p>
+                    <P>{{ user.username }} was it? Nice to meet you.</P>
+                    <p>I'm Dr. Autama, and I'm glad you're interested in helping me create Autamas.</p>
+                {% else %}
+                    <P>Hi again!</P>
+                    <p>I'm glad you want to make more Autamas.</p>
+                {% endif %}
+                <p>Creating an Autama is easy. Just give it a name and a persona by filling out everything below and hitting the "Create" button.</p>
+                <p>To make it even easier, I will provide a random picture for your Autama.</p>
                 <br>
             </div>
 
@@ -30,52 +37,55 @@
                 
                 <div>
                     <br>
-                    <p>Other users can see the first three interests.</p>
-                    <p>An interest is something that describes who the Autama is.</p>
-                    <p>Below are some example interests:</p>
+                    <p>Please create a persona for your Autama by providing some details about your Autama.</p>
+                    <p>The details you provide should describe who the Autama is.</p>
+                    <p>Below are some example details:</p>
                     <ul>
                         <li>I like cars.</li>
                         <li>I work at a factory.</li>
                         <li>I live in the mountains.</li>
                         <li>I am a student.</li>
                         <li>My favorite color is purple.</li>
+                        <li>My best friend is a professional curler.</li>
+                        <li>My mom picks out my outfit everyday.</li>
                     </ul>
+                    <p>The first three details will be shown to other users.</p>
                     <br>
                 </div>
 
                 <div class="form-group">
-                    <label for="interest1">interest1</label>
-                    <input type="text" class="form-control" id="interest1" placeholder="interest 1" name="interest1">
+                    <label for="interest1">Detail 1</label>
+                    <input type="text" class="form-control" id="interest1" placeholder="Detail 1" name="interest1">
                 </div>
 
                 <div class="form-group">
-                    <label for="interest2">interest2</label>
-                    <input type="text" class="form-control" id="interest2" placeholder="interest 2" name="interest2">
+                    <label for="interest2">Detail 2</label>
+                    <input type="text" class="form-control" id="interest2" placeholder="Detail 2" name="interest2">
                 </div>
 
                 <div class="form-group">
-                    <label for="interest3">interest3</label>
-                    <input type="text" class="form-control" id="interest3" placeholder="interest 3" name="interest3">
+                    <label for="interest3">Detail 3</label>
+                    <input type="text" class="form-control" id="interest3" placeholder="Detail 3" name="interest3">
                 </div>
 
                 <div class="form-group">
-                    <label for="interest4">interest4</label>
-                    <input type="text" class="form-control" id="interest4" placeholder="interest 4" name="interest4">
+                    <label for="interest4">Detail 4</label>
+                    <input type="text" class="form-control" id="interest4" placeholder="Detail 4" name="interest4">
                 </div>
 
                 <div class="form-group">
-                    <label for="interest5">interest5</label>
-                    <input type="text" class="form-control" id="interest5" placeholder="interest 5" name="interest5">
+                    <label for="interest5">Detail 5</label>
+                    <input type="text" class="form-control" id="interest5" placeholder="Detail 5" name="interest5">
                 </div>
 
                 <div class="form-group">
-                    <label for="interest6">interest6</label>
-                    <input type="text" class="form-control" id="interest6" placeholder="interest 6" name="interest6">
+                    <label for="interest6">Detail 6</label>
+                    <input type="text" class="form-control" id="interest6" placeholder="Detail 6" name="interest6">
                 </div>
                 
                 <div>
                     <br>
-                    <p>A random picture will be generated for your Autama.</p>
+                    <p>Make sure you filled in everything the way you want it because you can't edit your Autama later.</p>
                     <p>Thank you for creating a custom Autama.</p>
                     <br>
                 </div>
@@ -90,7 +100,7 @@
             </form>
         {% else %}
             <div>
-                <p>Sorry</p>
+                <p>Sorry!</p>
                 <p>It looks like you have created the maximum amount of Autamas allowed.</p>
             </div>
 
