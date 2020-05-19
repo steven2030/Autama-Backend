@@ -423,7 +423,9 @@
         </div>
 
         <div id="additional-feedback" title="Feedback">
-            <p>test</p>
+            <form id="feedback-form" action="mailto:autamafeedback@gmail.com" method="post" enctype="text/plain">
+                <textarea rows="5" cols="30">Enter feedback here...</textarea>
+            </form>
         </div>
 
         <script>
@@ -444,6 +446,15 @@
                         at: "left",
                         of: "#reportform"
                     },
+                    buttons: {
+                        "Submit": function() {
+                            /* submit feedback here */
+                            $(this).dialog("close");
+                        },
+                        "Close": function() {
+                            $(this).dialog("close");
+                        }
+                    }
                 });
 
                 $("#dialog-confirm").dialog({
@@ -459,15 +470,15 @@
                     },
                     buttons: {
                         "Yes": function() {
-                            /*$('#reportform').submit();*/
                             $("#additional-feedback").dialog('open');
                             $(this).dialog("close");
                             hideReport();
+                            $('#reportform').submit();
                         },
                         No: function() {
                             $(this).dialog("close");
                             hideReport();
-                            /*$('#reportform').submit();*/
+                            $('#reportform').submit();
                         }
                     }
                 });
@@ -483,7 +494,7 @@
             <!-- <form action="???" method="post"> -->
             <!-- include csrf_token here -->
             <h1>Report Autama</h1>
-            <form id="reportform">
+            <form id="reportform" action="mailto:autamafeedback@gmail.com" method="post" enctype="text/plain">
                 <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option1" name="option1" value="Option 1">
                 <label for="option1"> Inappropriate content</label><br>
                 <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option2" name="option2" value="Option 2">
