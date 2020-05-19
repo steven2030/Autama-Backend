@@ -103,11 +103,11 @@
         .send_button{
             background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
             width: 15%;
-            height:
-            70px;
+            height: 70px;
             color:white;
             font-size: 2.5vw;
             text-align: center;
+            border-radius: 14px;
         }
 
         .special{
@@ -234,6 +234,21 @@
             width: 100%;
         }
 
+        .match_warning{
+        height: 80%;
+        width: auto;
+        text-align: center;
+        }
+
+        .match_button{
+            background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+            width: 50%;
+            height: auto;
+            color: white;
+            font-size: 8vw;
+            text-align: center;
+            border-radius: 14px;
+        }
     </style>
 {% endblock %}
 
@@ -294,6 +309,10 @@
         function goBack(pages) {
           window.history.go(-pages);
         }
+
+        function match_with(){
+            document.getElementById("nav_match").click();
+        }
     </script>
 {% endblock %}
 
@@ -326,7 +345,7 @@
                         
                             <li><a onclick="showReport()">Report</a></li>
                         {% else %}
-                            <li><a href="{% url 'Match' pk=autama.pk %}">
+                            <li><a id="nav_match" href="{% url 'Match' pk=autama.pk %}">
                                 {% csrf_token %}
                                 Match
                             </a></li>
@@ -376,141 +395,153 @@
         <!--create some space between Autama profile and chat box-->
         <section><div style="margin-top: 5px;"></div></section>
 
-        <section class="chatbox_view">
-            <div class="lite-chatbox">
-                {% for a_message in message_chain %}
-                    {% if a_message.sender == 'User' %}
-                        <div class="cright cmsg">
-                            <span class="content">{{a_message.message}}</span>  <!-- timezone is in UTC -->
-                            <span class="time_stamp">{{ a_message.timeStamp.isoformat }}</span>
-                        </div>
-                    {% else %}
-                        <div class="cleft cmsg">
-                            <a href="/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
-                                <img class="headIcon radius" ondragstart="return false;" oncontextmenu="return false;" src="{{ autama.picture.url }}">
-                            </a>
-                            <span class="name">{{autama.first}}</span>
-                            <span class="content">{{a_message.message}}</span>
-                            <span class="time_stamp">{{ a_message.timeStamp.isoformat }}</span>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </section>
-
-        <!-- Input/button area -->
-        <section>
-            <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div style="padding: 10px; height: 77px;">
-                    <div class="text_input">
-                        {{ form }}
-                    </div>
-
-                    <input id="send_button" type="submit" value="Send" class="send_button">
+        {% if is_matched %}
+            <section class="chatbox_view">
+                <div class="lite-chatbox">
+                    {% for a_message in message_chain %}
+                        {% if a_message.sender == 'User' %}
+                            <div class="cright cmsg">
+                                <span class="content">{{a_message.message}}</span>  <!-- timezone is in UTC -->
+                                <span class="time_stamp">{{ a_message.timeStamp.isoformat }}</span>
+                            </div>
+                        {% else %}
+                            <div class="cleft cmsg">
+                                <a href="/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
+                                    <img class="headIcon radius" ondragstart="return false;" oncontextmenu="return false;" src="{{ autama.picture.url }}">
+                                </a>
+                                <span class="name">{{autama.first}}</span>
+                                <span class="content">{{a_message.message}}</span>
+                                <span class="time_stamp">{{ a_message.timeStamp.isoformat }}</span>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
-            </form>
+            </section>
+
+            <!-- Input/button area -->
+            <section>
+                <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div style="padding: 10px; height: 77px;">
+                        <div class="text_input">
+                            {{ form }}
+                        </div>
+
+                        <input id="send_button" type="submit" value="Send" class="send_button">
+                    </div>
+                </form>
+            </section>
+
+            <!-- jQuery dialog code here: https://stackoverflow.com/questions/40939099/jquery-form-submit-with-confirmation-in-a-modal -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+            <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+            <div id="dialog-confirm" title="Report submitted, thank you!">
+                <p>Would you like to provide additional feedback?</p>
+            </div>
+
+            <div id="additional-feedback" title="Feedback">
+                <form id="feedback-form" action="mailto:autamafeedback@gmail.com" method="post" enctype="text/plain">
+                    <textarea rows="5" cols="30">Enter feedback here...</textarea>
+                </form>
+            </div>
+
+            <script>
+                /* After page load go to all time_stamp class fields and update to local time */
+                $('.time_stamp').text(function(index, text) {
+                    return convertTime(text);
+                });
+
+                $(function() {
+                    $("#additional-feedback").dialog({
+                        resizable: false,
+                        height: "auto",
+                        autoOpen: false,
+                        width: "auto",
+                        modal: true,
+                        position: {
+                            my: "left",
+                            at: "left",
+                            of: "#reportform"
+                        },
+                        buttons: {
+                            "Submit": function() {
+                                /* submit feedback here */
+                                $(this).dialog("close");
+                            },
+                            "Close": function() {
+                                $(this).dialog("close");
+                            }
+                        }
+                    });
+
+                    $("#dialog-confirm").dialog({
+                        resizable: false,
+                        height: "auto",
+                        autoOpen: false,
+                        width: "auto",
+                        modal: true,
+                        position: {
+                            my: "left",
+                            at: "left",
+                            of: "#reportform"
+                        },
+                        buttons: {
+                            "Yes": function() {
+                                $("#additional-feedback").dialog('open');
+                                $(this).dialog("close");
+                                hideReport();
+                                $('#reportform').submit();
+                            },
+                            No: function() {
+                                $(this).dialog("close");
+                                hideReport();
+                                $('#reportform').submit();
+                            }
+                        }
+                    });
+
+                    $('#submitReport').on('click', function(e) {
+                        $("#dialog-confirm").dialog('open');
+                    });
+                });
+            </script>
+
+            <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
+            <div class="report_box" id="report">
+                <!-- <form action="???" method="post"> -->
+                <!-- include csrf_token here -->
+                <h1>Report Autama</h1>
+                <form id="reportform" action="mailto:autamafeedback@gmail.com" method="post" enctype="text/plain">
+                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option1" name="option1" value="Option 1">
+                    <label for="option1"> Inappropriate content</label><br>
+                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option2" name="option2" value="Option 2">
+                    <label for="option2"> Autama is broken</label><br>
+                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option3" name="option3" value="Option 3">
+                    <label for="option3"> Autama is boring</label><br>
+                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option4" name="option4" value="Option 4">
+                    <label for="option4"> Other</label><br><br>
+
+                    <!-- jQuery dialog-confirm code -->
+                    <input type="hidden" name="submitReport" value="Submit"/>
+                    <input type="button" id="submitReport" value="Submit"/>
+
+                    <button onclick="hideReport()"/>Close</button>
+                </form>
+            </div>
+        {% else %}
+        <section class="match_warning">
+            <h1 style="font-size: 8vw;"><b>Warning:</b></h1>
+            <br>
+            <p style="font-size: 2vw;">You must match with {{ autama.first }} {{ autama.last }} first before you can chat with {{ autama.first }}.</p>
+            <br>
+            <button onclick="match_with()" class="match_button">Match</button>
         </section>
 
-        <!-- jQuery dialog code here: https://stackoverflow.com/questions/40939099/jquery-form-submit-with-confirmation-in-a-modal -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-
-        <div id="dialog-confirm" title="Report submitted, thank you!">
-            <p>Would you like to provide additional feedback?</p>
-        </div>
-
-        <div id="additional-feedback" title="Feedback">
-            <form id="feedback-form" action="mailto:autamafeedback@gmail.com" method="post" enctype="text/plain">
-                <textarea rows="5" cols="30">Enter feedback here...</textarea>
-            </form>
-        </div>
-
-        <script>
-            /* After page load go to all time_stamp class fields and update to local time */
-            $('.time_stamp').text(function(index, text) {
-                return convertTime(text);
-            });
-
-            $(function() {
-                $("#additional-feedback").dialog({
-                    resizable: false,
-                    height: "auto",
-                    autoOpen: false,
-                    width: "auto",
-                    modal: true,
-                    position: {
-                        my: "left",
-                        at: "left",
-                        of: "#reportform"
-                    },
-                    buttons: {
-                        "Submit": function() {
-                            /* submit feedback here */
-                            $(this).dialog("close");
-                        },
-                        "Close": function() {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-
-                $("#dialog-confirm").dialog({
-                    resizable: false,
-                    height: "auto",
-                    autoOpen: false,
-                    width: "auto",
-                    modal: true,
-                    position: {
-                        my: "left",
-                        at: "left",
-                        of: "#reportform"
-                    },
-                    buttons: {
-                        "Yes": function() {
-                            $("#additional-feedback").dialog('open');
-                            $(this).dialog("close");
-                            hideReport();
-                            $('#reportform').submit();
-                        },
-                        No: function() {
-                            $(this).dialog("close");
-                            hideReport();
-                            $('#reportform').submit();
-                        }
-                    }
-                });
-
-                $('#submitReport').on('click', function(e) {
-                    $("#dialog-confirm").dialog('open');
-                });
-            });
-        </script>
-
-        <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
-        <div class="report_box" id="report">
-            <!-- <form action="???" method="post"> -->
-            <!-- include csrf_token here -->
-            <h1>Report Autama</h1>
-            <form id="reportform" action="mailto:autamafeedback@gmail.com" method="post" enctype="text/plain">
-                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option1" name="option1" value="Option 1">
-                <label for="option1"> Inappropriate content</label><br>
-                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option2" name="option2" value="Option 2">
-                <label for="option2"> Autama is broken</label><br>
-                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option3" name="option3" value="Option 3">
-                <label for="option3"> Autama is boring</label><br>
-                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option4" name="option4" value="Option 4">
-                <label for="option4"> Other</label><br><br>
-
-                <!-- jQuery dialog-confirm code -->
-                <input type="hidden" name="submitReport" value="Submit"/>
-                <input type="button" id="submitReport" value="Submit"/>
-
-                <button onclick="hideReport()"/>Close</button>
-            </form>
-        </div>
+        <section></section>
+        {% endif %}
 
     </body>
 {% endblock %}
