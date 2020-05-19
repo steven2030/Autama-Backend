@@ -1,67 +1,636 @@
-{% extends 'base.html' %}
-{% block csstyle %}
-   <style>
-    .div1{
-	position:relative;
-	margin:0 auto;
-	width:100%;
-	height:100%;
-    }
+{% block head %}
+    <meta charset="utf-8">
+    <title>login</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    .div2{
-        overflow:auto;
-        height:100vh;
-    }
-
-    img{
-    position:absolute;
-      left:0px;
-      top:0px;
-      z-index:-1;
-    width:100%!important;
-    height:100%!important;
-    }
-   </style>
-{%  endblock %}
-
-{% block content %}
-    <div class="div1">
-        <img id="div_first" src="/Images/Images/background-login01.jpg">
-        <div class="div2" style="width: 80%;margin: auto;margin-top: 50px; color: white">
-            <h2> login </h2>
-            <form action="/login/" method="post">
-              <div class="form-group">
-                <label for="username">username</label>
-                <input type="text" class="form-control" id="username" placeholder="username or email" name="username" style="width:50%">
-              </div>
-              <div class="form-group">
-                <label for="password">password</label>
-                <input type="password" class="form-control" id="password" placeholder="password" name="password"  style="width:50%">
-              </div>
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" name="is_remember_me"> remember me
-                </label>
-              </div>
-
-              <button style="background-image: linear-gradient(90deg, rgba(252, 79, 108, 1) 50%, rgba(245, 114, 88, 1) 70%); border-style: none;" type="submit" class="btn btn-default">login</button>
-                {% csrf_token %}
-            </form>
-            <div style="color: red;font-size: 14px">{{ error }}</div>
-        </div>
-    </div>
 {% endblock %}
 
-{% block js %}
-<script>
-var imgs =["background-login01.jpg", "background-login02.jpg"];       
-        function time(){
-              let i = Math.floor(Math.random()*100);
-              /// document.getElementById("div_first").src ="../Images/"+imgs[i]; 
-            document.getElementById("div_first").src = "../Images/a" + i + ".png";
-             
-        }setInterval("time()",5000); 
 
-       
-</script>
+{% block csstyle %}
+    <style>
+        .login{
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            background-color:rgba(92,67,197,.7);
+        }
+        .login .l-m{
+            border-radius: 20px;
+            width: 400px;
+            margin: auto;
+            margin-top: 200px;
+            padding: 50px 20px;
+            box-shadow: 0px 0px 5px 0px #000;
+            background-color: #fff;
+        }
+        .l-t{
+            text-align: center;
+        }
+        .l-t p > img{
+            width: 60px;
+        }
+        @media screen and (max-width:760px) {
+            a:hover{
+                text-decoration: none;
+            }
+
+            .top{
+                position: absolute;
+                top: 0;
+                width: 100%;
+
+                padding: 25px 5%;
+            }
+            .top img{
+                height: 1.8rem;
+            }
+            .top .logo{
+                display: none;
+            }
+            .top .link{
+                width: 100%;
+                text-align: center;
+            }
+            .top a{
+                width: 40%;
+                font-size: 1.1rem;
+                color: #fff;
+                display: inline-block;
+                line-height: 2rem;
+                border-radius: 2rem;
+                padding: 0 3rem!important;
+            }
+            .logop{
+                text-align: center;
+                padding: 0.5rem 0;
+            }
+            .top a:hover{
+                font-size: 1.1rem;
+                color: #fff;
+                display: inline-block;
+                line-height: 2rem;
+                border-radius: 2rem;
+                background-color: rgb(234,92,87);
+                padding: 0 3rem!important;
+            }
+            .active{
+                font-size: 1.1rem;
+                color: #fff;
+                display: inline-block;
+                line-height: 2rem;
+                border-radius: 2rem;
+                background-color: rgb(234,92,87);
+                padding: 0 3rem!important;
+            }
+            .title{
+                font-size: 1.4rem;
+                width: 100%;
+                line-height: 1rem;
+                position: absolute;
+                top: 7rem;
+                text-align: center;
+                color: #fff;
+            }
+            .title a{
+                color: #fff;
+                display: inline-block;
+                font-size: 1.2rem;
+            }
+            .text1{
+                padding: 10%;
+                text-align: center;
+                line-height: 2rem;
+                font-size: 1.6rem;
+                color: #999;
+            }
+
+
+            .titile{
+            display: none;
+            }
+            .tet .pic{
+                position: relative;
+            }
+            .text2 .pic  img{
+                width: 100%;
+                border-radius: 50%;
+            }
+
+            .text2 ul{
+                padding-left: 0;
+            }
+            .text2 .tet{
+                width: 60%;
+                margin: auto;
+                color: #999;
+                text-align: center;
+            }
+             li{
+                list-style: none;
+                margin-bottom: 2rem;
+            }
+            .text2 .pic .icon{
+                font-size: 0;
+                width: 5rem;
+                position: absolute;
+                bottom: 0;
+                height: 5rem;
+                background-color:rgb(92,67,194);
+                right: 0;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 6px solid #fff;
+            }
+            .p1{
+                padding: 0.2rem 0;
+                font-size: 1.4rem;
+            }
+            .add a{
+                margin-top: 2rem;
+            }
+            .line{
+                height: 3rem;
+                background-color: rgb(92,67,197);
+            }
+            .line .bg{
+                width: 100%;
+                height: 100%;
+                background-color: #fff;
+                border-bottom-left-radius: 5rem;
+            }
+            .bottom{
+                padding: 1.5rem 0;
+                    border-top-right-radius: 5rem;
+                text-align: center;
+                background-color: rgb(92,67,197);
+            }
+
+        }
+
+        @media screen and (min-width:760px) {
+            a:hover{
+                text-decoration: none;
+            }
+            #header{
+                position: relative;
+            }
+            .top{
+                position: absolute;
+                top: 0;
+                width: 100%;
+                /*box-sizing: padding-box;*/
+                padding: 25px 5%;
+            }
+            .top img{
+                height: 2rem;
+            }
+            .top .logo{
+                float: left;
+            }
+            .top .link{
+                float: right;
+            }
+            .top a{
+                font-size: 1.1rem;
+                color: #fff;
+                display: inline-block;
+                line-height: 2rem;
+                border-radius: 2rem;
+                padding: 0 3rem!important;
+            }
+            .logop{
+                display: none;
+            }
+            .top a:hover{
+                font-size: 1.1rem;
+                color: #fff;
+                display: inline-block;
+                line-height: 2rem;
+                border-radius: 2rem;
+                background-color: rgb(234,92,87);
+                padding: 0 3rem!important;
+            }
+            .active{
+                font-size: 1.1rem;
+                color: #fff;
+                display: inline-block;
+                line-height: 2rem;
+                border-radius: 2rem;
+                background-color: rgb(234,92,87);
+                padding: 0 3rem!important;
+            }
+            .title{
+                font-size: 2rem;
+                width: 100%;
+                line-height: 4rem;
+                position: absolute;
+                top: 5rem;
+                text-align: center;
+                color: #fff;
+            }
+            .title a{
+                margin-top: 10%;
+                color: #fff;
+                display: inline-block;
+                font-size: 1.2rem;
+            }
+            .text1{
+                text-align: center;
+                line-height: 1rem;
+                font-size: 1.2rem;
+                color: #999;
+            }
+            .text2{
+                padding-bottom: 5rem;
+            }
+
+            .titile{
+                padding: 2rem 0 4rem;
+                font-size: 3rem;
+                text-align: center;
+                color: rgb(92,67,194);
+            }
+            .tet .pic{
+                position: relative;
+            }
+            .text2 .pic  img{
+                width: 100%;
+                border-radius: 50%;
+            }
+            .text2 .tet{
+                width: 60%;
+                color: #999;
+                text-align: center;
+            }
+             li{
+                list-style: none;
+            }
+            .text2 .pic .icon{
+                font-size: 0;
+                width: 3.5rem;
+                position: absolute;
+                bottom: 0;
+                height: 3.5rem;
+                right: 0;
+                background-color:rgb(92,67,194);
+                border-radius: 50%;
+                overflow: hidden;
+                border: 6px solid #fff;
+            }
+            .p1{
+                padding: 0.2rem 0;
+                font-size: 1.4rem;
+            }
+            .add a{
+                margin-top: 2rem;
+            }
+            .line{
+                height: 5rem;
+                background-color: rgb(92,67,197);
+            }
+            .line .bg{
+                width: 100%;
+                height: 100%;
+                background-color: #fff;
+                border-bottom-left-radius: 5rem;
+            }
+            .bottom{
+                padding: 3rem 0;
+                    border-top-right-radius: 5rem;
+                text-align: center;
+                background-color: rgb(92,67,197);
+            }
+        }
+
+        @media screen and (min-width:1400px) {
+            a:hover{
+                text-decoration: none;
+            }
+            #header{
+                position: relative;
+            }
+            .top{
+                position: absolute;
+                top: 0;
+                width: 100%;
+                /*box-sizing: padding-box;*/
+                padding: 25px 5%;
+            }
+            .top img{
+                height: 2rem;
+            }
+            .top .logo{
+                float: left;
+            }
+            .top .link{
+                float: right;
+            }
+            .top a{
+                font-size: 1.2rem;
+                color: #fff;
+                display: inline-block;
+                line-height: 3rem;
+                border-radius: 2rem;
+                padding: 0 4rem!important;
+            }
+            .logop{
+                display: none;
+            }
+            .top a:hover{
+                font-size: 1.2rem;
+                color: #fff;
+                display: inline-block;
+                line-height: 3rem;
+                border-radius: 2rem;
+                background-color: rgb(234,92,87);
+                padding: 0 4rem!important;
+            }
+            .active{
+                font-size: 1.2rem;
+                color: #fff;
+                display: inline-block;
+                line-height: 3rem;
+                border-radius: 2rem;
+                background-color: rgb(234,92,87);
+                padding: 0 4rem!important;
+            }
+            .title{
+                font-size: 4rem;
+                width: 100%;
+                line-height: 4rem;
+                position: absolute;
+                top: 8rem;
+                text-align: center;
+                color: #fff;
+            }
+            .title a{
+                margin-top: 14rem;
+                color: #fff;
+                display: inline-block;
+                font-size: 1.2rem;
+            }
+            .text1{
+                text-align: center;
+                line-height: 1rem;
+                font-size: 1.5rem;
+                color: #999;
+            }
+            .text2{
+                padding-bottom: 5rem;
+            }
+
+            .titile{
+                padding: 2rem 0 4rem;
+                font-size: 4rem;
+                text-align: center;
+                color: rgb(92,67,194);
+            }
+            .tet .pic{
+                position: relative;
+            }
+            .text2 .pic  img{
+                width: 100%;
+                border-radius: 50%;
+            }
+            .text2 .tet{
+                width: 70%;
+                color: #999;
+                text-align: center;
+            }
+             li{
+                list-style: none;
+            }
+            .text2 .pic .icon{
+                font-size: 0;
+                width: 4rem;
+                position: absolute;
+                bottom: 0;
+                height: 4rem;
+                right: 0;
+                border-radius: 50%;
+                overflow: hidden;
+                background-color:rgb(92,67,194);
+                border: 6px solid #fff;
+            }
+            .p1{
+                padding: 0.2rem 0;
+                font-size: 1.4rem;
+            }
+            .add a{
+                margin-top: 2rem;
+            }
+            .line{
+                height: 5rem;
+                background-color: rgb(92,67,197);
+            }
+            .line .bg{
+                width: 100%;
+                height: 100%;
+                background-color: #fff;
+                border-bottom-left-radius: 5rem;
+            }
+            .bottom{
+                padding: 3rem 0;
+                border-top-right-radius: 5rem;
+                text-align: center;
+                background-color: rgb(92,67,197);
+            }
+            .p2{
+                width: 1101px;
+                height: 90px;
+                font-size: 24px;
+            }
+        }
+
+</style>
+
+{% endblock %}
+
+
+{% block content%}
+    <body>
+		<div class="login" id="log">
+			<div class="l-m">
+				<div class="l-t">
+					<p>
+							<img src="/Images/images/03.png" >
+						<button type="button text-danger" class="close" aria-label="close"  id="close" >
+						  <span aria-hidden="true" class="text-danger" >&times;</span>
+						</button>
+					</p>
+
+					<p style="padding: 15px 0 0 0 ;">
+						log in
+					</p>
+					<p>
+						Don't be bad,you agree to our <span>Terms</span>
+					</p>
+
+					<form action="/login/" method="post">
+						<div class="form-group">
+						    <input type="text" id="username" class="form-control" name="username" placeholder="username">
+
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password" placeholder="password" name="password">
+                        </div>
+                        <p>
+						    Email support if you forgot your password.
+					    </p>
+                        <button type="submit" class="active">Login</button>
+                    {% csrf_token %}
+
+					</form>
+
+				</div>
+			</div>
+
+		</div>
+		<div id="container">
+
+			<div id="header">
+				<img src="/Images/images/01.png"  width="100%">
+				<div class="top">
+					<div class="logo">
+						<img src="/Images/images/03.png" >
+						<img src="/Images/images/02.png" >
+					</div>
+					<div class="link">
+						<a href="javascript:open();" class=" " id="login">login</a>
+						<a href="/accounts/register/" class="active">sign up</a>
+					</div>
+					<div class="logop">
+						<img src="/Images/images/03.png" >
+						<img src="/Images/images/02.png" >
+					</div>
+
+				</div>
+				<div class="title">
+					<h2 style="font-stretch: normal; font-style: normal; font-weight: 500;">MEET,GENERATE AND SHARE A.I. PERSONALITIES</h2>
+					<h3 style="font-stretch: normal; font-style: normal; font-weight: 500;">
+						BASED ON YOUR INTERESTS
+					</h3>
+                    {% if not request.user.is_authenticated  %}
+					<a href="/accounts/register/" class="active">SIGN UP</a>
+                    {% endif %}
+				</div>
+
+			</div>
+			<script>
+				var olog = document.getElementById("log")
+				var oclose = document.getElementById("close")
+				function open(){
+
+					olog.style.display="block"
+				}
+
+				oclose.onclick = function(){
+				olog.style.display="none"
+				}
+			</script>
+
+			<div class="main">
+
+				<div class="container">
+
+					<div class="text1">
+						<p class="p2" style="font-weight: normal; font-stretch: normal; font-style: normal; letter-spacing: normal; color: #757575; line-height: 1.02;">
+							Autama are a community of quirky personalities made by our users using artificial intelligence. Each Autama has unique interests and desires. Come in, hang out and play.
+						</p>
+
+					</div>
+
+					<div class="text2">
+						<div class="titile">
+							Meet a few Autama
+						</div>
+
+						<ul class="row">
+							<li class="col-md-4 col-12">
+								<div class="tet">
+									<div class="pic">
+										<img src="/Images/images/001.png" >
+										<div class="icon">
+											<img src="/Images/images/11.png" >
+										</div>
+									</div>
+
+									<p class="p1">
+										KAY WRECKER
+									</p>
+									<p class="p2">
+										 I love black and white photography, chillout music and green tea. I’ll break up with your boyfreind for you.
+									</p>
+								</div>
+
+							</li>
+						<li class="col-md-4">
+							<div class="tet">
+								<div class="pic">
+									<img src="/Images/images/002.png" >
+									<div class="icon">
+										<img src="/Images/images/22.png" >
+									</div>
+								</div>
+
+								<p class="p1">
+									MARIE BENNETT
+								</p>
+								<p class="p2">
+									OK, my name is Marie, not marry me, but you might want to because I am so funny.
+								</p>
+							</div>
+
+						</li>
+
+						<li class="col-md-4">
+							<div class="tet">
+								<div class="pic">
+									<img src="/Images/images/003.png" >
+									<div class="icon">
+										<img src="/Images/images/020.png" style="width: 80%;position: relative;top: 4px;">
+									</div>
+								</div>
+
+								<p class="p1">
+									TONY
+								</p>
+								<p class="p2">
+									I love music and hate people. Star Wars is worse then pickles
+								</p>
+							</div>
+
+						</li>
+
+						</ul>
+					</div>
+
+					<div class="text1 add">
+						<p>
+							Autama can be used to teach your friends new music, share a joke with friends, general entertainment or just to hang out with. You can create your Autama any way you’d like.
+						</p>
+						<p>
+							<a href="/accounts/register/" class="active">SIGN UP</a>
+						</p>
+					</div>
+
+
+				</div>
+				<div class="line">
+					<div class="bg">
+
+					</div>
+				</div>
+			</div>
+
+			<div class="bottom">
+				<a href="" class="active">About THE PROJECT</a>
+			</div>
+		</div>
+	</body>
 {% endblock %}
