@@ -67,6 +67,10 @@ def match(user_pk, autama_pk):
     else:
         new_match = Matches(userID=user, autamaID=autama)
         new_match.save()
+        
+        # Adding 1 to its follower count
+        autama.nummatches += 1
+        autama.save()
 
     return ret
 
@@ -84,6 +88,10 @@ def unmatch(user_pk, autama_pk):
         message_chain = Messages.objects.all().filter(userID=user.pk).filter(autamaID=autama.pk)
         for message in message_chain:
             message.delete()
+
+        # Subtract 1 from its follower count
+        autama.nummatches -= 1
+        autama.save()
 
     else:
         ret = False
@@ -291,16 +299,16 @@ class FindMatches(LoginRequiredMixin, View):
         # Handle matching / unmatching and follower update
         if data.get('match') == '1':
             ret = match(request.user.id, aid)
-            if ret:
+            '''if ret:
                 autama = AutamaProfile.objects.get(pk=aid)
                 autama.nummatches += 1
-                autama.save()
+                autama.save()'''
         else:
             ret = unmatch(request.user.id, aid)
-            if ret:
+            '''if ret:
                 autama = AutamaProfile.objects.get(pk=aid)
                 autama.nummatches -= 1
-                autama.save()
+                autama.save()'''
 
 
         # Test to see if past current Autama Limit
