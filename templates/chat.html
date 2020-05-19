@@ -323,22 +323,22 @@
                                 {% csrf_token %}
                                 Unmatch
                             </a></li>
+                        
+                            <li><a onclick="showReport()">Report</a></li>
                         {% else %}
                             <li><a href="{% url 'Match' pk=autama.pk %}">
                                 {% csrf_token %}
                                 Match
                             </a></li>
                         {% endif %}
-
-                        <li><a onclick="showReport()">Report</a></li>
                     </ul>
                 </div>
 
-                <div>
+                <!--<div>
                     <a href="/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
                         <img  style="position: relative; " class="to" alt="aaa" src="{{ autama.picture.url }}">
                     </a>
-                </div>
+                </div>-->
             </div>
         </nav>
 
@@ -356,7 +356,7 @@
                 <div class="autama_description">
                     <h5><b>{{ autama.first }} {{ autama.last }} </b></h5>
                     <p>
-                        <b>Interests:</b>
+                        <b>Description:</b>
                         {{ autama.interest1 }}
                         {{ autama.interest2 }}
                         {{ autama.interest3 }}
