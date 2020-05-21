@@ -7,9 +7,8 @@
     <style>
         .circular--portrait {
             position: relative;
-            width:100%;
+            width: 100%;
             height: auto;
-            min-width: 60px;
             /*
             width: 100px;
             height: 100 px
@@ -51,15 +50,23 @@
             margin-bottom: 12px;
         }
 
-        .flexbox-wrapper {
+        .flexbox-wrapper-matches {
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
+            overflow-x: auto;
         }
 
-        .flexbox-image {
+        .flexbox-wrapper-messages {
+            display: flex;
+            overflow-x: auto;
+        }
+
+        .flexbox-item {
             width: 15%;
             padding: 0.5%;
+            text-align: left;
+            min-width: 0;
+            min-height: 0;
+            overflow: hidden;
         }
 
         .recent-msg {
@@ -68,12 +75,6 @@
             flex-direction: column;
             justify-content: center;
             margin-left: 20px;
-        }
-
-        .scrolling-wrapper-flexbox {
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
         }
     </style>
 {% endblock %}
@@ -123,15 +124,15 @@
         <h1>New Matches {{num_matches}}</h1>
         <br>
 
-        <div class="scrolling-wrapper-flexbox">
+        <div class="flexbox-wrapper-matches">
             {% for a_profile in user_matches %}
-                <div class="flexbox-image some-match">
+                <div class="flexbox-item some-match">
                     <a href="{% url 'Chat' pk=a_profile.autamaID.pk %}" class="image">
                         <div class="circular--portrait">
                             <img src="{{ a_profile.autamaID.picture.url }}" alt="Avatar"/>
                         </div>
                     </a>
-                    <div class="content">
+                    <div class="flexbox-profilename">
                         <h4 class="profilename">{{a_profile.autamaID.first}} {{a_profile.autamaID.last}}</h4>
                     </div>
                 </div>
@@ -149,11 +150,11 @@
 
         {% for a_profile, a_message, a_chain in user_messages %}
 
-            <div class="flexbox-wrapper some-msg-box">
+            <div class="flexbox-wrapper-messages some-msg-box">
                 <!-- tag a_chain for use in dynamicSearch() -->
                 <div class="some-conversation" style="display: none;">{{ a_chain }}</div>
 
-                <div class="flexbox-image">
+                <div class="flexbox-item">
                     <a href="{% url 'Chat' pk=a_profile.pk %}" class="image">
                         <div class="circular--portrait">
                             <img src="{{ a_profile.picture.url }}" alt="Avatar" align="left"/>
