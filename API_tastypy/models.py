@@ -46,6 +46,8 @@ class RegistrationResource(ModelResource):
         allowed_methods = ['post']
         object_class = User
         include_resource_uri = False
+        #fields = ['password'] # Seems like atleast one of the fields in the post must be mentioned here to have them included in post response.
+        #always_return_data = True # Seems to need this get posted data returned in response.
 
     def obj_create(self, bundle, request=None, **kwargs):
         try:
@@ -56,9 +58,21 @@ class RegistrationResource(ModelResource):
             user = User.objects.get(username=bundle.data.get('username'))
             apikey = ApiKey.objects.create(key=apikey, user=user)
             apikey.save()
+            bundle.obj = user  # HAVE to update the bundle object to include its data in post response.
         except IntegrityError:
             raise BadRequest('That username already exists')
         return bundle
+
+    ''' # can use this to make null fields sent that I don't want returned in the post response.
+    def dehydrate(self, bundle):
+        if bundle.request.method == 'POST':
+            bundle.data['apikey'] = 'nope'
+            bundle.data['password'] = 'also nope'
+
+        return bundle
+    '''
+
+
 
 
 
