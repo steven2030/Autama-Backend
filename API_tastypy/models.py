@@ -88,6 +88,19 @@ class MessagingResource(ModelResource):
         authorization = MessagingAuthorization()
         authentication = BasicAuthentication()
 
+    def hydrate(self, bundle):
+        try:
+            user    = User.objects.get(username=bundle.data.get("username"))
+            autama  = AutamaProfile.objects.get(pk=int(bundle.data.get("autamaID")))
+            message = bundle.data.get("message")
+            sender  = bundle.data.get("sender")
+            message = Messages.objects.create(userID=user, autamaID=autama, sender=sender, message=message)
+            #message.save()
+            bundle.obj = message
+        except IntegrityError:
+            raise BadRequest('database issue')
+        return bundle
+
 
 
 '''
