@@ -10,6 +10,7 @@ from django.conf.urls import url
 from django.db import IntegrityError
 from tastypie.exceptions import BadRequest
 from accounts.models import Messages
+from Nucleus.ham import Ham
 
 
 # Create your models here.
@@ -87,19 +88,27 @@ class MessagingResource(ModelResource):
         resource_name = 'messages'
         authorization = MessagingAuthorization()
         authentication = BasicAuthentication()
+        include_resource_uri = False
+        fields = ['userID', 'autamaID', 'message', 'sender', 'timeStamp'] # Seems like atleast one of the fields in the post must be mentioned here to have them included in post response.
+        always_return_data = True # Seems to need this get posted data returned in response.
+        allowed_methods = ['post', 'get']
 
     def hydrate(self, bundle):
-        try:
-            user    = User.objects.get(username=bundle.data.get("username"))
-            autama  = AutamaProfile.objects.get(pk=int(bundle.data.get("autamaID")))
-            message = bundle.data.get("message")
-            sender  = bundle.data.get("sender")
-            message = Messages.objects.create(userID=user, autamaID=autama, sender=sender, message=message)
-            #message.save()
-            bundle.obj = message
-        except IntegrityError:
-            raise BadRequest('database issue')
+        user = User.objects.get(username=bundle.data.get("username"))
+        autama = AutamaProfile.objects.get(pk=int(bundle.data.get("autamaID")))
+        message = bundle.data.get("message")
+        sender = bundle.data.get("sender")
+        message = Messages.objects.create(userID=user, autamaID=autama, sender=sender, message=message)
+        #message.save() # somewhere in the hydrate cycle tastypie calls save for us
+        bundle.obj = message
+
         return bundle
+
+    def dehydrate(self, bundle):
+        # Include the request IP in the bundle.
+        #bundle.data['request_ip'] = bundle.request.META.get('REMOTE_ADDR')
+        return bundle
+
 
 
 
