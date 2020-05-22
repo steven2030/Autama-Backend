@@ -2,7 +2,7 @@
 
 {% block csstyle %}
     <style>
-        .send_button{
+        .create_button{
             background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
             height: 100%;
             width: 100%;
@@ -62,7 +62,7 @@
 
         {% if user.my_Autama < my_autama_limit %}
             <form action="/CreateAutama/">
-                <input type="submit" value="Create an Autama" class="send_button"/>
+                <input type="submit" value="Create an Autama" class="create_button"/>
             </form>
 
             <br>
