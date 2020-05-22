@@ -9,6 +9,7 @@ from django.urls import path
 from django.conf.urls import url
 from django.db import IntegrityError
 from tastypie.exceptions import BadRequest
+from accounts.models import Messages
 
 
 # Create your models here.
@@ -71,6 +72,31 @@ class RegistrationResource(ModelResource):
 
         return bundle
     '''
+
+class MessagingAuthorization(Authorization):
+    def read_list(self, object_list, bundle):
+        autama_id = int(bundle.request.headers.get('AutamaID'))
+        autama = AutamaProfile.objects.get(pk=autama_id)
+        user = bundle.request.user
+        return object_list.filter(userID=user).filter(autamaID=autama)
+
+
+class MessagingResource(ModelResource):
+    class Meta:
+        queryset = Messages.objects.all()
+        resource_name = 'messages'
+        authorization = MessagingAuthorization()
+        authentication = BasicAuthentication()
+
+
+
+'''
+    message = models.TextField()
+    timeStamp = models.DateTimeField(auto_now_add=True)
+    userID = models.ForeignKey('User', on_delete=models.CASCADE)
+    autamaID = models.ForeignKey('AutamaProfiles.AutamaProfile', on_delete=models.CASCADE)
+    sender = models.CharField(max_length=6, choices=SENDER_CHOICES)
+'''
 
 
 
