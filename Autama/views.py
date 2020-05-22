@@ -22,6 +22,7 @@ from AutamaProfiles.models import AutamaProfile, AutamaGeneral
 from AutamaProfiles.views import get_meta, create_custom_autama, get_my_autama_limit
 from django.utils import timezone
 from Nucleus.ham import Ham
+from django.core.mail import send_mail, BadHeaderError
 
 
 def claim_autama(user_pk, autama_pk):
@@ -597,3 +598,20 @@ def testdata(request):
         except IntegrityError as e:
             if 'UNIQUE constraint' in str(e.args):
                 return HttpResponse("Already Added")
+
+# from https://docs.djangoproject.com/en/3.0/topics/email/
+# send_mail('Subject', 'Message', 'from@example.com', ['john@example.com', jane@example.com'],)
+def send_mail(request):
+    user = User.objects.get(pk=request.user.id)
+    last_page = user.last_page
+    subject = request.POST.get('subject', '')
+    message = request.POST.get('message', '')
+    from_email = request.post.get('from_email', '')
+    if subject and message and from_email:
+        try:
+            send_mail(subject, message, from_email, ['autamafeedback@gmail.com['])
+        except BadHeaderError:
+            return HttpResponse('Invalid header found.')
+        return HttpResponse(last_page)
+    else:
+        return HttpResponse('Make sure all fields are entered and valid.')
