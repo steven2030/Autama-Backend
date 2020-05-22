@@ -125,7 +125,7 @@
         }
 
         .content{
-            word-wrap: break-spaces;
+            /*word-wrap: break-spaces;*/
         }
 
         .butt3{
@@ -338,6 +338,8 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         {% if is_matched %}
+                            <li><a onclick="">Share</a></li>
+                        
                             <li><a href="{% url 'UnMatch' pk=autama.pk %}">
                                 {% csrf_token %}
                                 Unmatch
