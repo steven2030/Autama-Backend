@@ -63,9 +63,9 @@
         .flexbox-item {
             width: 15%;
             padding: 0.5%;
-            text-align: left;
-            min-width: 0;
-            min-height: 0;
+            text-align: center;
+            min-width: 100px;
+            min-height: 0px;
             overflow: hidden;
         }
 
@@ -75,6 +75,14 @@
             flex-direction: column;
             justify-content: center;
             margin-left: 20px;
+        }
+
+        .profilename {
+            font-size: calc(1em + 0.5vw);
+        }
+
+        .some-recent-msg {
+            font-size: calc(1em + 0.5vw);
         }
     </style>
 {% endblock %}
@@ -133,7 +141,7 @@
                         </div>
                     </a>
                     <div class="flexbox-profilename">
-                        <h4 class="profilename">{{a_profile.autamaID.first}} {{a_profile.autamaID.last}}</h4>
+                        <h5 class="profilename">{{a_profile.autamaID.first}} {{a_profile.autamaID.last}}</h5>
                     </div>
                 </div>
             {% endfor %}
@@ -162,7 +170,7 @@
                     </a>
                 </div>
                 <div class="recent-msg">
-                    <h4 class="profilename"><b>{{ a_profile.first }} {{ a_profile.last }}</b></h4>
+                    <h4 class="profilename">{{ a_profile.first }} {{ a_profile.last }}</h4>
                     <div class="some-recent-msg">{{ a_message }}</div>
                 </div>
             </div>
