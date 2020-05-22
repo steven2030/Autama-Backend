@@ -94,7 +94,7 @@ class MessagingResource(ModelResource):
         allowed_methods = ['post', 'get']
 
     def hydrate(self, bundle):
-        user = User.objects.get(username=bundle.data.get("username"))
+        user = User.objects.get(username=bundle.data.get("userID"))
         autama = AutamaProfile.objects.get(pk=int(bundle.data.get("autamaID")))
         message = bundle.data.get("message")
         sender = bundle.data.get("sender")
@@ -105,8 +105,37 @@ class MessagingResource(ModelResource):
         return bundle
 
     def dehydrate(self, bundle):
-        # Include the request IP in the bundle.
-        #bundle.data['request_ip'] = bundle.request.META.get('REMOTE_ADDR')
+        # Using HAM to get a response from Autama
+        autama  = AutamaProfile.objects.get(pk=int(bundle.data.get("autamaID")))
+        message = bundle.data.get("message")
+        user    = User.objects.get(username=bundle.data.get("userID"))
+
+        first_name = autama.first
+        last_name  = autama.last
+        trait1 = autama.interest1
+        trait2 = autama.interest2
+        trait3 = autama.interest3
+        trait4 = autama.interest4
+        trait5 = autama.interest5
+        trait6 = autama.interest6
+        personality     = [trait1, trait2, trait3, trait4, trait5, trait6]
+        ham             = Ham(first_name, last_name, personality)
+        autama_response = ham.converse(user_input=message)
+        message         = Messages.objects.create(userID=user, autamaID=autama, sender="Autama", message=autama_response)
+        message.save()
+
+        autama    = str(message.autamaID.id)
+        user      = message.userID.username
+        sender    = message.sender
+        timeStamp = str(message.timeStamp)
+        message   = message.message
+
+        bundle.data['autamaID']  = autama
+        bundle.data['userID']    = user
+        bundle.data['sender']    = sender
+        bundle.data['timeStamp'] = timeStamp
+        bundle.data['message']   = message
+
         return bundle
 
 
