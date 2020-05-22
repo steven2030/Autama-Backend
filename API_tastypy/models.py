@@ -76,7 +76,9 @@ class RegistrationResource(ModelResource):
 class MessagingAuthorization(Authorization):
     def read_list(self, object_list, bundle):
         autama_id = int(bundle.request.headers.get('AutamaID'))
-        return object_list.filter(userID=bundle.request.user).filter(autamaID=AutamaProfile.objects.get(pk=autama_id))
+        autama = AutamaProfile.objects.get(pk=autama_id)
+        user = bundle.request.user
+        return object_list.filter(userID=user).filter(autamaID=autama)
 
 
 class MessagingResource(ModelResource):
