@@ -9,6 +9,7 @@ import torch
 from itertools import chain
 from Nucleus.interact import sample_sequence
 from Nucleus.tools import read_pickle
+from random import choice, seed
 
 
 class Ham:
