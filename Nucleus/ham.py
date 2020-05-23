@@ -26,17 +26,29 @@ class Ham:
         # An identity is a list containing a name and a personality
         self.__identity = self.__create_identity() # A list of name and personality combined
         self.__history = []
+        # Messages for when user types in too much
+        self.__error_messages = ["i'm here to have a conversation. not to read a book.",
+                                 "i'm confused. can you give me a summary of what you just wrote? thanks!",
+                                 "you lost me. can you give me a short version? thanks!",
+                                 "i thought we were having a conversation. when did it become a lecture?",
+                                 "gross. that is so much writing. just gross."]
 
     # A method that returns Autama's output by taking in user's input
     # https://github.com/huggingface/transfer-learning-conv-ai/blob/master/interact.py
     def converse(self, user_input: str):
         self.__history.append(self.__tokenizer.encode(user_input))
-        with torch.no_grad():
-            out_ids = sample_sequence(self.__identity, self.__history, self.__tokenizer, self.__model, self.__args)
-        self.__history.append(out_ids)
-        self.__history = self.__history[-(2 * self.__args.max_history + 1):]
-        nucleus_output = self.__tokenizer.decode(out_ids, skip_special_tokens=True)
-        return nucleus_output
+        user_input_length = len(self.__history[0])
+        if user_input_length > 400:
+            seed()
+            output = choice(self.__error_messages)
+            return output
+        else:
+            with torch.no_grad():
+                out_ids = sample_sequence(self.__identity, self.__history, self.__tokenizer, self.__model, self.__args)
+            self.__history.append(out_ids)
+            self.__history = self.__history[-(2 * self.__args.max_history + 1):]
+            nucleus_output = self.__tokenizer.decode(out_ids, skip_special_tokens=True)
+            return nucleus_output
 
     # A method that checks if the user asks for the Autama's name and helps answer that question if needed
     def check_converse(self, user_input: str):
