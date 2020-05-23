@@ -236,19 +236,20 @@
         }
 
         .match_warning{
-        height: 80%;
-        width: auto;
-        text-align: center;
+            height: 80%;
+            width: auto;
+            text-align: center;
         }
 
         .match_button{
-            background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
-            width: 50%;
+            background: #ff4e50;
             height: auto;
+            width: 50%;
             color: white;
-            font-size: 8vw;
+            font-size: 10vw;
             text-align: center;
-            border-radius: 14px;
+            vertical-align: middle;
+            border-radius: 10vw;
         }
     </style>
 {% endblock %}
@@ -536,9 +537,8 @@
             </div>
         {% else %}
         <section class="match_warning">
-            <h1 style="font-size: 8vw;"><b>Warning:</b></h1>
-            <br>
-            <p style="font-size: 2vw;">You must match with {{ autama.first }} {{ autama.last }} first before you can chat with {{ autama.first }}.</p>
+            <p style="font-size: 2.5vw;">I don't talk to strangers.</p>
+            <p style="font-size: 2.5vw;">Match with me, then we'll talk.</p>
             <br>
             <button onclick="match_with()" class="match_button">Match</button>
         </section>
