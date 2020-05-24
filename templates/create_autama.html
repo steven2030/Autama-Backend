@@ -1,6 +1,66 @@
-{% extends 'base.html' %}
+{% block head %}
+    <title>Autama</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block csstyle %}
+    <style>
+         .bottom{
+            padding: 0rem 0;
+            border-bottom-left-radius: 5rem;
+            text-align: center;
+            background-color: rgb(92,67,197);
+            }
+
+            .toplab{
+                background-color: #ff4e50;
+                text-align: center;
+                height: 46px;
+                width: 100%;
+            }
+
+            .Autama-text-logo{
+                width: 105px;
+                height: 36px;
+                object-fit: contain;
+
+            }
+
+            .nav-tabs{
+                border: none;
+                padding-left: 2.5vw;
+            }
+
+            .create_button{
+                background: #ff4e50;
+                height: 5vw;
+                width: 10vw;
+                color: white;
+                font-size: 2vw;
+                text-align: center;
+                vertical-align: middle;
+                border-radius: 5vw;
+            }
+    </style>
+{% endblock %}
 
 {% block content %}
+    <div>
+        <div class="toplab">
+            <img class="Autama-text-logo" src="/Images/images/autama-text-logo.png">
+        </div>
+        <div>
+			<div class="bottom">
+                    <ul class="nav nav-tabs">
+                            <li class="nav-item"><a href="/MyAutamas/"><img class="bitmap" src="/Images/images/back-chevron.png"></a></li>
+                    </ul>
+			</div>
+		</div>
+    </div>
+
     <div style="width: 80%;margin: auto; padding-top: 50px;">
         <h1>Create an Autama</h1>
         <br>
@@ -26,12 +86,12 @@
 
             <form action="/CreateAutama/" method="post">
                 <div class="form-group">
-                    <label for="firstname">firstname</label>
+                    <label for="firstname">First Name</label>
                     <input type="text" class="form-control" id="firstname" placeholder="firstname" name="firstname">
                 </div>
 
                 <div class="form-group">
-                    <label for="lastname">lastname</label>
+                    <label for="lastname">Last Name</label>
                     <input type="text" class="form-control" id="lastname" placeholder="lastname" name="lastname">
                 </div>
                 
@@ -55,32 +115,32 @@
 
                 <div class="form-group">
                     <label for="interest1">Detail 1</label>
-                    <input type="text" class="form-control" id="interest1" placeholder="Detail 1" name="interest1">
+                    <input type="text" class="form-control" id="interest1" placeholder="example: I can eat a giant pile of ice cream." name="interest1">
                 </div>
 
                 <div class="form-group">
                     <label for="interest2">Detail 2</label>
-                    <input type="text" class="form-control" id="interest2" placeholder="Detail 2" name="interest2">
+                    <input type="text" class="form-control" id="interest2" placeholder="example: I have a dog named Rice and Beans." name="interest2">
                 </div>
 
                 <div class="form-group">
                     <label for="interest3">Detail 3</label>
-                    <input type="text" class="form-control" id="interest3" placeholder="Detail 3" name="interest3">
+                    <input type="text" class="form-control" id="interest3" placeholder="example: My husband and I have three children which are all overweight." name="interest3">
                 </div>
 
                 <div class="form-group">
                     <label for="interest4">Detail 4</label>
-                    <input type="text" class="form-control" id="interest4" placeholder="Detail 4" name="interest4">
+                    <input type="text" class="form-control" id="interest4" placeholder="example: I am a poet who doesn’t know it." name="interest4">
                 </div>
 
                 <div class="form-group">
                     <label for="interest5">Detail 5</label>
-                    <input type="text" class="form-control" id="interest5" placeholder="Detail 5" name="interest5">
+                    <input type="text" class="form-control" id="interest5" placeholder="example: The world is messed up because there is COVID-19." name="interest5">
                 </div>
 
                 <div class="form-group">
                     <label for="interest6">Detail 6</label>
-                    <input type="text" class="form-control" id="interest6" placeholder="Detail 6" name="interest6">
+                    <input type="text" class="form-control" id="interest6" placeholder="example: I think that you are a very sweet person." name="interest6">
                 </div>
                 
                 <div>
@@ -91,7 +151,7 @@
                 </div>
 
                 <input hidden name="id" value="{{ user.id }}">
-                <button style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">Create</button>
+                <button class="create_button" type="submit">Create</button>
                 
                 <br>
                 <br>

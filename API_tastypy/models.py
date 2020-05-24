@@ -30,16 +30,21 @@ class AccountAuthorization(Authorization):
 class AccountsResource(ModelResource):
     class Meta:
         queryset = User.objects.all()
-        resource_name = 'accounts'
+        resource_name = 'accounts'  # Change to 'login' end point
         fields = ['id', 'username']
         filtering = {
             'username': ['exact']
         }
 
-        #authorization = Authorization()
         authorization = AccountAuthorization()
-        #authentication = ApiKeyAuthentication()
         authentication = BasicAuthentication()
+
+    def dehydrate(self, bundle):
+        username = bundle.request.headers.get('Username')
+        user = User.objects.get(username=username)
+        apikey = ApiKey.objects.get(user=user)
+        bundle.data['apikey'] = apikey
+        return bundle
 
 
 class RegistrationResource(ModelResource):
