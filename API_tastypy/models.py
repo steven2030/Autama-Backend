@@ -31,6 +31,15 @@ class UnmatchedAutamaResource(ModelResource):
         authentication = BasicAuthentication()
         authorization = UnmatchedAutamaAuthorization()
 
+    def hydrate(self, bundle):
+        bundle.obj = None
+        userID = User.objects.get(username=bundle.data.get('userID'))
+        autamaID = AutamaProfile.objects.get(id=int(bundle.data.get('autamaID')))
+        if not Matches.objects.filter(autamaID=autamaID).filter(userID=userID).exists():
+            Matches(userID=userID, autamaID=autamaID).save()
+
+        return bundle
+
 
 class AccountAuthorization(Authorization):
     def read_list(self, object_list, bundle):
