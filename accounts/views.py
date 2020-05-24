@@ -69,7 +69,7 @@ class RegisterView(View):
         if User.objects.filter(username=username) or User.objects.filter(email=email):
             return render(request, '../templates/register.html', {'error': 'Username or email already exists.'})
 
-        obj = User.objects.create(username=username, email=email)
+        obj = User.objects.create(username=username, email=email, currentAutama=1, nextAutama=2)
         obj.set_password(password)
         if interests1:
             obj.interests1 = interests1
@@ -86,7 +86,6 @@ class RegisterView(View):
             same_personality = bacon.check_personality(user_personality)
             create_autama_profile(personality=same_personality, creator=username, origin=username)
 
-        obj.currentAutama = 0
         obj.save()
 
         return HttpResponseRedirect(reverse('login'))

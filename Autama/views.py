@@ -233,19 +233,22 @@ class FindMatches(LoginRequiredMixin, View):
         ag = get_meta()
         a_id = request.GET.get('AID')
 
-        # Returns the base HTML if no AID parameter.
+        # Returns the base HTML if no AID parameter.  This is first page load.
         if a_id is None:
             user = User.objects.get(id=request.user.id)
             return render(request, 'find_matches.html', {'autama_id': user.currentAutama})
 
-        # Check if the user has swiped all current Autama.
+        # Check if the user has swiped all current Autama & redirect.
         if user.currentAutama > ag.currentCount:
             data = {
                 'redirect': '/SeenAll/',
             }
             return JsonResponse(data)
         autama = None
+
         # Return current id
+        # a_id =  0 get current autama. This happens upon first page load
+        # if a_id = 1 get next autama.  This happens once upon page load and then every swipe.
         if a_id == "0":
             if autama_id_exist(user.currentAutama):
                 autama = autama_get_profile(user.currentAutama)
@@ -261,6 +264,7 @@ class FindMatches(LoginRequiredMixin, View):
                     return JsonResponse(data)
 
         # return next id
+        # if a_id = 1 get next autama.  This happens once upon page load and then every swipe.
         else:
             if autama_id_exist(user.nextAutama):
                 autama = autama_get_profile(user.nextAutama)
@@ -270,6 +274,7 @@ class FindMatches(LoginRequiredMixin, View):
                 user.save()
                 autama = autama_get_profile(user.nextAutama)
 
+        # return object
         data = {
             'autama_id': autama.id,
             'creator': autama.creator,
@@ -284,6 +289,8 @@ class FindMatches(LoginRequiredMixin, View):
         }
         return JsonResponse(data)
 
+    # Update after a swipe has occured
+    # Beware of async requests
     def post(self, request):
         data = request.POST.copy()
         # handle updating autama position
@@ -322,6 +329,13 @@ class FindMatches(LoginRequiredMixin, View):
         else:
             return JsonResponse({"user": request.user.id, "Autama": aid})
 
+
+# Checks if an autama is matched to the user
+def autama_is_matched(user_id, autama_id):
+    if Matches.objects.filter(userID=user_id).filter(autamaID=autama_id).exists():
+        return True
+    else:
+        return False
 
 # Checks if the int id provided matches the primary key of an autama
 # Returns true if exists, false if it does not.
@@ -560,12 +574,13 @@ class Chat(LoginRequiredMixin, View):
                                              'message_chain': message_chain, 'is_matched': is_matched})
 
     def post(self, request, pk):
+        message = request.POST.get('message')
+        autama_id = request.POST.get('autama_id')
         user = User.objects.get(pk=request.user.id)
-        autama = AutamaProfile.objects.get(pk=pk)  # Check the validity of Autama id.
-        form = MessageForm(request.POST)
-
-        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[0][1],
-                                            message=form['x'].value())
+        autama = AutamaProfile.objects.get(pk=autama_id)  # Check the validity of Autama id.
+        # form = MessageForm(request.POST)
+        a_message = Messages.objects.create(userID=user, autamaID=autama, sender='User',
+                                            message=message)
         a_message.save()
 
         # Using HAM to get a response from Autama
@@ -580,13 +595,21 @@ class Chat(LoginRequiredMixin, View):
         personality = [trait1, trait2, trait3, trait4, trait5, trait6]
 
         ham = Ham(first_name, last_name, personality)
-        autama_response = ham.converse(user_input=form['x'].value())
+        autama_response = ham.converse(user_input=message)
 
-        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[1][1],
+        a_message = Messages.objects.create(userID=user, autamaID=autama, sender='Autama',
                                             message=autama_response)
         a_message.save()
 
-        return redirect('Chat', pk=pk)
+        data = {
+            'autama': autama_id,
+            'user': request.user.id,
+            'response': autama_response,
+            'time': a_message.timeStamp,
+        }
+
+        return JsonResponse(data)
+        # return redirect('Chat', pk=pk)
 
 
 def testdata(request):
