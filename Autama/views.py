@@ -233,19 +233,22 @@ class FindMatches(LoginRequiredMixin, View):
         ag = get_meta()
         a_id = request.GET.get('AID')
 
-        # Returns the base HTML if no AID parameter.
+        # Returns the base HTML if no AID parameter.  This is first page load.
         if a_id is None:
             user = User.objects.get(id=request.user.id)
             return render(request, 'find_matches.html', {'autama_id': user.currentAutama})
 
-        # Check if the user has swiped all current Autama.
+        # Check if the user has swiped all current Autama & redirect.
         if user.currentAutama > ag.currentCount:
             data = {
                 'redirect': '/SeenAll/',
             }
             return JsonResponse(data)
         autama = None
+
         # Return current id
+        # a_id =  0 get current autama. This happens upon first page load
+        # if a_id = 1 get next autama.  This happens once upon page load and then every swipe.
         if a_id == "0":
             if autama_id_exist(user.currentAutama):
                 autama = autama_get_profile(user.currentAutama)
@@ -261,6 +264,7 @@ class FindMatches(LoginRequiredMixin, View):
                     return JsonResponse(data)
 
         # return next id
+        # if a_id = 1 get next autama.  This happens once upon page load and then every swipe.
         else:
             if autama_id_exist(user.nextAutama):
                 autama = autama_get_profile(user.nextAutama)
@@ -270,6 +274,7 @@ class FindMatches(LoginRequiredMixin, View):
                 user.save()
                 autama = autama_get_profile(user.nextAutama)
 
+        # return object
         data = {
             'autama_id': autama.id,
             'creator': autama.creator,
@@ -284,6 +289,8 @@ class FindMatches(LoginRequiredMixin, View):
         }
         return JsonResponse(data)
 
+    # Update after a swipe has occured
+    # Beware of async requests
     def post(self, request):
         data = request.POST.copy()
         # handle updating autama position
@@ -322,6 +329,13 @@ class FindMatches(LoginRequiredMixin, View):
         else:
             return JsonResponse({"user": request.user.id, "Autama": aid})
 
+
+# Checks if an autama is matched to the user
+def autama_is_matched(user_id, autama_id):
+    if Matches.objects.filter(userID=user_id).filter(autamaID=autama_id).exists():
+        return True
+    else:
+        return False
 
 # Checks if the int id provided matches the primary key of an autama
 # Returns true if exists, false if it does not.

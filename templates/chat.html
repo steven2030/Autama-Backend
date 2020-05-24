@@ -423,16 +423,17 @@
 
             <!-- Input/button area -->
             <section>
-                <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
+{#                <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">#}
+{#                    {% csrf_token %}#}
                     <div style="padding: 10px; height: 77px;">
                         <div class="text_input">
-                            {{ form }}
+{#                            {{ form }}#}
+                            <textarea name="x" cols="40" rows="10" class="special" required="" id="id_x"></textarea>
                         </div>
 
                         <input id="send_button" type="submit" value="Send" class="send_button">
                     </div>
-                </form>
+{#                </form>#}
             </section>
 
             <!-- jQuery dialog code here: https://stackoverflow.com/questions/40939099/jquery-form-submit-with-confirmation-in-a-modal -->
@@ -452,6 +453,22 @@
             </div>
 
             <script>
+                $("#send_button").click(function() {
+                    $.ajax({
+                        url : "/Chat/",
+                        type: "POST",
+                        data : { csrfmiddlewaretoken: "{{ csrf_token }}", 'autama_id': {{ autama.pk }}, 'message': 'test',},
+                        success: function(data, textStatus, jqXHR)
+                        {
+                            console.log("We heard back!")
+                        },
+                        error: function (jqXHR, textStatus, errorThrown)
+                        {
+                            console.log("No response")
+                        }
+                    });
+                });
+
                 /* After page load go to all time_stamp class fields and update to local time */
                 $('.time_stamp').text(function(index, text) {
                     return convertTime(text);
