@@ -144,47 +144,32 @@ class MessagingResource(ModelResource):
 
         return bundle
 
+class MyMatchesAuthorization(Authorization):
+    def read_list(self, object_list, bundle):
+        user = bundle.request.user
+        return object_list.filter(userID=user)
 
+class MyMatchesResource(ModelResource):
+    class Meta:
+        queryset = Matches.objects.all()
+        resource_name = 'mymatches'
+        authorization = MyMatchesAuthorization()
+        #authentication = ApiKeyAuthentication()
+        authentication = BasicAuthentication()
 
+    def dehydrate(self, bundle):
+        a_match  = Matches.objects.get(id=int(bundle.data.get("id")))
+        userID   = str(a_match.userID.id)
+        autamaID = str(a_match.autamaID.id)
+        bundle.data['userID'] = userID
+        bundle.data['autamaID'] = autamaID
+
+        return bundle
 
 
 
 '''
-    message = models.TextField()
     timeStamp = models.DateTimeField(auto_now_add=True)
     userID = models.ForeignKey('User', on_delete=models.CASCADE)
     autamaID = models.ForeignKey('AutamaProfiles.AutamaProfile', on_delete=models.CASCADE)
-    sender = models.CharField(max_length=6, choices=SENDER_CHOICES)
-'''
-
-
-
-
-
-
-
-'''
-
-(<django.db.models.fields.AutoField: id>,
- <django.db.models.fields.CharField: password>,
- <django.db.models.fields.DateTimeField: last_login>,
- <django.db.models.fields.BooleanField: is_superuser>,
- <django.db.models.fields.CharField: username>,
- <django.db.models.fields.CharField: first_name>,
- <django.db.models.fields.CharField: last_name>,
- <django.db.models.fields.EmailField: email>,
- <django.db.models.fields.BooleanField: is_staff>,
- <django.db.models.fields.BooleanField: is_active>,
- <django.db.models.fields.DateTimeField: date_joined>,
- <django.db.models.fields.IntegerField: sex>,
- <django.db.models.fields.files.ImageField: image>,
- <django.db.models.fields.TextField: interests1>,
- <django.db.models.fields.TextField: interests2>,
- <django.db.models.fields.TextField: interests3>,
- <django.db.models.fields.TextField: interests4>,
- <django.db.models.fields.TextField: interests5>,
- <django.db.models.fields.TextField: interests6>,
- <django.db.models.fields.IntegerField: currentAutama>)
-
-
 '''
