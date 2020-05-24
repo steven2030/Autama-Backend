@@ -574,12 +574,13 @@ class Chat(LoginRequiredMixin, View):
                                              'message_chain': message_chain, 'is_matched': is_matched})
 
     def post(self, request, pk):
+        message = request.POST.get('message')
+        autama_id = request.POST.get('autama_id')
         user = User.objects.get(pk=request.user.id)
-        autama = AutamaProfile.objects.get(pk=pk)  # Check the validity of Autama id.
-        form = MessageForm(request.POST)
-
-        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[0][1],
-                                            message=form['x'].value())
+        autama = AutamaProfile.objects.get(pk=autama_id)  # Check the validity of Autama id.
+        # form = MessageForm(request.POST)
+        a_message = Messages.objects.create(userID=user, autamaID=autama, sender='User',
+                                            message=message)
         a_message.save()
 
         # Using HAM to get a response from Autama
@@ -594,13 +595,21 @@ class Chat(LoginRequiredMixin, View):
         personality = [trait1, trait2, trait3, trait4, trait5, trait6]
 
         ham = Ham(first_name, last_name, personality)
-        autama_response = ham.converse(user_input=form['x'].value())
+        autama_response = ham.converse(user_input=message)
 
-        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[1][1],
+        a_message = Messages.objects.create(userID=user, autamaID=autama, sender='Autama',
                                             message=autama_response)
         a_message.save()
 
-        return redirect('Chat', pk=pk)
+        data = {
+            'autama': autama_id,
+            'user': request.user.id,
+            'response': autama_response,
+            'time': a_message.timeStamp,
+        }
+
+        return JsonResponse(data)
+        # return redirect('Chat', pk=pk)
 
 
 def testdata(request):

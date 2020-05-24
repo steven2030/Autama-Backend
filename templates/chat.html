@@ -428,7 +428,7 @@
                     <div style="padding: 10px; height: 77px;">
                         <div class="text_input">
 {#                            {{ form }}#}
-                            <textarea name="x" cols="40" rows="10" class="special" required="" id="id_x"></textarea>
+                            <textarea cols="40" rows="10" class="special" id="input_textbox"></textarea>
                         </div>
 
                         <input id="send_button" type="submit" value="Send" class="send_button">
@@ -454,17 +454,51 @@
 
             <script>
                 $("#send_button").click(function() {
+
+                    let msg = document.createElement('div');
+                    let timebox = document.createElement('span');
+                    let contentbox = document.createElement('span');
+
+                    msg.classList.add('cright');
+                    msg.classList.add('cmsg');
+                    contentbox.classList.add('content');
+                    timebox.classList.add('time_stamp');
+                    contentbox.innerHTML = $("#input_textbox").val();
+                    // TODO: Need to add actual timestamp
+                    timebox.textContent = "May 23rd 5pm";
+
+                    msg.appendChild(contentbox);
+                    msg.appendChild(timebox);
+
+                    $(".lite-chatbox").append(msg);
+
                     $.ajax({
-                        url : "/Chat/",
+                        url : "/Chat/" + {{ autama.pk }} + '/',
                         type: "POST",
                         data : { csrfmiddlewaretoken: "{{ csrf_token }}", 'autama_id': {{ autama.pk }}, 'message': 'test',},
                         success: function(data, textStatus, jqXHR)
                         {
-                            console.log("We heard back!")
+                            let msg = document.createElement('div');
+                            let timebox = document.createElement('span');
+                            let contentbox = document.createElement('span');
+
+                            msg.classList.add('cleft');
+                            msg.classList.add('cmsg');
+                            contentbox.classList.add('content');
+                            timebox.classList.add('time_stamp');
+                            contentbox.innerHTML = data.response;
+                            timebox.textContent = convertTime(data.time);
+
+                            msg.appendChild(contentbox);
+                            msg.appendChild(timebox);
+
+                            $(".lite-chatbox").append(msg);
+
+                            console.log(data)
                         },
                         error: function (jqXHR, textStatus, errorThrown)
                         {
-                            console.log("No response")
+                            console.log(errorThrown)
                         }
                     });
                 });
