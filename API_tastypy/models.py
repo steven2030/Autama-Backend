@@ -1,7 +1,7 @@
 from django.db import models
 from tastypie.resources import ModelResource
 from AutamaProfiles.models import AutamaProfile
-from accounts.models import User
+from accounts.models import User, Matches
 from tastypie.authorization import Authorization
 from tastypie.authentication import ApiKeyAuthentication, BasicAuthentication
 from tastypie.models import ApiKey
@@ -43,7 +43,7 @@ class AccountsResource(ModelResource):
         username = bundle.request.headers.get('Username')
         user = User.objects.get(username=username)
         apikey = ApiKey.objects.get(user=user)
-        bundle.data['apikey'] = apikey
+        bundle.data['apikey'] = apikey.key
         return bundle
 
 
@@ -92,6 +92,7 @@ class MessagingResource(ModelResource):
         queryset = Messages.objects.all()
         resource_name = 'messages'
         authorization = MessagingAuthorization()
+        #authentication = ApiKeyAuthentication()
         authentication = BasicAuthentication()
         include_resource_uri = False
         fields = ['userID', 'autamaID', 'message', 'sender', 'timeStamp'] # Seems like atleast one of the fields in the post must be mentioned here to have them included in post response.
@@ -142,6 +143,8 @@ class MessagingResource(ModelResource):
         bundle.data['message']   = message
 
         return bundle
+
+
 
 
 
