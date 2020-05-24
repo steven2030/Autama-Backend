@@ -279,7 +279,7 @@
         https://stackoverflow.com/questions/155188/trigger-a-button-click-with-javascript-on-the-enter-key-in-a-text-box
         */
         $(document).ready(function() {
-            $('form').keydown(function() {
+            $('#input_textbox').keydown(function() {
                 if (event.keyCode == 13) {
                     document.getElementById("send_button").click();
                     return false;
@@ -466,19 +466,29 @@
                     timebox.classList.add('time_stamp');
                     contentbox.innerHTML = $("#input_textbox").val();
                     // TODO: Need to add actual timestamp
-                    timebox.textContent = "May 23rd 5pm";
+                    timebox.textContent = convertTime(moment.utc().valueOf());
 
                     msg.appendChild(contentbox);
                     msg.appendChild(timebox);
 
                     $(".lite-chatbox").append(msg);
+                    $("#input_textbox").val("");
+
+                    let img = document.createElement('img');
+                    img.id = 'type_image';
+                    img.classList.add('cleft');
+                    img.src = '../../Images/Images/type.gif';
+
+                    $(".lite-chatbox").append(img);
+                    $('.lite-chatbox').animate({scrollTop: $('.lite-chatbox')[0].scrollHeight}, 0);
 
                     $.ajax({
                         url : "/Chat/" + {{ autama.pk }} + '/',
                         type: "POST",
-                        data : { csrfmiddlewaretoken: "{{ csrf_token }}", 'autama_id': {{ autama.pk }}, 'message': 'test',},
+                        data : { csrfmiddlewaretoken: "{{ csrf_token }}", 'autama_id': {{ autama.pk }}, 'message': $("#input_textbox").val(),},
                         success: function(data, textStatus, jqXHR)
                         {
+                            $("#type_image").remove();
                             let msg = document.createElement('div');
                             let timebox = document.createElement('span');
                             let contentbox = document.createElement('span');
@@ -495,7 +505,7 @@
 
                             $(".lite-chatbox").append(msg);
 
-                            console.log(data)
+                            $('.lite-chatbox').animate({scrollTop: $('.lite-chatbox')[0].scrollHeight}, 0);
                         },
                         error: function (jqXHR, textStatus, errorThrown)
                         {
