@@ -163,6 +163,8 @@ class MyMatchesResource(ModelResource):
         autamaID = str(a_match.autamaID.id)
         bundle.data['userID'] = userID
         bundle.data['autamaID'] = autamaID
+        bundle.data['autamaFirstName'] = a_match.autamaID.first
+        bundle.data['autamaLastName'] = a_match.autamaID.last
 
         return bundle
 
