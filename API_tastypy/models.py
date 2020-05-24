@@ -13,13 +13,23 @@ from accounts.models import Messages
 from Nucleus.ham import Ham
 
 
-# Create your models here.
-class AutamaResource(ModelResource):
+class UnmatchedAutamaAuthorization(Authorization):
+    def read_list(self, object_list, bundle):
+        matched_autama = Matches.objects.filter(userID=bundle.request.user)
+        matched_autama = matched_autama.values('autamaID').distinct()
+        unmatched_autama = AutamaProfile.objects.exclude(id__in=matched_autama)
+
+        return unmatched_autama
+
+class UnmatchedAutamaResource(ModelResource):
     class Meta:
         queryset = AutamaProfile.objects.all()
-        resource_name = 'autamas'
+        resource_name = 'unmatchedautama'
         fields = ['id', 'creator', 'first', 'last', 'interest1', 'interest2', 'interest3', 'interest4', 'interest5',
                   'interest6']
+
+        authentication = BasicAuthentication()
+        authorization = UnmatchedAutamaAuthorization()
 
 
 class AccountAuthorization(Authorization):
@@ -53,8 +63,6 @@ class RegistrationResource(ModelResource):
         allowed_methods = ['post']
         object_class = User
         include_resource_uri = False
-        #fields = ['password'] # Seems like atleast one of the fields in the post must be mentioned here to have them included in post response.
-        #always_return_data = True # Seems to need this get posted data returned in response.
 
     def obj_create(self, bundle, request=None, **kwargs):
         try:
@@ -69,15 +77,6 @@ class RegistrationResource(ModelResource):
         except IntegrityError:
             raise BadRequest('That username already exists')
         return bundle
-
-    ''' # can use this to make null fields sent that I don't want returned in the post response.
-    def dehydrate(self, bundle):
-        if bundle.request.method == 'POST':
-            bundle.data['apikey'] = 'nope'
-            bundle.data['password'] = 'also nope'
-
-        return bundle
-    '''
 
 class MessagingAuthorization(Authorization):
     def read_list(self, object_list, bundle):
@@ -167,11 +166,3 @@ class MyMatchesResource(ModelResource):
         bundle.data['autamaLastName'] = a_match.autamaID.last
 
         return bundle
-
-
-
-'''
-    timeStamp = models.DateTimeField(auto_now_add=True)
-    userID = models.ForeignKey('User', on_delete=models.CASCADE)
-    autamaID = models.ForeignKey('AutamaProfiles.AutamaProfile', on_delete=models.CASCADE)
-'''
