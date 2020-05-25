@@ -8,39 +8,39 @@
 
 {% block content %}
 <style>
-    body {
-	margin-top: 0px;  <!-- this was 50 -->
-        padding-left: 3%;    <!-- this was 30px-->
-	margin-bottom: 5%;   <!-- this was 50px-->
+    body {               /*in this page, body includes nav bar => no left or top pad*/
+	margin-top: 0%;  /*<!-- this was 50px -->*/
+        padding-left: 0%;   /* <!-- this was 30px-->*/
+	margin-bottom: 5%;   /*<!-- this was 50px--> this part places margin only at body bottom*/
     }
 
     .info-container {
         text-align: left;
-        margin-right: 0px;
-	margin-left: 30px;  <!--this was 0px -->
-        padding-left: 30px;  <!--this was 0px -->
-        padding-right: 0px;
+        margin-right: 0%; /*adjusts the row as one object?*/
+	margin-left: 2%; /* <!--this was 0px --> gives row objects total 5%*/
+        padding-left: 0%; /* <!--this was 0px-->*/
+        padding-right: 0%;
 	padding-top: 3%;
-	padding-bottom: 3%;  <!-- added this -->
+	padding-bottom: 3%; /* <!-- added this -->*/
     }
 
     .info-container div {
         display: inline-block;
         text-align: left;
-	padding-left: 3%;
+	padding-left: 3%; /* adjusts both words and image objects*/
     }
 
     .photo img {
-        max-height: 197px;
-        max-width: 343px;
-        object-fit: cover;
+        max-height: 200px; /*was 200px, then 15% -- should maybe be 175x350 for a 1:2 ratio*/
+        max-width: 350px; /*was 350px then 30%*/
+        object-fit: contain; /*was cover*/
     }
 
     .feedback-container {
         padding-top: 3%;
         display: none;
-	padding-left: 5%; <!-- this indents the feedback box-->
-	<!-- added this line -->
+	padding-left: 5%; /*<!-- this indents the popup feedback box-->*/
+	/*<!-- added this line -->*/
     }
 
 </style>
@@ -57,14 +57,35 @@
 
 
 <body>
+    <!-- ABOUT US -->
+    <div class="info-container">
+        <!--
+	<div class="photo">
+            <img src="/Images/Team/teamphoto.png"/>
+        </div>
+	-->
+        <div class="text">
+            <h1> Our Mission </h1>
+	    <p>    </p>
+	    <p> CHANGING THE WORLD - ONE AUTAMA AT A TIME </p>
+	    <p> WITH OPEN SOURCE BATTLE - A.I. MURDER IS NO CRIME </p>
+	    <p> GOOGLE ALEXA CORTANA SIRI HOUND </p>
+	    <p> A CHAMPION WILL RISE FROM THE DIGITAL UNDERGROUND </p>
+	    <p> LET'S CHANGE THE WORLD FOR BETTER THROUGH AUTAMA - YOU, AND I </p>
+	    <p> IF WE ALL JOIN FORCES - THE LIMIT IS THE SKY </p>
+        </div>
+    	<br>
+    </div>
+
+
     <!-- Team -->
     <div class="info-container">
         <div class="photo">
             <img src="/Images/Team/teamphoto.png"/>
         </div>
         <div class="text">
-            <h1>Meet the team</h1>
-            <p>Let knowledge serve the city.</p>
+            <h1>Meet the Autama Team</h1>
+            <p></p>
         </div>
         <br>
     </div>
