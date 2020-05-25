@@ -251,6 +251,23 @@
             vertical-align: middle;
             border-radius: 10vw;
         }
+        
+        .dfont{
+		font-family: Helvetica;
+		font-size: 13px;
+		font-weight: normal;
+		font-stretch: normal;
+		font-style: normal;
+		line-height: 1.02;
+		letter-spacing: normal;
+		}
+
+	.three-dots {
+		width: 20px;
+		height: 30px;
+		background-image: radial-gradient(circle, white 4px, transparent 3px);
+		background-size: 100% 33.33%;
+	}
     </style>
 {% endblock %}
 
@@ -331,47 +348,42 @@
     <body>
 
         <nav class="nav navbar-inverse navbar-default navbar-fixed-top" role="navgation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
+          <ul class="nav nav-tabs">
+		{% if request.user.is_authenticated  %}
+		<li class="nav-item" style="font-size: 25px; margin-left: 15px"><a class="nav-link" href="{{ last_page }}"><b style="color: white;"><</b></a></li>
+		{% endif %}
+		<li class="dropdown nav-item" style="float: right; margin-right: 20px;">
+			<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" > 
+				<p class="three-dots"></p>
+			</a>
+			<ul class="dropdown-menu">
+				{% if is_matched %}
+				<li><a class="dfont" onclick="">Share</a></li>
 
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav nav">
-                        {% if request.user.is_authenticated  %}
-                            <li style="font-size: 25px;"><a href="{{ last_page }}"><b><</b></a></li>
-                        {% endif %}
-                    </ul>
+				<li><a class="dfont" href="{% url 'UnMatch' pk=autama.pk %}">
+				{% csrf_token %}
+					Unmatch
+				</a></li>
 
-                    <ul class="nav navbar-nav navbar-right">
-                        {% if is_matched %}
-                            <li><a onclick="">Share</a></li>
-                        
-                            <li><a href="{% url 'UnMatch' pk=autama.pk %}">
-                                {% csrf_token %}
-                                Unmatch
-                            </a></li>
-                        
-                            <li><a onclick="showReport()">Report</a></li>
-                        {% else %}
-                            <li><a id="nav_match" href="{% url 'Match' pk=autama.pk %}">
-                                {% csrf_token %}
-                                Match
-                            </a></li>
-                        {% endif %}
-                    </ul>
-                </div>
+				<li><a class="dfont" onclick="showReport()">Report</a></li>
+				{% else %}
+				<li><a id="nav_match" href="{% url 'Match' pk=autama.pk %}">
+				{% csrf_token %}
+					Match
+	    			</a></li>
+				{% endif %}
+			</ul>
+		</li>
+
+				
+			</ul>
 
                 <!--<div>
                     <a href="/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
                         <img  style="position: relative; " class="to" alt="aaa" src="{{ autama.picture.url }}">
                     </a>
                 </div>-->
-            </div>
+
         </nav>
 
         <!--create some space between nav and chat box-->
