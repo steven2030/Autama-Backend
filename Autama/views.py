@@ -24,8 +24,6 @@ from django.utils import timezone
 from Nucleus.ham import Ham
 from django.core.mail import send_mail, BadHeaderError
 
-import Autama.settings
-
 
 def claim_autama(user_pk, autama_pk):
     autama = AutamaProfile.objects.get(pk=autama_pk)  # Validation needed here
@@ -623,19 +621,3 @@ def testdata(request):
         except IntegrityError as e:
             if 'UNIQUE constraint' in str(e.args):
                 return HttpResponse("Already Added")
-
-# email settings
-email_conf = Autama.settings.email_config['DEFAULT']
-EMAIL_USE_TLS = email_conf['E_USE_TLS']
-EMAIL_HOST = email_conf['E_HOST']
-EMAIL_PORT = email_conf['E_PORT']
-EMAIL_HOST_USER = email_conf['E_HOST_USERNAME']
-EMAIL_HOST_PASSWORD = email_conf['E_HOST_PASSWORD']
-EMAIL_RECIPIENTS = email_conf['E_TEAM_RECIPIENT_ADDRESSES']
-
-
-def send_message(subj, msg):
-    send_mail(subj, msg, EMAIL_HOST_USER, EMAIL_RECIPIENTS, fail_silently=False)
-
-# add code here.  To email your team, call
-# send_message('some subject', 'some message')
