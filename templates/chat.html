@@ -482,6 +482,15 @@
                         img.src = '../../Images/Images/type.gif';
 
                         $(".lite-chatbox").append(img);
+                    } else {
+                        $("#type_image").remove();
+                        // Typing image - This is removed upon successful ajax return
+                        let img = document.createElement('img');
+                        img.id = 'type_image';
+                        img.classList.add('cleft');
+                        img.src = '../../Images/Images/type.gif';
+
+                        $(".lite-chatbox").append(img);
                     }
                     $('.lite-chatbox').animate({scrollTop: $('.lite-chatbox')[0].scrollHeight}, 0);
                     $.ajax({
