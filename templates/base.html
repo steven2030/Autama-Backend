@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <ftehead>
     <meta charset="UTF-8">
     <title>Autama</title>
@@ -9,61 +10,66 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <style media="screen">
+    /*<!-- THIS STUFF INCLUDES CSS .bottom .line etc -->*/
 
-             .bottom{
-                padding: 0rem 0;
-                border-bottom-left-radius: 5rem;
-                text-align: center;
-                background-color: rgb(92,67,197);
-            }
+        .bottom{
+            padding: 0rem 0;
+            border-bottom-left-radius: 5rem;
+            text-align: center;
+    	    background-color: #6041ce;   /*<!-- was rgb(92,67,197) = hex#5c43c5-->*/
+        }
 
-            .toplab{
-                background-color: #ff4e50;
-                text-align: center;
-                height: 46px;
-                width: 100%;
-            }
+        .toplab{
+            background-color: #ff4e50;
+            text-align: center;
+            height: 46px;
+            width: 100%;
+        }
 
-            .Autama-text-logo{
-                width: 105px;
-                height: 36px;
-                object-fit: contain;
+        .Autama-text-logo{
+            width: 105px;
+            height: 36px;
+            object-fit: contain;
+        }
 
-            }
-            .line{
-                height: 1rem;
-                background-color: rgb(92,67,197);
-            }
-            .line .bg{
-                width: 100%;
-                height: 100%;
-                background-color: #fff;
-                border-top-right-radius: 10rem;
-            }
-            .nav-tabs{
-                border: none;
-            }
-            .bitmap{
-                width: 30.2px;
-                height: 30px;
+        .line{
+            height: 1rem;
+    	    background-color: #6041ce;   /* <!--rgb(92,67,197)-->*/
+        }
 
-            }
+        .line .bg{
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            border-top-right-radius: 10rem;
+        }
 
-            .logo-a{
-                width: 45px;
-                height: 30px;
-            }
-        
-            .middle {
-                float: none;
-                display: inline;
-                vertical-align: center;
-            }
+        .nav-tabs{
+            border: none;
+        }
 
-    </style>
+        .bitmap{
+            width: 30.2px;
+            height: 30px;
+        }
 
-    <!-- Tutorial: creating a simple cookie consent pop-up: https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
-    <style>
+        .logo-a{
+            width: 45px;
+            height: 30px;
+        }
+    
+        .middle {
+            float: none;
+            display: inline;
+            vertical-align: center;
+        }
+
+    </style> <!-- end of style media = 'screen' -->
+
+
+    <!-- Tutorial: creating a simple cookie consent pop-up: 
+    https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
+    <style> /*MORE CSS STUFF*/
         .cookie-banner {
             position: fixed;
             bottom: 40px;
@@ -87,56 +93,92 @@
              border-radius: 2px;
              cursor: pointer;
          }
+
     </style>
+
+
+    <!-- exactly what is this csstyle block for?-->
     {% block csstyle %}
     {%  endblock %}
 
 </ftehead>
+
+
+
+<!-- added to show number of 'new' matches a user has-->
 <script>
-function matchNotifications() {
-    var navbar_num_matches = {{ num_matches }}
-    document.getElementById("myText").innerHTML = navbar_num_matches;
-}
+    function matchNotifications() {
+        var navbar_num_matches = {{ num_matches }}
+        document.getElementById("myText").innerHTML = navbar_num_matches;
+    }
 </script>
+
+
+
+<!-- body start here--> <!-- HTML includes li/ul stuff-->
 <body onload="matchNotifications()">
     <div>
+	<!-- top half of nav bar -->
         <div class="toplab">
             <img class="Autama-text-logo" src="/Images/images/autama-text-logo.png">
         </div>
+
+	<!-- container has lower half of nav bar, and main? -->
         <div id="container">
-			<div class="bottom">
-                    <ul class="nav nav-tabs">
-                            <li class="nav-item"><a href="/accounts/profile/"> <img class="bitmap" src="/Images/images/swipe-icon.png" style="margin-left: 25px;"> </a></li>
-                            <li class="dropdown nav-item middle" style="margin-left: 41%;">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" > <img class="logo-a" src="/Images/images/not-selected-autama-logo.png"> <b class="caret" style="color: goldenrod"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/FindMatches/">FindMatches</a></li>
-                                    <li><a href="/MyAutamas/">MyAutamas</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item" style="float: right"><a class="nav-link" href="/MyMatches/" style="color: goldenrod"> <img class="bitmap" src="/Images/images/hamburger-icon.png"> (<span id="myText"></span>) </a></li>
-                    </ul>
-			</div>
-			<div class="main">
-				<div class="line">
-					<div class="bg">
-					</div>
-				</div>
+	    <!-- bottom half of nav bar-->
+	    <div class="bottom">
+                <ul class="nav nav-tabs">
+		    <!-- left nav button: should go to Find Matches -->
+                    <!--<li class="nav-item"><a href="/accounts/profile/"> 
+		    <img class="bitmap" src="/Images/images/swipe-icon.png" style="margin-left: 25px;"> </a></li>-->
+                    <li class="nav-item">
+		        <a href="/FindMatches/"> 
+			    <img class="bitmap" src="/Images/images/swipe-icon.png" style="margin-left: 25px;"> 
+			</a>
+		    </li> <!-- end of left nav button -->
+		    <!-- middle nav toggle -->
+                    <li class="dropdown nav-item middle" style="margin-left: 41%;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" > 
+			    <img class="logo-a" src="/Images/images/not-selected-autama-logo.png"> 
+			<b class="caret" style="color: hotpink"></b>
+			</a>
+			<!-- toggle default page Matched, secondary page Created -->
+                        <ul class="dropdown-menu">
+                            <li><a href="/MyMatches/"> Matched Autamas (<span id="myText"></span>) </a></li>
+                            <li><a href="/MyAutamas/"> Created Autamas </a></li>
+                        </ul>
+		    </li> <!-- end of middlee nav button -->
+		    <!-- right nav button: hamburger goes to profile, about us, logout-->
+                    <li class="nav-item" style="float: right">
+			<!-- <a class="nav-link" href="/accounts/profile/" style="color: hotpink"> 
+			    <img class="bitmap" src="/Images/images/hhamburger-icon.png"> 
+			</a> -->
+			<a class="nav-link" href="/accounts/profile/" style="color: hotpink"> 
+			    <img class="bitmap" src="/Images/images/hamburger-icon.png"> 
+			</a>
+		    </li> <!-- end of right nav button -->
+		</ul> <!-- end of nav-tabs class -->
+	    </div> <!-- end of bottom half nav bar -->
 
-			</div>
-		</div>
+	    <!-- what is start of main -->
+	    <div class="main">
+	        <div class="line">
+		    <div class="bg"></div>
+		</div> <!-- end of line and bg -->
+	    </div> <!-- end of main -->
+	</div> <!-- end of container with lower half of nav bar and main -->
 
-    </div>
+    </div> <!-- end of div containing pieces of nav bar -->
 
 
-    <!-- Tutorial: creating a simple cookie consent pop-up: https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
+    <!-- Tutorial: creating a simple cookie consent pop-up: 
+    https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
     <div class="cookie-banner" style="display: none">
         <p>By using our website, you agree to our
             <a href="http://127.0.0.1:8000/PrivacyPolicy/">privacy policy</a>
         </p>
         <button class="close_banner">&times;</button>
     </div>
-
 
     <script>
         if (localStorage.getItem('privacyCookieSeen') !== 'accepted') {
@@ -149,10 +191,15 @@ function matchNotifications() {
         })
     </script>
 
+    <!-- exactly what is this label block content -->
     {% block content %}
     {% endblock %}
 </body>
 
+
+<!-- exactly what is this block js connected to -->
+<!-- JS stuff included inline with scripts -->
 {% block js %}
 {% endblock %}
+
 </html>
