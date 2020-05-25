@@ -61,7 +61,7 @@
         }
         .pic {
             position: absolute;
-            top: 48px;
+            top: 50px;
             left: 8px;
             width: 361px;
             height: 361px;
@@ -69,6 +69,8 @@
         }
         .topcard {
             position: absolute;
+            width: 374px;
+            height: 188px;
             z-index: 1;
             pointer-events: none;
         }
@@ -120,8 +122,53 @@
             color: #666666;
             z-index: 2;
         }
+        .likebtn {
+            position: absolute;
+            top: 560px;
+            left: 263px;
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
+            z-index: 2;
+        }
+        .dislikebtn {
+            position: absolute;
+            top: 560px;
+            left: 33px;
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
+            z-index: 2;
+        }
+        .chatbtn {
+            position: absolute;
+            top: 560px;
+            left: 148px;
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
+            z-index: 2;
+        }
+        .followericon {
+            position: absolute;
+            top: 415px;
+            left: 230px;
+            z-index: 2;
+            width: 36px;
+            height: 20px;
+            object-fit: contain;
+        }
         .followers {
-
+            position: absolute;
+            top: 412px;
+            left: 270px;
+            z-index: 2;
+            width: 64px;
+            height: 25px;
+            font-family: Helvetica;
+            font-size: 18px;
+            line-height: 1.36;
+            color: #6041ce;
         }
         .btmcard {
             position: absolute;
@@ -153,6 +200,9 @@
     <script>
         /* Modified From original code below */
         /* LikeCarousel (c) 2019 Simone P.M. github.com/simonepm - Licensed MIT */
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
 
         class Carousel {
 
@@ -393,7 +443,21 @@
                 let creator = document.createElement('p');
                 let abouttitle = document.createElement('p');
                 let about = document.createElement('p');
+                let followericon = document.createElement('img');
+                let followers = document.createElement('p');
+                let dislike = document.createElement('img');
+                let chat = document.createElement('img');
+                let like = document.createElement('img');
 
+                dislike.classList.add('dislikebtn');
+                dislike.src = "../Images/Images/dislike-button.png";
+                chat.classList.add('chatbtn');
+                chat.src = "../Images/Images/chat-button.png";
+                like.classList.add('likebtn');
+                like.src = "../Images/Images/like-button.png";
+                followers.classList.add('followers');
+                followericon.classList.add('followericon');
+                followericon.src = "../Images/Images/follower.png";
                 about.classList.add('about');
                 abouttitle.classList.add('abouttitle');
                 creator.classList.add('creator');
@@ -418,20 +482,21 @@
                 card.appendChild(creator);
                 card.appendChild(abouttitle);
                 card.appendChild(about);
+                card.appendChild(followericon);
+                card.appendChild(followers);
+                card.appendChild(dislike);
+                card.appendChild(like);
+                card.appendChild(chat);
 
                 abouttitle.innerText = 'About';
                 // Get Random Background Image
                 $.get("?AID=" + aid, function(data) {
                     name.innerText = data.first;
                     creator.innerText = 'Creator: ' + data.creator;
-                    //p1.innerText = data.first + " " + data.last;
-                    //p2.innerText = "Followers: " + data.matches;
-                    //p3.innerText = "Creator: " + data.creator;
+                    followers.innerText = numberWithCommas(data.matches);
                     about.innerText = data.interest1 + " "
                     + data.interest2 + " " + data.interest3;
                     pic.src = (data.picture);
-                    /*card.style.backgroundImage =
-                        "url(" + data.picture + ")";*/
                     card.autamaID = data.autama_id;
                     if (data.redirect) {
                         window.location.replace(data.redirect);
