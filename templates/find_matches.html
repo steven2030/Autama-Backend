@@ -387,7 +387,10 @@
                             { csrfmiddlewaretoken: "{{ csrf_token }}", 'AID': this.topCard.autamaID, 'match': dirX},
                             // This is the return function of submitting a match
                             function(data, status) {
-
+                            if (data.redirect) {
+                                window.location.replace(data.redirect);
+                                console.log("redirect failed");
+                            }
                         });
 
                         // Attempt to handle multiple requests for same card
@@ -491,6 +494,9 @@
                 abouttitle.innerText = 'About';
                 // Get Random Background Image
                 $.get("?AID=" + aid, function(data) {
+                    if (data.redirect) {
+                        window.location.replace(data.redirect);
+                    }
                     name.innerText = data.first;
                     creator.innerText = 'Creator: ' + data.creator;
                     followers.innerText = numberWithCommas(data.matches);
@@ -498,9 +504,6 @@
                     + data.interest2 + " " + data.interest3;
                     pic.src = (data.picture);
                     card.autamaID = data.autama_id;
-                    if (data.redirect) {
-                        window.location.replace(data.redirect);
-                    }
                 });
 
                 if (this.board.firstChild) {

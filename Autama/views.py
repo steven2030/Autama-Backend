@@ -304,6 +304,12 @@ class FindMatches(LoginRequiredMixin, View):
         ret = False
         aid = data.get('AID')
 
+        # Test to see if past current Autama Limit
+        ag = AutamaGeneral.objects.get(pk=1)
+        if user.currentAutama > ag.currentCount:
+            print(str(user.currentAutama) + " " + str(ag.currentCount))
+            return redirect('SeenAll')
+
         # Handle matching / unmatching and follower update
         if data.get('match') == '1':
             ret = match(request.user.id, aid)
@@ -318,11 +324,6 @@ class FindMatches(LoginRequiredMixin, View):
                 autama.nummatches -= 1
                 autama.save()'''
 
-
-        # Test to see if past current Autama Limit
-        ag = AutamaGeneral.objects.get(pk=1)
-        if user.currentAutama > ag.currentCount:
-            return redirect('SeenAll')
 
         if ret:
             return HttpResponse(status=200)
