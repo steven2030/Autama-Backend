@@ -474,14 +474,15 @@
 
                     $(".lite-chatbox").append(msg);
                     $("#input_textbox").val("");
+                    if (!$("#type_image")[0]) {
+                        // Typing image - This is removed upon successful ajax return
+                        let img = document.createElement('img');
+                        img.id = 'type_image';
+                        img.classList.add('cleft');
+                        img.src = '../../Images/Images/type.gif';
 
-                    // Typing image - This is removed upon successful ajax return
-                    let img = document.createElement('img');
-                    img.id = 'type_image';
-                    img.classList.add('cleft');
-                    img.src = '../../Images/Images/type.gif';
-
-                    $(".lite-chatbox").append(img);
+                        $(".lite-chatbox").append(img);
+                    }
                     $('.lite-chatbox').animate({scrollTop: $('.lite-chatbox')[0].scrollHeight}, 0);
                     $.ajax({
                         url : "/Chat/" + {{ autama.pk }} + '/',
