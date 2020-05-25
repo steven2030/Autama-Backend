@@ -268,6 +268,42 @@
 		background-image: radial-gradient(circle, white 4px, transparent 3px);
 		background-size: 100% 33.33%;
 	}
+	 
+	.line{
+                height: 5rem;
+                background-color: rgb(92,67,197);
+            }
+
+	.line .bg{
+		width: 100%;
+		height: 100%;
+		background-color: #fff;
+		border-top-right-radius: 5rem;
+	}
+
+	.bottom{
+		border-bottom-left-radius: 5rem;
+		text-align: center;
+		background-color: rgb(92,67,197);
+	}
+
+	.toplab{
+		background-color: #ff4e50;
+		text-align: center;
+		height: 46px;
+		width: 100%;
+    	}
+
+	.Autama-text-logo{
+		width: 105px;
+		height: 36px;
+		object-fit: contain;
+
+	}
+        .nav-tabs{
+            border: none;
+        }
+		
     </style>
 {% endblock %}
 
@@ -346,37 +382,47 @@
 
 {% block content %}
     <body>
+	<div>
+            <div class="toplab">
+                <img class="Autama-text-logo" src="/Images/images/autama-text-logo.png">
+            </div>
+            <div id="container">
+                <div class="bottom">
+                        <ul class="nav nav-tabs">
+                            {% if request.user.is_authenticated  %}
+                            <li style="font-size: 25px;"><a class="nav-link" href="{{ last_page }}"><b style="color:white; margin-left:15px;"><</b></a></li>
+                            {% endif %}
+                            <li class="dropdown nav-item" style="float: right; margin-right: 20px;">
+								<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" > 
+									<p class="three-dots"></p>
+								</a>
+								<ul class="dropdown-menu">	
+                                    {% if is_matched %}								
+									<li><a onclick="">Share</a></li>
+                                    <li><a href="{% url 'UnMatch' pk=autama.pk %}">
+                                       {% csrf_token %}
+                                        Unmatch
+                                    </a></li>
+                                    <li><a onclick="showReport()">Report</a></li>
+                                    {% else %}
+                                    <li><a id="nav_match" href="{% url 'Match' pk=autama.pk %}">
+                                    {% csrf_token %}
+                                        Match
+                                        </a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        </ul>
+                </div>
+                <div class="main">
+                    <div class="line">
+                        <div class="bg">
+                        </div>
+                    </div>
 
-        <nav class="nav navbar-inverse navbar-default navbar-fixed-top" role="navgation">
-          <ul class="nav nav-tabs">
-		{% if request.user.is_authenticated  %}
-		<li class="nav-item" style="font-size: 25px; margin-left: 15px"><a class="nav-link" href="{{ last_page }}"><b style="color: white;"><</b></a></li>
-		{% endif %}
-		<li class="dropdown nav-item" style="float: right; margin-right: 20px;">
-			<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" > 
-				<p class="three-dots"></p>
-			</a>
-			<ul class="dropdown-menu">
-				{% if is_matched %}
-				<li><a class="dfont" onclick="">Share</a></li>
-
-				<li><a class="dfont" href="{% url 'UnMatch' pk=autama.pk %}">
-				{% csrf_token %}
-					Unmatch
-				</a></li>
-
-				<li><a class="dfont" onclick="showReport()">Report</a></li>
-				{% else %}
-				<li><a id="nav_match" href="{% url 'Match' pk=autama.pk %}">
-				{% csrf_token %}
-					Match
-	    			</a></li>
-				{% endif %}
-			</ul>
-		</li>
-
-				
-			</ul>
+                </div>
+            </div>
+        </div>
 
                 <!--<div>
                     <a href="/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
@@ -384,10 +430,10 @@
                     </a>
                 </div>-->
 
-        </nav>
+
 
         <!--create some space between nav and chat box-->
-        <section><div style="margin-top: 70px;"></div></section>
+        <section><div style="margin-top: 10px;"></div></section>
 
         <section class="profile_view">
             <div class="profile_box">
