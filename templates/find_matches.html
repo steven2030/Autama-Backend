@@ -389,14 +389,13 @@
                             function(data, status) {
                             if (data.redirect) {
                                 window.location.replace(data.redirect);
-                                console.log("redirect failed");
                             }
                         });
 
                         // Attempt to handle multiple requests for same card
-                        if (this.topCard.autamaID >= this.currAutama) {
-                            this.currAutama = this.topCard.autamaID + 1;
-                        }
+                        //if (this.topCard.autamaID >= this.currAutama) {
+                            //this.currAutama = this.topCard.autamaID + 1;
+                        //}
                         // wait transition end
                         setTimeout(() => {
                             // remove swiped card
@@ -463,6 +462,7 @@
                 followericon.src = "../Images/Images/follower.png";
                 about.classList.add('about');
                 abouttitle.classList.add('abouttitle');
+                abouttitle.innerText = 'About';
                 creator.classList.add('creator');
                 name.classList.add('name');
                 topcard.classList.add('topcard');
@@ -491,7 +491,16 @@
                 card.appendChild(like);
                 card.appendChild(chat);
 
-                abouttitle.innerText = 'About';
+                dislike.addEventListener("click", function() {
+                    console.log("dislike");
+                });
+                like.addEventListener("click", function() {
+                    console.log("like");
+                });
+                chat.addEventListener("click", function() {
+                    console.log("chat");
+                });
+
                 // Get Random Background Image
                 $.get("?AID=" + aid, function(data) {
                     if (data.redirect) {
@@ -500,8 +509,7 @@
                     name.innerText = data.first;
                     creator.innerText = 'Creator: ' + data.creator;
                     followers.innerText = numberWithCommas(data.matches);
-                    about.innerText = data.interest1 + " "
-                    + data.interest2 + " " + data.interest3;
+                    about.innerText = data.interest1 + " " + data.interest2 + " " + data.interest3;
                     pic.src = (data.picture);
                     card.autamaID = data.autama_id;
                 });

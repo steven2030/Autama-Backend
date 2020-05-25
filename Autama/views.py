@@ -250,18 +250,22 @@ class FindMatches(LoginRequiredMixin, View):
         # a_id =  0 get current autama. This happens upon first page load
         # if a_id = 1 get next autama.  This happens once upon page load and then every swipe.
         if a_id == "0":
-            if autama_id_exist(user.currentAutama):
+            if autama_id_exist(user.currentAutama) and not autama_is_matched(request.user.id, a_id):
                 autama = autama_get_profile(user.currentAutama)
             # id doesn't exist
             else:
-                user.currentAutama = autama_id_next(user.currentAutama)
-                user.nextAutama = autama_id_next(user.currentAutama)
-                user.save()
-                if user.currentAutama > ag.currentCount:
-                    data = {
-                        'redirect': '/SeenAll/',
-                    }
-                    return JsonResponse(data)
+                while True:
+                    user.currentAutama = autama_id_next(user.currentAutama)
+                    user.nextAutama = autama_id_next(user.currentAutama)
+                    user.save()
+                    if user.currentAutama > ag.currentCount:
+                        data = {
+                            'redirect': '/SeenAll/',
+                        }
+                        return JsonResponse(data)
+                    if autama_id_exist(user.currentAutama) and not autama_is_matched(request.user.id, a_id):
+                        autama = autama_get_profile(user.currentAutama)
+                        break
 
         # return next id
         # if a_id = 1 get next autama.  This happens once upon page load and then every swipe.
