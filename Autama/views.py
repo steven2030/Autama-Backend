@@ -24,6 +24,8 @@ from django.utils import timezone
 from Nucleus.ham import Ham
 from django.core.mail import send_mail, BadHeaderError
 
+import Autama.settings
+
 
 def claim_autama(user_pk, autama_pk):
     autama = AutamaProfile.objects.get(pk=autama_pk)  # Validation needed here
@@ -622,19 +624,18 @@ def testdata(request):
             if 'UNIQUE constraint' in str(e.args):
                 return HttpResponse("Already Added")
 
-# from https://docs.djangoproject.com/en/3.0/topics/email/
-# send_mail('Subject', 'Message', 'from@example.com', ['john@example.com', jane@example.com'],)
-def send_mail(request):
-    user = User.objects.get(pk=request.user.id)
-    last_page = user.last_page
-    subject = request.POST.get('subject', '')
-    message = request.POST.get('message', '')
-    from_email = request.post.get('from_email', '')
-    if subject and message and from_email:
-        try:
-            send_mail(subject, message, from_email, ['autamafeedback@gmail.com['])
-        except BadHeaderError:
-            return HttpResponse('Invalid header found.')
-        return HttpResponse(last_page)
-    else:
-        return HttpResponse('Make sure all fields are entered and valid.')
+# email settings
+email_conf = Autama.settings.email_config['DEFAULT']
+EMAIL_USE_TLS = email_conf['E_USE_TLS']
+EMAIL_HOST = email_conf['E_HOST']
+EMAIL_PORT = email_conf['E_PORT']
+EMAIL_HOST_USER = email_conf['E_HOST_USERNAME']
+EMAIL_HOST_PASSWORD = email_conf['E_HOST_PASSWORD']
+EMAIL_RECIPIENTS = email_conf['E_TEAM_RECIPIENT_ADDRESSES']
+
+
+def send_message(subj, msg):
+    send_mail(subj, msg, EMAIL_HOST_USER, EMAIL_RECIPIENTS, fail_silently=False)
+
+# add code here.  To email your team, call
+# send_message('some subject', 'some message')

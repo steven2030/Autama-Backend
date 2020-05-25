@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 import os
+import configparser  # for email settings
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -148,3 +149,9 @@ LOGOUT_REDIRECT_URL = '/login/'
 
 # User Model
 AUTH_USER_MODEL = 'accounts.User'
+
+# Django feedback email
+email_config = configparser.ConfigParser()
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+CONFIG_FILE = '../email.cfg'
+email_config.read(CONFIG_FILE)

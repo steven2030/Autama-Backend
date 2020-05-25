@@ -315,6 +315,15 @@
         function match_with(){
             document.getElementById("nav_match").click();
         }
+
+        function share_popup() {
+
+        }
+
+        /* https://www.w3schools.com/howto/howto_js_copy_clipboard.asp */
+        function copy_text() {
+
+        }
     </script>
 {% endblock %}
 
@@ -447,9 +456,13 @@
             </div>
 
             <div id="additional-feedback" title="Feedback">
-                <form id="feedback-form" action="mailto:autamafeedback@gmail.com" method="post" enctype="text/plain">
+                <form id="feedback-form" method="POST" enctype="text/plain">
                     <textarea rows="5" cols="30">Enter feedback here...</textarea>
                 </form>
+            </div>
+
+            <div id="share-popup" title="Share this Autama with others!">
+
             </div>
 
             <script>
@@ -595,6 +608,19 @@
                         }
                     });
 
+                    $("#share-popup").dialog({
+                        resizable: false,
+                        height: "auto",
+                        autoOpen: false,
+                        width: "auto",
+                        modal: true,
+                        position: {
+                            my: "center bottom",
+                            at: "center bottom",
+                            of: "#navbar-fixed-top"
+                        },
+                    });
+
                     $('#submitReport').on('click', function(e) {
                         $("#dialog-confirm").dialog('open');
                     });
@@ -606,7 +632,7 @@
                 <!-- <form action="???" method="post"> -->
                 <!-- include csrf_token here -->
                 <h1>Report Autama</h1>
-                <form id="reportform" action="mailto:autamafeedback@gmail.com" method="post" enctype="text/plain">
+                <form id="reportform" method="POST" enctype="text/plain">
                     <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option1" name="option1" value="Option 1">
                     <label for="option1"> Inappropriate content</label><br>
                     <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option2" name="option2" value="Option 2">
