@@ -13,35 +13,36 @@
     /*<!-- THIS STUFF INCLUDES CSS .bottom .line etc -->*/
 
         .bottom{
-            padding: 0rem 0;
-            border-bottom-left-radius: 5rem;
+            padding: 0rem 0;         /*top right bottom left*/
+            border-bottom-left-radius: 5rem; /*this creates a rounded edge -- was 5rem*/
             text-align: center;
-    	    background-color: #6041ce;   /*<!-- was rgb(92,67,197) = hex#5c43c5-->*/
+    	    background-color: #6041ce;   /* this is purple <!-- was rgb(92,67,197) = hex#5c43c5-->*/
         }
 
         .toplab{
-            background-color: #ff4e50;
+            background-color: #ff4e50;    /*light red*/
             text-align: center;
-            height: 46px;
+            height: 4rem;   /* was 46px */
             width: 100%;
         }
 
         .Autama-text-logo{
-            width: 105px;
-            height: 36px;
+	    padding: .1rem;  /* added */
+            width: 15rem;  /* was 105px */
+            height: 4rem;  /* was 36px */
             object-fit: contain;
         }
 
         .line{
             height: 1rem;
-    	    background-color: #6041ce;   /* <!--rgb(92,67,197)-->*/
+    	    background-color: #6041ce;   /*this is purple <!--rgb(92,67,197)-->*/
         }
 
         .line .bg{
             width: 100%;
             height: 100%;
-            background-color: #fff;
-            border-top-right-radius: 10rem;
+            background-color: #fff;  /* white */
+            border-top-right-radius: 5rem;  /* was 10rem */
         }
 
         .nav-tabs{
@@ -120,7 +121,7 @@
     <div>
 	<!-- top half of nav bar -->
         <div class="toplab">
-            <img class="Autama-text-logo" src="/Images/images/autama-text-logo.png">
+		<img class="Autama-text-logo" src="/Images/images/autama-text-logo-3x.png"> <!-- was autama-text-logo.png-->
         </div>
 
 	<!-- container has lower half of nav bar, and main? -->
@@ -133,13 +134,13 @@
 		    <img class="bitmap" src="/Images/images/swipe-icon.png" style="margin-left: 25px;"> </a></li>-->
                     <li class="nav-item">
 		        <a href="/FindMatches/"> 
-			    <img class="bitmap" src="/Images/images/swipe-icon.png" style="margin-left: 25px;"> 
+			    <img class="bitmap" src="/Images/images/swipe-purp-wback-round-3x.png" style="margin-left: 25px;"> 
 			</a>
 		    </li> <!-- end of left nav button -->
-		    <!-- middle nav toggle -->
+		    <!-- middle nav toggle --> <!-- was not-selected-autama-logo.png-->
                     <li class="dropdown nav-item middle" style="margin-left: 41%;">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" > 
-			    <img class="logo-a" src="/Images/images/not-selected-autama-logo.png"> 
+			    <img class="logo-a" src="/Images/images/logo-purp-wback-round-3x.png"> 
 			<b class="caret" style="color: hotpink"></b>
 			</a>
 			<!-- toggle default page Matched, secondary page Created -->
@@ -154,7 +155,7 @@
 			    <img class="bitmap" src="/Images/images/hhamburger-icon.png"> 
 			</a> -->
 			<a class="nav-link" href="/accounts/profile/" style="color: hotpink"> 
-			    <img class="bitmap" src="/Images/images/hamburger-icon.png"> 
+			    <img class="bitmap" src="/Images/images/hamburger-3x.png"> 
 			</a>
 		    </li> <!-- end of right nav button -->
 		</ul> <!-- end of nav-tabs class -->
