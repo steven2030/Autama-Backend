@@ -26,14 +26,13 @@
         .card {
 
             position: absolute;
-            top: 50%;
+            top: 360px;
             left: 50%;
-            height: 380px;
-            width: 320px;
-            background-size: 320px 320px;
+            height: 664px;
+            width: 378px;
             background-repeat: no-repeat;
             border-radius: 1%;
-            box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.1);
+            /*box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.1);*/
             background-color: white;
             transform: translateX(-50%) translateY(-50%) scale(0.95);
             overflow-x: auto;
@@ -45,6 +44,7 @@
             pointer-events: none;
             height: 320px;
             width: 320px;
+            left: 58px;
             background-size: 320px 320px;
             z-index: 3;
             opacity: 0;
@@ -59,32 +59,78 @@
             z-index: 3;
             opacity: 0;
         }
-        .btmtext {
-            display: block;
+        .pic {
             position: absolute;
-            width: 90%;
-            bottom: 104px;
+            top: 48px;
             left: 8px;
-            font-size: 18px;
-            text-shadow: 2px 2px black;
+            width: 361px;
+            height: 361px;
+            pointer-events: none;
         }
-        .btmtext2 {
-            display: block;
+        .topcard {
             position: absolute;
-            width: 90%;
-            bottom: 82px;
-            left: 8px;
-            font-size: 18px;
-            text-shadow: 2px 2px black;
+            z-index: 1;
+            pointer-events: none;
         }
-        .btmtext3 {
-            display: block;
+        .name {
             position: absolute;
-            width: 90%;
-            bottom: 60px;
-            left: 8px;
+            width: 294px;
+            height: 58px;
+            font-size: 48px;
+            font-weight: bold;
+            color: #6041ce;
+            z-index: 2;
+            left: 37px;
+            top: 5px;
+            font-family: SansSerif;
+        }
+        .creator {
+            position: absolute;
+            width: 294px;
+            height: 24px;
+            line-height: 1.36;
             font-size: 18px;
-            text-shadow: 2px 2px black;
+            color: #6041ce;
+            z-index: 2;
+            left: 40px;
+            top: 65px;
+            font-family: SansSerif;
+        }
+        .abouttitle {
+            position: absolute;
+            top: 410px;
+            left: 37px;
+            width: 88px;
+            height: 29px;
+            color: #6041ce;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: -0.3px;
+            z-index: 2;
+        }
+        .about {
+            position: absolute;
+            top: 460px;
+            left: 37px;
+            width: 294px;
+            height: 66px;
+            line-height: 0.78px;
+            font-size: 18px;
+            font-family: Helvetica;
+            color: #666666;
+            z-index: 2;
+        }
+        .followers {
+
+        }
+        .btmcard {
+            position: absolute;
+            top: 320px;
+            left: 4px;
+            z-index: 1;
+            width: 370px;
+            height: 232px;
+            pointer-events: none;
         }
         .leftalign {
             float: left;
@@ -340,46 +386,52 @@
 
                 let likeOverlay = document.createElement('div');
                 let nopeOverlay = document.createElement('div');
-                let textbox1 = document.createElement('div');
-                let textbox2 = document.createElement('div');
-                let textbox3 = document.createElement('div');
-                let p1 = document.createElement('p');
-                let p2 = document.createElement('p');
-                let p3 = document.createElement('p');
-                let textbox4 = document.createElement('div');
+                let topcard = document.createElement('img');
+                let btmcard = document.createElement('img');
+                let pic = document.createElement('img');
+                let name = document.createElement('p');
+                let creator = document.createElement('p');
+                let abouttitle = document.createElement('p');
+                let about = document.createElement('p');
+
+                about.classList.add('about');
+                abouttitle.classList.add('abouttitle');
+                creator.classList.add('creator');
+                name.classList.add('name');
+                topcard.classList.add('topcard');
+                topcard.src = "../Images/Images/top-card.png";
+                btmcard.classList.add('btmcard');
+                btmcard.src = "../Images/Images/bottom-card.png";
+                pic.classList.add('pic');
 
                 likeOverlay.classList.add('like');
                 likeOverlay.id = 'like';
                 nopeOverlay.classList.add('nope');
                 nopeOverlay.id = 'nope';
-                textbox1.classList.add('btmtext');
-                textbox2.classList.add('btmtext2');
-                textbox3.classList.add('btmtext3');
-                textbox4.id='interests';
-                textbox4.classList.add('interests');
-                p1.classList.add('leftalign');
-                p2.classList.add('leftalign');
-                p3.classList.add('leftalign');
 
                 card.appendChild(likeOverlay);
                 card.appendChild(nopeOverlay);
-                card.appendChild(textbox1);
-                card.appendChild(textbox2);
-                card.appendChild(textbox3);
-                card.appendChild(textbox4);
-                textbox1.appendChild(p1);
-                textbox2.appendChild(p2);
-                textbox3.appendChild(p3);
+                card.appendChild(topcard);
+                card.appendChild(btmcard);
+                card.appendChild(pic);
+                card.appendChild(name);
+                card.appendChild(creator);
+                card.appendChild(abouttitle);
+                card.appendChild(about);
 
+                abouttitle.innerText = 'About';
                 // Get Random Background Image
                 $.get("?AID=" + aid, function(data) {
-                    p1.innerText = data.first + " " + data.last;
-                    p2.innerText = "Followers: " + data.matches;
-                    p3.innerText = "Creator: " + data.creator;
-                    textbox4.innerText = "Interests: " + data.interest1 + " "
+                    name.innerText = data.first;
+                    creator.innerText = 'Creator: ' + data.creator;
+                    //p1.innerText = data.first + " " + data.last;
+                    //p2.innerText = "Followers: " + data.matches;
+                    //p3.innerText = "Creator: " + data.creator;
+                    about.innerText = data.interest1 + " "
                     + data.interest2 + " " + data.interest3;
-                    card.style.backgroundImage =
-                        "url(" + data.picture + ")";
+                    pic.src = (data.picture);
+                    /*card.style.backgroundImage =
+                        "url(" + data.picture + ")";*/
                     card.autamaID = data.autama_id;
                     if (data.redirect) {
                         window.location.replace(data.redirect);
