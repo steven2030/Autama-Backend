@@ -393,12 +393,12 @@
                             <li style="font-size: 25px;"><a class="nav-link" href="{{ last_page }}"><b style="color:white; margin-left:15px;"><</b></a></li>
                             {% endif %}
                             <li class="dropdown nav-item" style="float: right; margin-right: 20px;">
-								<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" > 
-									<p class="three-dots"></p>
-								</a>
-								<ul class="dropdown-menu">	
+				<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" > 
+					<p class="three-dots"></p>
+				</a>
+				<ul class="dropdown-menu">	
                                     {% if is_matched %}								
-									<li><a onclick="">Share</a></li>
+				    <li><a onclick="">Share</a></li>
                                     <li><a href="{% url 'UnMatch' pk=autama.pk %}">
                                        {% csrf_token %}
                                         Unmatch
