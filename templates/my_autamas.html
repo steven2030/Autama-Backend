@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>Chat</title>
+    <title>My Autamas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% endblock %}
 
@@ -29,6 +29,7 @@
 
             .profile_card{
                 padding: 4vw;
+                /*background: purple;*/
             }
 
             div.profile-container {
@@ -49,7 +50,9 @@
             }
 
             .autama_description{
-                /*text-align: left;*/
+                text-align: left;
+                margin: auto;
+                width: 70%;
             }
         }
 
@@ -69,11 +72,13 @@
             .grid-container{
                 display: grid;
                 grid-template-columns: auto auto auto;
-                /*grid-gap: 1vw;*/
+                grid-gap: 1vw;
             }
 
             .profile_card{
-                padding: 4vw;
+                /*padding: 4vw;*/
+                width: 29vw;
+                /*background: purple;*/
             }
 
             div.profile-container {
@@ -95,6 +100,8 @@
 
             .autama_description{
                 text-align: left;
+                margin: auto;
+                width: 70%;
             }
         }
     </style>
@@ -103,6 +110,7 @@
 {% block content %}
     <div style="width: 90%;margin: auto; padding-top: 1vw;">
         <h1>My Autamas</h1>
+        <br>
 
         <div class="grid-container">
             <div class="profile_card">
@@ -110,13 +118,15 @@
                     <form action="/CreateAutama/">
                         <input type="submit" value="+" class="create_button"/>
                     </form>
-                </div>
 
-                <a href="/CreateAutama/" style="color: black; text-align: center;">
-                    <h2 style="padding-top: 0.4vw;"><b>Create an Autama</b></h2>
-                    <p>Each user is allowed to create up to {{ my_autama_limit }} My Autamas total.</p>
-                    <p><b>Remaining My Autama creations:</b> {{ difference }}</p>
-                </a>
+                    <a href="/CreateAutama/" style="color: black;">
+                        <div class="autama_description">
+                            <h2 style="padding-top: 0.4vw; text-align: center;"><b>Create an Autama</b></h2>
+                            <p>Each user is allowed to create up to {{ my_autama_limit }} My Autamas total.</p>
+                            <p><b>Remaining My Autama creations:</b> {{ difference }}</p>
+                        </div>
+                    </a>
+                </div>
             </div>
 
             {% for autama in my_autamas %}
@@ -153,6 +163,18 @@
                     </div>
                 </div>
             {% endfor %}
+
+            <!--DO NOT DELETE the following 4 lines. They are used for keep the grid even.-->
+             <div class="profile_card">
+                    <div class="profile-container">
+                    </div>
+             </div>
+
+            <!--DO NOT DELETE the following 4 lines. They are used for keep the grid even.-->
+            <div class="profile_card">
+                    <div class="profile-container">
+                    </div>
+             </div>
         </div>
     </div>
 {% endblock %}

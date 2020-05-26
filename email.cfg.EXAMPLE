@@ -1,0 +1,7 @@
+[DEFAULT]
+E_USE_TLS = True
+E_HOST = smtp.gmail.com
+E_PORT = 465
+E_HOST_USERNAME = some_user@gmail.com
+E_HOST_PASSWORD = yoursecretpassword
+E_TEAM_RECIPIENT_ADDRESSES = ['autamafeedback@gmail.com']

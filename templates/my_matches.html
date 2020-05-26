@@ -46,18 +46,18 @@
             font-size: 16px;
             padding: 12px 20px 12px 40px;
             border: 1px solid #ddd;
-            margin-top: 24px;
-            margin-bottom: 12px;
+            margin-top: 0px;
+            margin-bottom: 0px;
         }
 
         .flexbox-wrapper-matches {
             display: flex;
-            overflow-x: auto;
+            flex-direction: row;
+            flex-wrap: wrap;
         }
 
         .flexbox-wrapper-messages {
             display: flex;
-            overflow-x: auto;
         }
 
         .flexbox-item-match {
@@ -94,7 +94,7 @@
         }
 
         .text-header {
-            font-size: calc(2em + 0.7vw);
+            font-size: calc(1.5em + 0.5vw);
         }
     </style>
 {% endblock %}
@@ -139,7 +139,7 @@
         <!-- From https://www.w3schools.com/howto/howto_js_filter_lists.asp -->
         <input type="text" id="search-input" onkeyup="dynamicSearch()" placeholder="Search your matches..." title="Type in a name">
 
-            <!-- aligning images with text: https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_img_align -->
+        <!-- aligning images with text: https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_img_align -->
         <h1 class="text-header">Conversations {{num_messages}}</h1>
 
         <br>
@@ -165,7 +165,6 @@
 
         {% endfor %}
 
-            <br><br>
 
         <title>My Matches</title>
         <br>
