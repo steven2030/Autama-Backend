@@ -22,8 +22,10 @@ from AutamaProfiles.models import AutamaProfile, AutamaGeneral
 from AutamaProfiles.views import get_meta, create_custom_autama, get_my_autama_limit
 from django.utils import timezone
 from Nucleus.ham import Ham
-from django.core.mail import send_mail, BadHeaderError
 
+from django.core.mail import send_mail
+from Autama.settings import EMAIL_HOST_USER
+from Autama.settings import EMAIL_RECIPIENTS
 
 def claim_autama(user_pk, autama_pk):
     autama = AutamaProfile.objects.get(pk=autama_pk)  # Validation needed here
@@ -233,43 +235,54 @@ class FindMatches(LoginRequiredMixin, View):
         ag = get_meta()
         a_id = request.GET.get('AID')
 
-        # Returns the base HTML if no AID parameter.
+        matches = Matches.objects.all().filter(userID=user.id).count()
+        print(matches)
+        # Returns the base HTML if no AID parameter.  This is first page load.
         if a_id is None:
             user = User.objects.get(id=request.user.id)
-            return render(request, 'find_matches.html', {'autama_id': user.currentAutama})
+            return render(request, 'find_matches.html', {'autama_id': user.currentAutama, 'num_matches': matches})
 
-        # Check if the user has swiped all current Autama.
+        # Check if the user has swiped all current Autama & redirect.
         if user.currentAutama > ag.currentCount:
             data = {
                 'redirect': '/SeenAll/',
             }
             return JsonResponse(data)
         autama = None
+
         # Return current id
+        # a_id =  0 get current autama. This happens upon first page load
+        # if a_id = 1 get next autama.  This happens once upon page load and then every swipe.
         if a_id == "0":
-            if autama_id_exist(user.currentAutama):
+            if autama_id_exist(user.currentAutama) and not autama_is_matched(request.user.id, a_id):
                 autama = autama_get_profile(user.currentAutama)
             # id doesn't exist
             else:
-                user.currentAutama = autama_id_next(user.currentAutama)
-                user.nextAutama = autama_id_next(user.currentAutama)
-                user.save()
-                if user.currentAutama > ag.currentCount:
-                    data = {
-                        'redirect': '/SeenAll/',
-                    }
-                    return JsonResponse(data)
+                while True:
+                    user.currentAutama = autama_id_next(user.id, user.currentAutama)
+                    user.nextAutama = autama_id_next(user.id, user.currentAutama)
+                    user.save()
+                    if user.currentAutama > ag.currentCount:
+                        data = {
+                            'redirect': '/SeenAll/',
+                        }
+                        return JsonResponse(data)
+                    if autama_id_exist(user.currentAutama) and not autama_is_matched(request.user.id, a_id):
+                        autama = autama_get_profile(user.currentAutama)
+                        break
 
         # return next id
+        # if a_id = 1 get next autama.  This happens once upon page load and then every swipe.
         else:
             if autama_id_exist(user.nextAutama):
                 autama = autama_get_profile(user.nextAutama)
             # id doesn't exist
             else:
-                user.nextAutama = autama_id_next(user.currentAutama)
+                user.nextAutama = autama_id_next(user.id, user.currentAutama)
                 user.save()
                 autama = autama_get_profile(user.nextAutama)
 
+        # return object
         data = {
             'autama_id': autama.id,
             'creator': autama.creator,
@@ -284,14 +297,17 @@ class FindMatches(LoginRequiredMixin, View):
         }
         return JsonResponse(data)
 
+    # Update after a swipe has occured
+    # Beware of async requests
     def post(self, request):
+        print(request.POST)
         data = request.POST.copy()
         # handle updating autama position
         # TODO: Add class method to handle?
         # DB Lock: with transaction.atomic():
         user = User.objects.get(pk=request.user.id)
         user.currentAutama = user.nextAutama
-        user.nextAutama = autama_id_next(user.currentAutama)
+        user.nextAutama = autama_id_next(user.id, user.currentAutama)
         user.save()
 
         ret = False
@@ -311,10 +327,10 @@ class FindMatches(LoginRequiredMixin, View):
                 autama.nummatches -= 1
                 autama.save()'''
 
-
         # Test to see if past current Autama Limit
         ag = AutamaGeneral.objects.get(pk=1)
         if user.currentAutama > ag.currentCount:
+            print(str(user.currentAutama) + " " + str(ag.currentCount))
             return redirect('SeenAll')
 
         if ret:
@@ -322,6 +338,13 @@ class FindMatches(LoginRequiredMixin, View):
         else:
             return JsonResponse({"user": request.user.id, "Autama": aid})
 
+
+# Checks if an autama is matched to the user
+def autama_is_matched(user_id, autama_id):
+    if Matches.objects.filter(userID=user_id).filter(autamaID=autama_id).exists():
+        return True
+    else:
+        return False
 
 # Checks if the int id provided matches the primary key of an autama
 # Returns true if exists, false if it does not.
@@ -335,11 +358,11 @@ def autama_id_exist(autama_id):
 
 # Takes an integer ID and returns the next valid autama id.
 # returns int of next valid autama id or -1 if reached end of the list
-def autama_id_next(autama_id):
+def autama_id_next(user_id, autama_id):
     autama_id += 1
     ag = AutamaGeneral.objects.get(pk=1)
     while True:
-        if autama_id_exist(autama_id):
+        if autama_id_exist(autama_id) and not autama_is_matched(user_id, autama_id):
             return autama_id
         else:
             autama_id += 1
@@ -367,8 +390,8 @@ class SeenAll(LoginRequiredMixin, View):
         user = User.objects.get(pk=request.user.id)
         ag = AutamaGeneral.objects.get(pk=1)
         if retval == "again":
-            user.currentAutama = autama_id_next(0)
-            user.nextAutama = autama_id_next(user.currentAutama)
+            user.currentAutama = autama_id_next(user.id, 0)
+            user.nextAutama = autama_id_next(user.id, user.currentAutama)
         else:
             user.currentAutama = ag.currentCount + 1;
         user.save()
@@ -432,7 +455,9 @@ class MyAutamas(LoginRequiredMixin, View):
         my_autama_limit = get_my_autama_limit()
         current_my_autama_count = user.my_Autama
         difference = my_autama_limit - current_my_autama_count
-        my_autamas = {'my_autamas': autama_profiles, 'my_autama_limit': my_autama_limit, 'difference': difference}
+        matches = Matches.objects.all().filter(userID=user.id).count()
+        my_autamas = {'my_autamas': autama_profiles, 'my_autama_limit': my_autama_limit, 'difference': difference,
+                      'num_matches': matches}
         return render(request, 'my_autamas.html', my_autamas)
 
 
@@ -560,12 +585,13 @@ class Chat(LoginRequiredMixin, View):
                                              'message_chain': message_chain, 'is_matched': is_matched})
 
     def post(self, request, pk):
+        message = request.POST.get('message')
+        autama_id = request.POST.get('autama_id')
         user = User.objects.get(pk=request.user.id)
-        autama = AutamaProfile.objects.get(pk=pk)  # Check the validity of Autama id.
-        form = MessageForm(request.POST)
-
-        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[0][1],
-                                            message=form['x'].value())
+        autama = AutamaProfile.objects.get(pk=autama_id)  # Check the validity of Autama id.
+        # form = MessageForm(request.POST)
+        a_message = Messages.objects.create(userID=user, autamaID=autama, sender='User',
+                                            message=message)
         a_message.save()
 
         # Using HAM to get a response from Autama
@@ -580,13 +606,21 @@ class Chat(LoginRequiredMixin, View):
         personality = [trait1, trait2, trait3, trait4, trait5, trait6]
 
         ham = Ham(first_name, last_name, personality)
-        autama_response = ham.converse(user_input=form['x'].value())
+        autama_response = ham.converse(user_input=message)
 
-        a_message = Messages.objects.create(userID=user, autamaID=autama, sender=Messages.SENDER_CHOICES[1][1],
+        a_message = Messages.objects.create(userID=user, autamaID=autama, sender='Autama',
                                             message=autama_response)
         a_message.save()
 
-        return redirect('Chat', pk=pk)
+        data = {
+            'autama': autama_id,
+            'user': request.user.id,
+            'response': autama_response,
+            'time': a_message.timeStamp,
+        }
+
+        return JsonResponse(data)
+        # return redirect('Chat', pk=pk)
 
 
 def testdata(request):
@@ -599,19 +633,44 @@ def testdata(request):
             if 'UNIQUE constraint' in str(e.args):
                 return HttpResponse("Already Added")
 
-# from https://docs.djangoproject.com/en/3.0/topics/email/
-# send_mail('Subject', 'Message', 'from@example.com', ['john@example.com', jane@example.com'],)
-def send_mail(request):
-    user = User.objects.get(pk=request.user.id)
-    last_page = user.last_page
-    subject = request.POST.get('subject', '')
-    message = request.POST.get('message', '')
-    from_email = request.post.get('from_email', '')
-    if subject and message and from_email:
+
+# Generates the message that will be sent based on checkboxes
+def build_report_msg(request):
+    a_info = request.POST.get('autama_info')
+    user = request.POST.get('sender')
+    inapp = request.POST.get('option1')
+    broken = request.POST.get('option2')
+    boring = request.POST.get('option3')
+    other = request.POST.get('option4')
+
+    msg = 'Report for: ' + a_info + '\n' + 'From user: ' + user + '\n'
+    if inapp:
+        msg += 'Inappropriate\n'
+    if broken:
+        msg += 'Autuma is broken\n'
+    if boring:
+        msg += 'Autuma is boring\n'
+    if other:
+        msg += 'Other issue\n'
+
+    msg += 'End of report\n'
+    return msg
+
+
+class SendReportEmail(LoginRequiredMixin, View):
+    def get(self, request):
+        return HttpResponse('GET not allowed, please use the provided form to submit a report')
+
+    def post(self, request):
+        msg = build_report_msg(request)
         try:
-            send_mail(subject, message, from_email, ['autamafeedback@gmail.com['])
-        except BadHeaderError:
-            return HttpResponse('Invalid header found.')
-        return HttpResponse(last_page)
-    else:
-        return HttpResponse('Make sure all fields are entered and valid.')
+            # this will fail if there is an authentication error, etc.
+            # recipients must be single string or a list.  Since the configparser doesn't create a list automatically,
+            # need to .split() the recipients on commas - works fine if it's already just a single recipient
+            email_response = send_mail('Autama Report', msg, EMAIL_HOST_USER, EMAIL_RECIPIENTS.split(','), fail_silently=False)
+        except:
+            email_response = 0
+        if email_response == 1:
+            return HttpResponse("Report submitted!") # 1 if successful
+        else:
+            return HttpResponse("Uh oh, report failed to send")

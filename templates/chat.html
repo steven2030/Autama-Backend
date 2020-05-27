@@ -70,8 +70,8 @@
         .lite-chatbox .tips{margin:12px;text-align:center;font-size:12px}.lite-chatbox .tips span{display:inline-block;padding:4px;background-color:#ccc;color:#fff;-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px}
         .lite-chatbox img.radius{-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%}.lite-chatbox .cright img.headIcon{right:0}.lite-chatbox .cleft img.headIcon{left:0}
         .lite-chatbox .cright .name{margin:0 48px 2px 0}
-        .lite-chatbox .cleft .name{margin:0 0 2px 48px}
-        .lite-chatbox .cright .content{margin:0 0 0 0;-webkit-border-radius:20px 0 20px 20px;border-radius:20px 0 20px 20px;color:#fff;background:-webkit-linear-gradient(70deg,#3FD1E1 0%,#44D7CD 100%);background: #B93FA3;-webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15)}
+        .lite-chatbox .cleft .name{margin:0 0 2px 48px} /* remove 48px, 0 0 2px 48px */
+        .lite-chatbox .cright .content{margin:0 0 0 0;-webkit-border-radius:20px 0 20px 20px;border-radius:20px 0 20px 20px;color:#fff;background:-webkit-linear-gradient(70deg,#3FD1E1 0%,#44D7CD 100%);background: #6041ce;-webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15)}
         .lite-chatbox .cleft .content{margin:0 0 0 48px;-webkit-border-radius:0 20px 20px 20px;border-radius:0 20px 20px 20px;color:#666;border:1px solid rgba(0,0,0,0.05);background:#FFF;-webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.1);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.1)}
         .lite-chatbox .cright .content:after{right:-12px;top:8px}
         .lite-chatbox .cleft .content:after{left:-12px;top:8px}
@@ -95,10 +95,82 @@
             margin:4px 0 8px 72px;
         }
         
-        .text_input{
-            float: left;
-            padding-right: 10px;
-            width: 85%;
+        @media only screen and (max-width: 499px) {
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 85%;
+            }
+
+            .send_arrow{
+                height: 85%;
+                width: 15%;
+            }
+        }
+
+        @media only screen and (min-width: 500px) {
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 85%;
+            }
+
+            .send_arrow{
+                height: 85%;
+                width: 15%;
+            }
+        }
+
+        @media only screen and (min-width: 600px) {
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 87.5%;
+            }
+
+            .send_arrow{
+                height: 85%;
+                width: 12.5%;
+            }
+        }
+
+        @media only screen and (min-width: 700px) {
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 90%;
+            }
+
+            .send_arrow{
+                height: 85%;
+                width: 10%;
+            }
+        }
+
+        @media only screen and (min-width: 800px) {
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 92.5%;
+            }
+
+            .send_arrow{
+                height: 85%;
+                width: 7.5%;
+            }
+        }
+
+        @media only screen and (min-width: 900px) {
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 95%;
+            }
+
+            .send_arrow{
+                height: 85%;
+                width: 5%;
+            }
         }
 
         .send_button{
@@ -236,20 +308,80 @@
         }
 
         .match_warning{
-        height: 80%;
-        width: auto;
-        text-align: center;
+            height: 80%;
+            width: auto;
+            text-align: center;
         }
 
         .match_button{
-            background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
-            width: 50%;
+            background: #ff4e50;
             height: auto;
+            width: 50%;
             color: white;
-            font-size: 8vw;
+            font-size: 10vw;
             text-align: center;
-            border-radius: 14px;
+            vertical-align: middle;
+            border-radius: 10vw;
         }
+        
+        .dfont{
+		font-family: Helvetica;
+		font-size: 13px;
+		font-weight: normal;
+		font-stretch: normal;
+		font-style: normal;
+		line-height: 1.02;
+		letter-spacing: normal;
+		}
+
+	.three-dots {
+		width: 20px;
+		height: 20px;
+		background-image: radial-gradient(circle, white 0.22vw, transparent 3px);
+		background-size: 100% 33.33%;
+	}
+	 
+	.line{
+                height: 2rem;
+                background-color: rgb(92,67,197);
+            }
+
+	.line .bg{
+		width: 100%;
+		height: 100%;
+		background-color: #fff;
+		border-top-right-radius: 10rem;
+	}
+
+	.bottom{
+		border-bottom-left-radius: 5rem;
+		text-align: center;
+		background-color: rgb(92,67,197);
+	}
+
+	.toplab{
+		background-color: #ff4e50;
+		text-align: center;
+		height: 46px;
+		width: 100%;
+    	}
+
+	.Autama-text-logo{
+		width: 105px;
+		height: 36px;
+		object-fit: contain;
+
+	}
+        .nav-tabs{
+            border: none;
+		padding-left: 2.5vw;
+        }
+
+	.bitmap{
+		width: 30.2px;
+		height: 30px;
+	}
+		
     </style>
 {% endblock %}
 
@@ -267,10 +399,6 @@
                 div = document.getElementById("report").style.display="none";
             }
         }
-
-        function hideReport() {
-            div = document.getElementById("report").style.display="none";
-        }
         
         /*
         A little smashed up of the two links below to create a function for submitting with the enter key.
@@ -278,7 +406,7 @@
         https://stackoverflow.com/questions/155188/trigger-a-button-click-with-javascript-on-the-enter-key-in-a-text-box
         */
         $(document).ready(function() {
-            $('form').keydown(function() {
+            $('#input_textbox').keydown(function() {
                 if (event.keyCode == 13) {
                     document.getElementById("send_button").click();
                     return false;
@@ -314,58 +442,74 @@
         function match_with(){
             document.getElementById("nav_match").click();
         }
+
+        function share_popup() {
+
+        }
+
+        /* https://www.w3schools.com/howto/howto_js_copy_clipboard.asp */
+        function copy_text() {
+
+        }
     </script>
 {% endblock %}
 
 {% block content %}
     <body>
+	<section>
+            <div class="toplab">
+                <img class="Autama-text-logo" src="/Images/images/autama-text-logo.png">
+            </div>
 
-        <nav class="nav navbar-inverse navbar-default navbar-fixed-top" role="navgation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav nav">
+            <div id="container">
+                <div class="bottom">
+                    <ul class="nav nav-tabs">
                         {% if request.user.is_authenticated  %}
-                            <li style="font-size: 25px;"><a href="{{ last_page }}"><b><</b></a></li>
+                            <li class="nav-item"><a href="{{ last_page }}"><img class="bitmap" src="/Images/images/back-chevron.png"></a></li>
                         {% endif %}
-                    </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        {% if is_matched %}
-                            <li><a onclick="">Share</a></li>
-                        
-                            <li><a href="{% url 'UnMatch' pk=autama.pk %}">
-                                {% csrf_token %}
-                                Unmatch
-                            </a></li>
-                        
-                            <li><a onclick="showReport()">Report</a></li>
-                        {% else %}
-                            <li><a id="nav_match" href="{% url 'Match' pk=autama.pk %}">
-                                {% csrf_token %}
-                                Match
-                            </a></li>
-                        {% endif %}
+                            <li class="dropdown nav-item" style="float: right; margin-right: 50px;">
+                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" >
+                                    <p class="three-dots"></p>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    {% if is_matched %}
+                                        <li><a onclick="">Share</a></li>
+                                        <li><a href="{% url 'UnMatch' pk=autama.pk %}">
+                                           {% csrf_token %}
+                                            Unmatch
+                                        </a></li>
+                                        <li><a onclick="showReport()">Report</a></li>
+                                    {% else %}
+                                        <li><a id="nav_match" href="{% url 'Match' pk=autama.pk %}">
+                                        {% csrf_token %}
+                                            Match
+                                        </a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
                     </ul>
                 </div>
+
+                <div class="main">
+                    <div class="line">
+                        <div class="bg">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
 
                 <!--<div>
                     <a href="/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
                         <img  style="position: relative; " class="to" alt="aaa" src="{{ autama.picture.url }}">
                     </a>
                 </div>-->
-            </div>
-        </nav>
+
+
 
         <!--create some space between nav and chat box-->
-        <section><div style="margin-top: 70px;"></div></section>
+        <!--<section><div style="margin-top: 10px;"></div></section>-->
 
         <section class="profile_view">
             <div class="profile_box">
@@ -377,16 +521,19 @@
 
                 <div class="autama_description">
                     <h5><b>{{ autama.first }} {{ autama.last }} </b></h5>
-                    <p>
-                        <b>Description:</b>
-                        {{ autama.interest1 }}
-                        {{ autama.interest2 }}
-                        {{ autama.interest3 }}
-                    </p>
+			
                     <p>
                         <b>Creator:</b>
                         {{ autama.creator }}
                     </p>
+			
+                    <p>
+                        <b>About:</b>
+                        {{ autama.interest1 }}
+                        {{ autama.interest2 }}
+                        {{ autama.interest3 }}
+                    </p>
+                    
                     <p>
                         <b>Followers:</b>
                         {{ autama.nummatches }}
@@ -412,7 +559,6 @@
                                 <a href="/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
                                     <img class="headIcon radius" ondragstart="return false;" oncontextmenu="return false;" src="{{ autama.picture.url }}">
                                 </a>
-                                <span class="name">{{autama.first}}</span>
                                 <span class="content">{{a_message.message}}</span>
                                 <span class="time_stamp">{{ a_message.timeStamp.isoformat }}</span>
                             </div>
@@ -423,16 +569,18 @@
 
             <!-- Input/button area -->
             <section>
-                <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div style="padding: 10px; height: 77px;">
+{#                <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">#}
+{#                    {% csrf_token %}#}
+                    <div style="padding: 1vw;">
                         <div class="text_input">
-                            {{ form }}
+{#                            {{ form }}#}
+                            <textarea cols="40" rows="10" class="special" id="input_textbox"></textarea>
                         </div>
 
-                        <input id="send_button" type="submit" value="Send" class="send_button">
+                        <!--<input id="send_button" type="submit" value="Send" class="send_button">-->
+			<input id="send_button" type="image" src="/Images/images/send-arrow-3x.png" alt="Submit" class="send_arrow">
                     </div>
-                </form>
+{#                </form>#}
             </section>
 
             <!-- jQuery dialog code here: https://stackoverflow.com/questions/40939099/jquery-form-submit-with-confirmation-in-a-modal -->
@@ -441,20 +589,185 @@
             <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 
-            <div id="dialog-confirm" title="Report submitted, thank you!">
+            <div id="prompt-feedback" title="Report submitted, thank you!">
                 <p>Would you like to provide additional feedback?</p>
             </div>
 
             <div id="additional-feedback" title="Feedback">
-                <form id="feedback-form" action="mailto:autamafeedback@gmail.com" method="post" enctype="text/plain">
-                    <textarea rows="5" cols="30">Enter feedback here...</textarea>
+                <form id="feedback-form" method="POST" enctype="text/plain">
+                    <textarea rows="5" cols="30" placeholder="Enter feedback here..."></textarea>
                 </form>
             </div>
 
+            <div id="share-popup" title="Share this Autama with others!">
+
+            </div>
+
+
+            <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
+            <div id="report" class="report_box" >
+                <h1>Report Autama</h1>
+                <form id="reportform" method="POST" action="/send_report_email/" enctype="text/plain">
+                    <input type="hidden" id="sender" name="sender" value="{{ user }}">
+                    <input type="hidden" id="autama_info" name='autama_info' value="{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
+                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="inappropriate" name="option1" value="inappropriate">
+                    <label for="option1"> Inappropriate content</label><br>
+                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="broken" name="option2" value="broken">
+                    <label for="option2"> Autama is broken</label><br>
+                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="boring" name="option3" value="boring">
+                    <label for="option3"> Autama is boring</label><br>
+                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="other" name="option4" value="other">
+                    <label for="option4"> Other</label><br><br>
+                    <input type="submit" id="submitReportBtn" name="submitReport" value="Submit"/>
+                    <input type="button" id="hideReportBtn" name="hideReport" value="Close"/>
+                    {%csrf_token%}
+                </form>
+            </div>
+            <div id="report_response"></div>
+            <br>
+
             <script>
+		// For counting how many times a user hit send
+                var sent = 0;
+
+                // Handle submitting user message to server and handling response
+                $("#send_button").click(function() {
+
+                    // Setup new DOM elements
+                    let user_message = $("#input_textbox").val();
+                    let msg = document.createElement('div');
+                    let timebox = document.createElement('span');
+                    let contentbox = document.createElement('span');
+
+                    msg.classList.add('cright');
+                    msg.classList.add('cmsg');
+                    contentbox.classList.add('content');
+                    timebox.classList.add('time_stamp');
+                    contentbox.innerHTML = $("#input_textbox").val();
+                    timebox.textContent = convertTime(moment.utc().valueOf());
+
+                    msg.appendChild(contentbox);
+                    msg.appendChild(timebox);
+
+                    $(".lite-chatbox").append(msg);
+                    $("#input_textbox").val("");
+			
+                    // Counting user hitting send button
+                    sent += 1;
+			
+                    if (!$("#type_image")[0]) {
+                        // Typing image - This is removed upon successful ajax return
+                        let img = document.createElement('img');
+                        img.id = 'type_image';
+                        img.classList.add('cleft');
+                        img.src = '../../Images/Images/type.gif';
+
+                        $(".lite-chatbox").append(img);
+                    } else {
+                        $("#type_image").remove();
+                        // Typing image - This is removed upon successful ajax return
+                        let img = document.createElement('img');
+                        img.id = 'type_image';
+                        img.classList.add('cleft');
+                        img.src = '../../Images/Images/type.gif';
+
+                        $(".lite-chatbox").append(img);
+                    }
+                    $('.lite-chatbox').animate({scrollTop: $('.lite-chatbox')[0].scrollHeight}, 0);
+                    $.ajax({
+                        url : "/Chat/" + {{ autama.pk }} + '/',
+                        type: "POST",
+                        data : { csrfmiddlewaretoken: "{{ csrf_token }}", 'autama_id': {{ autama.pk }}, 'message': user_message,},
+                        success: function(data, textStatus, jqXHR)
+                        {
+
+                            $("#type_image").remove();
+                            let msg = document.createElement('div');
+                            let timebox = document.createElement('span');
+                            let contentbox = document.createElement('span');
+                            let pic = document.createElement('a');
+                            let img = document.createElement('img');
+
+                            pic.appendChild(img);
+                            img.classList.add('headIcon');
+                            img.classList.add('radius');
+                            img.src = "{{ autama.picture.url }}";
+                            img.addEventListener('dragstart', function(event) {
+                                event.preventDefault();
+                            }, true);
+                            img.addEventListener('contextmenu', function(event) {
+                                event.preventDefault();
+                            }, true);
+                            pic.href = "/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}";
+
+                            msg.classList.add('cleft');
+                            msg.classList.add('cmsg');
+                            contentbox.classList.add('content');
+                            timebox.classList.add('time_stamp');
+                            contentbox.innerHTML = data.response;
+                            timebox.textContent = convertTime(data.time);
+
+                            msg.appendChild(pic);
+                            msg.appendChild(contentbox);
+                            msg.appendChild(timebox);
+
+                            $(".lite-chatbox").append(msg);
+				
+                            // Subtract one because Autama sent response
+                            sent -= 1;
+
+                            // Add typing thing if user sent more than one message
+                            if (sent > 0) {
+                                if (!$("#type_image")[0]) {
+                                    // Typing image - This is removed upon successful ajax return
+                                    let img = document.createElement('img');
+                                    img.id = 'type_image';
+                                    img.classList.add('cleft');
+                                    img.src = '../../Images/Images/type.gif';
+
+                                    $(".lite-chatbox").append(img);
+                                } else {
+                                    $("#type_image").remove();
+                                    // Typing image - This is removed upon successful ajax return
+                                    let img = document.createElement('img');
+                                    img.id = 'type_image';
+                                    img.classList.add('cleft');
+                                    img.src = '../../Images/Images/type.gif';
+
+                                    $(".lite-chatbox").append(img);
+                                }
+                            }
+
+                            $('.lite-chatbox').animate({scrollTop: $('.lite-chatbox')[0].scrollHeight}, 0);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown)
+                        {
+                            console.log(errorThrown)
+                        }
+                    });
+                });
+
                 /* After page load go to all time_stamp class fields and update to local time */
                 $('.time_stamp').text(function(index, text) {
                     return convertTime(text);
+                });
+
+                /* Email report submission handling */
+                $("#reportform").submit(function() {
+                    $("#report_response").show();
+                    $("#report_response").html("Sending report..."); /* udpate div that we're working on it */
+                    /* .post signature is .post(action, data, success_callback_handler)
+                       .serialize() converts the elements of the <form> into a text string */
+                    $.post($(this).attr('action'), $(this).serialize(), function(response) {
+                        $("#report_response").html(response); /* update div with actual server response */
+                    });
+                    $("#prompt-feedback").dialog('open');
+                    return false; /* don't use the actual HTML form submit process (we use jQuery .post()) */
+                });
+
+                $("#hideReportBtn").click(function() {
+                    $("#report").hide();
+                    $("#report_response").html('');
                 });
 
                 $(function() {
@@ -473,14 +786,18 @@
                             "Submit": function() {
                                 /* submit feedback here */
                                 $(this).dialog("close");
+                                $("#report").fadeOut(3000);
+                                $("#report_response").fadeOut(3000);
                             },
                             "Close": function() {
                                 $(this).dialog("close");
+                                $("#report").fadeOut(3000);
+                                $("#report_response").fadeOut(3000);
                             }
                         }
                     });
 
-                    $("#dialog-confirm").dialog({
+                    $("#prompt-feedback").dialog({
                         resizable: false,
                         height: "auto",
                         autoOpen: false,
@@ -496,49 +813,37 @@
                                 $("#additional-feedback").dialog('open');
                                 $(this).dialog("close");
                                 hideReport();
-                                $('#reportform').submit();
                             },
-                            No: function() {
+                            "No": function() {
                                 $(this).dialog("close");
-                                hideReport();
-                                $('#reportform').submit();
+                                $("#report").fadeOut(3000);
+                                $("#report_response").fadeOut(3000);
                             }
                         }
                     });
 
+                    $("#share-popup").dialog({
+                        resizable: false,
+                        height: "auto",
+                        autoOpen: false,
+                        width: "auto",
+                        modal: true,
+                        position: {
+                            my: "center bottom",
+                            at: "center bottom",
+                            of: "#navbar-fixed-top"
+                        },
+                    });
+
                     $('#submitReport').on('click', function(e) {
-                        $("#dialog-confirm").dialog('open');
+                        $("#prompt-feedback").dialog('open');
                     });
                 });
             </script>
-
-            <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
-            <div class="report_box" id="report">
-                <!-- <form action="???" method="post"> -->
-                <!-- include csrf_token here -->
-                <h1>Report Autama</h1>
-                <form id="reportform" action="mailto:autamafeedback@gmail.com" method="post" enctype="text/plain">
-                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option1" name="option1" value="Option 1">
-                    <label for="option1"> Inappropriate content</label><br>
-                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option2" name="option2" value="Option 2">
-                    <label for="option2"> Autama is broken</label><br>
-                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option3" name="option3" value="Option 3">
-                    <label for="option3"> Autama is boring</label><br>
-                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option4" name="option4" value="Option 4">
-                    <label for="option4"> Other</label><br><br>
-
-                    <!-- jQuery dialog-confirm code -->
-                    <input type="hidden" name="submitReport" value="Submit"/>
-                    <input type="button" id="submitReport" value="Submit"/>
-
-                    <button onclick="hideReport()"/>Close</button>
-                </form>
-            </div>
         {% else %}
-        <section class="match_warning">
-            <h1 style="font-size: 8vw;"><b>Warning:</b></h1>
-            <br>
-            <p style="font-size: 2vw;">You must match with {{ autama.first }} {{ autama.last }} first before you can chat with {{ autama.first }}.</p>
+            <section class="match_warning">
+                <p style="font-size: 2.5vw;">I don't talk to strangers.</p>
+            <p style="font-size: 2.5vw;">Match with me, then we'll talk.</p>
             <br>
             <button onclick="match_with()" class="match_button">Match</button>
         </section>

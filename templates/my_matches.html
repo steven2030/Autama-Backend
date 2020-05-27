@@ -46,18 +46,18 @@
             font-size: 16px;
             padding: 12px 20px 12px 40px;
             border: 1px solid #ddd;
-            margin-top: 24px;
-            margin-bottom: 12px;
+            margin-top: 0px;
+            margin-bottom: 0px;
         }
 
         .flexbox-wrapper-matches {
             display: flex;
-            overflow-x: auto;
+            flex-direction: row;
+            flex-wrap: wrap;
         }
 
         .flexbox-wrapper-messages {
             display: flex;
-            overflow-x: auto;
         }
 
         .flexbox-item-match {
@@ -94,7 +94,7 @@
         }
 
         .text-header {
-            font-size: calc(2em + 0.7vw);
+            font-size: calc(1.5em + 0.5vw);
         }
     </style>
 {% endblock %}
@@ -137,34 +137,10 @@
     <div class="container" onload="matchNotifications()">
 
         <!-- From https://www.w3schools.com/howto/howto_js_filter_lists.asp -->
-        <input type="text" id="search-input" onkeyup="dynamicSearch()" placeholder="Search for matches..." title="Type in a name">
-
-        <title>My Matches</title>
-        <br>
-        <h1 class="text-header">New Matches {{num_matches}}</h1>
-        <br>
-
-        <div class="flexbox-wrapper-matches">
-            {% for a_profile in user_matches %}
-                <div class="flexbox-item-match some-match">
-                    <a href="{% url 'Chat' pk=a_profile.autamaID.pk %}" class="image">
-                        <div class="circular--portrait">
-                            <img src="{{ a_profile.autamaID.picture.url }}" alt="Avatar"/>
-                        </div>
-                    </a>
-                    <div class="flexbox-profilename">
-                        <h5 class="profilename">{{a_profile.autamaID.first}} {{a_profile.autamaID.last}}</h5>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-
-
-        <br>
-        <br>
+        <input type="text" id="search-input" onkeyup="dynamicSearch()" placeholder="Search your matches..." title="Type in a name">
 
         <!-- aligning images with text: https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_img_align -->
-        <h1 class="text-header">Messages {{num_messages}}</h1>
+        <h1 class="text-header">Conversations ({{num_messages}})</h1>
 
         <br>
 
@@ -188,6 +164,31 @@
             </div>
 
         {% endfor %}
+
+
+        <title>My Matches</title>
+        <br>
+        <h1 class="text-header">Start a Conversation ({{num_matches}})</h1>
+        <br>
+
+        <div class="flexbox-wrapper-matches">
+            {% for a_profile in user_matches %}
+                <div class="flexbox-item-match some-match">
+                    <a href="{% url 'Chat' pk=a_profile.autamaID.pk %}" class="image">
+                        <div class="circular--portrait">
+                            <img src="{{ a_profile.autamaID.picture.url }}" alt="Avatar"/>
+                        </div>
+                    </a>
+                    <div class="flexbox-profilename">
+                        <h5 class="profilename">{{a_profile.autamaID.first}} {{a_profile.autamaID.last}}</h5>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+
+        <br>
+        <br>
 
     </div>
 {% endblock %}

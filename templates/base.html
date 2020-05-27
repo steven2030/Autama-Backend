@@ -10,45 +10,69 @@
 
     <style media="screen">
 
-            .navbar {
-             background-image: linear-gradient(#54B4EB, #2FA4E7 60%, #1D9CE5);
-             background-repeat: no-repeat;
-             border-bottom: 1px solid #178ACC;
-             box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
-             border-radius: 0px;
+             .bottom{
+                padding: 0rem 0;
+                border-bottom-left-radius: 5rem;
+                text-align: center;
+                background-color: rgb(92,67,197);
             }
 
-            .navbar-default {
-             background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
-             border-style: none;;
-             border-color: #FC4F6C;
+            .toplab{
+                background-color: #ff4e50;
+                text-align: center;
+                height: 46px;
+                width: 100%;
             }
 
-            .navbar-default .navbar-brand,
-            .navbar-default .navbar-brand:hover,
-            .navbar-default .navbar-brand:focus ,
-            .navbar-default .navbar-nav > li > a {
-             color: #FFF;
+            .Autama-text-logo{
+                width: 105px;
+                height: 36px;
+                object-fit: contain;
+
+            }
+            .line{
+                height: 2rem;
+                background-color: rgb(92,67,197);
+            }
+            .line .bg{
+                width: 100%;
+                height: 100%;
+                background-color: #fff;
+                border-top-right-radius: 10rem;
+            }
+            .nav-tabs{
+                border: none;
+            }
+            .bitmap{
+                width: 30.2px;
+                height: 30px;
+
             }
 
-            .navbar-default .navbar-nav > li > a:hover,
-            .navbar-default .navbar-nav > li > a:focus {
-             color: #FFF;
-             background-color: #FC8909;
+            .logo-a{
+                width: 45px;
+                height: 30px;
             }
+	    
+	    @media screen and (min-width:561px){
+                .middle {
+                    float: none;
+                    display: inline;
+                    vertical-align: center;
+                    margin-left: 36%;
+                }
+        }
 
-            .navbar-default .navbar-toggle:hover,
-            .navbar-default .navbar-toggle:focus {
-            background-color: #FC8909;
-            }
+            @media screen and (max-width:561px){
+                .middle {
+                    float: none;
+                    display: inline;
+                    vertical-align: center;
+                    margin-left: 26%;
+                }
+        }
+        
 
-            .navbar-default .navbar-toggle {
-            border-color: #FC8909;
-            }
-
-            .navbar-default .navbar-toggle .icon-bar {
-            background-color: #FFF;
-            }
 
     </style>
 
@@ -84,53 +108,49 @@
 </ftehead>
 <script>
 function matchNotifications() {
-    var navbar_num_matches = {{ num_matches }};
+    var navbar_num_matches = {{ num_matches }}
     document.getElementById("myText").innerHTML = navbar_num_matches;
 }
 </script>
 <body onload="matchNotifications()">
-    <nav class="nav navbar-inverse navbar-default navbar-fixed-top" role="navgation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav nav">
-                    {% if not request.user.is_authenticated  %}
-                        <li><a href="/login/">Login</a></li>
-                        <li><a href="/accounts/register/">Register</a></li>
-                    {% endif %}
-
-                    {% if request.user.is_authenticated  %}
-                        <li><a href="/FindMatches/">FindMatches</a></li>
-                        <li><a href="/MyMatches/">MyMatches (<span id="myText"></span>)</a></li>
-                        <li><a href="/MyAutamas/">MyAutamas</a></li>
-                        </ul>
-
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a class="navbar-link" href="/logout">Logout</a></li>
-                            <li><a class="navbar-link" href="/accounts/profile/">{{ request.user }}</a></li>
-                        </ul>
-
-
-                        <!-- Tutorial: creating a simple cookie consent pop-up: https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
-                        <div class="cookie-banner" style="display: none">
-                            <p>By using our website, you agree to our
-                                <a href="http://127.0.0.1:8000/PrivacyPolicy/">privacy policy</a>
-                            </p>
-                            <button class="close_banner">&times;</button>
-                        </div>
-
-                    {% endif %}
-
-            </div>
+    <div>
+        <div class="toplab">
+            <img class="Autama-text-logo" src="/Images/images/autama-text-logo.png">
         </div>
-    </nav>
+        <div id="container">
+			<div class="bottom">
+                    <ul class="nav nav-tabs">
+                            <li class="nav-item"><a href="/accounts/profile/"> <img class="bitmap" src="/Images/images/swipe-icon.png" style="margin-left: 25px;"> </a></li>
+                            <li class="dropdown nav-item middle">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" > <img class="logo-a" src="/Images/images/not-selected-autama-logo.png"> <b class="caret" style="color: goldenrod"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/FindMatches/">FindMatches</a></li>
+                                    <li><a href="/MyAutamas/">MyAutamas</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item" style="float: right"> <a class="nav-link" href="/MyMatches/" style="color: white; font-size: 20px"> <span class="glyphicon glyphicon-comment" ></span> (<span id="myText"></span>) </a></li>
+                    </ul>
+			</div>
+			<div class="main">
+				<div class="line">
+					<div class="bg">
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+    </div>
+
+
+    <!-- Tutorial: creating a simple cookie consent pop-up: https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
+    <div class="cookie-banner" style="display: none">
+        <p>By using our website, you agree to our
+            <a href="http://127.0.0.1:8000/PrivacyPolicy/">privacy policy</a>
+        </p>
+        <button class="close_banner">&times;</button>
+    </div>
+
 
     <script>
         if (localStorage.getItem('privacyCookieSeen') !== 'accepted') {

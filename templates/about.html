@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+<!--  comment goes in here -->
 {% load static %}
 
 {% block head %}
@@ -7,34 +8,39 @@
 
 {% block content %}
 <style>
-    body {
-        margin-top: 50px;
-        padding-left: 30px;
-        margin-bottom: 50px;
+    body {               /*in this page, body includes nav bar => no left or top pad*/
+	margin-top: 0%;  /*<!-- this was 50px -->*/
+        padding-left: 0%;   /* <!-- this was 30px-->*/
+	margin-bottom: 5%;   /*<!-- this was 50px--> this part places margin only at body bottom*/
     }
 
     .info-container {
         text-align: left;
-        margin-right: 0px;
-        margin-left: 0px;
-        padding-left: 0px;
-        padding-right: 0px;
-        padding-top: 3%;
+        margin-right: 0%; /*adjusts the row as one object?*/
+	margin-left: 2%; /* <!--this was 0px --> gives row objects total 5%*/
+        padding-left: 0%; /* <!--this was 0px-->*/
+        padding-right: 0%;
+	padding-top: 3%;
+	padding-bottom: 3%; /* <!-- added this -->*/
     }
 
     .info-container div {
         display: inline-block;
         text-align: left;
+	padding-left: 3%; /* adjusts both words and image objects*/
     }
 
     .photo img {
-        height: 197px;
-        width: 343px;
+        max-height: 200px; /*was 200px, then 15% -- should maybe be 175x350 for a 1:2 ratio*/
+        max-width: 350px; /*was 350px then 30%*/
+        object-fit: contain; /*was cover*/
     }
 
     .feedback-container {
         padding-top: 3%;
         display: none;
+	padding-left: 5%; /*<!-- this indents the popup feedback box-->*/
+	/*<!-- added this line -->*/
     }
 
 </style>
@@ -51,25 +57,49 @@
 
 
 <body>
+    <!-- ABOUT US -->
+    <div class="info-container">
+        <!--
+	<div class="photo">
+            <img src="/Images/Team/teamphoto.png"/>
+        </div>
+	-->
+        <div class="text">
+            <h1> Our Mission </h1>
+	    <p>    </p>
+	    <p> CHANGING THE WORLD - ONE AUTAMA AT A TIME </p>
+	    <p> WITH OPEN SOURCE BATTLE - A.I. MURDER IS NO CRIME </p>
+	    <p> GOOGLE ALEXA CORTANA SIRI HOUND </p>
+	    <p> A CHAMPION WILL RISE FROM THE DIGITAL UNDERGROUND </p>
+	    <p> LET'S CHANGE THE WORLD FOR BETTER THROUGH AUTAMA - YOU, AND I </p>
+	    <p> IF WE ALL JOIN FORCES - THE LIMIT IS THE SKY </p>
+        </div>
+    	<br>
+    </div>
+
+
     <!-- Team -->
     <div class="info-container">
         <div class="photo">
             <img src="/Images/Team/teamphoto.png"/>
         </div>
         <div class="text">
-            <h1>Meet the team</h1>
-            <p>Let knowledge serve the city.</p>
+            <h1>Meet the Autama Team</h1>
+            <p></p>
         </div>
         <br>
     </div>
 
 
     <br>
+    <!--  
     <input onclick="showFeedback()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="feedback" value="Feedback">
-
+comment goes in here -->
+<!--margin-left:5% in style matches margin given to images()-->
+<input onclick="showFeedback()" style="background-image: linear-gradient(90deg, #FF4E50 50%, #FF4E50 80%); border-style: none;margin-left: 5%;" class="btn btn-info" style="width:100px;position: absolute; top: 50%; transform: translateY(-50%)translateX(-50%); left: 50%;" name="feedback" value="Feedback">
     <div class="feedback-container" id="feedback">
         <form id="feedbackform">
-            <textarea id="userFeedback" rows="5" cols="60" placeholder="Any comments, concerns, or suggestsions?"></textarea>
+            <textarea id="userFeedback" rows="5" cols="60" placeholder="Any comments, concerns, or suggestions?"></textarea>
             <br>
             <input type="submit" name="Submit" value="Submit">
             <button onclick="hideFeedback()">Close</button>
@@ -80,7 +110,7 @@
     <!-- Aaron -->
     <div class="info-container">
         <div class="photo">
-            <img src="/Images/Team/Aaron.png"/>
+            <img src="/Images/Team/Aaron-2.png"/>
         </div>
 
         <div class="text">
@@ -93,7 +123,7 @@
     <!-- Hao -->
     <div class="info-container">
         <div class="photo">
-            <img src="/Images/Team/Hao.png"/>
+            <img src="/Images/Team/Hao-2.png"/>
         </div>
 
         <div class="text">
@@ -106,7 +136,7 @@
     <!-- Kevin -->
     <div class="info-container">
         <div class="photo">
-            <img src="/Images/Team/Kevin.png"/>
+            <img src="/Images/Team/Kevin-2.png"/>
         </div>
 
         <div class="text">
@@ -119,7 +149,7 @@
     <!-- Michael -->
     <div class="info-container">
         <div class="photo">
-            <img src="/Images/Team/Michael.jpg"/>
+            <img src="/Images/Team/Michael-2.png"/>
         </div>
 
         <div class="text">
@@ -132,7 +162,7 @@
     <!-- Nick -->
     <div class="info-container">
         <div class="photo">
-            <img src="/Images/Team/Nick.png"/>
+            <img src="/Images/Team/Nick-2.png"/>
         </div>
 
         <div class="text">
@@ -145,7 +175,7 @@
     <!-- Ryan -->
     <div class="info-container">
         <div class="photo">
-            <img src="/Images/Team/Ryan.jpg"/>
+            <img src="/Images/Team/Ryan-2.png"/>
         </div>
 
         <div class="text">
@@ -158,12 +188,12 @@
     <!-- Sharice -->
     <div class="info-container">
         <div class="photo">
-            <img src="/Images/Team/Sharice.png"/>
+            <img src="/Images/Team/Sharice-2.png"/>
         </div>
 
         <div class="text">
             <h1>Sharice</h1>
-            <p>I have details.</p>
+            <p>I enjoy learning, eating, sleeping, reading, and dancing. :)</p>
         </div>
 
     </div>

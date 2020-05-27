@@ -1,110 +1,184 @@
 {% extends 'base.html' %}
 
+{% block head %}
+    <title>My Autamas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
 {% block csstyle %}
     <style>
+        /* The following link provides information about media queries: https://www.w3schools.com/css/css_rwd_mediaqueries.asp */
+        /* Extra small devices (phones, 700px and down) */
+        @media only screen and (max-width: 700px) {
         .create_button{
-            background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
-            height: 100%;
-            width: 100%;
-            padding: 20px;
-            color:white;
-            font-size: 5vw;
-            text-align: center;
-            border-radius: 14px;
+                background: #ff4e50;
+                height: 50vw;
+                width: 50vw;
+                color:white;
+                font-size: 25vw;
+                text-align: center;
+                vertical-align: middle;
+                border-radius: 50%;
+            }
+
+            .grid-container{
+                display: grid;
+                grid-template-columns: auto;
+                /*grid-gap: 1vw;*/
+            }
+
+            .profile_card{
+                padding: 4vw;
+                /*background: purple;*/
+            }
+
+            div.profile-container {
+                text-align: center;
+            }
+
+            .circular--portrait {
+                width: 50vw;
+                height: auto;
+                overflow: hidden;
+                border-radius: 50%;
+                display: inline-block;
+            }
+
+            .circular--portrait img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .autama_description{
+                text-align: left;
+                margin: auto;
+                width: 70%;
+            }
         }
 
-        .flexbox-wrapper {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            background: #c299ff
-        }
+        /* Medium devices (landscape tablets, 701px and up) */
+        @media only screen and (min-width: 701px) {
+            .create_button{
+                background: #ff4e50;
+                height: 20vw;
+                width: 20vw;
+                color:white;
+                font-size: 10vw;
+                text-align: center;
+                vertical-align: middle;
+                border-radius: 50%;
+            }
 
-        .flexbox-image {
-            width: 125px;
-            float: left;
-            padding-top: 10px;
-            padding-left: 20px;
-        }
+            .grid-container{
+                display: grid;
+                grid-template-columns: auto auto auto;
+                grid-gap: 1vw;
+            }
 
-        .circular--portrait {
-            /*position: relative;*/
-            width: 100%;
-            height: auto;
-            overflow: hidden;
-            border-radius: 50%;
-            display: inline-block;
-        }
+            .profile_card{
+                /*padding: 4vw;*/
+                width: 29vw;
+                /*background: purple;*/
+            }
 
-        .circular--portrait img {
-            max-width: 100%;
-            height: auto;
-        }
+            div.profile-container {
+                text-align: center;
+            }
 
-        .autama_description{
-            float: left;
-            padding-left: 20px;
-            width: 85%;
+            .circular--portrait {
+                width: 20vw;
+                height: auto;
+                overflow: hidden;
+                border-radius: 50%;
+                display: inline-block;
+            }
+
+            .circular--portrait img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .autama_description{
+                text-align: left;
+                margin: auto;
+                width: 70%;
+            }
         }
     </style>
 {% endblock %}
 
 {% block content %}
-    <div style="width: 80%;margin: auto; padding-top: 50px;">
+    <div style="width: 90%;margin: auto; padding-top: 1vw;">
         <h1>My Autamas</h1>
         <br>
-        
-        <div>
-            <p>Each user is allowed {{ my_autama_limit }} My Autama creations.</p>
-            <p>Remaining My Autama creations: {{ difference }}</p>
-            <br>
-        </div>
 
-        {% if user.my_Autama < my_autama_limit %}
-            <form action="/CreateAutama/">
-                <input type="submit" value="Create an Autama" class="create_button"/>
-            </form>
+        <div class="grid-container">
+            <div class="profile_card">
+                <div class="profile-container">
+                    <form action="/CreateAutama/">
+                        <input type="submit" value="+" class="create_button"/>
+                    </form>
 
-            <br>
-            <br>
-        {% else %}
-            <p>Sorry, you have used up all your My Autama creations.</p>
-            <br>
-            <br>
-        {% endif %}
+                    <a href="/CreateAutama/" style="color: black;">
+                        <div class="autama_description">
+                            <h2 style="padding-top: 0.4vw; text-align: center;"><b>Create an Autama</b></h2>
+                            {% if request.user.is_superuser %}
+                                <p>As a super user, you can create as many my Autamas as you want.</p>
+                            {% else %}
+                                <p>Each user is allowed to create up to {{ my_autama_limit }} My Autamas total.</p>
+                                <p><b>Remaining My Autama creations:</b> {{ difference }}</p>
+                            {% endif %}
+                        </div>
+                    </a>
+                </div>
+            </div>
 
-        <div>
             {% for autama in my_autamas %}
-                <a href="{% url 'Chat' pk=autama.pk %}" style="color: black;">
-                    <div class="flexbox-wrapper">
-                        <div class="flexbox-image">
+                <div class="profile_card">
+                    <div class="profile-container">
+                        <a href="{% url 'Chat' pk=autama.pk %}" style="color: black;">
                             <div class="circular--portrait">
                                 <img src="{{ autama.picture.url }}" alt="Avatar"/>
                             </div>
-                        </div>
 
-                        <div class="autama_description">
-                            <h5><b>{{ autama.first }} {{ autama.last }} </b></h5>
-                            <p>
-                                <b>Description:</b>
-                                {{ autama.interest1 }}
-                                {{ autama.interest2 }}
-                                {{ autama.interest3 }}
-                            </p>
-                            <p>
-                                <b>Creator:</b>
-                                {{ autama.creator }}
-                            </p>
-                            <p>
-                                <b>Followers:</b>
-                                {{ autama.nummatches }}
-                            </p>
-                        </div>
+                            <div class="autama_description">
+                                <h2 style="color: #6041ce; text-align: center;"><b>{{ autama.first }} {{ autama.last }}</b></h2>
+
+                                <p>
+                                    <b>Creator: </b>
+                                    {{ autama.creator }}
+                                </p>
+
+                                <p>
+                                    <h4 style="color: #ff4e50;"><b>About</b></h4>
+                                </p>
+                                <p>
+                                    {{ autama.interest1 }}
+                                    {{ autama.interest2 }}
+                                    {{ autama.interest3 }}
+                                </p>
+
+                                <p>
+                                    <b>Followers:</b>
+                                    {{ autama.nummatches }}
+                                </p>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            
-                <br>
+                </div>
             {% endfor %}
+
+            <!--DO NOT DELETE the following 4 lines. They are used for keep the grid even.-->
+             <div class="profile_card">
+                    <div class="profile-container">
+                    </div>
+             </div>
+
+            <!--DO NOT DELETE the following 4 lines. They are used for keep the grid even.-->
+            <div class="profile_card">
+                    <div class="profile-container">
+                    </div>
+             </div>
         </div>
     </div>
 {% endblock %}

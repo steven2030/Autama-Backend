@@ -6,7 +6,7 @@ from django.shortcuts import reverse
 class AutamaGeneral(models.Model):
     currentCount = models.IntegerField() # Index of current picture's spot
     totalCount = models.IntegerField() # Total amount of pictures
-    autamaLimit = models.IntegerField(default=3) # Maximum autamas allowed for users to create
+    autamaLimit = models.IntegerField(default=10) # Maximum autamas allowed for users to create
 
     def __str__(self):
         return '{currentCount} {totalCount}'.format(currentCount=self.currentCount, totalCount=self.totalCount)
@@ -17,7 +17,7 @@ class AutamaProfile(models.Model):
     picture = models.ImageField(upload_to='Images', blank=False)
     first = models.CharField(max_length=100)
     last = models.CharField(max_length=100)
-    nummatches = models.IntegerField(default=0, editable=False)
+    nummatches = models.IntegerField(default=0)
     owner = models.CharField(max_length=100, default='FREE')
     pickle = models.CharField(max_length=100, default='PICKLE')
     interest1 = models.CharField(max_length=100)
