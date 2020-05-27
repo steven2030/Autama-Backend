@@ -257,8 +257,8 @@ class FindMatches(LoginRequiredMixin, View):
             # id doesn't exist
             else:
                 while True:
-                    user.currentAutama = autama_id_next(user.currentAutama)
-                    user.nextAutama = autama_id_next(user.currentAutama)
+                    user.currentAutama = autama_id_next(user.id, user.currentAutama)
+                    user.nextAutama = autama_id_next(user.id, user.currentAutama)
                     user.save()
                     if user.currentAutama > ag.currentCount:
                         data = {
@@ -276,7 +276,7 @@ class FindMatches(LoginRequiredMixin, View):
                 autama = autama_get_profile(user.nextAutama)
             # id doesn't exist
             else:
-                user.nextAutama = autama_id_next(user.currentAutama)
+                user.nextAutama = autama_id_next(user.id, user.currentAutama)
                 user.save()
                 autama = autama_get_profile(user.nextAutama)
 
@@ -305,17 +305,11 @@ class FindMatches(LoginRequiredMixin, View):
         # DB Lock: with transaction.atomic():
         user = User.objects.get(pk=request.user.id)
         user.currentAutama = user.nextAutama
-        user.nextAutama = autama_id_next(user.currentAutama)
+        user.nextAutama = autama_id_next(user.id, user.currentAutama)
         user.save()
 
         ret = False
         aid = data.get('AID')
-
-        # Test to see if past current Autama Limit
-        ag = AutamaGeneral.objects.get(pk=1)
-        if user.currentAutama > ag.currentCount:
-            print(str(user.currentAutama) + " " + str(ag.currentCount))
-            return redirect('SeenAll')
 
         # Handle matching / unmatching and follower update
         if data.get('match') == '1':
@@ -331,6 +325,11 @@ class FindMatches(LoginRequiredMixin, View):
                 autama.nummatches -= 1
                 autama.save()'''
 
+        # Test to see if past current Autama Limit
+        ag = AutamaGeneral.objects.get(pk=1)
+        if user.currentAutama > ag.currentCount:
+            print(str(user.currentAutama) + " " + str(ag.currentCount))
+            return redirect('SeenAll')
 
         if ret:
             return HttpResponse(status=200)
@@ -357,11 +356,11 @@ def autama_id_exist(autama_id):
 
 # Takes an integer ID and returns the next valid autama id.
 # returns int of next valid autama id or -1 if reached end of the list
-def autama_id_next(autama_id):
+def autama_id_next(user_id, autama_id):
     autama_id += 1
     ag = AutamaGeneral.objects.get(pk=1)
     while True:
-        if autama_id_exist(autama_id):
+        if autama_id_exist(autama_id) and not autama_is_matched(user_id, autama_id):
             return autama_id
         else:
             autama_id += 1
@@ -389,8 +388,8 @@ class SeenAll(LoginRequiredMixin, View):
         user = User.objects.get(pk=request.user.id)
         ag = AutamaGeneral.objects.get(pk=1)
         if retval == "again":
-            user.currentAutama = autama_id_next(0)
-            user.nextAutama = autama_id_next(user.currentAutama)
+            user.currentAutama = autama_id_next(user.id, 0)
+            user.nextAutama = autama_id_next(user.id, user.currentAutama)
         else:
             user.currentAutama = ag.currentCount + 1;
         user.save()
