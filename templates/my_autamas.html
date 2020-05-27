@@ -122,8 +122,12 @@
                     <a href="/CreateAutama/" style="color: black;">
                         <div class="autama_description">
                             <h2 style="padding-top: 0.4vw; text-align: center;"><b>Create an Autama</b></h2>
-                            <p>Each user is allowed to create up to {{ my_autama_limit }} My Autamas total.</p>
-                            <p><b>Remaining My Autama creations:</b> {{ difference }}</p>
+                            {% if request.user.is_superuser %}
+                                <p>As a super user, you can create as many my Autamas as you want.</p>
+                            {% else %}
+                                <p>Each user is allowed to create up to {{ my_autama_limit }} My Autamas total.</p>
+                                <p><b>Remaining My Autama creations:</b> {{ difference }}</p>
+                            {% endif %}
                         </div>
                     </a>
                 </div>
