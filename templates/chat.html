@@ -608,6 +608,7 @@
             <div id="report" class="report_box" >
                 <h1>Report Autama</h1>
                 <form id="reportform" method="POST" action="/send_report_email/" enctype="text/plain">
+                    <input type="hidden" id="sender" name="sender" value="{{ user }}">
                     <input type="hidden" id="autama_info" name='autama_info' value="{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
                     <input style="margin: 15px 15px 15px 15px" type="checkbox" id="inappropriate" name="option1" value="inappropriate">
                     <label for="option1"> Inappropriate content</label><br>

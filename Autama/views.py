@@ -637,12 +637,13 @@ def testdata(request):
 # Generates the message that will be sent based on checkboxes
 def build_report_msg(request):
     a_info = request.POST.get('autama_info')
+    user = request.POST.get('sender')
     inapp = request.POST.get('option1')
     broken = request.POST.get('option2')
     boring = request.POST.get('option3')
     other = request.POST.get('option4')
 
-    msg = 'Report for: ' + a_info + '\n'
+    msg = 'Report for: ' + a_info + '\n' + 'From user: ' + user + '\n'
     if inapp:
         msg += 'Inappropriate\n'
     if broken:
