@@ -53,12 +53,26 @@
                 width: 45px;
                 height: 30px;
             }
+	    
+	    @media screen and (min-width:561px){
+                .middle {
+                    float: none;
+                    display: inline;
+                    vertical-align: center;
+                    margin-left: 36%;
+                }
+        }
+
+            @media screen and (max-width:561px){
+                .middle {
+                    float: none;
+                    display: inline;
+                    vertical-align: center;
+                    margin-left: 26%;
+                }
+        }
         
-            .middle {
-                float: none;
-                display: inline;
-                vertical-align: center;
-            }
+
 
     </style>
 
@@ -107,7 +121,7 @@ function matchNotifications() {
 			<div class="bottom">
                     <ul class="nav nav-tabs">
                             <li class="nav-item"><a href="/accounts/profile/"> <img class="bitmap" src="/Images/images/swipe-icon.png" style="margin-left: 25px;"> </a></li>
-                            <li class="dropdown nav-item middle" style="margin-left: 41%;">
+                            <li class="dropdown nav-item middle">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" > <img class="logo-a" src="/Images/images/not-selected-autama-logo.png"> <b class="caret" style="color: goldenrod"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="/FindMatches/">FindMatches</a></li>
