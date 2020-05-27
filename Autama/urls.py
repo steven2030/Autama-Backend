@@ -49,6 +49,7 @@ urlpatterns = [
     path('SeenAll/', main_page_views.SeenAll.as_view(), name="SeenAll"),
     path('MyAutamas/', main_page_views.MyAutamas.as_view(), name='MyAutamas'),
     path('CreateAutama/', main_page_views.CreateAutama.as_view(), name='CreateAutama'),
+    path('send_report_email/', main_page_views.SendReportEmail.as_view(), name='SendReportEmail'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
