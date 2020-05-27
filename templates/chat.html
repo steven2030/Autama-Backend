@@ -321,10 +321,6 @@
                 div = document.getElementById("report").style.display="none";
             }
         }
-
-        function hideReport() {
-            div = document.getElementById("report").style.display="none";
-        }
         
         /*
         A little smashed up of the two links below to create a function for submitting with the enter key.
@@ -523,6 +519,28 @@
 
             </div>
 
+
+            <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
+            <div id="report" class="report_box" >
+                <h1>Report Autama</h1>
+                <form id="reportform" method="POST" action="/send_report_email/" enctype="text/plain">
+                    <input type="hidden" id="autama_info" name='autama_info' value="{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
+                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="inappropriate" name="option1" value="inappropriate">
+                    <label for="option1"> Inappropriate content</label><br>
+                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="broken" name="option2" value="broken">
+                    <label for="option2"> Autama is broken</label><br>
+                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="boring" name="option3" value="boring">
+                    <label for="option3"> Autama is boring</label><br>
+                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="other" name="option4" value="other">
+                    <label for="option4"> Other</label><br><br>
+                    <input type="submit" id="submitReportBtn" name="submitReport" value="Submit"/>
+                    <input type="button" id="hideReportBtn" name="hideReport" value="Close"/>
+                    {%csrf_token%}
+                </form>
+            </div>
+            <div id="report_response"></div>
+            <br>
+
             <script>
                 // Handle submitting user message to server and handling response
                 $("#send_button").click(function() {
@@ -617,6 +635,22 @@
                     return convertTime(text);
                 });
 
+                /* Email report submission handling */
+                $("#reportform").submit(function() {
+                    $("#report_response").html("Sending report..."); /* udpate div that we're working on it */
+                    /* .post signature is .post(action, data, success_callback_handler)
+                       .serialize() converts the elements of the <form> into a text string */
+                    $.post($(this).attr('action'), $(this).serialize(), function(response) {
+                        $("#report_response").html(response); /* update div with actual server response */
+                    });
+                    return false; /* don't use the actual HTML form submit process (we use jQuery .post()) */
+                });
+
+                $("#hideReportBtn").click(function() {
+                    $("#report").hide();
+                    $("#report_response").html('');
+                });
+
                 $(function() {
                     $("#additional-feedback").dialog({
                         resizable: false,
@@ -656,12 +690,12 @@
                                 $("#additional-feedback").dialog('open');
                                 $(this).dialog("close");
                                 hideReport();
-                                $('#reportform').submit();
+                                /*$('#reportform').submit();*/
                             },
                             No: function() {
                                 $(this).dialog("close");
                                 hideReport();
-                                $('#reportform').submit();
+                                /*$('#reportform').submit();*/
                             }
                         }
                     });
@@ -684,32 +718,9 @@
                     });
                 });
             </script>
-
-            <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
-            <div class="report_box" id="report">
-                <!-- <form action="???" method="post"> -->
-                <!-- include csrf_token here -->
-                <h1>Report Autama</h1>
-                <form id="reportform" method="POST" enctype="text/plain">
-                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option1" name="option1" value="Option 1">
-                    <label for="option1"> Inappropriate content</label><br>
-                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option2" name="option2" value="Option 2">
-                    <label for="option2"> Autama is broken</label><br>
-                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option3" name="option3" value="Option 3">
-                    <label for="option3"> Autama is boring</label><br>
-                    <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option4" name="option4" value="Option 4">
-                    <label for="option4"> Other</label><br><br>
-
-                    <!-- jQuery dialog-confirm code -->
-                    <input type="hidden" name="submitReport" value="Submit"/>
-                    <input type="button" id="submitReport" value="Submit"/>
-
-                    <button onclick="hideReport()"/>Close</button>
-                </form>
-            </div>
         {% else %}
-        <section class="match_warning">
-            <p style="font-size: 2.5vw;">I don't talk to strangers.</p>
+            <section class="match_warning">
+                <p style="font-size: 2.5vw;">I don't talk to strangers.</p>
             <p style="font-size: 2.5vw;">Match with me, then we'll talk.</p>
             <br>
             <button onclick="match_with()" class="match_button">Match</button>
