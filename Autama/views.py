@@ -252,18 +252,22 @@ class FindMatches(LoginRequiredMixin, View):
         # a_id =  0 get current autama. This happens upon first page load
         # if a_id = 1 get next autama.  This happens once upon page load and then every swipe.
         if a_id == "0":
-            if autama_id_exist(user.currentAutama):
+            if autama_id_exist(user.currentAutama) and not autama_is_matched(request.user.id, a_id):
                 autama = autama_get_profile(user.currentAutama)
             # id doesn't exist
             else:
-                user.currentAutama = autama_id_next(user.currentAutama)
-                user.nextAutama = autama_id_next(user.currentAutama)
-                user.save()
-                if user.currentAutama > ag.currentCount:
-                    data = {
-                        'redirect': '/SeenAll/',
-                    }
-                    return JsonResponse(data)
+                while True:
+                    user.currentAutama = autama_id_next(user.currentAutama)
+                    user.nextAutama = autama_id_next(user.currentAutama)
+                    user.save()
+                    if user.currentAutama > ag.currentCount:
+                        data = {
+                            'redirect': '/SeenAll/',
+                        }
+                        return JsonResponse(data)
+                    if autama_id_exist(user.currentAutama) and not autama_is_matched(request.user.id, a_id):
+                        autama = autama_get_profile(user.currentAutama)
+                        break
 
         # return next id
         # if a_id = 1 get next autama.  This happens once upon page load and then every swipe.
@@ -306,6 +310,12 @@ class FindMatches(LoginRequiredMixin, View):
         ret = False
         aid = data.get('AID')
 
+        # Test to see if past current Autama Limit
+        ag = AutamaGeneral.objects.get(pk=1)
+        if user.currentAutama > ag.currentCount:
+            print(str(user.currentAutama) + " " + str(ag.currentCount))
+            return redirect('SeenAll')
+
         # Handle matching / unmatching and follower update
         if data.get('match') == '1':
             ret = match(request.user.id, aid)
@@ -320,11 +330,6 @@ class FindMatches(LoginRequiredMixin, View):
                 autama.nummatches -= 1
                 autama.save()'''
 
-
-        # Test to see if past current Autama Limit
-        ag = AutamaGeneral.objects.get(pk=1)
-        if user.currentAutama > ag.currentCount:
-            return redirect('SeenAll')
 
         if ret:
             return HttpResponse(status=200)
