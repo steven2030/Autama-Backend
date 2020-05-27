@@ -235,10 +235,12 @@ class FindMatches(LoginRequiredMixin, View):
         ag = get_meta()
         a_id = request.GET.get('AID')
 
+        matches = Matches.objects.all().filter(userID=user.id).count()
+        print(matches)
         # Returns the base HTML if no AID parameter.  This is first page load.
         if a_id is None:
             user = User.objects.get(id=request.user.id)
-            return render(request, 'find_matches.html', {'autama_id': user.currentAutama})
+            return render(request, 'find_matches.html', {'autama_id': user.currentAutama, 'num_matches': matches})
 
         # Check if the user has swiped all current Autama & redirect.
         if user.currentAutama > ag.currentCount:
@@ -453,7 +455,9 @@ class MyAutamas(LoginRequiredMixin, View):
         my_autama_limit = get_my_autama_limit()
         current_my_autama_count = user.my_Autama
         difference = my_autama_limit - current_my_autama_count
-        my_autamas = {'my_autamas': autama_profiles, 'my_autama_limit': my_autama_limit, 'difference': difference}
+        matches = Matches.objects.all().filter(userID=user.id).count()
+        my_autamas = {'my_autamas': autama_profiles, 'my_autama_limit': my_autama_limit, 'difference': difference,
+                      'num_matches': matches}
         return render(request, 'my_autamas.html', my_autamas)
 
 
