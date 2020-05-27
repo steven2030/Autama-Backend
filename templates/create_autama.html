@@ -91,7 +91,7 @@
         <h1>Create an Autama</h1>
         <br>
 
-        {% if user.my_Autama < my_autama_limit %}
+        {% if user.my_Autama < my_autama_limit or request.user.is_superuser %}
             <div>
                 {% if user.my_Autama == 0 %}
                     <p>Hi there!</p>
