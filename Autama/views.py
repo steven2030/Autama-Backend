@@ -22,8 +22,10 @@ from AutamaProfiles.models import AutamaProfile, AutamaGeneral
 from AutamaProfiles.views import get_meta, create_custom_autama, get_my_autama_limit
 from django.utils import timezone
 from Nucleus.ham import Ham
-from django.core.mail import send_mail, BadHeaderError
 
+from django.core.mail import send_mail
+from Autama.settings import EMAIL_HOST_USER
+from Autama.settings import EMAIL_RECIPIENTS
 
 def claim_autama(user_pk, autama_pk):
     autama = AutamaProfile.objects.get(pk=autama_pk)  # Validation needed here
@@ -627,3 +629,44 @@ def testdata(request):
         except IntegrityError as e:
             if 'UNIQUE constraint' in str(e.args):
                 return HttpResponse("Already Added")
+
+
+# Generates the message that will be sent based on checkboxes
+def build_report_msg(request):
+    a_info = request.POST.get('autama_info')
+    inapp = request.POST.get('option1')
+    broken = request.POST.get('option2')
+    boring = request.POST.get('option3')
+    other = request.POST.get('option4')
+
+    msg = 'Report for: ' + a_info + '\n'
+    if inapp:
+        msg += 'Inappropriate\n'
+    if broken:
+        msg += 'Autuma is broken\n'
+    if boring:
+        msg += 'Autuma is boring\n'
+    if other:
+        msg += 'Other issue\n'
+
+    msg += 'End of report\n'
+    return msg
+
+
+class SendReportEmail(LoginRequiredMixin, View):
+    def get(self, request):
+        return HttpResponse('GET not allowed, please use the provided form to submit a report')
+
+    def post(self, request):
+        msg = build_report_msg(request)
+        try:
+            # this will fail if there is an authentication error, etc.
+            # recipients must be single string or a list.  Since the configparser doesn't create a list automatically,
+            # need to .split() the recipients on commas - works fine if it's already just a single recipient
+            email_response = send_mail('Autama Report', msg, EMAIL_HOST_USER, EMAIL_RECIPIENTS.split(','), fail_silently=False)
+        except:
+            email_response = 0
+        if email_response == 1:
+            return HttpResponse("Report submitted!") # 1 if successful
+        else:
+            return HttpResponse("Uh oh, report failed to send")
