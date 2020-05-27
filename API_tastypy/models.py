@@ -26,7 +26,7 @@ class UnmatchedAutamaResource(ModelResource):
         queryset = AutamaProfile.objects.all()
         resource_name = 'unmatchedautama'
         fields = ['id', 'creator', 'first', 'last', 'interest1', 'interest2', 'interest3', 'interest4', 'interest5',
-                  'interest6']
+                  'interest6', 'picture']
 
         authentication = BasicAuthentication()
         authorization = UnmatchedAutamaAuthorization()
