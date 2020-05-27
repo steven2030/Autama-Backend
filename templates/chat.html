@@ -589,13 +589,13 @@
             <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 
-            <div id="dialog-confirm" title="Report submitted, thank you!">
+            <div id="prompt-feedback" title="Report submitted, thank you!">
                 <p>Would you like to provide additional feedback?</p>
             </div>
 
             <div id="additional-feedback" title="Feedback">
                 <form id="feedback-form" method="POST" enctype="text/plain">
-                    <textarea rows="5" cols="30">Enter feedback here...</textarea>
+                    <textarea rows="5" cols="30" placeholder="Enter feedback here..."></textarea>
                 </form>
             </div>
 
@@ -754,12 +754,14 @@
 
                 /* Email report submission handling */
                 $("#reportform").submit(function() {
+                    $("#report_response").show();
                     $("#report_response").html("Sending report..."); /* udpate div that we're working on it */
                     /* .post signature is .post(action, data, success_callback_handler)
                        .serialize() converts the elements of the <form> into a text string */
                     $.post($(this).attr('action'), $(this).serialize(), function(response) {
                         $("#report_response").html(response); /* update div with actual server response */
                     });
+                    $("#prompt-feedback").dialog('open');
                     return false; /* don't use the actual HTML form submit process (we use jQuery .post()) */
                 });
 
@@ -791,7 +793,7 @@
                         }
                     });
 
-                    $("#dialog-confirm").dialog({
+                    $("#prompt-feedback").dialog({
                         resizable: false,
                         height: "auto",
                         autoOpen: false,
@@ -807,12 +809,11 @@
                                 $("#additional-feedback").dialog('open');
                                 $(this).dialog("close");
                                 hideReport();
-                                /*$('#reportform').submit();*/
                             },
-                            No: function() {
+                            "No": function() {
                                 $(this).dialog("close");
-                                hideReport();
-                                /*$('#reportform').submit();*/
+                                $("#report").hide();
+                                $("#report_response").fadeOut(3000);
                             }
                         }
                     });
@@ -831,7 +832,7 @@
                     });
 
                     $('#submitReport').on('click', function(e) {
-                        $("#dialog-confirm").dialog('open');
+                        $("#prompt-feedback").dialog('open');
                     });
                 });
             </script>
