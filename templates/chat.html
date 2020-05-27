@@ -786,9 +786,13 @@
                             "Submit": function() {
                                 /* submit feedback here */
                                 $(this).dialog("close");
+                                $("#report").fadeOut(3000);
+                                $("#report_response").fadeOut(3000);
                             },
                             "Close": function() {
                                 $(this).dialog("close");
+                                $("#report").fadeOut(3000);
+                                $("#report_response").fadeOut(3000);
                             }
                         }
                     });
@@ -812,7 +816,7 @@
                             },
                             "No": function() {
                                 $(this).dialog("close");
-                                $("#report").hide();
+                                $("#report").fadeOut(3000);
                                 $("#report_response").fadeOut(3000);
                             }
                         }
