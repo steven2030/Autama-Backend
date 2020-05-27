@@ -623,6 +623,9 @@
             <br>
 
             <script>
+		// For counting how many times a user hit send
+                var sent = 0;
+
                 // Handle submitting user message to server and handling response
                 $("#send_button").click(function() {
 
@@ -644,6 +647,10 @@
 
                     $(".lite-chatbox").append(msg);
                     $("#input_textbox").val("");
+			
+                    // Counting user hitting send button
+                    sent += 1;
+			
                     if (!$("#type_image")[0]) {
                         // Typing image - This is removed upon successful ajax return
                         let img = document.createElement('img');
@@ -701,6 +708,31 @@
                             msg.appendChild(timebox);
 
                             $(".lite-chatbox").append(msg);
+				
+                            // Subtract one because Autama sent response
+                            sent -= 1;
+
+                            // Add typing thing if user sent more than one message
+                            if (sent > 0) {
+                                if (!$("#type_image")[0]) {
+                                    // Typing image - This is removed upon successful ajax return
+                                    let img = document.createElement('img');
+                                    img.id = 'type_image';
+                                    img.classList.add('cleft');
+                                    img.src = '../../Images/Images/type.gif';
+
+                                    $(".lite-chatbox").append(img);
+                                } else {
+                                    $("#type_image").remove();
+                                    // Typing image - This is removed upon successful ajax return
+                                    let img = document.createElement('img');
+                                    img.id = 'type_image';
+                                    img.classList.add('cleft');
+                                    img.src = '../../Images/Images/type.gif';
+
+                                    $(".lite-chatbox").append(img);
+                                }
+                            }
 
                             $('.lite-chatbox').animate({scrollTop: $('.lite-chatbox')[0].scrollHeight}, 0);
                         },
