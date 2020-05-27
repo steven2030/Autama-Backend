@@ -296,6 +296,7 @@ class FindMatches(LoginRequiredMixin, View):
     # Update after a swipe has occured
     # Beware of async requests
     def post(self, request):
+        print(request.POST)
         data = request.POST.copy()
         # handle updating autama position
         # TODO: Add class method to handle?

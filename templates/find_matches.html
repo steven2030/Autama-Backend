@@ -393,9 +393,9 @@
                         });
 
                         // Attempt to handle multiple requests for same card
-                        //if (this.topCard.autamaID >= this.currAutama) {
-                            //this.currAutama = this.topCard.autamaID + 1;
-                        //}
+                        if (this.topCard.autamaID >= this.currAutama) {
+                            this.currAutama = this.topCard.autamaID + 1;
+                        }
                         // wait transition end
                         setTimeout(() => {
                             // remove swiped card
@@ -432,7 +432,7 @@
             }
 
             push(aid) {
-
+                let parentThis = this;
                 let card = document.createElement('div');
                 card.classList.add('card');
 
@@ -492,13 +492,30 @@
                 card.appendChild(chat);
 
                 dislike.addEventListener("click", function() {
-                    console.log("dislike");
+                    $.post('',
+                        { csrfmiddlewaretoken: "{{ csrf_token }}", 'AID': card.autamaID, 'match': -1},
+                        // This is the return function of submitting a match
+                        function(data, status) {
+                            if (data.redirect) {
+                                window.location.replace(data.redirect);
+                            }
+                    });
+                    location.reload();
                 });
                 like.addEventListener("click", function() {
-                    console.log("like");
+                    let autama_id = card.autamaID;
+                    $.post('',
+                        { csrfmiddlewaretoken: "{{ csrf_token }}", 'AID': autama_id, 'match': 1},
+                        // This is the return function of submitting a match
+                        function(data, status) {
+                            if (data.redirect) {
+                                window.location.replace(data.redirect);
+                            }
+                        });
+                    location.reload();
                 });
                 chat.addEventListener("click", function() {
-                    console.log("chat");
+                    window.location.href = "/Chat/" + String(card.autamaID);
                 });
 
                 // Get Random Background Image
