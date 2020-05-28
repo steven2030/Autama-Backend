@@ -442,15 +442,6 @@
         function match_with(){
             document.getElementById("nav_match").click();
         }
-
-        function share_popup() {
-
-        }
-
-        /* https://www.w3schools.com/howto/howto_js_copy_clipboard.asp */
-        function copy_text() {
-
-        }
     </script>
 {% endblock %}
 
@@ -601,10 +592,23 @@
             </form>
         </div>
 
-        <div style="display:none" id="share-popup" title="Share this Autama with others!">
+        <div style="display:none;text-align: center" id="share-popup" title="Share this Autama with others!">
             <br>
-            <p id="shareURL">test</p>
+            <input style="width:75%;" type="text" id="shareURL" value="http://127.0.0.1:8000/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}"></input>
+            <button id="copyBtn" onclick="copyToClipboard()">Copy</button>
         </div>
+
+        <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_copy_clipboard -->
+        <script>
+            function copyToClipboard() {
+                var a_URL = document.getElementById("shareURL");
+                a_URL.select();
+                a_URL.setSelectionRange(0, 99999);
+                document.execCommand("copy");
+                var elem = document.getElementById("copyBtn");
+                elem.innerHTML = "Copied!";
+            }
+        </script>
 
         <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
         <div id="report" class="report_box" >
@@ -848,13 +852,17 @@
                     resizable: false,
                     height: "auto",
                     autoOpen: false,
-                    width: "auto",
+                    width: "400",
                     modal: true,
                     position: {
                         my: "center",
                         at: "top",
                         of: "#lite-chatbox",
                     },
+                    Cancel: function() {
+                        $("#copyBtn").innerHTML = "Copy";
+                        alert(test);
+                    }
                 });
 
                 $('#submitReport').on('click', function(e) {
