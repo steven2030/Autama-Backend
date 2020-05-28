@@ -13,7 +13,7 @@ Add description here.
 ## Build and Run  
 
 ### To Run:
-  * pip install -r requirements.txt
+  * pip3 install -r requirements.txt
   * If this is the first run, create a DB, download a personality dataset, and create a Nucleus
   * python manage.py runserver
   * in a web browser go to: 127.0.0.1:8000 (This should be displayed during server startup)
@@ -35,6 +35,11 @@ Add description here.
 Bugs, Defects, and Failing Test information goes here as needed.
 
   * If you get a transformers.activations error while talking with an Autama, just recreate a nucleus
+  * 5/27/20 - Bugs needing solutions:
+    - first and last name fields during creation at registration not inserted into new Autama
+    - fix missing icons
+    - auto-login at registration(no redirect to login again)
+    - swipe card details are jumbled
 
 
 ## License
