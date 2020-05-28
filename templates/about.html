@@ -3,60 +3,42 @@
 {% load static %}
 
 {% block head %}
-<title>About Us</title>
+    <title>About Us</title>
 {% endblock %}
 
 {% block content %}
-<style>
-    body {               /*in this page, body includes nav bar => no left or top pad*/
-	margin-top: 0%;  /*<!-- this was 50px -->*/
-        padding-left: 0%;   /* <!-- this was 30px-->*/
-	margin-bottom: 5%;   /*<!-- this was 50px--> this part places margin only at body bottom*/
-    }
+    <style>
+        body {               /*in this page, body includes nav bar => no left or top pad*/
+            margin-top: 0%;  /*<!-- this was 50px -->*/
+            padding-left: 0%;   /* <!-- this was 30px-->*/
+            margin-bottom: 5%;   /*<!-- this was 50px--> this part places margin only at body bottom*/
+        }
 
-    .info-container {
-        text-align: left;
-        margin-right: 0%; /*adjusts the row as one object?*/
-	margin-left: 2%; /* <!--this was 0px --> gives row objects total 5%*/
-        padding-left: 0%; /* <!--this was 0px-->*/
-        padding-right: 0%;
-	padding-top: 3%;
-	padding-bottom: 3%; /* <!-- added this -->*/
-    }
+        .info-container {
+            text-align: left;
+            margin-right: 0%; /*adjusts the row as one object?*/
+            margin-left: 2%; /* <!--this was 0px --> gives row objects total 5%*/
+            padding-left: 0%; /* <!--this was 0px-->*/
+            padding-right: 0%;
+            padding-top: 3%;
+            padding-bottom: 3%; /* <!-- added this -->*/
+        }
 
-    .info-container div {
-        display: inline-block;
-        text-align: left;
-	padding-left: 3%; /* adjusts both words and image objects*/
-    }
+        .info-container div {
+            display: inline-block;
+            text-align: left;
+            padding-left: 3%; /* adjusts both words and image objects*/
+        }
 
-    .photo img {
-        max-height: 200px; /*was 200px, then 15% -- should maybe be 175x350 for a 1:2 ratio*/
-        max-width: 350px; /*was 350px then 30%*/
-        object-fit: contain; /*was cover*/
-    }
-
-    .feedback-container {
-        padding-top: 3%;
-        display: none;
-	padding-left: 5%; /*<!-- this indents the popup feedback box-->*/
-	/*<!-- added this line -->*/
-    }
-
-</style>
-
-<script>
-    function showFeedback() {
-        div = document.getElementById("feedback").style.display="block";
-    }
-
-    function hideFeedback() {
-        div = document.getElementById("feedback").style.display="none";
-    }
-</script>
+        .photo img {
+            max-height: 200px; /*was 200px, then 15% -- should maybe be 175x350 for a 1:2 ratio*/
+            max-width: 350px; /*was 350px then 30%*/
+            object-fit: contain; /*was cover*/
+        }
+    </style>
 
 
-<body>
+    <body>
     <!-- ABOUT US -->
     <div class="info-container">
         <!--
@@ -66,15 +48,15 @@
 	-->
         <div class="text">
             <h1> Our Mission </h1>
-	    <p>    </p>
-	    <p> CHANGING THE WORLD - ONE AUTAMA AT A TIME </p>
-	    <p> WITH OPEN SOURCE BATTLE - A.I. MURDER IS NO CRIME </p>
-	    <p> GOOGLE ALEXA CORTANA SIRI HOUND </p>
-	    <p> A CHAMPION WILL RISE FROM THE DIGITAL UNDERGROUND </p>
-	    <p> LET'S CHANGE THE WORLD FOR BETTER THROUGH AUTAMA - YOU, AND I </p>
-	    <p> IF WE ALL JOIN FORCES - THE LIMIT IS THE SKY </p>
+            <p>    </p>
+            <p> CHANGING THE WORLD - ONE AUTAMA AT A TIME </p>
+            <p> WITH OPEN SOURCE BATTLE - A.I. MURDER IS NO CRIME </p>
+            <p> GOOGLE ALEXA CORTANA SIRI HOUND </p>
+            <p> A CHAMPION WILL RISE FROM THE DIGITAL UNDERGROUND </p>
+            <p> LET'S CHANGE THE WORLD FOR BETTER THROUGH AUTAMA - YOU, AND I </p>
+            <p> IF WE ALL JOIN FORCES - THE LIMIT IS THE SKY </p>
         </div>
-    	<br>
+        <br>
     </div>
 
 
@@ -92,20 +74,24 @@
 
 
     <br>
-    <!--  
-    <input onclick="showFeedback()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="feedback" value="Feedback">
-comment goes in here -->
-<!--margin-left:5% in style matches margin given to images()-->
-<input onclick="showFeedback()" style="background-image: linear-gradient(90deg, #FF4E50 50%, #FF4E50 80%); border-style: none;margin-left: 5%;" class="btn btn-info" style="width:100px;position: absolute; top: 50%; transform: translateY(-50%)translateX(-50%); left: 50%;" name="feedback" value="Feedback">
-    <div class="feedback-container" id="feedback">
-        <form id="feedbackform">
-            <textarea id="userFeedback" rows="5" cols="60" placeholder="Any comments, concerns, or suggestions?"></textarea>
-            <br>
-            <input type="submit" name="Submit" value="Submit">
-            <button onclick="hideFeedback()">Close</button>
+
+    <!-- Feedback -->
+    <!-- jQuery dialog code here: https://stackoverflow.com/questions/40939099/jquery-form-submit-with-confirmation-in-a-modal -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <button id="display-feedback-btn">Feedback</button>
+
+    <div style="display: none" id="additional-feedback" title="Feedback">
+        <form id="feedback-form" method="POST" action="/send_feedback_email/" enctype="text/plain">
+            <input type="hidden" id="sender" name="sender" value="{{ user }}">
+            <textarea rows="5" cols="40" name="feedback" placeholder="Enter feedback here..."></textarea>
+            {% csrf_token %}
         </form>
     </div>
-
+    <div id="feedback-response" style="margin-left:30px"></div>
+    <br>
 
     <!-- Aaron -->
     <div class="info-container">
@@ -201,6 +187,56 @@ comment goes in here -->
 
     </div>
 
-</body>
+    </body>
+
+
+    <script>
+        $(function() {
+            $(window).resize(function() {
+                $("#additional-feedback").dialog("option", "position", {my: "center", at: "center", of: window});
+            });
+
+            $('#feedback-form').submit(function() {
+                $("#feedback-response").show();
+                $("#feedback-response").html("Sending feedback...");
+                $.post($(this).attr('action'), $(this).serialize(), function(response) {
+                    $("#feedback-response").html(response);
+                });
+                return false;
+            });
+
+
+            $("#additional-feedback").dialog({
+                resizable: false,
+                height: "auto",
+                autoOpen: false,
+                width: "auto",
+                modal: true,
+                position: {
+                    my: "center",
+                    at: "center",
+                    of: window,
+                },
+                buttons: {
+                    "Submit": function() {
+                        $('#feedback-form').submit();
+                        $(this).dialog("close");
+                        $("#feedback-response").fadeOut(3000);
+                    },
+                    "Close": function() {
+                        $(this).dialog("close");
+                    }
+                },
+                create: function() {
+                    $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
+                    $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
+                },
+            });
+
+            $('#display-feedback-btn').click(function() {
+                $("#additional-feedback").dialog('open');
+            });
+        });
+    </script>
 
 {% endblock %}

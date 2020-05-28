@@ -675,8 +675,8 @@
                 {%csrf_token%}
             </form>
         </div>
-        <div id="report_response" style="margin-left:30px"></div>
-        <div id="feedback_response" style="margin-left:30px"></div>
+        <div id="report-response" style="margin-left:30px"></div>
+        <div id="feedback-response" style="margin-left:30px"></div>
         <br>
 
         <script>
@@ -813,29 +813,29 @@
 
             /* Email report submission handling */
             $("#reportform").submit(function() {
-                $("#report_response").show();
-                $("#report_response").html("Sending report..."); /* udpate div that we're working on it */
+                $("#report-response").show();
+                $("#report-response").html("Sending report..."); /* udpate div that we're working on it */
                 /* .post signature is .post(action, data, success_callback_handler)
                    .serialize() converts the elements of the <form> into a text string */
                 $.post($(this).attr('action'), $(this).serialize(), function(response) {
-                    $("#report_response").html(response); /* update div with actual server response */
+                    $("#report-response").html(response); /* update div with actual server response */
                 });
                 $("#prompt-feedback").dialog('open');
                 return false; /* don't use the actual HTML form submit process (we use jQuery .post()) */
             });
 
             $('#feedback-form').submit(function() {
-                $("#feedback_response").show();
-                $("#feedback_response").html("Sending feedback...");
+                $("#feedback-response").show();
+                $("#feedback-response").html("Sending feedback...");
                 $.post($(this).attr('action'), $(this).serialize(), function(response) {
-                    $("#feedback_response").html(response);
+                    $("#feedback-response").html(response);
                 });
                 return false;
             });
 
             $("#hideReportBtn").click(function() {
                 $("#report").hide();
-                $("#report_response").html('');
+                $("#report-response").html('');
             });
 
             $(function() {
@@ -855,18 +855,18 @@
                             $('#feedback-form').submit();
                             $(this).dialog("close");
                             $("#report").fadeOut(3000);
-                            $("#report_response").fadeOut(3000);
-                            $("#feedback_response").fadeOut(3000);
+                            $("#report-response").fadeOut(3000);
+                            $("#feedback-response").fadeOut(3000);
                         },
                         "Close": function() {
                             $(this).dialog("close");
                             $("#report").fadeOut(3000);
-                            $("#report_response").fadeOut(3000);
+                            $("#report-response").fadeOut(3000);
                         }
                     },
                     close: function() {
                         $("#report").fadeOut(3000);
-                        $("#report_response").fadeOut(3000);
+                        $("#report-response").fadeOut(3000);
                     },
                     create: function() {
                         $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
@@ -898,7 +898,7 @@
                             click: function() {
                                 $(this).dialog("close");
                                 $("#report").fadeOut(3000);
-                                $("#report_response").fadeOut(3000);
+                                $("#report-response").fadeOut(3000);
                             },
                         }
                     ],
@@ -908,7 +908,7 @@
                     },
                     close: function() {
                         $("#report").fadeOut(3000);
-                        $("#report_response").fadeOut(3000);
+                        $("#report-response").fadeOut(3000);
                     },
                 });
 
