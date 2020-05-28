@@ -167,7 +167,10 @@
           });
 
     }
-
+	    
+        function aa() {
+        parent.location.reload();
+    }
 
 
     function fileLoad(ele){
@@ -190,6 +193,7 @@
             },
             success: function (responseStr) {
                // successfully change
+	       aa();
                $("#avatar").attr("src", JSON.parse(rchengedesponseStr)['avatar'] + "?a"+Date());
                alert("Successfully changed");
             }
