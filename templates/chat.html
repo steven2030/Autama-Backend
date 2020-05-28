@@ -756,7 +756,9 @@
             });
 
             $(window).resize(function() {
-               $("#share-popup").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
+                $("#prompt-feedback").dialog("option", "position", {my: "center", at: "bottom", of: "#lite-chatbox"});
+                $("#additional-feedback").dialog("option", "position", {my: "center", at: "bottom", of: "#lite-chatbox"});
+                $("#share-popup").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
             });
 
             /* Email report submission handling */
@@ -794,9 +796,9 @@
                     width: "auto",
                     modal: true,
                     position: {
-                        my: "left",
-                        at: "left",
-                        of: "#reportform"
+                        my: "center",
+                        at: "bottom",
+                        of: "#lite-chatbox",
                     },
                     buttons: {
                         "Submit": function() {
@@ -821,9 +823,9 @@
                     width: "auto",
                     modal: true,
                     position: {
-                        my: "left",
-                        at: "left",
-                        of: "#reportform"
+                        my: "center",
+                        at: "bottom",
+                        of: "#lite-chatbox",
                     },
                     buttons: {
                         "Yes": function() {
