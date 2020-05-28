@@ -381,7 +381,8 @@ def autama_get_profile(autama_id):
 # redirects to MyMatches page.
 class SeenAll(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'seenall.html')
+        matches = Matches.objects.all().filter(userID=request.user.id).count()
+        return render(request, 'seenall.html', {'num_matches': matches})
 
     def post(self, request):
         data = request.POST.copy()
