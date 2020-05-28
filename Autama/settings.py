@@ -29,7 +29,7 @@ SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 
 
-ALLOWED_HOSTS = ['autama.org','localhost', '127.0.0.1', 'autama-dev.ipq.co','52.32.28.117', '18.236.187.114', '10.0.2.2']
+ALLOWED_HOSTS = ['autama.org','localhost', '127.0.0.1', 'autama-dev2.ipq.co','52.38.158.185', '18.236.187.114', '10.0.2.2']
 
 
 # Application definition
