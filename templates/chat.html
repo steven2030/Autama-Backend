@@ -472,8 +472,8 @@
                             <p class="three-dots"></p>
                         </a>
                         <ul class="dropdown-menu">
+                                <li id="shareBtn"><a onclick="">Share</a></li>
                             {% if is_matched %}
-                                <li><a onclick="">Share</a></li>
                                 <li><a href="{% url 'UnMatch' pk=autama.pk %}">
                                     {% csrf_token %}
                                     Unmatch
@@ -547,7 +547,7 @@
 
     {% if is_matched %}
         <section class="chatbox_view">
-            <div class="lite-chatbox">
+            <div class="lite-chatbox" id="lite-chatbox">
                 {% for a_message in message_chain %}
                     {% if a_message.sender == 'User' %}
                         <div class="cright cmsg">
@@ -755,6 +755,10 @@
                 return convertTime(text);
             });
 
+            $(window).resize(function() {
+               $("#share-popup").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
+            });
+
             /* Email report submission handling */
             $("#reportform").submit(function() {
                 $("#report_response").show();
@@ -798,8 +802,8 @@
                         "Submit": function() {
                             $('#feedback-form').submit();
                             $(this).dialog("close");
-                            $("#report").fadeOut(3000);
-                            $("#report_response").fadeOut(3000);
+                            $("#report").fadeOut(5000);
+                            $("#report_response").fadeOut(5000);
                             $("#feedback_response").fadeOut(5000);
                         },
                         "Close": function() {
@@ -834,6 +838,10 @@
                     }
                 });
 
+                $("#shareBtn").click( function() {
+                    $("#share-popup").dialog('open');
+                });
+
                 $("#share-popup").dialog({
                     resizable: false,
                     height: "auto",
@@ -841,9 +849,9 @@
                     width: "auto",
                     modal: true,
                     position: {
-                        my: "center bottom",
-                        at: "center bottom",
-                        of: "#navbar-fixed-top"
+                        my: "center",
+                        at: "top",
+                        of: "#lite-chatbox",
                     },
                 });
 
