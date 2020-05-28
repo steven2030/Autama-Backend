@@ -653,7 +653,7 @@ def build_report_msg(request):
     if other:
         msg += 'Other issue\n'
 
-    msg += 'End of report\n'
+    msg += '\nEnd of report\n'
     return msg
 
 
@@ -674,3 +674,25 @@ class SendReportEmail(LoginRequiredMixin, View):
             return HttpResponse("Report submitted!") # 1 if successful
         else:
             return HttpResponse("Uh oh, report failed to send")
+
+def build_feedback_msg(request):
+    user = request.POST.get('sender')
+    feedback = request.POST.get('feedback')
+
+    msg = 'Feedback from user: ' + user + '\n' + feedback + '\n\n' + 'End of feedback' + '\n'
+    return msg
+
+class SendFeedbackEmail(LoginRequiredMixin, View):
+    def get(self, request):
+        return HttpResponse('GET not allowed, please use the provided for mto submit feedback')
+
+    def post(self, request):
+        msg = build_feedback_msg(request)
+        try:
+            email_response = send_mail('Autama Feedback', msg, EMAIL_HOST_USER, EMAIL_RECIPIENTS.split(','), fail_silently=False)
+        except:
+            email_response = 0
+        if email_response == 1:
+            return HttpResponse("Feedback submitted!")
+        else:
+            return HttpResponse("Uh oh, feedback failed to send")
