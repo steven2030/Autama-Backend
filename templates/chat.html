@@ -324,6 +324,47 @@
             border-radius: 10vw;
         }
 
+        .form-button-red {
+            background: #ff4e50;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+
+        .form-button-blue {
+            background: rgb(92,67,197);
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+
+        .ui-dialog button.red {
+            background: #ff4e50;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+
+        .ui-dialog button.blue {
+            background: rgb(92,67,197);
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+
+        .form-bar-blue {
+            background: rgb(92,67,197);
+            color: white;
+        }
+
         .dfont{
             font-family: Helvetica;
             font-size: 13px;
@@ -381,7 +422,6 @@
             width: 30.2px;
             height: 30px;
         }
-
     </style>
 {% endblock %}
 
@@ -595,6 +635,7 @@
         <div style="display:none;text-align: center" id="share-popup" title="Share this Autama with others!">
             <br>
             <input style="width:75%;" type="text" id="shareURL" value="http://127.0.0.1:8000/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}"></input>
+            <!-- <input style="width:75%;" type="text" id="shareURL" value="3.16.189.148/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}"></input> -->
             <button id="copyBtn" onclick="copyToClipboard()">Copy</button>
         </div>
 
@@ -608,10 +649,15 @@
                 var elem = document.getElementById("copyBtn");
                 elem.innerHTML = "Copied!";
             }
+
+            function changeCopyBtnOnClose() {
+                var elem = document.getElementById("copyBtn");
+                elem.innerHTML = "Copy";
+            }
         </script>
 
         <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
-        <div id="report" class="report_box" >
+        <div id="report" class="report_box" style="margin-left: 20px">
             <h1>Report Autama</h1>
             <form id="reportform" method="POST" action="/send_report_email/" enctype="text/plain">
                 <input type="hidden" id="sender" name="sender" value="{{ user }}">
@@ -624,13 +670,13 @@
                 <label for="option3"> Autama is boring</label><br>
                 <input style="margin: 15px 15px 15px 15px" type="checkbox" id="other" name="option4" value="other">
                 <label for="option4"> Other</label><br><br>
-                <input type="submit" id="submitReportBtn" name="submitReport" value="Submit"/>
-                <input type="button" id="hideReportBtn" name="hideReport" value="Close"/>
+                <input class="form-button-blue" type="submit" id="submitReportBtn" name="submitReport" value="Submit"/>
+                <input class="form-button-red" type="button" id="hideReportBtn" name="hideReport" value="Close"/>
                 {%csrf_token%}
             </form>
         </div>
-        <div id="report_response"></div>
-        <div id="feedback_response"></div>
+        <div id="report_response" style="margin-left:30px"></div>
+        <div id="feedback_response" style="margin-left:30px"></div>
         <br>
 
         <script>
@@ -808,16 +854,20 @@
                         "Submit": function() {
                             $('#feedback-form').submit();
                             $(this).dialog("close");
-                            $("#report").fadeOut(5000);
-                            $("#report_response").fadeOut(5000);
-                            $("#feedback_response").fadeOut(5000);
+                            $("#report").fadeOut(3000);
+                            $("#report_response").fadeOut(3000);
+                            $("#feedback_response").fadeOut(3000);
                         },
                         "Close": function() {
                             $(this).dialog("close");
                             $("#report").fadeOut(3000);
                             $("#report_response").fadeOut(3000);
                         }
-                    }
+                    },
+                    close: function() {
+                        $("#report").fadeOut(3000);
+                        $("#report_response").fadeOut(3000);
+                    },
                 });
 
                 $("#prompt-feedback").dialog({
@@ -831,17 +881,35 @@
                         at: "bottom",
                         of: "#lite-chatbox",
                     },
-                    buttons: {
-                        "Yes": function() {
-                            $("#additional-feedback").dialog('open');
-                            $(this).dialog("close");
-                        },
-                        "No": function() {
+                    buttons: [
+                        {
+                            text: "Yes",
+                            click: function() {
+                                $("#additional-feedback").dialog('open');
+                                $(this).dialog("close");
+                            },
+                            class: 'form-button-blue'
+                        }
+                    ],
+                    create: function() {
+                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
+                    }
+                    /*buttons: {
+                {
+                    click: function () {
+                        $("#additional-feedback").dialog('open');
+                        $(this).dialog("close");
+                    },
+                    "No": function () {
                             $(this).dialog("close");
                             $("#report").fadeOut(3000);
                             $("#report_response").fadeOut(3000);
                         }
-                    }
+                    },
+                    close: function() {
+                        $("#report").fadeOut(3000);
+                        $("#report_response").fadeOut(3000);
+                    },*/
                 });
 
                 $("#shareBtn").click( function() {
@@ -859,10 +927,9 @@
                         at: "top",
                         of: "#lite-chatbox",
                     },
-                    Cancel: function() {
-                        $("#copyBtn").innerHTML = "Copy";
-                        alert(test);
-                    }
+                    close: function (event, ui) {
+                        changeCopyBtnOnClose();
+                    },
                 });
 
                 $('#submitReport').on('click', function(e) {
