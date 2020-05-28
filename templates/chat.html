@@ -360,7 +360,12 @@
             border-radius: 20px;
         }
 
-        .form-bar-blue {
+        .popup-titlebar {
+            background: rgb(92,67,197);
+            color: white;
+        }
+
+        div.ui-widget-header {
             background: rgb(92,67,197);
             color: white;
         }
@@ -888,28 +893,25 @@
                                 $("#additional-feedback").dialog('open');
                                 $(this).dialog("close");
                             },
-                            class: 'form-button-blue'
+                        },
+                        {
+                            text: "No",
+                            click: function() {
+                                $(this).dialog("close");
+                                $("#report").fadeOut(3000);
+                                $("#report_response").fadeOut(3000);
+                            },
                         }
                     ],
+                    /* styling the dialog's buttons and titlebar */
                     create: function() {
                         $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
-                    }
-                    /*buttons: {
-                {
-                    click: function () {
-                        $("#additional-feedback").dialog('open');
-                        $(this).dialog("close");
-                    },
-                    "No": function () {
-                            $(this).dialog("close");
-                            $("#report").fadeOut(3000);
-                            $("#report_response").fadeOut(3000);
-                        }
+                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
                     },
                     close: function() {
                         $("#report").fadeOut(3000);
                         $("#report_response").fadeOut(3000);
-                    },*/
+                    },
                 });
 
                 $("#shareBtn").click( function() {
