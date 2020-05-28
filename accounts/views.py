@@ -87,8 +87,10 @@ class RegisterView(View):
             create_autama_profile(personality=same_personality, creator=username, origin=username)
 
         obj.save()
-
-        return HttpResponseRedirect(reverse('login'))
+        
+        # Login and redirect to find_matches
+        login(request, obj)
+        return HttpResponseRedirect("/")
 
 
 class LoginRequiredMixin(object):
