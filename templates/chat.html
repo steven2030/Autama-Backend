@@ -360,11 +360,6 @@
             border-radius: 20px;
         }
 
-        .popup-titlebar {
-            background: rgb(92,67,197);
-            color: white;
-        }
-
         div.ui-widget-header {
             background: rgb(92,67,197);
             color: white;
@@ -632,7 +627,7 @@
         <div style="display:none" id="additional-feedback" title="Feedback">
             <form id="feedback-form" method="POST" action="/send_feedback_email/" enctype="text/plain">
                 <input type="hidden" id="sender" name="sender" value="{{ user }}">
-                <textarea rows="5" cols="30" name="feedback" placeholder="Enter feedback here..."></textarea>
+                <textarea rows="5" cols="40" name="feedback" placeholder="Enter feedback here..."></textarea>
                 {% csrf_token %}
             </form>
         </div>
@@ -641,7 +636,7 @@
             <br>
             <input style="width:75%;" type="text" id="shareURL" value="http://127.0.0.1:8000/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}"></input>
             <!-- <input style="width:75%;" type="text" id="shareURL" value="3.16.189.148/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}"></input> -->
-            <button id="copyBtn" onclick="copyToClipboard()">Copy</button>
+            <button class="form-button-blue" id="copyBtn" onclick="copyToClipboard()">Copy</button>
         </div>
 
         <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_copy_clipboard -->
@@ -873,6 +868,10 @@
                         $("#report").fadeOut(3000);
                         $("#report_response").fadeOut(3000);
                     },
+                    create: function() {
+                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
+                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
+                    },
                 });
 
                 $("#prompt-feedback").dialog({
@@ -903,7 +902,6 @@
                             },
                         }
                     ],
-                    /* styling the dialog's buttons and titlebar */
                     create: function() {
                         $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
                         $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
