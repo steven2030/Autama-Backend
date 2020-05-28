@@ -589,11 +589,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 
-        <div id="prompt-feedback" title="Report submitted, thank you!">
+        <div style="display:none" id="prompt-feedback" title="Report submitted, thank you!">
             <p>Would you like to provide additional feedback?</p>
         </div>
 
-        <div id="additional-feedback" title="Feedback">
+        <div style="display:none" id="additional-feedback" title="Feedback">
             <form id="feedback-form" method="POST" action="/send_feedback_email/" enctype="text/plain">
                 <input type="hidden" id="sender" name="sender" value="{{ user }}">
                 <textarea rows="5" cols="30" name="feedback" placeholder="Enter feedback here..."></textarea>
@@ -601,10 +601,10 @@
             </form>
         </div>
 
-        <div id="share-popup" title="Share this Autama with others!">
-
+        <div style="display:none" id="share-popup" title="Share this Autama with others!">
+            <br>
+            <p id="shareURL">test</p>
         </div>
-
 
         <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
         <div id="report" class="report_box" >
