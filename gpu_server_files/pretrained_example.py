@@ -23,7 +23,7 @@ def main():
     tflib.init_tf()
 
     # Load pre-trained network.
-    url = os.path.abspath("/home/ubuntu/stylegan/image.pkl")
+    url = os.path.abspath("/home/ubuntu/stylegan/karras2019stylegan-ffhq-1024x1024.pkl")
     with open(url, 'rb') as f:
         _G, _D, Gs = pickle.load(f)
         # _G = Instantaneous snapshot of the generator. Mainly useful for resuming a previous training run.
@@ -33,15 +33,17 @@ def main():
     # Print network details.
     Gs.print_layers()
 
-    # Pick latent vector.
-    rnd = np.random.RandomState(5)
-    latents = rnd.randn(1, Gs.input_shape[1])
-
     #iterations & starting image number
     iterations = int(sys.argv[1])
     image_start = int(sys.argv[2])
+
     
     for i in range(0, iterations):
+        # Pick latent vector.
+        np.random.seed()
+        rnd = np.random.RandomState()
+        latents = rnd.randn(1, Gs.input_shape[1])
+
         # Generate image.
         fmt = dict(func=tflib.convert_images_to_uint8, nchw_to_nhwc=True)
         images = Gs.run(latents, None, truncation_psi=0.7, randomize_noise=True, output_transform=fmt)
@@ -52,14 +54,18 @@ def main():
         PIL.Image.fromarray(images[0], 'RGB').save(png_filename)
 
 
+### Uncomment the lines below to enable copy back to Autama server, deleting of images and auto shutoff.
+### You will need to replace the server connection information & id's below.
+### ubuntu@ec2-ip-ip-ip-ip.region... and --instance-ids id_number_here
+
     # copy resulting images back to Autama Image folder
-    tmp = subprocess.Popen('scp -o StrictHostKeyChecking=no -i /home/ubuntu/stylegan/autama.pem /home/ubuntu/stylegan/results/* ubuntu@ec2-52-38-158-185.us-west-2.compute.amazonaws.com:/home/ubuntu/Autama-Backend/Images/', shell=True, stdout=subprocess.PIPE).communicate()  
+    #tmp = subprocess.Popen('scp -o StrictHostKeyChecking=no -i /home/ubuntu/stylegan/autama.pem /home/ubuntu/stylegan/results/* ubuntu@ec2-52-38-158-185.us-west-2.compute.amazonaws.com:/home/ubuntu/Autama-Backend/Images/', shell=True, stdout=subprocess.PIPE).communicate()  
 
     # delete images to keep results folder tidy
-    tmp = subprocess.Popen('rm /home/ubuntu/stylegan/results/*', shell=True, stdout=subprocess.PIPE).communicate()
+   # tmp = subprocess.Popen('rm /home/ubuntu/stylegan/results/*', shell=True, stdout=subprocess.PIPE).communicate()
 
     # shut down this instance.
-    tmp = subprocess.Popen('aws ec2 stop-instances --instance-ids i-01d6de0c8312b250c --region us-west-2', shell=True, stdout=subprocess.PIPE).communicate()  
+   # tmp = subprocess.Popen('aws ec2 stop-instances --instance-ids i-01d6de0c8312b250c --region us-west-2', shell=True, stdout=subprocess.PIPE).communicate()  
 
 
 
