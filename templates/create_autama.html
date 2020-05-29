@@ -13,35 +13,39 @@
             border-bottom-left-radius: 5rem;
             text-align: center;
             background-color: rgb(92,67,197);
+            height: 8rem;              /*added*/
             }
 
             .toplab{
                 background-color: #ff4e50;
                 text-align: center;
-                height: 46px;
+                height: 4rem;          /*changed from 46px*/
                 width: 100%;
             }
 
             .Autama-text-logo{
-                width: 105px;
-                height: 36px;
+                padding-top: 0.75rem;  /*added*/
+                padding-bottom: 1rem;  /*added*/
+                width: 18rem;          /*changed from 105px*/
+                height: 4rem;          /*changed from 36px*/
                 object-fit: contain;
-
             }
 
             .nav-tabs{
                 border: none;
-                padding-left: 2.5vw;
+                /* removed padding-left: 2.5vw;*/
             }
 	    
-	    .bitmap{
-                width: 30.2px;
-                height: 30px;
-
+	        .logo-left{                   /*renamed bitmap to logo-left*/
+                padding-top: 0.5rem;      /*added*/
+                padding-bottom: 0.75rem;  /*added*/
+                width: 3.75rem;           /*changed from 30.2px*/
+                height: 6rem;             /*changed from 30px*/
+                object-fit: contain;      /*added*/
             }
 
             .line{
-                height: 2rem;
+                height: 4rem;           /*changed from 2rem*/
                 background-color: rgb(92,67,197);
             }
 
@@ -74,7 +78,7 @@
         <div>
 		<div class="bottom">
 		    <ul class="nav nav-tabs">
-			<li class="nav-item"><a href="/MyAutamas/"><img class="bitmap" src="/Images/Images/back-arrow-3x.png"></a></li>
+			<li class="nav-item" style="float:left; padding-left: 3vw;"><a href="/MyAutamas/"><img class="logo-left" src="/Images/Images/back-chevron.png"></a></li>
 		    </ul>
 		</div>
 	</div>
@@ -94,15 +98,16 @@
         {% if user.my_Autama < my_autama_limit or request.user.is_superuser %}
             <div>
                 {% if user.my_Autama == 0 %}
-                    <p>Hi there!</p>
-                    <P>{{ user.username }}, was it? Nice to meet you.</P>
+                    <!--<p>Hi there! </p>-->
+                    <P>Hi there, {{ user.username }}! Nice to meet you.</P>
                     <p>I'm Dr. Autama, and I'm glad you're interested in helping me create Autamas.</p>
                 {% else %}
-                    <P>Hi again!</P>
+                <P>Hi again {{ user.username }}!</P>
                     <p>I'm glad you want to create more Autamas.</p>
                 {% endif %}
+                <p>You can create up to 10 Autamas.</p>
                 <p>Creating an Autama is easy. Just give it a name and a persona by filling out everything below and hitting the "Create" button.</p>
-                <p>To make it even easier, I will provide a random picture for your Autama.</p>
+                <p>I will generate a picture for your Autama, and I hope you like it!</p>
                 <br>
             </div>
 
@@ -136,6 +141,7 @@
                         <li>My mom picks out my outfit everyday.</li>
                     </ul>
                     <p>The first three details will be shown to other users.</p>
+                    <p>The last three details will be a mystery for users to find out!</p>
                     <br>
                 </div>
 
@@ -171,7 +177,7 @@
                 
                 <div>
                     <br>
-                    <p>Make sure you filled in everything the way you want it because you can't edit your Autama later.</p>
+                    <p>Please make sure you fill in everything exactly the way you want it, because you won't be able to edit your Autama later.</p>
                     <p>Thank you for creating a custom Autama.</p>
                     <br>
                 </div>
