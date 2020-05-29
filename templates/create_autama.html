@@ -102,13 +102,15 @@
                     <P>Hi there, {{ user.username }}! Nice to meet you.</P>
                     <p>I'm Dr. Autama, and I'm glad you're interested in helping me create Autamas.</p>
                 {% else %}
-                <P>Hi again {{ user.username }}!</P>
+                    <P>Hi again {{ user.username }}!</P>
                     <p>I'm glad you want to create more Autamas.</p>
                 {% endif %}
-                <p>You can create up to 10 Autamas.</p>
-                <p>Creating an Autama is easy. Just give it a name and a persona by filling out everything below and hitting the "Create" button.</p>
-                <p>I will generate a picture for your Autama, and I hope you like it!</p>
-                <br>
+                    {% if not request.user.is_superuser %}
+                        <p>You can create up to 10 Autamas.</p>
+                    {% endif %}
+                    <p>Creating an Autama is easy. Just give it a name and a persona by filling out everything below and hitting the "Create" button.</p>
+                    <p>I will generate a picture for your Autama, and I hope you like it!</p>
+                    <br>
             </div>
 
             <div style="color: red;font-size: 14px">
