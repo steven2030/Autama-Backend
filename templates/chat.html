@@ -25,33 +25,27 @@
             display: table-row;
             /*background: yellow;*/
         }
-
         section + section{
             /* Do not delete section + section. It's to build a css table. */
             /*background: red;*/
         }
-
         section + section + section{
             /* Do not delete section + section + section. It's to build a css table. */
             /*background: blue;*/
         }
-
         section + section + section + section{
             /* Do not delete section + section + section + section. It's to build a css table. */
             /*background: pink;*/
         }
-
         section + section + section + section + section{
             /* Do not delete section + section + section + section + section. It's to build a css table. */
             /*background: green;*/
         }
-
         .chatbox_view{
             padding: 0;
             height: 100%;
             width: 100%;
         }
-
         .lite-chatbox{
             padding: 0;
             overflow-x: hidden;
@@ -59,20 +53,32 @@
             height: 100%;
             width: 100%;
         }
-
         .lite-chatbox .cmsg{position:relative;margin:4px 7px;min-height:50px;border:0}
         .lite-chatbox .cright{text-align:right;margin-left:64px}
         .lite-chatbox .cleft{text-align:left;margin-right:64px}
         .lite-chatbox img.headIcon{width:34px;height:34px;top:9px;position:absolute;border:1px solid #c5d4c4}
         .lite-chatbox .name{color:#8b8b8b;font-size:12px;display:block;line-height:18px}
-        .lite-chatbox .name .htitle{display:inline-block;padding:0 3px;background-color:#ccc;color:#fff;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;margin-right:4px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;max-width:50px}
-        .lite-chatbox .content{word-break:break-word;word-wrap:break-word;text-align:left;position:relative;display:inline-block;font-size:15px;padding:10px 15px;line-height:20px;min-width:9px;min-height:18px}.lite-chatbox .content img{width:100%;height:auto}.lite-chatbox .content a{color:#0072C1;margin:0 5px;cursor:hand}
-        .lite-chatbox .tips{margin:12px;text-align:center;font-size:12px}.lite-chatbox .tips span{display:inline-block;padding:4px;background-color:#ccc;color:#fff;-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px}
-        .lite-chatbox img.radius{-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%}.lite-chatbox .cright img.headIcon{right:0}.lite-chatbox .cleft img.headIcon{left:0}
+        .lite-chatbox .name .htitle{display:inline-block;padding:0 3px;background-color:#ccc;color:#fff;
+            -moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;margin-right:4px;
+            font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;max-width:50px}
+        .lite-chatbox .content{word-break:break-word;word-wrap:break-word;text-align:left;position:relative;
+            display:inline-block;font-size:15px;padding:10px 15px;line-height:20px;min-width:9px;min-height:18px}
+        .lite-chatbox .content img{width:100%;height:auto}
+        .lite-chatbox .content a{color:#0072C1;margin:0 5px;cursor:hand}
+        .lite-chatbox .tips{margin:12px;text-align:center;font-size:12px}
+        .lite-chatbox .tips span{display:inline-block;padding:4px;background-color:#ccc;color:#fff;
+            -moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px}
+        .lite-chatbox img.radius{-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%}
+        .lite-chatbox .cright img.headIcon{right:0}
+        .lite-chatbox .cleft img.headIcon{left:0}
         .lite-chatbox .cright .name{margin:0 48px 2px 0}
         .lite-chatbox .cleft .name{margin:0 0 2px 48px} /* remove 48px, 0 0 2px 48px */
-        .lite-chatbox .cright .content{margin:0 0 0 0;-webkit-border-radius:20px 0 20px 20px;border-radius:20px 0 20px 20px;color:#fff;background:-webkit-linear-gradient(70deg,#3FD1E1 0%,#44D7CD 100%);background: #6041ce;-webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15)}
-        .lite-chatbox .cleft .content{margin:0 0 0 48px;-webkit-border-radius:0 20px 20px 20px;border-radius:0 20px 20px 20px;color:#666;border:1px solid rgba(0,0,0,0.05);background:#FFF;-webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.1);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.1)}
+        .lite-chatbox .cright .content{margin:0 0 0 0;-webkit-border-radius:20px 0 20px 20px;border-radius:20px 0 20px 20px;
+            color:#fff;background:-webkit-linear-gradient(70deg,#3FD1E1 0%,#44D7CD 100%);background: #6041ce;
+            -webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15)}
+        .lite-chatbox .cleft .content{margin:0 0 0 48px;-webkit-border-radius:0 20px 20px 20px;
+            border-radius:0 20px 20px 20px;color:#666;border:1px solid rgba(0,0,0,0.05);background:#FFF;
+            -webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.1);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.1)}
         .lite-chatbox .cright .content:after{right:-12px;top:8px}
         .lite-chatbox .cleft .content:after{left:-12px;top:8px}
         .lite-chatbox .tips .tips-primary{background-color:#3986c8}
@@ -82,97 +88,81 @@
         .lite-chatbox .tips .tips-danger{background-color:#e24d48}
         .lite-chatbox .name .admin{background-color:#72D6A0}
         .lite-chatbox .name .owner{background-color:#F2BF25}
-
         .lite-chatbox .time_stamp{
             color:#8b8b8b;font-size:12px;display:block;line-height:18px;
         }
-
         .lite-chatbox .cright .time_stamp{
             margin:4px 28px 8px 0;
         }
-
         .lite-chatbox .cleft .time_stamp{
             margin:4px 0 8px 72px;
         }
-
-        @media only screen and (max-width: 499px) {
+        @media only screen and (max-width: 499px){
             .text_input{
                 float: left;
                 padding-right: 1vw;
                 width: 85%;
             }
-
             .send_arrow{
                 height: 85%;
                 width: 15%;
             }
         }
-
-        @media only screen and (min-width: 500px) {
+        @media only screen and (min-width: 500px){
             .text_input{
                 float: left;
                 padding-right: 1vw;
                 width: 85%;
             }
-
             .send_arrow{
                 height: 85%;
                 width: 15%;
             }
         }
-
-        @media only screen and (min-width: 600px) {
+        @media only screen and (min-width: 600px){
             .text_input{
                 float: left;
                 padding-right: 1vw;
                 width: 87.5%;
             }
-
             .send_arrow{
                 height: 85%;
                 width: 12.5%;
             }
         }
-
-        @media only screen and (min-width: 700px) {
+        @media only screen and (min-width: 700px){
             .text_input{
                 float: left;
                 padding-right: 1vw;
                 width: 90%;
             }
-
             .send_arrow{
                 height: 85%;
                 width: 10%;
             }
         }
-
-        @media only screen and (min-width: 800px) {
+        @media only screen and (min-width: 800px){
             .text_input{
                 float: left;
                 padding-right: 1vw;
                 width: 92.5%;
             }
-
             .send_arrow{
                 height: 85%;
                 width: 7.5%;
             }
         }
-
-        @media only screen and (min-width: 900px) {
+        @media only screen and (min-width: 900px){
             .text_input{
                 float: left;
                 padding-right: 1vw;
                 width: 95%;
             }
-
             .send_arrow{
                 height: 85%;
                 width: 5%;
             }
         }
-
         .send_button{
             background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
             width: 15%;
@@ -182,7 +172,6 @@
             text-align: center;
             border-radius: 14px;
         }
-
         .special{
             border-radius:5px;
             border: 0;
@@ -192,69 +181,56 @@
             height: 70px;
             overflow-y: auto;
         }
-
         .content1{
             padding-top: 20px;
         }
-
         .content{
             /*word-wrap: break-spaces;*/
         }
-
         .butt3{
             float: right;
-            margin-right: 10px;
+            margin-right: 10px; /*was 10px*/
         }
-
-        .navbar {
-            background-image: linear-gradient(#54B4EB, #2FA4E7 60%, #1D9CE5);
+        .navbar{
+            background-image: linear-gradient(#54B4EB, #2FA4E7 60%, #1D9CE5); /*#54b4eb light blue, 2fa4e7 darker light blue, 1d9ce5 darkerer lbl*/
             background-repeat: no-repeat;
-            border-bottom: 1px solid #178ACC;
+            border-bottom: 1px solid #178ACC;   /* 178acc still darkererer lbl*/
             box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
             border-radius: 0px;
         }
-
-        .navbar-default {
-            background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+        .navbar-default{
+            background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); /*6737e5 purple b93fa3 rose pink*/
             border-style: none;;
-            border-color: #FC4F6C;
+            border-color: #FC4F6C;  /* fc4f6c light red/pink*/
         }
-
         .navbar-default .navbar-brand,
         .navbar-default .navbar-brand:hover,
         .navbar-default .navbar-brand:focus ,
         .navbar-default .navbar-nav > li > a {
             color: #FFF;
         }
-
         .navbar-default .navbar-nav > li > a:hover,
         .navbar-default .navbar-nav > li > a:focus {
             color: #FFF;
-            background-color: #FC8909;
+            background-color: #FC8909;  /*fc8909 orange */
         }
-
         .navbar-default .navbar-toggle:hover,
-        .navbar-default .navbar-toggle:focus {
+        .navbar-default .navbar-toggle:focus{
             background-color: #FC8909;
         }
-
-        .navbar-default .navbar-toggle {
+        .navbar-default .navbar-toggle{
             border-color: #FC8909;
         }
-
-        .navbar-default .navbar-toggle .icon-bar {
+        .navbar-default .navbar-toggle .icon-bar{
             background-color: #FFF;
         }
-
         .fas{
             color: white;
         }
-
-        .report_box {
+        .report_box{
             display: none;
         }
-
-        .to {
+        .to{
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -265,15 +241,13 @@
             margin-top: -43px;
             background-color: white;
         }
-
-        .flexbox-image {
+        .flexbox-image{
             width: 125px;
             float: left;
             padding-top: 10px;
             padding-left: 20px;
         }
-
-        .circular--portrait {
+        .circular--portrait{
             /*position: relative;*/
             width: 100%;
             height: auto;
@@ -281,24 +255,20 @@
             border-radius: 50%;
             display: inline-block;
         }
-
-        .circular--portrait img {
+        .circular--portrait img{
             max-width: 100%;
             height: auto;
         }
-
         .autama_description{
             float: left;
             padding-left: 20px;
             width: 75%;
         }
-
         .profile_view{
             padding: 0;
             height: 20%;
             width: 100%;
         }
-
         .profile_box{
             padding: 0;
             overflow-x: hidden;
@@ -306,13 +276,11 @@
             height: 100%;
             width: 100%;
         }
-
         .match_warning{
             height: 80%;
             width: auto;
             text-align: center;
         }
-
         .match_button{
             background: #ff4e50;
             height: auto;
@@ -323,8 +291,7 @@
             vertical-align: middle;
             border-radius: 10vw;
         }
-
-        .form-button-red {
+        .form-button-red{
             background: #ff4e50;
             color: white;
             font-size: 20px;
@@ -332,8 +299,7 @@
             vertical-align: middle;
             border-radius: 20px;
         }
-
-        .form-button-blue {
+        .form-button-blue{
             background: rgb(92,67,197);
             color: white;
             font-size: 20px;
@@ -341,8 +307,7 @@
             vertical-align: middle;
             border-radius: 20px;
         }
-
-        .ui-dialog button.red {
+        .ui-dialog button.red{
             background: #ff4e50;
             color: white;
             font-size: 20px;
@@ -350,8 +315,7 @@
             vertical-align: middle;
             border-radius: 20px;
         }
-
-        .ui-dialog button.blue {
+        .ui-dialog button.blue{
             background: rgb(92,67,197);
             color: white;
             font-size: 20px;
@@ -359,12 +323,10 @@
             vertical-align: middle;
             border-radius: 20px;
         }
-
-        div.ui-widget-header {
+        div.ui-widget-header{
             background: rgb(92,67,197);
             color: white;
         }
-
         .dfont{
             font-family: Helvetica;
             font-size: 13px;
@@ -374,56 +336,58 @@
             line-height: 1.02;
             letter-spacing: normal;
         }
-
-        .three-dots {
-            width: 20px;
-            height: 20px;
-            background-image: radial-gradient(circle, white 0.22vw, transparent 3px);
-            background-size: 100% 33.33%;
+        .three-dots{
+            width: 3rem;    /* was 20px */
+            height: 3rem;   /* was 20px */   /*radial-gradient: ending shape, size, [at position?]*/
+            background-image: radial-gradient(circle, white 0.30vw, transparent 5%);
+            /* background-image: radial-gradient(circle, white 0.22vw, transparent 3px);*/
+            background-size: 100% 33.33%;    /*width, height*/
+            /* background-size: 100% 33.33%;*/
         }
-
         .line{
             height: 2rem;
             background-color: rgb(92,67,197);
         }
-
         .line .bg{
             width: 100%;
             height: 100%;
             background-color: #fff;
             border-top-right-radius: 10rem;
         }
-
         .bottom{
             border-bottom-left-radius: 5rem;
             text-align: center;
-            background-color: rgb(92,67,197);
+            background-color: rgb(92,67,197);  /* same as #5c43c5 */
         }
-
         .toplab{
-            background-color: #ff4e50;
+            background-color: #ff4e50;   /* ff4e50 light red */
             text-align: center;
             height: 46px;
             width: 100%;
         }
-
         .Autama-text-logo{
             width: 105px;
             height: 36px;
             object-fit: contain;
-
         }
         .nav-tabs{
             border: none;
             padding-left: 2.5vw;
         }
-
-        .bitmap{
-            width: 30.2px;
-            height: 30px;
+        .left-nav{         /* back-chevron is ~60x96 */ 
+            width: 3rem;   /* was 30.2px */
+            height: 6rem;    /* was 30px */
+            object-fit: contain;
         }
+        .right-nav{         /* ellipsis is ~27x90 */ 
+            width: 2rem;   /* */
+            height: 6rem;    /* */
+            object-fit: contain;
+        }
+
     </style>
-{% endblock %}
+{% endblock %} <!-- end css block -->
+
 
 {% block js %}
     <script>
@@ -483,7 +447,8 @@
             document.getElementById("nav_match").click();
         }
     </script>
-{% endblock %}
+{% endblock %}   <!-- end js block -->
+
 
 {% block content %}
     <body>
@@ -496,15 +461,16 @@
             <div class="bottom">
                 <ul class="nav nav-tabs">
                     {% if request.user.is_authenticated  %}
-                        <li class="nav-item"><a href="{{ last_page }}"><img class="bitmap" src="/Images/Images/back-arrow-3x.png"></a></li>
+                        <li class="nav-item"><a href="{{ last_page }}"><img class="left-nav" src="/Images/Images/back-chevron.png"></a></li>
                     {% endif %}
-                    <li class="dropdown nav-item" style="float: right; margin-right: 50px;">
-                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" >
-                            <p class="three-dots"></p>
+                    <li class="dropdown nav-item" style="float: right; margin-right: 2.5vw;">   <!-- was 50px -->
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" > 
+                            <img class="right-nav" src="Images/Images/ellipsis.png"> 
+                            <!--<p class="three-dots"></p>-->
                         </a>
                         <ul class="dropdown-menu">
                             {% if is_matched %}
-                                <li id="shareBtn"><a onclick="">Share</a></li>
+                                <li id="shareBtn" style=";"><a onclick="">Share</a></li>
                                 <li><a href="{% url 'UnMatch' pk=autama.pk %}">
                                     {% csrf_token %}
                                     Unmatch
@@ -516,9 +482,9 @@
                                     Match
                                 </a></li>
                             {% endif %}
-                        </ul>
-                    </li>
-                </ul>
+                        </ul>    <!-- end dropdown menu -->
+                    </li>    <!-- end dropdown nav-item -->
+                </ul>    <!-- end nav-tabs -->
             </div>
 
             <div class="main">
@@ -536,7 +502,6 @@
                         <img  style="position: relative; " class="to" alt="aaa" src="{{ autama.picture.url }}">
                     </a>
                 </div>-->
-
 
 
     <!--create some space between nav and chat box-->

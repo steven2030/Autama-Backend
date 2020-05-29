@@ -9,78 +9,77 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <style media="screen">
-
-             .bottom{
-                padding: 0rem 0;
-                border-bottom-left-radius: 5rem;
-                text-align: center;
-                background-color: rgb(92,67,197);
-            }
-
-            .toplab{
-                background-color: #ff4e50;
-                text-align: center;
-                height: 46px;
-                width: 100%;
-            }
-
-            .Autama-text-logo{
-                width: 105px;
-                height: 36px;
-                object-fit: contain;
-
-            }
-            .line{
-                height: 2rem;
-                background-color: rgb(92,67,197);
-            }
-            .line .bg{
-                width: 100%;
-                height: 100%;
-                background-color: #fff;
-                border-top-right-radius: 10rem;
-            }
-            .nav-tabs{
-                border: none;
-            }
-            .bitmap{
-                width: 30.2px;
-                height: 30px;
-
-            }
-
-            .logo-a{
-                width: 45px;
-                height: 30px;
-            }
-	    
+         /* -- CSS for nav bar -- */
+        .bottom{
+            padding: 0rem 0;
+            border-bottom-left-radius: 5rem;   /* was 5rem */
+            text-align: center;
+            background-color: #6041ce;    /*was rgb(92,67,197); purple*/
+        }
+        .toplab{
+            background-color: #ff4e50; /*#ff4e50 is light red*/
+            text-align: center;
+            height: 4rem;  /* was 46px */
+            width: 100%; 
+        }
+        .Autama-text-logo{
+            width: 105px;  /* was 105px */
+            height: 36px;  /* was 36px */
+            object-fit: contain;
+        }
+        .line{             /* the purple edge on rt of bottom half nav bar*/
+            height: 2rem;  /* was 2rem */
+            background-color: #6041ce;  /* was  rgb(92,67,197) purple */
+        }
+        .line .bg{        /* white layer over purple edge bottom half nav bar */
+            width: 100%;
+            height: 100%;
+            background-color: #fff;   /* #fff is white*/
+            border-top-right-radius: 10rem;
+        }
+        .nav-tabs{
+            border: none;
+        }
+        .logo-left{
+            width: 3rem;  /* was 30.2px;*/
+            height: 2.5rem;  /* was 30px */
+            object-fit: contain;  /*added*/
+        }
+        .logo-mid{
+            width: 3rem;  /*was 45px*/
+            height: 2.5rem;  /*was 45px*/
+            object-fit: contain; /*added*/
+        }
+        .logo-right{       /*added*/
+            width: 3rem;
+            height: 2.5rem;
+            object-fit: contain;
+        }
 	    @media screen and (min-width:561px){
-                .middle {
-                    float: none;
-                    display: inline;
-                    vertical-align: center;
-                    margin-left: 36%;
-                }
+            .middle {
+                float: none;
+                display: inline;
+                vertical-align: center;
+                margin-left: 36%;
+            }
         }
+        @media screen and (max-width:561px){
+            .middle {
+                float: none;
+                display: inline;
+                vertical-align: center;
+                margin-left: 26%;
+            }
+        } 
+    </style>    <!-- end nav bar CSS -->
 
-            @media screen and (max-width:561px){
-                .middle {
-                    float: none;
-                    display: inline;
-                    vertical-align: center;
-                    margin-left: 26%;
-                }
-        }
-        
-
-
-    </style>
-
-    <!-- Tutorial: creating a simple cookie consent pop-up: https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
+    <!-- Tutorial: creating a simple cookie consent pop-up: 
+      https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
     <style>
+        /* -- CSS for cookie banner -- */
         .cookie-banner {
             position: fixed;
-            bottom: 40px;
+            bottom: 40px;   /*was  */
             left: 10%;
             right: 10%;
             width: 80%;
@@ -101,49 +100,79 @@
              border-radius: 2px;
              cursor: pointer;
          }
-    </style>
+
+    </style> <!-- end cookie banner CSS -->
+
     {% block csstyle %}
     {%  endblock %}
-
 </ftehead>
+
+
+<!-- JS for nav-bar -->
 <script>
-function matchNotifications() {
-    var navbar_num_matches = {{ num_matches }}
-    document.getElementById("myText").innerHTML = navbar_num_matches;
-}
+    // JS - display number of matches
+    function matchNotifications() {
+        var navbar_num_matches = {{ num_matches }}
+        document.getElementById("myText").innerHTML = navbar_num_matches
+    }
 </script>
+
+
+<!-- html body -->
 <body onload="matchNotifications()">
+    <!-- HTML for nav bar in body -->
     <div>
-        <div class="toplab">
-            <img class="Autama-text-logo" src="/Images/images/autama-text-logo.png">
+        <div class="toplab">   <!-- top half top nav bar -->
+            <img class="Autama-text-logo" src="/Images/Images/autama-text-logo.png">
         </div>
-        <div id="container">
-			<div class="bottom">
-                    <ul class="nav nav-tabs">
-                            <li class="nav-item"><a href="/accounts/profile/"> <img class="bitmap" src="/Images/images/swipe-icon.png" style="margin-left: 25px;"> </a></li>
-                            <li class="dropdown nav-item middle">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" > <img class="logo-a" src="/Images/images/not-selected-autama-logo.png"> <b class="caret" style="color: goldenrod"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/FindMatches/">FindMatches</a></li>
-                                    <li><a href="/MyAutamas/">MyAutamas</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item" style="float: right"> <a class="nav-link" href="/MyMatches/" style="color: white; font-size: 20px"> <span class="glyphicon glyphicon-comment" ></span> (<span id="myText"></span>) </a></li>
-                    </ul>
-			</div>
-			<div class="main">
-				<div class="line">
-					<div class="bg">
-					</div>
-				</div>
 
-			</div>
-		</div>
+        <div id="container">    <!-- bottom half nav bar layers -->
 
-    </div>
+			<div class="bottom">    <!-- bottom bar -->
+                <ul class="nav nav-tabs">    <!-- nav-tabs -->
 
+                    <li class="nav-item">        <!-- left nav icon -->
+                        <a href="/accounts/profile/"> 
+                            <!--<img class="bitmap" src="/Images/Images/swipe-icon-round.png" style="margin-left: 25px;"> -->
+                            <img class="logo-left" src="/Images/Images/swipe-icon-round.png" style="margin-left: 25px;"> 
+                        </a>
+                    </li>                        <!-- end left nav icon -->
 
-    <!-- Tutorial: creating a simple cookie consent pop-up: https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
+                    <li class="dropdown nav-item middle">    <!-- mid nav icon -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" > 
+                            <img class="logo-mid" src="/Images/Images/logo-purp-round.png"> 
+                            <b class="caret" style="color: hotpink"></b>
+                        </a>
+                        <ul class="dropdown-menu">           <!-- mid dropdown -->
+                            <li><a href="/FindMatches/">FindMatches</a></li>
+                            <li><a href="/MyAutamas/">MyAutamas</a></li>
+                        </ul>                                <!-- end mid dropdown -->
+                    </li>                                    <!-- end mid nav icon -->
+
+                    <li class="nav-item" style="float: right">    <!-- right nav icon -->
+                        <a class="nav-link" href="/MyMatches/" style="color: white; font-size: 20px"> 
+                            <img class = "logo-right" src="/Images/Images/chat-icon-white-test.png"> 
+                            <!--<span class="glyphicon glyphicon-comment" ></span> (<span id="myText"></span>)-->
+                            (<span id="myText"></span>) 
+                        </a>
+                    </li>                                         <!-- end right nav icon  -->
+                
+                </ul>                        <!-- end nav-tabs -->
+			</div>                   <!-- end bottom bar-->
+
+            <div class="main">    <!-- this is the lowest part of nav bar for curve on right-->
+                <div class="line">    <!-- adds purple layer at bottom -->
+					<div class="bg"></div>    <!-- adds white layer over purple -->
+                </div>            <!-- end of lowest part of top nav bar -->
+            </div>  <!-- end lowest part of nav bottom --> 
+            
+        </div>  <!-- end container-->
+
+    </div> <!-- end html nav bar in body -->
+
+    <!-- HTML for cookie banner in body -->
+    <!-- Tutorial: creating a simple cookie consent pop-up: 
+      https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
     <div class="cookie-banner" style="display: none">
         <p>By using our website, you agree to our
             <a href="http://127.0.0.1:8000/PrivacyPolicy/">privacy policy</a>
@@ -151,7 +180,7 @@ function matchNotifications() {
         <button class="close_banner">&times;</button>
     </div>
 
-
+    <!-- JS for cookie banner -->
     <script>
         if (localStorage.getItem('privacyCookieSeen') !== 'accepted') {
             $('.cookie-banner').delay(1000).fadeIn();
