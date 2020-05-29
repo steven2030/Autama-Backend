@@ -503,8 +503,8 @@
                             <p class="three-dots"></p>
                         </a>
                         <ul class="dropdown-menu">
-                                <li id="shareBtn"><a onclick="">Share</a></li>
                             {% if is_matched %}
+                                <li id="shareBtn"><a onclick="">Share</a></li>
                                 <li><a href="{% url 'UnMatch' pk=autama.pk %}">
                                     {% csrf_token %}
                                     Unmatch
