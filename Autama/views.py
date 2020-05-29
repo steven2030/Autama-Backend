@@ -27,6 +27,9 @@ from django.core.mail import send_mail
 from Autama.settings import EMAIL_HOST_USER
 from Autama.settings import EMAIL_RECIPIENTS
 
+import datetime
+
+
 def claim_autama(user_pk, autama_pk):
     autama = AutamaProfile.objects.get(pk=autama_pk)  # Validation needed here
     user = User.objects.get(pk=user_pk)
@@ -622,6 +625,46 @@ class Chat(LoginRequiredMixin, View):
 
         return JsonResponse(data)
         # return redirect('Chat', pk=pk)
+
+
+class Preview(View):
+
+    def get(self, request, pk):
+        autama = AutamaProfile.objects.get(pk=pk)
+        is_login = User.objects.filter(pk=request.user.id).exists()
+        chat_page = "/Chat/" + str(pk)
+
+        return render(request, 'preview.html', {'autama': autama, 'is_login': is_login, 'chat_page': chat_page})
+
+    def post(self, request, pk):
+        message = request.POST.get('message')
+        autama_id = request.POST.get('autama_id')
+        autama = AutamaProfile.objects.get(pk=autama_id)  # Check the validity of Autama id.
+
+        # Using HAM to get a response from Autama
+        first_name = autama.first
+        last_name = autama.last
+        trait1 = autama.interest1
+        trait2 = autama.interest2
+        trait3 = autama.interest3
+        trait4 = autama.interest4
+        trait5 = autama.interest5
+        trait6 = autama.interest6
+        personality = [trait1, trait2, trait3, trait4, trait5, trait6]
+
+        ham = Ham(first_name, last_name, personality)
+        autama_response = ham.converse(user_input=message)
+
+        time_stamp = datetime.datetime.utcnow()
+
+        data = {
+            'autama': autama_id,
+            'user': request.user.id,
+            'response': autama_response,
+            'time': time_stamp,
+        }
+
+        return JsonResponse(data)
 
 
 def testdata(request):
