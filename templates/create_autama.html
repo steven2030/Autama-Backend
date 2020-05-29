@@ -1,0 +1,206 @@
+{% block head %}
+    <title>Autama</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block csstyle %}
+    <style>
+         .bottom{
+            padding: 0rem 0;
+            border-bottom-left-radius: 5rem;
+            text-align: center;
+            background-color: rgb(92,67,197);
+            height: 8rem;              /*added*/
+            }
+
+            .toplab{
+                background-color: #ff4e50;
+                text-align: center;
+                height: 4rem;          /*changed from 46px*/
+                width: 100%;
+            }
+
+            .Autama-text-logo{
+                padding-top: 0.75rem;  /*added*/
+                padding-bottom: 1rem;  /*added*/
+                width: 18rem;          /*changed from 105px*/
+                height: 4rem;          /*changed from 36px*/
+                object-fit: contain;
+            }
+
+            .nav-tabs{
+                border: none;
+                /* removed padding-left: 2.5vw;*/
+            }
+	    
+	        .logo-left{                   /*renamed bitmap to logo-left*/
+                padding-top: 0.5rem;      /*added*/
+                padding-bottom: 0.75rem;  /*added*/
+                width: 3.75rem;           /*changed from 30.2px*/
+                height: 6rem;             /*changed from 30px*/
+                object-fit: contain;      /*added*/
+            }
+
+            .line{
+                height: 4rem;           /*changed from 2rem*/
+                background-color: rgb(92,67,197);
+            }
+
+            .line .bg{
+                width: 100%;
+                height: 100%;
+                background-color: #fff;
+                border-top-right-radius: 10rem;
+            }
+
+            .create_button{
+                background: #ff4e50;
+                height: 5vw;
+                width: 10vw;
+                color: white;
+                font-size: 2vw;
+                text-align: center;
+                vertical-align: middle;
+                border-radius: 5vw;
+            }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div class="toplab">
+            <img class="Autama-text-logo" src="/Images/images/autama-text-logo.png">
+        </div>
+
+        <div>
+		<div class="bottom">
+		    <ul class="nav nav-tabs">
+			<li class="nav-item" style="float:left; padding-left: 3vw;"><a href="/MyAutamas/"><img class="logo-left" src="/Images/Images/back-chevron.png"></a></li>
+		    </ul>
+		</div>
+	</div>
+
+        <div class="main">
+            <div class="line">
+                <div class="bg">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="width: 80%;margin: auto;">
+        <h1>Create an Autama</h1>
+        <br>
+
+        {% if user.my_Autama < my_autama_limit or request.user.is_superuser %}
+            <div>
+                {% if user.my_Autama == 0 %}
+                    <!--<p>Hi there! </p>-->
+                    <P>Hi there, {{ user.username }}! Nice to meet you.</P>
+                    <p>I'm Dr. Autama, and I'm glad you're interested in helping me create Autamas.</p>
+                {% else %}
+                <P>Hi again {{ user.username }}!</P>
+                    <p>I'm glad you want to create more Autamas.</p>
+                {% endif %}
+                <p>You can create up to 10 Autamas.</p>
+                <p>Creating an Autama is easy. Just give it a name and a persona by filling out everything below and hitting the "Create" button.</p>
+                <p>I will generate a picture for your Autama, and I hope you like it!</p>
+                <br>
+            </div>
+
+            <div style="color: red;font-size: 14px">
+                {{ error }}
+            </div>
+
+            <form action="/CreateAutama/" method="post">
+                <div class="form-group">
+                    <label for="firstname">First Name</label>
+                    <input type="text" class="form-control" id="firstname" placeholder="firstname" name="firstname">
+                </div>
+
+                <div class="form-group">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" class="form-control" id="lastname" placeholder="lastname" name="lastname">
+                </div>
+                
+                <div>
+                    <br>
+                    <p>Please create a persona for your Autama by providing some details about your Autama.</p>
+                    <p>The details you provide should describe who the Autama is.</p>
+                    <p>Below are some example details:</p>
+                    <ul>
+                        <li>I like cars.</li>
+                        <li>I work at a factory.</li>
+                        <li>I live in the mountains.</li>
+                        <li>I am a student.</li>
+                        <li>My favorite color is purple.</li>
+                        <li>My best friend is a professional curler.</li>
+                        <li>My mom picks out my outfit everyday.</li>
+                    </ul>
+                    <p>The first three details will be shown to other users.</p>
+                    <p>The last three details will be a mystery for users to find out!</p>
+                    <br>
+                </div>
+
+                <div class="form-group">
+                    <label for="interest1">Detail 1</label>
+                    <input type="text" class="form-control" id="interest1" placeholder="example: I can eat a giant pile of ice cream." name="interest1">
+                </div>
+
+                <div class="form-group">
+                    <label for="interest2">Detail 2</label>
+                    <input type="text" class="form-control" id="interest2" placeholder="example: I have a dog named Rice and Beans." name="interest2">
+                </div>
+
+                <div class="form-group">
+                    <label for="interest3">Detail 3</label>
+                    <input type="text" class="form-control" id="interest3" placeholder="example: My husband and I have three children which are all overweight." name="interest3">
+                </div>
+
+                <div class="form-group">
+                    <label for="interest4">Detail 4</label>
+                    <input type="text" class="form-control" id="interest4" placeholder="example: I am a poet who doesn’t know it." name="interest4">
+                </div>
+
+                <div class="form-group">
+                    <label for="interest5">Detail 5</label>
+                    <input type="text" class="form-control" id="interest5" placeholder="example: The world is messed up because there is COVID-19." name="interest5">
+                </div>
+
+                <div class="form-group">
+                    <label for="interest6">Detail 6</label>
+                    <input type="text" class="form-control" id="interest6" placeholder="example: I think that you are a very sweet person." name="interest6">
+                </div>
+                
+                <div>
+                    <br>
+                    <p>Please make sure you fill in everything exactly the way you want it, because you won't be able to edit your Autama later.</p>
+                    <p>Thank you for creating a custom Autama.</p>
+                    <br>
+                </div>
+
+                <input hidden name="id" value="{{ user.id }}">
+                <button class="create_button" type="submit">Create</button>
+                
+                <br>
+                <br>
+
+                {% csrf_token %}
+            </form>
+        {% else %}
+            <div>
+                <p>Sorry!</p>
+                <p>It looks like you have created the maximum amount of Autamas allowed.</p>
+            </div>
+
+            <div>
+                <br>
+                <img src="/Images/Team/Michael.jpg"/>
+            </div>
+            <br>
+        {% endif %}
+    </div>
+{% endblock %}

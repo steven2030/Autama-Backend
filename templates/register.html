@@ -1,4 +1,56 @@
-{% extends 'base.html' %}
+{% block head %}
+    <title>Autama</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block csstyle %}
+    <style>
+            .bottom{
+                padding: 0rem 0;
+                border-bottom-left-radius: 5rem;
+                text-align: center;
+                background-color: rgb(92,67,197);
+            }
+
+            .toplab{
+                background-color: #ff4e50;
+                text-align: center;
+                height: 46px;
+                width: 100%;
+            }
+
+            .Autama-text-logo{
+                width: 105px;
+                height: 36px;
+                object-fit: contain;
+
+            }
+
+            .nav-tabs{
+                border: none;
+                padding-left: 2.5vw;
+            }
+
+	    .bitmap{
+                width: 30.2px;
+                height: 30px;
+
+            }
+
+            .line{
+                height: 2rem;
+                background-color: rgb(92,67,197);
+            }
+
+            .line .bg{
+                width: 100%;
+                height: 100%;
+                background-color: #fff;
+                border-top-right-radius: 10rem;
+            }
+    </style>
+{% endblock %}
 
 {% block js %}
 
@@ -40,7 +92,28 @@
 {% endblock %}
 
 {% block content %}
-    <div style="width: 80%;margin: auto; padding-top: 3%;">
+    <div>
+        <div class="toplab">
+            <img class="Autama-text-logo" src="/Images/images/autama-text-logo.png">
+        </div>
+
+        <div>
+            <div class="bottom">
+                <ul class="nav nav-tabs">
+                <li class="nav-item"><a href="/login/"><img class="bitmap" src="/Images/Images/back-chevron.png"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="line">
+                <div class="bg">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="width: 80%;margin: auto;">
         <h2> Create an account</h2>
         <form action="/accounts/register/" method="post">
             <div id="essentials-container">

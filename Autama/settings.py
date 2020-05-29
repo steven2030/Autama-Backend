@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 import os
+import configparser
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,7 +29,7 @@ SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 
 
-ALLOWED_HOSTS = ['autama.org','localhost', '127.0.0.1', 'autama-dev.ipq.co','52.32.28.117', '18.236.187.114', '10.0.2.2']
+ALLOWED_HOSTS = ['autama.org','localhost', '127.0.0.1', 'autama-dev2.ipq.co','52.38.158.185', '18.236.187.114', '10.0.2.2']
 
 
 # Application definition
@@ -148,3 +149,17 @@ LOGOUT_REDIRECT_URL = '/login/'
 
 # User Model
 AUTH_USER_MODEL = 'accounts.User'
+
+
+# Emailer settings
+email_config_path = os.path.join(BASE_DIR, 'email.cfg')
+email_config_obj = configparser.ConfigParser()
+email_config_obj.read(email_config_path) # file is in BASE_DIR so it can't be read from the Internet
+email_config = email_config_obj['DEFAULT']  # returns associative array for items in [DEFAULT] section
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = email_config['E_HOST_USERNAME']
+EMAIL_HOST_PASSWORD = email_config['E_HOST_PASSWORD']
+EMAIL_RECIPIENTS = email_config['E_TEAM_RECIPIENT_ADDRESSES']

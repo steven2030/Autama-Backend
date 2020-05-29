@@ -1,81 +1,184 @@
 {% extends 'base.html' %}
 
+{% block head %}
+    <title>My Autamas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block csstyle %}
+    <style>
+        /* The following link provides information about media queries: https://www.w3schools.com/css/css_rwd_mediaqueries.asp */
+        /* Extra small devices (phones, 700px and down) */
+        @media only screen and (max-width: 700px) {
+        .create_button{
+                background: #ff4e50;
+                height: 50vw;
+                width: 50vw;
+                color:white;
+                font-size: 25vw;
+                text-align: center;
+                vertical-align: middle;
+                border-radius: 50%;
+            }
+
+            .grid-container{
+                display: grid;
+                grid-template-columns: auto;
+                /*grid-gap: 1vw;*/
+            }
+
+            .profile_card{
+                padding: 4vw;
+                /*background: purple;*/
+            }
+
+            div.profile-container {
+                text-align: center;
+            }
+
+            .circular--portrait {
+                width: 50vw;
+                height: auto;
+                overflow: hidden;
+                border-radius: 50%;
+                display: inline-block;
+            }
+
+            .circular--portrait img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .autama_description{
+                text-align: left;
+                margin: auto;
+                width: 70%;
+            }
+        }
+
+        /* Medium devices (landscape tablets, 701px and up) */
+        @media only screen and (min-width: 701px) {
+            .create_button{
+                background: #ff4e50;
+                height: 20vw;
+                width: 20vw;
+                color:white;
+                font-size: 10vw;
+                text-align: center;
+                vertical-align: middle;
+                border-radius: 50%;
+            }
+
+            .grid-container{
+                display: grid;
+                grid-template-columns: auto auto auto;
+                grid-gap: 1vw;
+            }
+
+            .profile_card{
+                /*padding: 4vw;*/
+                width: 29vw;
+                /*background: purple;*/
+            }
+
+            div.profile-container {
+                text-align: center;
+            }
+
+            .circular--portrait {
+                width: 20vw;
+                height: auto;
+                overflow: hidden;
+                border-radius: 50%;
+                display: inline-block;
+            }
+
+            .circular--portrait img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .autama_description{
+                text-align: left;
+                margin: auto;
+                width: 70%;
+            }
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
-    <div style="width: 80%;margin: auto; padding-top: 50px;">
-        <h1>My Autama</h1>
+    <div style="width: 90%;margin: auto; padding-top: 1vw;">
+        <h1>My Autamas</h1>
+        <br>
 
-        {% if 0 == user.my_Autama %}
-            <div>
-                <br>
-                <p>It looks like you haven't created an Autama yet.</p>
-                <p>If you like to create an Autama, just fill out the form below and hit the "Create" button.</p>
-                <br>
-            </div>
+        <div class="grid-container">
+            <div class="profile_card">
+                <div class="profile-container">
+                    <form action="/CreateAutama/">
+                        <input type="submit" value="+" class="create_button"/>
+                    </form>
 
-            <div style="color: red;font-size: 14px">{{ error }}</div>
-            <br>
-
-            <form action="/MyAutamas/" method="post">
-                <div class="form-group">
-                    <label for="firstname">firstname</label>
-                    <input type="text" class="form-control" id="firstname" placeholder="firstname" name="firstname">
-                </div>
-
-                <div class="form-group">
-                    <label for="lastname">lastname</label>
-                    <input type="text" class="form-control" id="lastname" placeholder="lastname" name="lastname">
-                </div>
-
-                <div class="form-group">
-                    <label for="interest1">interest1</label>
-                    <input type="text" class="form-control" id="interest1" placeholder="interest 1" name="interest1">
-                </div>
-
-                <div class="form-group">
-                    <label for="interest2">interest2</label>
-                    <input type="text" class="form-control" id="interest2" placeholder="interest 2" name="interest2">
-                </div>
-
-                <div class="form-group">
-                    <label for="interest3">interest3</label>
-                    <input type="text" class="form-control" id="interest3" placeholder="interest 3" name="interest3">
-                </div>
-
-                <div class="form-group">
-                    <label for="interest4">interest4</label>
-                    <input type="text" class="form-control" id="interest4" placeholder="interest 4" name="interest4">
-                </div>
-
-                <div class="form-group">
-                    <label for="interest5">interest5</label>
-                    <input type="text" class="form-control" id="interest5" placeholder="interest 5" name="interest5">
-                </div>
-
-                <div class="form-group">
-                    <label for="interest6">interest6</label>
-                    <input type="text" class="form-control" id="interest6" placeholder="interest 6" name="interest6">
-                </div>
-
-                <input hidden name="id" value="{{ user.id }}">
-                <button style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">Create</button>
-
-                {% csrf_token %}
-            </form>
-        {% else %}
-            <div>
-                After creating one
-                <!--{% for a_profile in autamaprofile %}
-                    <div class="flexbox-wrapper some-msg-box">
-                        <div class="flexbox-image">
-                            <a href="{% url 'Chat' pk=a_profile.pk %}" class="image">
-                                <div class="circular--portrait">
-                                    <img src="{{ a_profile.picture.url }}" alt="Avatar"/>
-                                </div>
-                            </a>
+                    <a href="/CreateAutama/" style="color: black;">
+                        <div class="autama_description">
+                            <h2 style="padding-top: 0.4vw; text-align: center;"><b>Create an Autama</b></h2>
+                            {% if request.user.is_superuser %}
+                                <p>As a super user, you can create as many my Autamas as you want.</p>
+                            {% else %}
+                                <p>Each user is allowed to create up to {{ my_autama_limit }} My Autamas total.</p>
+                                <p><b>Remaining My Autama creations:</b> {{ difference }}</p>
+                            {% endif %}
                         </div>
-                    </div>
-                {% endfor %}-->
+                    </a>
+                </div>
             </div>
-        {% endif %}
+
+            {% for autama in my_autamas %}
+                <div class="profile_card">
+                    <div class="profile-container">
+                        <a href="{% url 'Chat' pk=autama.pk %}" style="color: black;">
+                            <div class="circular--portrait">
+                                <img src="{{ autama.picture.url }}" alt="Avatar"/>
+                            </div>
+
+                            <div class="autama_description">
+                                <h2 style="color: #6041ce; text-align: center;"><b>{{ autama.first }} {{ autama.last }}</b></h2>
+
+                                <p>
+                                    <b>Creator: </b>
+                                    {{ autama.creator }}
+                                </p>
+
+                                <p>
+                                    <h4 style="color: #ff4e50;"><b>About</b></h4>
+                                </p>
+                                <p>
+                                    {{ autama.interest1 }}
+                                    {{ autama.interest2 }}
+                                    {{ autama.interest3 }}
+                                </p>
+
+                                <p>
+                                    <b>Followers:</b>
+                                    {{ autama.nummatches }}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <!--DO NOT DELETE the following 4 lines. They are used for keep the grid even.-->
+             <div class="profile_card">
+                    <div class="profile-container">
+                    </div>
+             </div>
+
+            <!--DO NOT DELETE the following 4 lines. They are used for keep the grid even.-->
+            <div class="profile_card">
+                    <div class="profile-container">
+                    </div>
+             </div>
+        </div>
     </div>
 {% endblock %}

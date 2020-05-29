@@ -1,9 +1,9 @@
 {% block head %}
     <title>Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/11d06f2f9f.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js"></script>
 {% endblock %}
 
@@ -23,30 +23,29 @@
         https://stackoverflow.com/questions/90178/make-a-div-fill-the-height-of-the-remaining-screen-space */
         section{
             display: table-row;
-            background: yellow;
+            /*background: yellow;*/
         }
-
         section + section{
             /* Do not delete section + section. It's to build a css table. */
-            background: red;
+            /*background: red;*/
         }
-
         section + section + section{
             /* Do not delete section + section + section. It's to build a css table. */
-            background: blue;
+            /*background: blue;*/
         }
-
         section + section + section + section{
             /* Do not delete section + section + section + section. It's to build a css table. */
-            background: green;
+            /*background: pink;*/
         }
-
+        section + section + section + section + section{
+            /* Do not delete section + section + section + section + section. It's to build a css table. */
+            /*background: green;*/
+        }
         .chatbox_view{
             padding: 0;
             height: 100%;
             width: 100%;
         }
-
         .lite-chatbox{
             padding: 0;
             overflow-x: hidden;
@@ -54,20 +53,32 @@
             height: 100%;
             width: 100%;
         }
-
         .lite-chatbox .cmsg{position:relative;margin:4px 7px;min-height:50px;border:0}
         .lite-chatbox .cright{text-align:right;margin-left:64px}
         .lite-chatbox .cleft{text-align:left;margin-right:64px}
         .lite-chatbox img.headIcon{width:34px;height:34px;top:9px;position:absolute;border:1px solid #c5d4c4}
         .lite-chatbox .name{color:#8b8b8b;font-size:12px;display:block;line-height:18px}
-        .lite-chatbox .name .htitle{display:inline-block;padding:0 3px;background-color:#ccc;color:#fff;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;margin-right:4px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;max-width:50px}
-        .lite-chatbox .content{word-break:break-all;word-wrap:break-word;text-align:left;position:relative;display:inline-block;font-size:15px;padding:10px 15px;line-height:20px;min-width:9px;min-height:18px}.lite-chatbox .content img{width:100%;height:auto}.lite-chatbox .content a{color:#0072C1;margin:0 5px;cursor:hand}
-        .lite-chatbox .tips{margin:12px;text-align:center;font-size:12px}.lite-chatbox .tips span{display:inline-block;padding:4px;background-color:#ccc;color:#fff;-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px}
-        .lite-chatbox img.radius{-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%}.lite-chatbox .cright img.headIcon{right:0}.lite-chatbox .cleft img.headIcon{left:0}
-        .lite-chatbox .cright .name{margin:0 48px 2px 0}
-        .lite-chatbox .cleft .name{margin:0 0 2px 48px}
-        .lite-chatbox .cright .content{margin:0 0 0 0;-webkit-border-radius:20px 0 20px 20px;border-radius:20px 0 20px 20px;color:#fff;background:-webkit-linear-gradient(70deg,#3FD1E1 0%,#44D7CD 100%);background: #B93FA3;-webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15)}
-        .lite-chatbox .cleft .content{margin:0 0 0 48px;-webkit-border-radius:0 20px 20px 20px;border-radius:0 20px 20px 20px;color:#666;border:1px solid rgba(0,0,0,0.05);background:#FFF;-webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.1);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.1)}
+        .lite-chatbox .name .htitle{display:inline-block;padding:0 3px;background-color:#ccc;color:#fff;
+            -moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;margin-right:4px;
+            font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;max-width:50px}
+        .lite-chatbox .content{word-break:break-word;word-wrap:break-word;text-align:left;position:relative;
+            display:inline-block;font-size:15px;padding:10px 15px;line-height:20px;min-width:9px;min-height:18px}
+        .lite-chatbox .content img{width:100%;height:auto}
+        .lite-chatbox .content a{color:#0072C1;margin:0 5px;cursor:hand}
+        .lite-chatbox .tips{margin:12px;text-align:center;font-size:12px}
+        .lite-chatbox .tips span{display:inline-block;padding:4px;background-color:#ccc;color:#fff;
+            -moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px}
+        .lite-chatbox img.radius{-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%}
+        .lite-chatbox .cright img.headIcon{right:0}
+        .lite-chatbox .cleft img.headIcon{left:0}
+        .lite-chatbox .cright .name{margin:0 48px 2px 0} /*top right bottom left*/
+        .lite-chatbox .cleft .name{margin:0 0 2px 48px} /* remove 48px, 0 0 2px 48px */ /* border-rad: tpleft, tpright, btright, btleft */
+        .lite-chatbox .cright .content{margin:0 0 0 0;-webkit-border-radius:20px 20px 0 20px;border-radius:20px 20px 0 20px;
+            color:#fff;background:-webkit-linear-gradient(70deg,#3FD1E1 0%,#44D7CD 100%);background: #6041ce;
+            -webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15)}
+        .lite-chatbox .cleft .content{margin:0 0 0 48px;-webkit-border-radius:20px 20px 20px 0;     /*cleft is left chat - autama*/
+            border-radius:20px 20px 20px 0;color:#666;border:1px solid rgba(0,0,0,0.05);background:#FFF;
+            -webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.1);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.1)}
         .lite-chatbox .cright .content:after{right:-12px;top:8px}
         .lite-chatbox .cleft .content:after{left:-12px;top:8px}
         .lite-chatbox .tips .tips-primary{background-color:#3986c8}
@@ -77,19 +88,90 @@
         .lite-chatbox .tips .tips-danger{background-color:#e24d48}
         .lite-chatbox .name .admin{background-color:#72D6A0}
         .lite-chatbox .name .owner{background-color:#F2BF25}
-
         .lite-chatbox .time_stamp{
             color:#8b8b8b;font-size:12px;display:block;line-height:18px;
         }
-
         .lite-chatbox .cright .time_stamp{
             margin:4px 28px 8px 0;
         }
-
         .lite-chatbox .cleft .time_stamp{
             margin:4px 0 8px 72px;
         }
-
+        @media only screen and (max-width: 499px){
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 85%;
+            }
+            .send_arrow{
+                height: 85%;
+                width: 15%;
+            }
+        }
+        @media only screen and (min-width: 500px){
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 85%;
+            }
+            .send_arrow{
+                height: 85%;
+                width: 15%;
+            }
+        }
+        @media only screen and (min-width: 600px){
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 87.5%;
+            }
+            .send_arrow{
+                height: 85%;
+                width: 12.5%;
+            }
+        }
+        @media only screen and (min-width: 700px){
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 90%;
+            }
+            .send_arrow{
+                height: 85%;
+                width: 10%;
+            }
+        }
+        @media only screen and (min-width: 800px){
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 92.5%;
+            }
+            .send_arrow{
+                height: 85%;
+                width: 7.5%;
+            }
+        }
+        @media only screen and (min-width: 900px){
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 95%;
+            }
+            .send_arrow{
+                height: 85%;
+                width: 5%;
+            }
+        }
+        .send_button{
+            background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+            width: 15%;
+            height: 70px;
+            color:white;
+            font-size: 2.5vw;
+            text-align: center;
+            border-radius: 14px;
+        }
         .special{
             border-radius:5px;
             border: 0;
@@ -99,65 +181,56 @@
             height: 70px;
             overflow-y: auto;
         }
-
         .content1{
             padding-top: 20px;
         }
-
+        .content{
+            /*word-wrap: break-spaces;*/
+        }
         .butt3{
             float: right;
-            margin-right: 10px;
+            margin-right: 10px; /*was 10px*/
         }
-
-        .navbar {
-            background-image: linear-gradient(#54B4EB, #2FA4E7 60%, #1D9CE5);
+        .navbar{
+            background-image: linear-gradient(#54B4EB, #2FA4E7 60%, #1D9CE5); /*#54b4eb light blue, 2fa4e7 darker light blue, 1d9ce5 darkerer lbl*/
             background-repeat: no-repeat;
-            border-bottom: 1px solid #178ACC;
+            border-bottom: 1px solid #178ACC;   /* 178acc still darkererer lbl*/
             box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
             border-radius: 0px;
         }
-
-        .navbar-default {
-            background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+        .navbar-default{
+            background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); /*6737e5 purple b93fa3 rose pink*/
             border-style: none;;
-            border-color: #FC4F6C;
+            border-color: #FC4F6C;  /* fc4f6c light red/pink*/
         }
-
         .navbar-default .navbar-brand,
         .navbar-default .navbar-brand:hover,
         .navbar-default .navbar-brand:focus ,
         .navbar-default .navbar-nav > li > a {
             color: #FFF;
         }
-
         .navbar-default .navbar-nav > li > a:hover,
         .navbar-default .navbar-nav > li > a:focus {
             color: #FFF;
-            background-color: #FC8909;
+            background-color: #FC8909;  /*fc8909 orange */
         }
-
         .navbar-default .navbar-toggle:hover,
-        .navbar-default .navbar-toggle:focus {
+        .navbar-default .navbar-toggle:focus{
             background-color: #FC8909;
         }
-
-        .navbar-default .navbar-toggle {
+        .navbar-default .navbar-toggle{
             border-color: #FC8909;
         }
-
-        .navbar-default .navbar-toggle .icon-bar {
+        .navbar-default .navbar-toggle .icon-bar{
             background-color: #FFF;
         }
-
         .fas{
             color: white;
         }
-
-        .report_box {
+        .report_box{
             display: none;
         }
-
-        .to {
+        .to{
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -168,15 +241,13 @@
             margin-top: -43px;
             background-color: white;
         }
-
-        .flexbox-image {
-            width: 100px;
+        .flexbox-image{
+            width: 125px;
             float: left;
             padding-top: 10px;
-            padding-left: 10px;
+            padding-left: 20px;
         }
-
-        .circular--portrait {
+        .circular--portrait{
             /*position: relative;*/
             width: 100%;
             height: auto;
@@ -184,24 +255,20 @@
             border-radius: 50%;
             display: inline-block;
         }
-
-        .circular--portrait img {
+        .circular--portrait img{
             max-width: 100%;
             height: auto;
         }
-
         .autama_description{
             float: left;
-            padding-left: 10px;
-            /*width: 90%;*/
+            padding-left: 20px;
+            width: 75%;
         }
-
         .profile_view{
             padding: 0;
-            height: 19%;
+            height: 20%;
             width: 100%;
         }
-
         .profile_box{
             padding: 0;
             overflow-x: hidden;
@@ -209,16 +276,136 @@
             height: 100%;
             width: 100%;
         }
+        .match_warning{
+            height: 80%;
+            width: auto;
+            text-align: center;
+        }
+        .match_button{
+            background: #ff4e50;
+            height: auto;
+            width: 50%;
+            color: white;
+            font-size: 10vw;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 10vw;
+        }
+        .form-button-red{
+            background: #ff4e50;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+        .form-button-blue{
+            background: rgb(92,67,197);
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+        .ui-dialog button.red{
+            background: #ff4e50;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+        .ui-dialog button.blue{
+            background: rgb(92,67,197);
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+        div.ui-widget-header{
+            background: rgb(92,67,197);
+            color: white;
+        }
+        .dfont{
+            font-family: Helvetica;
+            font-size: 13px;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.02;
+            letter-spacing: normal;
+        }
+        .three-dots{
+            width: 3rem;    /* was 20px */
+            height: 3rem;   /* was 20px */   /*radial-gradient: ending shape, size, [at position?]*/
+            background-image: radial-gradient(circle, white 0.30vw, transparent 5%);
+            /* background-image: radial-gradient(circle, white 0.22vw, transparent 3px);*/
+            background-size: 100% 33.33%;    /*width, height*/
+            /* background-size: 100% 33.33%;*/
+        }
+        .line{
+            height: 4rem;
+            background-color: rgb(92,67,197);
+        }
+        .line .bg{
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            border-top-right-radius: 5rem;
+        }
+        .bottom{
+            border-bottom-left-radius: 5rem;
+            text-align: center;
+            background-color: rgb(92,67,197);  /* same as #5c43c5 */
+            height: 8rem;  /*added*/
+        }
+        .toplab{
+            background-color: #ff4e50;   /* ff4e50 light red */
+            text-align: center;
+            height: 4rem;     /* was 46px */
+            width: 100%;
+        }
+        .Autama-text-logo{
+            padding-top: 0.75rem;  /*added*/
+            padding-bottom: 1rem; /*added*/
+            width: 18rem;    /* was 105px */
+            height: 4rem;    /* was 36px */
+            object-fit: contain;
+        }
+        .nav-tabs{
+            border: none;
+            /* width: 3rem; added*/
+            /* height: 3rem;  added*/
+            /*padding-left: 2.5vw;*/
+        }
+        .logo-left{         /* back-chevron is ~60x96 */ 
+            /*padding-left: 2.5vw;    added*/
+            padding-top: 0.5rem;    /*added*/
+            padding-bottom: 0.75rem;   /*added*/
+            width: 3.75rem;   /* was 30.2px */
+            height: 6rem;    /* was 30px */
+            object-fit: contain;
+        }
+        .logo-right{         /* ellipsis is ~27x90 */ 
+            padding-top: 0.5rem;    /*added*/
+            padding-bottom: 0.75rem;   /*added*/
+            width: 1.8rem;   /* was 2rem */
+            height: 6rem;    /* */
+            object-fit: contain;
+        }
 
     </style>
-{% endblock %}
+{% endblock %} <!-- end css block -->
+
 
 {% block js %}
     <script>
         /* function to convert iso utc time from the DB to local time in the browser */
         function convertTime(timestamp) {
-            return moment.utc(timestamp).local().format('MMM D YYYY, h:ma');
+            return moment.utc(timestamp).local().format('MMM D YYYY, h:mm a');
         }
+
         function showReport() {
             if (document.getElementById("report").style.display != "block") {
                 div = document.getElementById("report").style.display="block";
@@ -227,88 +414,148 @@
             }
         }
 
-        function hideReport() {
-            div = document.getElementById("report").style.display="none";
-        }
-        
         /*
         A little smashed up of the two links below to create a function for submitting with the enter key.
         https://www.formget.com/submit-data-from-textarea-on-enter-key/
         https://stackoverflow.com/questions/155188/trigger-a-button-click-with-javascript-on-the-enter-key-in-a-text-box
         */
         $(document).ready(function() {
-            $('form').keydown(function() {
+            $('#input_textbox').keydown(function() {
                 if (event.keyCode == 13) {
                     document.getElementById("send_button").click();
                     return false;
                 }
             });
-        });        
+        });
+
+        /*
+        The following link shows how to auto scroll to button:
+        https://stackoverflow.com/questions/24772491/auto-scroll-to-bottom-div/24772646
+        */
+        /* A function to go to the latest message in the chat box */
+        $(document).ready(function(){
+            $('.lite-chatbox').animate({scrollTop: $('.lite-chatbox')[0].scrollHeight}, 0);
+        });
+
+        /*
+        The following link shows how to go back to previous page:
+        https://www.w3schools.com/jsref/met_his_back.asp
+        */
+        function goBackOne() {
+            window.history.back();
+        }
+
+        /*
+        The following link shows how to go back multiple pages:
+        https://www.w3schools.com/jsref/met_his_go.asp
+        */
+        function goBack(pages) {
+            window.history.go(-pages);
+        }
+
+        function match_with(){
+            document.getElementById("nav_match").click();
+        }
     </script>
-{% endblock %}
+{% endblock %}   <!-- end js block -->
+
 
 {% block content %}
     <body>
+    <section>
+        <div class="toplab">
+            <img class="Autama-text-logo" src="/Images/Images/autama-text-logo.png">
+        </div>
 
-        <nav class="nav navbar-inverse navbar-default navbar-fixed-top" role="navgation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+        <div id="container">
+            <div class="bottom">
+                <ul class="nav nav-tabs">
+                    {% if request.user.is_authenticated  %}
+                        <li class="nav-item" style="float: left; padding-left: 3vw;">
+                            <a href="{{ last_page }}"><img class="logo-left" src="/Images/Images/back-chevron.png"></a>
+                        </li>
+                    {% endif %}
+                    <li class="dropdown nav-item" style="float: right; padding-right: 3vw;">   <!-- was 50px -->
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" > 
+                            <img class="logo-right" src="/Images/Images/ellipsis.png"> 
+                            <!--<p class="three-dots"></p>-->
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% if is_matched %}
+                                <li id="shareBtn" style=";"><a onclick="">Share</a></li>
+                                <li><a href="{% url 'UnMatch' pk=autama.pk %}">
+                                    {% csrf_token %}
+                                    Unmatch
+                                </a></li>
+                                <li><a onclick="showReport()">Report</a></li>
+                            {% else %}
+                                <li><a id="nav_match" href="{% url 'Match' pk=autama.pk %}">
+                                    {% csrf_token %}
+                                    Match
+                                </a></li>
+                            {% endif %}
+                        </ul>    <!-- end dropdown menu -->
+                    </li>    <!-- end dropdown nav-item -->
+                </ul>    <!-- end nav-tabs -->
+            </div>
+
+            <div class="main">
+                <div class="line">
+                    <div class="bg">
+                    </div>
                 </div>
+            </div>
 
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav nav">
-                        {% if request.user.is_authenticated  %}
-                            <li><a href="/MyMatches/"><i class="fas fa-chevron-left" aria-hidden="true"></i> </a></li>
-                            </ul>
-                        {% endif %}
-                </div>
+        </div>
+    </section>
 
-                <div>
+    <!--<div>
                     <a href="/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
                         <img  style="position: relative; " class="to" alt="aaa" src="{{ autama.picture.url }}">
                     </a>
+                </div>-->
+
+
+    <!--create some space between nav and chat box-->
+    <!--<section><div style="margin-top: 10px;"></div></section>-->
+
+    <section class="profile_view">
+        <div class="profile_box">
+            <div class="flexbox-image">
+                <div class="circular--portrait">
+                    <img src="{{ autama.picture.url }}" alt="Avatar"/>
                 </div>
             </div>
-        </nav>
 
-        <!--create some space between nav and chat box-->
-        <section><div style="margin-top: 70px;"></div></section>
+            <div class="autama_description">
+                <h5><b>{{ autama.first }} {{ autama.last }} </b></h5>
 
-        <section class="profile_view">
-            <div class="profile_box">
-                <div class="flexbox-image">
-                    <div class="circular--portrait">
-                        <img src="{{ autama.picture.url }}" alt="Avatar"/>
-                    </div>
-                </div>
+                <p>
+                    <b>Creator:</b>
+                    {{ autama.creator }}
+                </p>
 
-                <div class="autama_description">
-                    <h4><b>{{ autama.first }} {{ autama.last }} </b></h4>
-                    <p>
-                        <b>Interests:</b>
-                        {{ autama.interest1 }}
-                        {{ autama.interest2 }}
-                        {{ autama.interest3 }}
-                    </p>
-                    <p>
-                        <b>Creator:</b>
-                        {{ autama.creator }}
-                    </p>
-                    <p>
-                        <b>Followers:</b>
-                        {{ autama.nummatches }}
-                    </p>
-                </div>
+                <p>
+                    <b>About:</b>
+                    {{ autama.interest1 }}
+                    {{ autama.interest2 }}
+                    {{ autama.interest3 }}
+                </p>
+
+                <p>
+                    <b>Followers:</b>
+                    {{ autama.nummatches }}
+                </p>
             </div>
-        </section>
+        </div>
+    </section>
 
+    <!--create some space between Autama profile and chat box-->
+    <section><div style="margin-top: 5px;"></div></section>
+
+    {% if is_matched %}
         <section class="chatbox_view">
-            <div class="lite-chatbox">
+            <div class="lite-chatbox" id="lite-chatbox">
                 {% for a_message in message_chain %}
                     {% if a_message.sender == 'User' %}
                         <div class="cright cmsg">
@@ -320,7 +567,6 @@
                             <a href="/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
                                 <img class="headIcon radius" ondragstart="return false;" oncontextmenu="return false;" src="{{ autama.picture.url }}">
                             </a>
-                            <span class="name">{{autama.first}}</span>
                             <span class="content">{{a_message.message}}</span>
                             <span class="time_stamp">{{ a_message.timeStamp.isoformat }}</span>
                         </div>
@@ -331,20 +577,18 @@
 
         <!-- Input/button area -->
         <section>
-            <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div style="padding: 10px">
-                    <div>
-                        {{ form }}
-                    </div>
-
-                    <div class="butt3" style="margin-top: 10px">
-                        <input id="send_button" type="submit" value="Send" class="btn btn-info" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); width: 100px; height: 50px;">
-                    </div>
+            {#                <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">#}
+            {#                    {% csrf_token %}#}
+            <div style="padding: 1vw;">
+                <div class="text_input">
+                    {#                            {{ form }}#}
+                    <textarea cols="40" rows="10" class="special" id="input_textbox"></textarea>
                 </div>
-            </form>
 
-            <input onclick="showReport()" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" name="report" value="Report">
+                <!--<input id="send_button" type="submit" value="Send" class="send_button">-->
+                <input id="send_button" type="image" src="/Images/Images/send-arrow-3x.png" alt="Submit" class="send_arrow">
+            </div>
+            {#                </form>#}
         </section>
 
         <!-- jQuery dialog code here: https://stackoverflow.com/questions/40939099/jquery-form-submit-with-confirmation-in-a-modal -->
@@ -353,63 +597,333 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 
-        <div id="dialog-confirm" title="Report submitted, thank you!">
+        <div style="display:none" id="prompt-feedback" title="Report submitted, thank you!">
             <p>Would you like to provide additional feedback?</p>
         </div>
 
+        <div style="display:none" id="additional-feedback" title="Feedback">
+            <form id="feedback-form" method="POST" action="/send_feedback_email/" enctype="text/plain">
+                <input type="hidden" id="sender" name="sender" value="{{ user }}">
+                <textarea rows="5" cols="40" name="feedback" placeholder="Enter feedback here..."></textarea>
+                {% csrf_token %}
+            </form>
+        </div>
+
+        <div style="display:none;text-align: center" id="share-popup" title="Share this Autama with others!">
+            <br>
+            <input style="width:75%;" type="text" id="shareURL" value="http://127.0.0.1:8000/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}"></input>
+            <!-- <input style="width:75%;" type="text" id="shareURL" value="3.16.189.148/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}"></input> -->
+            <button class="form-button-blue" id="copyBtn" onclick="copyToClipboard()">Copy</button>
+        </div>
+
+        <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_copy_clipboard -->
         <script>
+            function copyToClipboard() {
+                var a_URL = document.getElementById("shareURL");
+                a_URL.select();
+                a_URL.setSelectionRange(0, 99999);
+                document.execCommand("copy");
+                var elem = document.getElementById("copyBtn");
+                elem.innerHTML = "Copied!";
+            }
+
+            function changeCopyBtnOnClose() {
+                var elem = document.getElementById("copyBtn");
+                elem.innerHTML = "Copy";
+            }
+        </script>
+
+        <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
+        <div id="report" class="report_box" style="margin-left: 20px">
+            <h1>Report Autama</h1>
+            <form id="reportform" method="POST" action="/send_report_email/" enctype="text/plain">
+                <input type="hidden" id="sender" name="sender" value="{{ user }}">
+                <input type="hidden" id="autama_info" name='autama_info' value="{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
+                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="inappropriate" name="option1" value="inappropriate">
+                <label for="option1"> Inappropriate content</label><br>
+                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="broken" name="option2" value="broken">
+                <label for="option2"> Autama is broken</label><br>
+                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="boring" name="option3" value="boring">
+                <label for="option3"> Autama is boring</label><br>
+                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="other" name="option4" value="other">
+                <label for="option4"> Other</label><br><br>
+                <input class="form-button-blue" type="submit" id="submitReportBtn" name="submitReport" value="Submit"/>
+                <input class="form-button-red" type="button" id="hideReportBtn" name="hideReport" value="Close"/>
+                {%csrf_token%}
+            </form>
+        </div>
+        <div id="report-response" style="margin-left:30px"></div>
+        <div id="feedback-response" style="margin-left:30px"></div>
+        <br>
+
+        <script>
+            // For counting how many times a user hit send
+            var sent = 0;
+
+            // Handle submitting user message to server and handling response
+            $("#send_button").click(function() {
+
+                // Setup new DOM elements
+                let user_message = $("#input_textbox").val();
+                let msg = document.createElement('div');
+                let timebox = document.createElement('span');
+                let contentbox = document.createElement('span');
+
+                msg.classList.add('cright');
+                msg.classList.add('cmsg');
+                contentbox.classList.add('content');
+                timebox.classList.add('time_stamp');
+                contentbox.innerHTML = $("#input_textbox").val();
+                timebox.textContent = convertTime(moment.utc().valueOf());
+
+                msg.appendChild(contentbox);
+                msg.appendChild(timebox);
+
+                $(".lite-chatbox").append(msg);
+                $("#input_textbox").val("");
+
+                // Counting user hitting send button
+                sent += 1;
+
+                if (!$("#type_image")[0]) {
+                    // Typing image - This is removed upon successful ajax return
+                    let img = document.createElement('img');
+                    img.id = 'type_image';
+                    img.classList.add('cleft');
+                    img.src = '../../Images/Images/type.gif';
+
+                    $(".lite-chatbox").append(img);
+                } else {
+                    $("#type_image").remove();
+                    // Typing image - This is removed upon successful ajax return
+                    let img = document.createElement('img');
+                    img.id = 'type_image';
+                    img.classList.add('cleft');
+                    img.src = '../../Images/Images/type.gif';
+
+                    $(".lite-chatbox").append(img);
+                }
+                $('.lite-chatbox').animate({scrollTop: $('.lite-chatbox')[0].scrollHeight}, 0);
+                $.ajax({
+                    url : "/Chat/" + {{ autama.pk }} + '/',
+                    type: "POST",
+                    data : { csrfmiddlewaretoken: "{{ csrf_token }}", 'autama_id': {{ autama.pk }}, 'message': user_message,},
+                    success: function(data, textStatus, jqXHR)
+                    {
+
+                        $("#type_image").remove();
+                        let msg = document.createElement('div');
+                        let timebox = document.createElement('span');
+                        let contentbox = document.createElement('span');
+                        let pic = document.createElement('a');
+                        let img = document.createElement('img');
+
+                        pic.appendChild(img);
+                        img.classList.add('headIcon');
+                        img.classList.add('radius');
+                        img.src = "{{ autama.picture.url }}";
+                        img.addEventListener('dragstart', function(event) {
+                            event.preventDefault();
+                        }, true);
+                        img.addEventListener('contextmenu', function(event) {
+                            event.preventDefault();
+                        }, true);
+                        pic.href = "/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}";
+
+                        msg.classList.add('cleft');
+                        msg.classList.add('cmsg');
+                        contentbox.classList.add('content');
+                        timebox.classList.add('time_stamp');
+                        contentbox.innerHTML = data.response;
+                        timebox.textContent = convertTime(data.time);
+
+                        msg.appendChild(pic);
+                        msg.appendChild(contentbox);
+                        msg.appendChild(timebox);
+
+                        $(".lite-chatbox").append(msg);
+
+                        // Subtract one because Autama sent response
+                        sent -= 1;
+
+                        // Add typing thing if user sent more than one message
+                        if (sent > 0) {
+                            if (!$("#type_image")[0]) {
+                                // Typing image - This is removed upon successful ajax return
+                                let img = document.createElement('img');
+                                img.id = 'type_image';
+                                img.classList.add('cleft');
+                                img.src = '../../Images/Images/type.gif';
+
+                                $(".lite-chatbox").append(img);
+                            } else {
+                                $("#type_image").remove();
+                                // Typing image - This is removed upon successful ajax return
+                                let img = document.createElement('img');
+                                img.id = 'type_image';
+                                img.classList.add('cleft');
+                                img.src = '../../Images/Images/type.gif';
+
+                                $(".lite-chatbox").append(img);
+                            }
+                        }
+
+                        $('.lite-chatbox').animate({scrollTop: $('.lite-chatbox')[0].scrollHeight}, 0);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        console.log(errorThrown)
+                    }
+                });
+            });
+
             /* After page load go to all time_stamp class fields and update to local time */
             $('.time_stamp').text(function(index, text) {
                 return convertTime(text);
             });
 
+            $(window).resize(function() {
+                $("#prompt-feedback").dialog("option", "position", {my: "center", at: "bottom", of: "#lite-chatbox"});
+                $("#additional-feedback").dialog("option", "position", {my: "center", at: "bottom", of: "#lite-chatbox"});
+                $("#share-popup").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
+            });
+
+            /* Email report submission handling */
+            $("#reportform").submit(function() {
+                $("#report-response").show();
+                $("#report-response").html("Sending report..."); /* udpate div that we're working on it */
+                /* .post signature is .post(action, data, success_callback_handler)
+                   .serialize() converts the elements of the <form> into a text string */
+                $.post($(this).attr('action'), $(this).serialize(), function(response) {
+                    $("#report-response").html(response); /* update div with actual server response */
+                });
+                $("#prompt-feedback").dialog('open');
+                return false; /* don't use the actual HTML form submit process (we use jQuery .post()) */
+            });
+
+            $('#feedback-form').submit(function() {
+                $("#feedback-response").show();
+                $("#feedback-response").html("Sending feedback...");
+                $.post($(this).attr('action'), $(this).serialize(), function(response) {
+                    $("#feedback-response").html(response);
+                });
+                return false;
+            });
+
+            $("#hideReportBtn").click(function() {
+                $("#report").hide();
+                $("#report-response").html('');
+            });
+
             $(function() {
-                $("#dialog-confirm").dialog({
+                $("#additional-feedback").dialog({
                     resizable: false,
-                    height: 180,
+                    height: "auto",
                     autoOpen: false,
-                    width: 330,
+                    width: "auto",
                     modal: true,
+                    position: {
+                        my: "center",
+                        at: "bottom",
+                        of: "#lite-chatbox",
+                    },
                     buttons: {
-                        "Yes": function() {
-                            $('#reportform').submit();
-                            window.location.replace("http://127.0.0.1:8000/about/");
-                        },
-                        No: function() {
+                        "Submit": function() {
+                            $('#feedback-form').submit();
                             $(this).dialog("close");
-                            hideReport();
+                            $("#report").fadeOut(3000);
+                            $("#report-response").fadeOut(3000);
+                            $("#feedback-response").fadeOut(3000);
+                        },
+                        "Close": function() {
+                            $(this).dialog("close");
+                            $("#report").fadeOut(3000);
+                            $("#report-response").fadeOut(3000);
                         }
-                    }
+                    },
+                    close: function() {
+                        $("#report").fadeOut(3000);
+                        $("#report-response").fadeOut(3000);
+                    },
+                    create: function() {
+                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
+                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
+                    },
+                });
+
+                $("#prompt-feedback").dialog({
+                    resizable: false,
+                    height: "auto",
+                    autoOpen: false,
+                    width: "auto",
+                    modal: true,
+                    position: {
+                        my: "center",
+                        at: "bottom",
+                        of: "#lite-chatbox",
+                    },
+                    buttons: [
+                        {
+                            text: "Yes",
+                            click: function() {
+                                $("#additional-feedback").dialog('open');
+                                $(this).dialog("close");
+                            },
+                        },
+                        {
+                            text: "No",
+                            click: function() {
+                                $(this).dialog("close");
+                                $("#report").fadeOut(3000);
+                                $("#report-response").fadeOut(3000);
+                            },
+                        }
+                    ],
+                    create: function() {
+                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
+                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
+                    },
+                    close: function() {
+                        $("#report").fadeOut(3000);
+                        $("#report-response").fadeOut(3000);
+                    },
+                });
+
+                $("#shareBtn").click( function() {
+                    $("#share-popup").dialog('open');
+                });
+
+                $("#share-popup").dialog({
+                    resizable: false,
+                    height: "auto",
+                    autoOpen: false,
+                    width: "400",
+                    modal: true,
+                    position: {
+                        my: "center",
+                        at: "top",
+                        of: "#lite-chatbox",
+                    },
+                    close: function (event, ui) {
+                        changeCopyBtnOnClose();
+                    },
                 });
 
                 $('#submitReport').on('click', function(e) {
-                    $("#dialog-confirm").dialog('open');
+                    $("#prompt-feedback").dialog('open');
                 });
             });
         </script>
+    {% else %}
+        <section class="match_warning">
+            <h1>I don't talk to strangers.</h1>
+            <h1>Match with me, then we'll talk.</h1>
+            <br>
+            <button onclick="match_with()" class="match_button">Match</button>
+        </section>
 
-        <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
-        <div class="report_box" id="report">
-            <!-- <form action="???" method="post"> -->
-            <!-- include csrf_token here -->
-            <h1>Report Autama</h1>
-            <form id="reportform">
-                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option1" name="option1" value="Option 1">
-                <label for="option1"> Inappropriate content</label><br>
-                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option2" name="option2" value="Option 2">
-                <label for="option2"> Autama is broken</label><br>
-                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option3" name="option3" value="Option 3">
-                <label for="option3"> Autama is boring</label><br>
-                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="option4" name="option4" value="Option 4">
-                <label for="option4"> Other</label><br><br>
-
-                <!-- jQuery dialog-confirm code -->
-                <input type="hidden" name="submitReport" value="Submit"/>
-                <input type="button" id="submitReport" value="Submit"/>
-
-                <button onclick="hideReport()"/>Close</button>
-            </form>
-        </div>
+        <section></section>
+    {% endif %}
 
     </body>
 {% endblock %}

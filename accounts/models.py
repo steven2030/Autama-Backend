@@ -12,6 +12,9 @@ class User(AbstractUser):
     interests5 = models.TextField()
     interests6 = models.TextField()
     currentAutama = models.IntegerField(default=1)  # Used for find matches stack tracing.
+    nextAutama = models.IntegerField(default=2)
+    my_Autama = models.IntegerField(default=0) # Use for tracking the amount of Autamas the user created
+    last_page = models.CharField(max_length=100, default='/MyMatches/') # Tracks the page used to get to chat page
 
 
 class Claims(models.Model):

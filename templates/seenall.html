@@ -1,16 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
+    <style>
+        .center {
+            margin: auto;
+            width: 50%;
+
+        }
+    </style>
     <div style="margin-bottom: 80px"></div>
-    <div style="margin-left: 8px">
-        <span>
-            <h1>Wow!</h1>
-            <p style="margin: auto">You've seen all of the Autama currently generated.</p> <br>
-            <button id="again">Show me them again</button>
-            <button id="stay">I'll wait for more</button>
+    <div class="center">
+        <span style="text-align: center;">
+            <div class="center" style="font-size: 24px; font-weight: bold">Wow!</div>
+            <div class="center">You've seen all of the Autama currently generated.  Start over from the begining?</div> <br>
+            <div>
+                <img id="stay" style="height: 85px; width: 85px;"  src="../Images/Images/dislike-button.png">
+                <img id="again" style="height: 85px; width: 85px;"  src="../Images/Images/like-button.png">
+            </div>
         </span>
     </div>
     <script>
-    $("button").click(function(e) {
+    $("img").click(function(e) {
         $.ajax({
             type: "POST",
             url: "/SeenAll/",

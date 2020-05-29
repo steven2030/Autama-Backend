@@ -34,6 +34,8 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('FindMatches/', main_page_views.FindMatches.as_view(), name="FindMatches"),
     path('MyMatches/', main_page_views.MyMatches.as_view(), name="MyMatches"),
+    path('UnMatch/<int:pk>/', main_page_views.unmatch_autama, name="UnMatch"),
+    path('Match/<int:pk>/', main_page_views.match_autama, name="Match"),
     path('Chat/', main_page_views.chat_main_page, name="Chat_homepage"),
     path('Chat/<int:pk>/', main_page_views.Chat.as_view(), name="Chat"),
     path('logout/', main_page_views.LogoutView.as_view(), name="logout"),
@@ -45,6 +47,11 @@ urlpatterns = [
     path('testdata/', main_page_views.testdata,),
     path('api/', include('API_tastypy.urls')),
     path('SeenAll/', main_page_views.SeenAll.as_view(), name="SeenAll"),
+    path('MyAutamas/', main_page_views.MyAutamas.as_view(), name='MyAutamas'),
+    path('CreateAutama/', main_page_views.CreateAutama.as_view(), name='CreateAutama'),
+    path('send_report_email/', main_page_views.SendReportEmail.as_view(), name='SendReportEmail'),
+    path('send_feedback_email/', main_page_views.SendFeedbackEmail.as_view(), name='SendFeedbackEmail'),
+    path('Preview/<int:pk>/', main_page_views.Preview.as_view(), name="Preview"),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

@@ -12,8 +12,10 @@ Nucleus/__*
 nucleus.pickle
 dataset_cache_OpenAIGPTTokenizer
 Autama.sock
-
+Images/*.png
 
 autama.pem
 Sharice.pem
 
+email.cfg
+!email.cfg

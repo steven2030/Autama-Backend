@@ -11,7 +11,7 @@ from django.views import View
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
-from .models import User
+from .models import User, Matches
 from AutamaProfiles.models import AutamaProfile
 from Nucleus.bacon import Bacon
 from AutamaProfiles.views import create_autama_profile
@@ -69,7 +69,7 @@ class RegisterView(View):
         if User.objects.filter(username=username) or User.objects.filter(email=email):
             return render(request, '../templates/register.html', {'error': 'Username or email already exists.'})
 
-        obj = User.objects.create(username=username, email=email)
+        obj = User.objects.create(username=username, email=email, currentAutama=1, nextAutama=2)
         obj.set_password(password)
         if interests1:
             obj.interests1 = interests1
@@ -86,10 +86,11 @@ class RegisterView(View):
             same_personality = bacon.check_personality(user_personality)
             create_autama_profile(personality=same_personality, creator=username, origin=username)
 
-        obj.currentAutama = 0
         obj.save()
-
-        return HttpResponseRedirect(reverse('login'))
+        
+        # Login and redirect to find_matches
+        login(request, obj)
+        return HttpResponseRedirect("/")
 
 
 class LoginRequiredMixin(object):
@@ -104,16 +105,17 @@ class LoginRequiredMixin(object):
 class ProfileView(LoginRequiredMixin, View):
     def get(self, request):
         user_id = request.GET.get("user_id")
+        matches = Matches.objects.all().filter(userID=request.user.id).count()
         if not user_id:
-            return render(request, '../templates/profile.html', {"user": request.user, 'myself': True})
+            return render(request, '../templates/profile.html', {"user": request.user, 'myself': True, 'num_matches': matches})
         else:
             try:
                 obj = User.objects.get(id=int(user_id))
             except Exception as e:
                 return render(request, '../templates/error.html', {"error": "user does not exist"})
             if obj.id == int(user_id):
-                return render(request, '../templates/profile.html', {"user": obj, 'myself': True})
-            return render(request, '../templates/profile.html', {"user": obj, 'myself': False})
+                return render(request, '../templates/profile.html', {"user": obj, 'myself': True, 'num_matches': matches})
+            return render(request, '../templates/profile.html', {"user": obj, 'myself': False, 'num_matches': matches})
 
     def post(self, request):
         user_id = request.POST.get("id")
