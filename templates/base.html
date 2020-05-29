@@ -15,6 +15,7 @@
             border-bottom-left-radius: 5rem;   /* was 5rem */
             text-align: center;
             background-color: #6041ce;    /*was rgb(92,67,197); purple*/
+            height: 8rem;
         }
         .toplab{
             background-color: #ff4e50; /*#ff4e50 is light red*/
@@ -23,37 +24,45 @@
             width: 100%; 
         }
         .Autama-text-logo{
-            width: 105px;  /* was 105px */
-            height: 36px;  /* was 36px */
+            padding-top: 0.75rem;     /*added*/
+            padding-bottom: 1rem;  /*added was 0.75rem*/
+            width: 18rem;  /* was 105px */
+            height: 4rem;  /* was 36px */
             object-fit: contain;
         }
         .line{             /* the purple edge on rt of bottom half nav bar*/
-            height: 2rem;  /* was 2rem */
+            height: 4rem;  /* was 2rem */
             background-color: #6041ce;  /* was  rgb(92,67,197) purple */
         }
         .line .bg{        /* white layer over purple edge bottom half nav bar */
             width: 100%;
             height: 100%;
             background-color: #fff;   /* #fff is white*/
-            border-top-right-radius: 10rem;
+            border-top-right-radius: 5rem; /*was 10rem*/
         }
         .nav-tabs{
             border: none;
         }
-        .logo-left{
-            width: 3rem;  /* was 30.2px;*/
-            height: 2.5rem;  /* was 30px */
+        .logo-left{         /*swipe icon 180x150*/
+            padding-top: 0.5rem;    /*added*/
+            padding-bottom: 0.75rem;    /*added*/
+            width: 7.2rem;  /* was 30.2px then 3rem*/
+            height: 6rem;  /* was 30px then 2.5rem*/
             object-fit: contain;  /*added*/
         }
-        .logo-mid{
-            width: 3rem;  /*was 45px*/
-            height: 2.5rem;  /*was 45px*/
+        .logo-mid{        /* autama icon 180x150 */
+            padding-top: 0.5rem;    /*added*/
+            padding-bottom: 0.75rem;    /*added*/
+            width: 7.2rem;  /*was 45px then 3rem*/
+            height: 6rem;  /*was 45px, then 2.5rem*/
             object-fit: contain; /*added*/
         }
-        .logo-right{       /*added*/
-            width: 3rem;
-            height: 2.5rem;
-            object-fit: contain;
+        .logo-right{       /*added-chatbutton 180x175*/
+            margin-top: 0.5rem;
+            padding-bottom: 0rem;    /*added*/
+            width: 10rem;
+            height: 7rem;
+            object-fit: cover;
         }
 	    @media screen and (min-width:561px){
             .middle {
