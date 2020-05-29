@@ -1,0 +1,551 @@
+{% block head %}
+    <title>Preview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js"></script>
+{% endblock %}
+
+{% block csstyle %}
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            display: table;
+            position: fixed;
+            bottom: 0px;
+        }
+
+        /* The following link shows how to create css tables:
+        https://stackoverflow.com/questions/90178/make-a-div-fill-the-height-of-the-remaining-screen-space */
+        section{
+            display: table-row;
+            /*background: yellow;*/
+        }
+
+        section + section{
+            /* Do not delete section + section. It's to build a css table. */
+            /*background: red;*/
+        }
+
+        section + section + section{
+            /* Do not delete section + section + section. It's to build a css table. */
+            /*background: blue;*/
+        }
+
+        section + section + section + section{
+            /* Do not delete section + section + section + section. It's to build a css table. */
+            /*background: pink;*/
+        }
+
+        section + section + section + section + section{
+            /* Do not delete section + section + section + section + section. It's to build a css table. */
+            /*background: green;*/
+        }
+
+        .chatbox_view{
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .lite-chatbox{
+            padding: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 100%;
+            width: 100%;
+        }
+
+        .lite-chatbox .cmsg{position:relative;margin:4px 7px;min-height:50px;border:0}
+        .lite-chatbox .cright{text-align:right;margin-left:64px}
+        .lite-chatbox .cleft{text-align:left;margin-right:64px}
+        .lite-chatbox img.headIcon{width:34px;height:34px;top:9px;position:absolute;border:1px solid #c5d4c4}
+        .lite-chatbox .name{color:#8b8b8b;font-size:12px;display:block;line-height:18px}
+        .lite-chatbox .name .htitle{display:inline-block;padding:0 3px;background-color:#ccc;color:#fff;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;margin-right:4px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;max-width:50px}
+        .lite-chatbox .content{word-break:break-word;word-wrap:break-word;text-align:left;position:relative;display:inline-block;font-size:15px;padding:10px 15px;line-height:20px;min-width:9px;min-height:18px}.lite-chatbox .content img{width:100%;height:auto}.lite-chatbox .content a{color:#0072C1;margin:0 5px;cursor:hand}
+        .lite-chatbox .tips{margin:12px;text-align:center;font-size:12px}.lite-chatbox .tips span{display:inline-block;padding:4px;background-color:#ccc;color:#fff;-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px}
+        .lite-chatbox img.radius{-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%}.lite-chatbox .cright img.headIcon{right:0}.lite-chatbox .cleft img.headIcon{left:0}
+        .lite-chatbox .cright .name{margin:0 48px 2px 0}
+        .lite-chatbox .cleft .name{margin:0 0 2px 48px} /* remove 48px, 0 0 2px 48px */
+        .lite-chatbox .cright .content{margin:0 0 0 0;-webkit-border-radius:20px 0 20px 20px;border-radius:20px 0 20px 20px;color:#fff;background:-webkit-linear-gradient(70deg,#3FD1E1 0%,#44D7CD 100%);background: #6041ce;-webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.15)}
+        .lite-chatbox .cleft .content{margin:0 0 0 48px;-webkit-border-radius:0 20px 20px 20px;border-radius:0 20px 20px 20px;color:#666;border:1px solid rgba(0,0,0,0.05);background:#FFF;-webkit-box-shadow:5px 5px 15px 0 rgba(102,102,102,0.1);box-shadow:5px 5px 15px 0 rgba(102,102,102,0.1)}
+        .lite-chatbox .cright .content:after{right:-12px;top:8px}
+        .lite-chatbox .cleft .content:after{left:-12px;top:8px}
+        .lite-chatbox .tips .tips-primary{background-color:#3986c8}
+        .lite-chatbox .tips .tips-success{background-color:#49b649}
+        .lite-chatbox .tips .tips-info{background-color:#5bb6d1}
+        .lite-chatbox .tips .tips-warning{background-color:#eea948}
+        .lite-chatbox .tips .tips-danger{background-color:#e24d48}
+        .lite-chatbox .name .admin{background-color:#72D6A0}
+        .lite-chatbox .name .owner{background-color:#F2BF25}
+
+        .lite-chatbox .time_stamp{
+            color:#8b8b8b;font-size:12px;display:block;line-height:18px;
+        }
+
+        .lite-chatbox .cright .time_stamp{
+            margin:4px 28px 8px 0;
+        }
+
+        .lite-chatbox .cleft .time_stamp{
+            margin:4px 0 8px 72px;
+        }
+
+        .text_input{
+            float: left;
+            padding-right: 1vw;
+            width: 85%;
+        }
+
+        @media only screen and (max-width: 499px) {
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 85%;
+            }
+
+            .send_arrow{
+                height: 85%;
+                width: 15%;
+            }
+        }
+
+        @media only screen and (min-width: 500px) {
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 85%;
+            }
+
+            .send_arrow{
+                height: 85%;
+                width: 15%;
+            }
+        }
+
+        @media only screen and (min-width: 600px) {
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 87.5%;
+            }
+
+            .send_arrow{
+                height: 85%;
+                width: 12.5%;
+            }
+        }
+
+        @media only screen and (min-width: 700px) {
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 90%;
+            }
+
+            .send_arrow{
+                height: 85%;
+                width: 10%;
+            }
+        }
+
+        @media only screen and (min-width: 800px) {
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 92.5%;
+            }
+
+            .send_arrow{
+                height: 85%;
+                width: 7.5%;
+            }
+        }
+
+        @media only screen and (min-width: 900px) {
+            .text_input{
+                float: left;
+                padding-right: 1vw;
+                width: 95%;
+            }
+
+            .send_arrow{
+                height: 85%;
+                width: 5%;
+            }
+        }
+
+        .send_button{
+            background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+            width: 15%;
+            height: 70px;
+            color:white;
+            font-size: 2.5vw;
+            text-align: center;
+            border-radius: 14px;
+        }
+
+        .special{
+            border-radius:5px;
+            border: 0;
+            background-color:rgba(241,241,241,.98);
+            resize: none;
+            width: 100%;
+            height: 70px;
+            overflow-y: auto;
+        }
+
+        .flexbox-image {
+            width: 125px;
+            float: left;
+            padding-top: 10px;
+            padding-left: 20px;
+        }
+
+        .circular--portrait {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .circular--portrait img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .autama_description{
+            float: left;
+            padding-left: 20px;
+            width: 75%;
+        }
+
+        .profile_view{
+            padding: 0;
+            height: 20%;
+            width: 100%;
+        }
+
+        .profile_box{
+            padding: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 100%;
+            width: 100%;
+        }
+
+        .bottom{
+            padding: 0rem 0;
+            border-bottom-left-radius: 5rem;
+            text-align: center;
+            background-color: rgb(92,67,197);
+        }
+
+        .toplab{
+            background-color: #ff4e50;
+            text-align: center;
+            height: 46px;
+            width: 100%;
+        }
+
+        .Autama-text-logo{
+            width: 105px;
+            height: 36px;
+            object-fit: contain;
+
+        }
+
+        .nav-tabs{
+            border: none;
+            padding-left: 2.5vw;
+        }
+
+	    .bitmap{
+            width: 30.2px;
+            height: 30px;
+
+        }
+
+        .line{
+            height: 2rem;
+            background-color: rgb(92,67,197);
+        }
+
+        .line .bg{
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            border-top-right-radius: 10rem;
+        }
+
+        .option{
+            color: white;
+            font-size: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block js %}
+    <script>
+        /* function to convert iso utc time from the DB to local time in the browser */
+        function convertTime(timestamp) {
+            return moment.utc(timestamp).local().format('MMM D YYYY, h:mm a');
+        }
+
+        /*
+        A little smashed up of the two links below to create a function for submitting with the enter key.
+        https://www.formget.com/submit-data-from-textarea-on-enter-key/
+        https://stackoverflow.com/questions/155188/trigger-a-button-click-with-javascript-on-the-enter-key-in-a-text-box
+        */
+        $(document).ready(function() {
+            $('#input_textbox').keydown(function() {
+                if (event.keyCode == 13) {
+                    document.getElementById("send_button").click();
+                    return false;
+                }
+            });
+        });
+
+        $(document).ready(function(){
+            var warning = "Warning:"
+            var message = "Please note that this is a preview, so your conversation will not be saved."
+            alert(warning + "\n" + message);
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <body>
+        <!-- Nav bar -->
+        <section>
+            <div class="toplab">
+                <img class="Autama-text-logo" src="/Images/images/autama-text-logo.png">
+            </div>
+
+            <div>
+                <div class="bottom">
+                    <ul class="nav nav-tabs">
+                        {% if is_login %}
+                            <li class="nav-item"><a href="/FindMatches/"><img class="bitmap" src="/Images/Images/back-arrow-3x.png"></a></li>
+                        {% endif %}
+
+                        <ul class="nav nav-tabs" style="float: right; margin-right: 5vw;">
+                            {% if is_login %}
+                                <li>
+                                    <a href="{{ chat_page }}" class="option">
+                                        Go to Official Chat Page
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="/login/" class="option">
+                                        Login/Register
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="main">
+                <div class="line">
+                    <div class="bg">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Autama profile description -->
+        <section class="profile_view">
+            <div class="profile_box">
+                <div class="flexbox-image">
+                    <div class="circular--portrait">
+                        <img src="{{ autama.picture.url }}" alt="Avatar"/>
+                    </div>
+                </div>
+
+                <div class="autama_description">
+                    <h5><b>{{ autama.first }} {{ autama.last }} </b></h5>
+
+                    <p>
+                        <b>Creator:</b>
+                        {{ autama.creator }}
+                    </p>
+
+                    <p>
+                        <b>About:</b>
+                        {{ autama.interest1 }}
+                        {{ autama.interest2 }}
+                        {{ autama.interest3 }}
+                    </p>
+
+                    <p>
+                        <b>Followers:</b>
+                        {{ autama.nummatches }}
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!--create some space between Autama profile and chat box-->
+        <section><div style="margin-top: 5px;"></div></section>
+
+        <!-- Chat box; where messages are displayed -->
+        <section class="chatbox_view">
+            <div class="lite-chatbox">
+            </div>
+        </section>
+
+        <!-- Input/button area -->
+        <section>
+{#                <form action="{% url 'Chat' pk=autama.pk %}" method="post" enctype="multipart/form-data">#}
+{#                    {% csrf_token %}#}
+                <div style="padding: 1vw;">
+                    <div class="text_input">
+{#                            {{ form }}#}
+                        <textarea cols="40" rows="10" class="special" id="input_textbox"></textarea>
+                    </div>
+
+                    <!--<input id="send_button" type="submit" value="Send" class="send_button">-->
+                    <input id="send_button" type="image" src="/Images/Images/send-arrow-3x.png" alt="Submit" class="send_arrow">
+                </div>
+{#                </form>#}
+        </section>
+
+        <br>
+
+        <script>
+            // For counting how many times a user hit send
+            var sent = 0;
+
+            // Handle submitting user message to server and handling response
+            $("#send_button").click(function() {
+
+                // Setup new DOM elements
+                let user_message = $("#input_textbox").val();
+                let msg = document.createElement('div');
+                let timebox = document.createElement('span');
+                let contentbox = document.createElement('span');
+
+                msg.classList.add('cright');
+                msg.classList.add('cmsg');
+                contentbox.classList.add('content');
+                timebox.classList.add('time_stamp');
+                contentbox.innerHTML = $("#input_textbox").val();
+                timebox.textContent = convertTime(moment.utc().valueOf());
+
+                msg.appendChild(contentbox);
+                msg.appendChild(timebox);
+
+                $(".lite-chatbox").append(msg);
+                $("#input_textbox").val("");
+
+                // Counting user hitting send button
+                sent += 1;
+
+                if (!$("#type_image")[0]) {
+                    // Typing image - This is removed upon successful ajax return
+                    let img = document.createElement('img');
+                    img.id = 'type_image';
+                    img.classList.add('cleft');
+                    img.src = '../../Images/Images/type.gif';
+
+                    $(".lite-chatbox").append(img);
+                } else {
+                    $("#type_image").remove();
+                    // Typing image - This is removed upon successful ajax return
+                    let img = document.createElement('img');
+                    img.id = 'type_image';
+                    img.classList.add('cleft');
+                    img.src = '../../Images/Images/type.gif';
+
+                    $(".lite-chatbox").append(img);
+                }
+
+                $('.lite-chatbox').animate({scrollTop: $('.lite-chatbox')[0].scrollHeight}, 0);
+                $.ajax({
+                    url : "/Preview/" + {{ autama.pk }} + '/',
+                    type: "POST",
+                    data : { csrfmiddlewaretoken: "{{ csrf_token }}", 'autama_id': {{ autama.pk }}, 'message': user_message,},
+                    success: function(data, textStatus, jqXHR)
+                    {
+
+                        $("#type_image").remove();
+                        let msg = document.createElement('div');
+                        let timebox = document.createElement('span');
+                        let contentbox = document.createElement('span');
+                        let pic = document.createElement('a');
+                        let img = document.createElement('img');
+
+                        pic.appendChild(img);
+                        img.classList.add('headIcon');
+                        img.classList.add('radius');
+                        img.src = "{{ autama.picture.url }}";
+                        img.addEventListener('dragstart', function(event) {
+                            event.preventDefault();
+                        }, true);
+                        img.addEventListener('contextmenu', function(event) {
+                            event.preventDefault();
+                        }, true);
+                        pic.href = "/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}";
+
+                        msg.classList.add('cleft');
+                        msg.classList.add('cmsg');
+                        contentbox.classList.add('content');
+                        timebox.classList.add('time_stamp');
+                        contentbox.innerHTML = data.response;
+                        timebox.textContent = convertTime(data.time);
+
+                        msg.appendChild(pic);
+                        msg.appendChild(contentbox);
+                        msg.appendChild(timebox);
+
+                        $(".lite-chatbox").append(msg);
+
+                        // Subtract one because Autama sent response
+                        sent -= 1;
+
+                        // Add typing thing if user sent more than one message
+                        if (sent > 0) {
+                            if (!$("#type_image")[0]) {
+                                // Typing image - This is removed upon successful ajax return
+                                let img = document.createElement('img');
+                                img.id = 'type_image';
+                                img.classList.add('cleft');
+                                img.src = '../../Images/Images/type.gif';
+
+                                $(".lite-chatbox").append(img);
+                            } else {
+                                $("#type_image").remove();
+                                // Typing image - This is removed upon successful ajax return
+                                let img = document.createElement('img');
+                                img.id = 'type_image';
+                                img.classList.add('cleft');
+                                img.src = '../../Images/Images/type.gif';
+
+                                $(".lite-chatbox").append(img);
+                            }
+                        }
+
+                        $('.lite-chatbox').animate({scrollTop: $('.lite-chatbox')[0].scrollHeight}, 0);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        console.log(errorThrown)
+                    }
+                });
+            });
+
+            /* After page load go to all time_stamp class fields and update to local time */
+            $('.time_stamp').text(function(index, text) {
+                return convertTime(text);
+            });
+        </script>
+    </body>
+{% endblock %}
