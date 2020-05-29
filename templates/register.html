@@ -53,6 +53,17 @@
                 background-color: #fff;
                 border-top-right-radius: 10rem;
             }
+
+            .register_button{
+                background: #ff4e50;
+                height: 5rem;
+                width: 10rem;
+                color: white;
+                font-size: 2rem;
+                text-align: center;
+                vertical-align: middle;
+                border-radius: 5rem;
+            }
     </style>
 {% endblock %}
 
@@ -118,47 +129,51 @@
     </div>
 
     <div style="width: 80%;margin: auto;">
-        <h2> Create an account</h2>
+        <h1> Create an Account</h1>
+
+        <br>
+
+        <div style="color: red; font-size: 2rem">{{ error }}</div>
+
         <form action="/accounts/register/" method="post">
             <div id="essentials-container">
                 <div class="form-group">
-                    <label for="username">username</label>
-                    <input type="text" class="form-control" id="username" placeholder="username" name="username" required>
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" placeholder="Username" name="username" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="password">password</label>
-                    <input type="password" class="form-control" id="password" placeholder="password" name="password" required>
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="rePassword">confirmed Password</label>
-                    <input type="password" class="form-control" id="rePassword" placeholder="rePassword" name="rePassword" required>
+                    <label for="rePassword">Confirmed Password</label>
+                    <input type="password" class="form-control" id="rePassword" placeholder="Confirmed Password" name="rePassword" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="email">email</label>
-                    <input type="email" class="form-control" id="email" placeholder="email" name="email" required>
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
                 </div>
 
             </div> <!-- end essentials-container -->
 
             <!-- Asking for more information. -->
-            <div id="call-to-action">
+            <!--<div id="call-to-action">
                 <p style="font-size: 18px;">Hey! Care to help us expand our collection of Autama? Click on the button "More fields" to create one.</p>
-            </div>
+            </div>-->
 
             <!-- Expanding entry fields button. -->
             <br>
-            <button id="expand-fields-button" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="button" class="btn btn-info" onclick="addFields()" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">More fields</button>
+            <!--<button id="expand-fields-button" style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="button" class="btn btn-info" onclick="addFields()" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">More fields</button>-->
 
             <!-- Register account button. -->
             <input hidden name="id" value="{{ user.id }}">
-            <button style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">register</button>
+            <button class="register_button" type="submit">Register</button>
             {% csrf_token %}
         </form>
         <br>
-        <div style="color: red;font-size: 14px">{{ error }}</div>
 
     </div>
 {% endblock %}
