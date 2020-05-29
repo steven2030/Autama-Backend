@@ -324,6 +324,47 @@
             border-radius: 10vw;
         }
 
+        .form-button-red {
+            background: #ff4e50;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+
+        .form-button-blue {
+            background: rgb(92,67,197);
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+
+        .ui-dialog button.red {
+            background: #ff4e50;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+
+        .ui-dialog button.blue {
+            background: rgb(92,67,197);
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+
+        div.ui-widget-header {
+            background: rgb(92,67,197);
+            color: white;
+        }
+
         .dfont{
             font-family: Helvetica;
             font-size: 13px;
@@ -381,7 +422,6 @@
             width: 30.2px;
             height: 30px;
         }
-
     </style>
 {% endblock %}
 
@@ -441,15 +481,6 @@
 
         function match_with(){
             document.getElementById("nav_match").click();
-        }
-
-        function share_popup() {
-
-        }
-
-        /* https://www.w3schools.com/howto/howto_js_copy_clipboard.asp */
-        function copy_text() {
-
         }
     </script>
 {% endblock %}
@@ -589,25 +620,44 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 
-        <div id="prompt-feedback" title="Report submitted, thank you!">
+        <div style="display:none" id="prompt-feedback" title="Report submitted, thank you!">
             <p>Would you like to provide additional feedback?</p>
         </div>
 
-        <div id="additional-feedback" title="Feedback">
+        <div style="display:none" id="additional-feedback" title="Feedback">
             <form id="feedback-form" method="POST" action="/send_feedback_email/" enctype="text/plain">
                 <input type="hidden" id="sender" name="sender" value="{{ user }}">
-                <textarea rows="5" cols="30" name="feedback" placeholder="Enter feedback here..."></textarea>
+                <textarea rows="5" cols="40" name="feedback" placeholder="Enter feedback here..."></textarea>
                 {% csrf_token %}
             </form>
         </div>
 
-        <div id="share-popup" title="Share this Autama with others!">
-
+        <div style="display:none;text-align: center" id="share-popup" title="Share this Autama with others!">
+            <br>
+            <input style="width:75%;" type="text" id="shareURL" value="http://127.0.0.1:8000/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}"></input>
+            <!-- <input style="width:75%;" type="text" id="shareURL" value="3.16.189.148/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}"></input> -->
+            <button class="form-button-blue" id="copyBtn" onclick="copyToClipboard()">Copy</button>
         </div>
 
+        <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_copy_clipboard -->
+        <script>
+            function copyToClipboard() {
+                var a_URL = document.getElementById("shareURL");
+                a_URL.select();
+                a_URL.setSelectionRange(0, 99999);
+                document.execCommand("copy");
+                var elem = document.getElementById("copyBtn");
+                elem.innerHTML = "Copied!";
+            }
+
+            function changeCopyBtnOnClose() {
+                var elem = document.getElementById("copyBtn");
+                elem.innerHTML = "Copy";
+            }
+        </script>
 
         <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
-        <div id="report" class="report_box" >
+        <div id="report" class="report_box" style="margin-left: 20px">
             <h1>Report Autama</h1>
             <form id="reportform" method="POST" action="/send_report_email/" enctype="text/plain">
                 <input type="hidden" id="sender" name="sender" value="{{ user }}">
@@ -620,13 +670,13 @@
                 <label for="option3"> Autama is boring</label><br>
                 <input style="margin: 15px 15px 15px 15px" type="checkbox" id="other" name="option4" value="other">
                 <label for="option4"> Other</label><br><br>
-                <input type="submit" id="submitReportBtn" name="submitReport" value="Submit"/>
-                <input type="button" id="hideReportBtn" name="hideReport" value="Close"/>
+                <input class="form-button-blue" type="submit" id="submitReportBtn" name="submitReport" value="Submit"/>
+                <input class="form-button-red" type="button" id="hideReportBtn" name="hideReport" value="Close"/>
                 {%csrf_token%}
             </form>
         </div>
-        <div id="report_response"></div>
-        <div id="feedback_response"></div>
+        <div id="report-response" style="margin-left:30px"></div>
+        <div id="feedback-response" style="margin-left:30px"></div>
         <br>
 
         <script>
@@ -756,34 +806,36 @@
             });
 
             $(window).resize(function() {
-               $("#share-popup").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
+                $("#prompt-feedback").dialog("option", "position", {my: "center", at: "bottom", of: "#lite-chatbox"});
+                $("#additional-feedback").dialog("option", "position", {my: "center", at: "bottom", of: "#lite-chatbox"});
+                $("#share-popup").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
             });
 
             /* Email report submission handling */
             $("#reportform").submit(function() {
-                $("#report_response").show();
-                $("#report_response").html("Sending report..."); /* udpate div that we're working on it */
+                $("#report-response").show();
+                $("#report-response").html("Sending report..."); /* udpate div that we're working on it */
                 /* .post signature is .post(action, data, success_callback_handler)
                    .serialize() converts the elements of the <form> into a text string */
                 $.post($(this).attr('action'), $(this).serialize(), function(response) {
-                    $("#report_response").html(response); /* update div with actual server response */
+                    $("#report-response").html(response); /* update div with actual server response */
                 });
                 $("#prompt-feedback").dialog('open');
                 return false; /* don't use the actual HTML form submit process (we use jQuery .post()) */
             });
 
             $('#feedback-form').submit(function() {
-                $("#feedback_response").show();
-                $("#feedback_response").html("Sending feedback...");
+                $("#feedback-response").show();
+                $("#feedback-response").html("Sending feedback...");
                 $.post($(this).attr('action'), $(this).serialize(), function(response) {
-                    $("#feedback_response").html(response);
+                    $("#feedback-response").html(response);
                 });
                 return false;
             });
 
             $("#hideReportBtn").click(function() {
                 $("#report").hide();
-                $("#report_response").html('');
+                $("#report-response").html('');
             });
 
             $(function() {
@@ -794,24 +846,32 @@
                     width: "auto",
                     modal: true,
                     position: {
-                        my: "left",
-                        at: "left",
-                        of: "#reportform"
+                        my: "center",
+                        at: "bottom",
+                        of: "#lite-chatbox",
                     },
                     buttons: {
                         "Submit": function() {
                             $('#feedback-form').submit();
                             $(this).dialog("close");
-                            $("#report").fadeOut(5000);
-                            $("#report_response").fadeOut(5000);
-                            $("#feedback_response").fadeOut(5000);
+                            $("#report").fadeOut(3000);
+                            $("#report-response").fadeOut(3000);
+                            $("#feedback-response").fadeOut(3000);
                         },
                         "Close": function() {
                             $(this).dialog("close");
                             $("#report").fadeOut(3000);
-                            $("#report_response").fadeOut(3000);
+                            $("#report-response").fadeOut(3000);
                         }
-                    }
+                    },
+                    close: function() {
+                        $("#report").fadeOut(3000);
+                        $("#report-response").fadeOut(3000);
+                    },
+                    create: function() {
+                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
+                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
+                    },
                 });
 
                 $("#prompt-feedback").dialog({
@@ -821,21 +881,35 @@
                     width: "auto",
                     modal: true,
                     position: {
-                        my: "left",
-                        at: "left",
-                        of: "#reportform"
+                        my: "center",
+                        at: "bottom",
+                        of: "#lite-chatbox",
                     },
-                    buttons: {
-                        "Yes": function() {
-                            $("#additional-feedback").dialog('open');
-                            $(this).dialog("close");
+                    buttons: [
+                        {
+                            text: "Yes",
+                            click: function() {
+                                $("#additional-feedback").dialog('open');
+                                $(this).dialog("close");
+                            },
                         },
-                        "No": function() {
-                            $(this).dialog("close");
-                            $("#report").fadeOut(3000);
-                            $("#report_response").fadeOut(3000);
+                        {
+                            text: "No",
+                            click: function() {
+                                $(this).dialog("close");
+                                $("#report").fadeOut(3000);
+                                $("#report-response").fadeOut(3000);
+                            },
                         }
-                    }
+                    ],
+                    create: function() {
+                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
+                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
+                    },
+                    close: function() {
+                        $("#report").fadeOut(3000);
+                        $("#report-response").fadeOut(3000);
+                    },
                 });
 
                 $("#shareBtn").click( function() {
@@ -846,12 +920,15 @@
                     resizable: false,
                     height: "auto",
                     autoOpen: false,
-                    width: "auto",
+                    width: "400",
                     modal: true,
                     position: {
                         my: "center",
                         at: "top",
                         of: "#lite-chatbox",
+                    },
+                    close: function (event, ui) {
+                        changeCopyBtnOnClose();
                     },
                 });
 

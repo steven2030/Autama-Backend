@@ -3,7 +3,7 @@
 
 {% block csstyle %}
     <style>
-    div.profile{
+    div.profile{    /*profile card*/
         height: 450px;
         width: 350px;
         border: 2px solid #d4cce0;
@@ -13,23 +13,24 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 15%;
+        margin-top: 2rem; /*was 15%*/
         margin-bottom: auto;
-        overflow: scroll;
+        overflow-x: hidden;  /* was overflow: scroll;*/
+        overflow-y: scroll;
     }
 
-    div.profile > img{
+    div.profile > img{  /*card pic*/
         height: 370px;
         width: 350px;
         border-radius: 15px;
     }
 
      div.profile > div:nth-child(1){
-        background-color: #9e9e9e59;
+        background-color: #9e9e9e9;/*this is grey*/
     }
 
     div.profile > div:nth-child(2){
-        margin-top: 30px;
+        margin-top: 2rem;/*was 30px*/
     }
 
     .name{
@@ -38,16 +39,18 @@
         color: transparent;
     }
 
-    .intro{
+    .intro{  /*profile header*/
         margin-top: auto;
-        float: left;
-        height:45px;
+        margin-left: 2rem; /* was 15px;*/
+	margin-right: 2rem;	/*added*/
+        float: none;
+        height:4rem; /* was 45px */
         border-radius: 3px;
         background-image:linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
         text-align: center;
         vertical-align: center;
-        margin-left: 15px;
-        color: wheat;
+	width: 75%;	/*added */
+        color: white;
 
     }
 
@@ -56,7 +59,7 @@
 
 
 {% block content %}
-    <h2 class="intro" style="margin-top: 50px;">
+<h2 class="intro" style="margin-top: 2rem;"><!--was margin-top 50px -->
         My Profile
     </h2>
     <div style="width: 80%;  margin: auto; ">
@@ -65,12 +68,22 @@
             <img {% if request.user.image %}src="{{ request.user.image.url }}" {% endif %} id="avatar">
             <span class="name" style="font-weight: bold; font-size: xx-large; margin-left: 10px">{{ user.first_name }} {{user.last_name }}</span>
 
-            <div style="font-size: x-large; color: black; margin-left: 10px; margin-bottom: 5px">
+            {% if myself %}
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-top: 5px; margin-bottom: 5px; display: block">
+                <input type="file" name="photo" style="display: none;" id="upload-img"/>
+                <button type="button"  style=" float:left; background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none; " class="btn btn-info" id="upload-img-btn" >
+                    Change Picture
+                </button>
+            </div>
+            {% endif %}
+
+            <div style="font-size: x-large; color: white; margin-left: 10px; margin-bottom: 5px">
                 Introduce
             </div>
-            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
+
+            <!-- <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
                 User ID: {{ user.id  }}
-            </div>
+	    </div> don't need this -->
             <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
                 Username: {{ user.username }}
             </div>
@@ -97,25 +110,17 @@
                 Email: {{ request.user.email }}
             </div>
 
-            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
+            <!--<div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
                 <span>Gender:</span>
                 <label style="width: 60px;margin-left: 10px"><input name="sex" type="radio" value="0" {% if request.user.sex == 0 %} checked {% endif %}/>male </label>
                 <label><input name="sex" type="radio" value="1" {% if request.user.sex == 1 %} checked {% endif %}/>female </label>
-            </div>
+	    </div>-->
             {% if myself %}
-            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px; display: block">
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px; margin-top: 5px; display: block">
                 <input type="password" name="password" id="password">
-                <button type="button" style="display: block; background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" class="btn btn-info" style="margin-top: 5px" change_password()>
+                <button type="button" style="display: block; background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none; margin-top: 5px;" class="btn btn-info" style="margin-top: 5px" change_password()>
                    Change Password
                 </button>
-            </div>
-            {% endif %}
-             {% if myself %}
-            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px; display: block">
-                <input type="file" name="photo" style="display: none;" id="upload-img"/>
-                <button type="button"  style=" float:left; background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none; " class="btn btn-info" id="upload-img-btn" >
-                    Change Picture
-                 </button>
             </div>
             {% endif %}
 
@@ -127,7 +132,7 @@
 
             <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px; display: block">
                  <a href="/logout/">
-                    <button type="button"  style=" float:left; background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none; " class="btn btn-info" >
+                    <button type="button"  style=" float:left; background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none; margin-bottom: 5px;" class="btn btn-info" >
                         Logout
                     </button>
                  </a>
@@ -162,7 +167,10 @@
           });
 
     }
-
+	    
+        function aa() {
+        parent.location.reload();
+    }
 
 
     function fileLoad(ele){
@@ -185,6 +193,7 @@
             },
             success: function (responseStr) {
                // successfully change
+	       aa();
                $("#avatar").attr("src", JSON.parse(rchengedesponseStr)['avatar'] + "?a"+Date());
                alert("Successfully changed");
             }

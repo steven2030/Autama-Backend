@@ -644,7 +644,7 @@ def build_report_msg(request):
     boring = request.POST.get('option3')
     other = request.POST.get('option4')
 
-    msg = 'Report for: ' + a_info + '\n' + 'From user: ' + user + '\n'
+    msg = 'Report for: ' + a_info + '\n' + 'From user: ' + user + '\n\n'
     if inapp:
         msg += 'Inappropriate\n'
     if broken:
@@ -680,7 +680,7 @@ def build_feedback_msg(request):
     user = request.POST.get('sender')
     feedback = request.POST.get('feedback')
 
-    msg = 'Feedback from user: ' + user + '\n' + feedback + '\n\n' + 'End of feedback' + '\n'
+    msg = 'Feedback from user: ' + user + '\n\n' + feedback + '\n\n' + 'End of feedback' + '\n'
     return msg
 
 class SendFeedbackEmail(LoginRequiredMixin, View):
