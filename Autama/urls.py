@@ -51,6 +51,7 @@ urlpatterns = [
     path('CreateAutama/', main_page_views.CreateAutama.as_view(), name='CreateAutama'),
     path('send_report_email/', main_page_views.SendReportEmail.as_view(), name='SendReportEmail'),
     path('send_feedback_email/', main_page_views.SendFeedbackEmail.as_view(), name='SendFeedbackEmail'),
+    path('Preview/<int:pk>/', main_page_views.Preview.as_view(), name="Preview"),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
