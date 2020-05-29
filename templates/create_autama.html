@@ -106,7 +106,7 @@
                     <p>I'm glad you want to create more Autamas.</p>
                 {% endif %}
                     {% if not request.user.is_superuser %}
-                        <p>You can create up to 10 Autamas.</p>
+                        <p>You can create up to {{ my_autama_limit }} Autamas.</p>
                     {% endif %}
                     <p>Creating an Autama is easy. Just give it a name and a persona by filling out everything below and hitting the "Create" button.</p>
                     <p>I will generate a picture for your Autama, and I hope you like it!</p>
