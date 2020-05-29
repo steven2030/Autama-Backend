@@ -358,7 +358,7 @@
             border-bottom-left-radius: 5rem;
             text-align: center;
             background-color: rgb(92,67,197);  /* same as #5c43c5 */
-            /*height: 8rem;  added*/
+            height: 8rem;  /*added*/
         }
         .toplab{
             background-color: #ff4e50;   /* ff4e50 light red */
@@ -368,7 +368,7 @@
         }
         .Autama-text-logo{
             padding-top: 0.75rem;  /*added*/
-            padding-bottom: 0.75rem; /*added*/
+            padding-bottom: 1rem; /*added*/
             width: 18rem;    /* was 105px */
             height: 4rem;    /* was 36px */
             object-fit: contain;
@@ -379,17 +379,17 @@
             /* height: 3rem;  added*/
             /*padding-left: 2.5vw;*/
         }
-        .left-nav{         /* back-chevron is ~60x96 */ 
+        .logo-left{         /* back-chevron is ~60x96 */ 
             /*padding-left: 2.5vw;    added*/
             padding-top: 0.5rem;    /*added*/
-            padding-bottom: 0.5rem;   /*added*/
+            padding-bottom: 0.75rem;   /*added*/
             width: 3.75rem;   /* was 30.2px */
             height: 6rem;    /* was 30px */
             object-fit: contain;
         }
-        .right-nav{         /* ellipsis is ~27x90 */ 
+        .logo-right{         /* ellipsis is ~27x90 */ 
             padding-top: 0.5rem;    /*added*/
-            padding-bottom: 0.5rem;   /*added*/
+            padding-bottom: 0.75rem;   /*added*/
             width: 1.8rem;   /* was 2rem */
             height: 6rem;    /* */
             object-fit: contain;
@@ -472,12 +472,12 @@
                 <ul class="nav nav-tabs">
                     {% if request.user.is_authenticated  %}
                         <li class="nav-item" style="float: left; padding-left: 3vw;">
-                            <a href="{{ last_page }}"><img class="left-nav" src="/Images/Images/back-chevron.png"></a>
+                            <a href="{{ last_page }}"><img class="logo-left" src="/Images/Images/back-chevron.png"></a>
                         </li>
                     {% endif %}
                     <li class="dropdown nav-item" style="float: right; padding-right: 3vw;">   <!-- was 50px -->
                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" > 
-                            <img class="right-nav" src="/Images/Images/ellipsis.png"> 
+                            <img class="logo-right" src="/Images/Images/ellipsis.png"> 
                             <!--<p class="three-dots"></p>-->
                         </a>
                         <ul class="dropdown-menu">
