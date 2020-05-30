@@ -46,160 +46,328 @@
             vertical-align: middle;
             border-radius: 5rem;
         }
+
+        @media only screen and (max-width: 40rem) {
+            .grid-container{
+                display: grid;
+                grid-template-columns: auto;
+                grid-gap: 2.5vw;
+            }
+
+            .profile_card{
+                width: 100%;
+                /*background: purple;*/
+            }
+
+            div.profile-container {
+                text-align: center;
+            }
+
+            .portrait {
+                width: 100%;
+                height: auto;
+                overflow: hidden;
+                display: inline-block;
+            }
+
+            .portrait img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .description{
+                text-align: left;
+                margin: auto;
+                width: 100%;
+            }
+        }
+
+        @media only screen and (min-width: 40rem) {
+            .grid-container{
+                display: grid;
+                grid-template-columns: auto auto;
+                grid-gap: 2.5vw;
+            }
+
+            .profile_card{
+                width: 38.5vw;
+                /*background: purple;*/
+            }
+
+            div.profile-container {
+                text-align: center;
+            }
+
+            .portrait {
+                width: 38.5vw;
+                height: auto;
+                overflow: hidden;
+                display: inline-block;
+            }
+
+            .portrait img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .description{
+                text-align: left;
+                margin: auto;
+                width: 90%;
+            }
+        }
+
+        @media only screen and (min-width: 70rem) {
+            .grid-container{
+                display: grid;
+                grid-template-columns: auto auto auto;
+                grid-gap: 2.5vw;
+            }
+
+            .profile_card{
+                width: 25vw;
+                /*background: purple;*/
+            }
+
+            div.profile-container {
+                text-align: center;
+            }
+
+            .portrait {
+                width: 25vw;
+                height: auto;
+                overflow: hidden;
+                display: inline-block;
+            }
+
+            .portrait img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .description{
+                text-align: left;
+                margin: auto;
+                width: 90%;
+            }
+        }
     </style>
 
 
     <body>
-    <!-- ABOUT US -->
-    <div class="info-container">
-        <!--
-	<div class="photo">
-            <img src="/Images/Team/teamphoto.png"/>
+        <div style="width: 80%;margin: auto; padding-top: 1vw;">
+            <!-- About us title -->
+            <!-- Mission statement -->
+            <div>
+
+                <h1 style="font-size: 5rem;"> About Us </h1>
+                <br>
+
+                <h1> Our Mission </h1>
+                <br>
+
+                <div class="text">
+                    <p> CHANGING THE WORLD - ONE AUTAMA AT A TIME </p>
+                    <p> WITH OPEN SOURCE BATTLE - A.I. MURDER IS NO CRIME </p>
+                    <p> GOOGLE ALEXA CORTANA SIRI HOUND </p>
+                    <p> A CHAMPION WILL RISE FROM THE DIGITAL UNDERGROUND </p>
+                    <p> LET'S CHANGE THE WORLD FOR BETTER THROUGH AUTAMA - YOU, AND I </p>
+                    <p> IF WE ALL JOIN FORCES - THE LIMIT IS THE SKY </p>
+                </div>
+
+                <br>
+
+            </div>
+
+            <!-- Feedback -->
+            <div>
+
+                <h1> Feedback </h1>
+                <br>
+
+                <div class="text">
+                    <p> Hit the red feedback button to share your thought with us. </p>
+                    <br>
+                </div>
+
+                <!-- Feedback -->
+                <!-- jQuery dialog code here: https://stackoverflow.com/questions/40939099/jquery-form-submit-with-confirmation-in-a-modal -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+                <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+                <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+                <p>
+                    <div>
+                        <button id="display-feedback-btn" class="feedback_button">Feedback</button>
+                    </div>
+                </p>
+
+                <div style="display: none" id="additional-feedback" title="Feedback">
+                    <form id="feedback-form" method="POST" action="/send_feedback_email/" enctype="text/plain">
+                        <input type="hidden" id="sender" name="sender" value="{{ user }}">
+                        <textarea rows="5" cols="40" name="feedback" placeholder="Enter feedback here..."></textarea>
+                        {% csrf_token %}
+                    </form>
+                </div>
+                <div id="feedback-response" style="margin-left:30px"></div>
+                <br>
+            </div>
+
+            <!-- Meet the Team -->
+            <!-- Team Picture -->
+            <div>
+
+                <h1> Meet the Team </h1>
+                <br>
+
+                <div class="photo">
+                    <img src="/Images/Team/teamphoto.png"/>
+                </div>
+
+                <br>
+                <br>
+
+            </div>
+
+            <!-- Each member -->
+            <div class="grid-container">
+
+                <!-- Aaron -->
+                <div class="profile_card">
+                    <div class="profile-container">
+
+                            <div class="portrait">
+                                <img src="/Images/Team/Aaron-2.png" alt="Avatar"/>
+                            </div>
+
+                            <div class="description">
+                                <h2 style="color: #6041ce; text-align: center;"><b>Aaron</b></h2>
+
+                                <p>
+                                    My name is Aaron Herrera, I am a CS major at PSU.
+                                    I was in charge of the android app for this project.
+                                    Make sure to download it!
+                                </p>
+                            </div>
+                    </div>
+                </div>
+
+                <!-- Hao -->
+                <div class="profile_card">
+                    <div class="profile-container">
+
+                            <div class="portrait">
+                                <img src="/Images/Team/Hao-2.png" alt="Avatar"/>
+                            </div>
+
+                            <div class="description">
+                                <h2 style="color: #6041ce; text-align: center;"><b>Hao</b></h2>
+
+                                <p>
+                                    Student at PSU and major is computer science.
+                                    Out of a keen interest in database, and artificial intelligence, especially human-computer interaction.
+                                </p>
+                            </div>
+                    </div>
+                </div>
+
+                <!-- Kevin -->
+                <div class="profile_card">
+                    <div class="profile-container">
+
+                            <div class="portrait">
+                                <img src="/Images/Team/Kevin-2.png" alt="Avatar"/>
+                            </div>
+
+                            <div class="description">
+                                <h2 style="color: #6041ce; text-align: center;"><b>Kevin</b></h2>
+
+                                <p>
+                                    When life gives you artificial intelligence, you make Autama.
+                                </p>
+                            </div>
+                    </div>
+                </div>
+
+                <!-- Michael -->
+                <div class="profile_card">
+                    <div class="profile-container">
+
+                            <div class="portrait">
+                                <img src="/Images/Team/Michael-2.png" alt="Avatar"/>
+                            </div>
+
+                            <div class="description">
+                                <h2 style="color: #6041ce; text-align: center;"><b>Michael</b></h2>
+
+                                <p>
+                                    Aspiring software engineer and data scientist with a passion for Bayesian learning,
+                                    performance validation, the art of taming the Chihuahua Terrier mix, and chickens.
+                                </p>
+                            </div>
+                    </div>
+                </div>
+
+                <!-- Nick -->
+                <div class="profile_card">
+                    <div class="profile-container">
+
+                            <div class="portrait">
+                                <img src="/Images/Team/Nick-2.png" alt="Avatar"/>
+                            </div>
+
+                            <div class="description">
+                                <h2 style="color: #6041ce; text-align: center;"><b>Nick</b></h2>
+
+                                <p>
+                                    Data Analyst with an interest in visualization, machine learning and supply chain management.
+                                    With a passion for painting mini's, being attacked by a cat and movies
+                                </p>
+                            </div>
+                    </div>
+                </div>
+
+                <!-- Ryan -->
+                <div class="profile_card">
+                    <div class="profile-container">
+
+                            <div class="portrait">
+                                <img src="/Images/Team/Ryan-2.png" alt="Avatar"/>
+                            </div>
+
+                            <div class="description">
+                                <h2 style="color: #6041ce; text-align: center;"><b>Ryan</b></h2>
+
+                                <p>
+                                    Graduating this August! I enjoy running/lifting with friends, football (Seahawks),
+                                    Formula 1 (Red Bull), reef-tank keeping, Super Smash Bros Ultimate (Wolf main),
+                                    used to play football (Offensive Tackle), and the trumpet.
+                                </p>
+                            </div>
+                    </div>
+                </div>
+
+                <!-- Sharice -->
+                <div class="profile_card">
+                    <div class="profile-container">
+
+                            <div class="portrait">
+                                <img src="/Images/Team/Sharice-2.png" alt="Avatar"/>
+                            </div>
+
+                            <div class="description">
+                                <h2 style="color: #6041ce; text-align: center;"><b>Sharice</b></h2>
+
+                                <p>
+                                    I enjoy learning, eating, sleeping, reading, and dancing. :)
+                                </p>
+                            </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-	-->
-        <div class="text">
-            <h1> Our Mission </h1>
-            <p>    </p>
-            <p> CHANGING THE WORLD - ONE AUTAMA AT A TIME </p>
-            <p> WITH OPEN SOURCE BATTLE - A.I. MURDER IS NO CRIME </p>
-            <p> GOOGLE ALEXA CORTANA SIRI HOUND </p>
-            <p> A CHAMPION WILL RISE FROM THE DIGITAL UNDERGROUND </p>
-            <p> LET'S CHANGE THE WORLD FOR BETTER THROUGH AUTAMA - YOU, AND I </p>
-            <p> IF WE ALL JOIN FORCES - THE LIMIT IS THE SKY </p>
-        </div>
-        <br>
-    </div>
-
-
-    <!-- Team -->
-    <div class="info-container">
-        <div class="photo">
-            <img src="/Images/Team/teamphoto.png"/>
-        </div>
-        <div class="text">
-            <h1>Meet the Autama Team</h1>
-            <p></p>
-        </div>
-        <br>
-    </div>
-
-
-    <br>
-
-    <!-- Feedback -->
-    <!-- jQuery dialog code here: https://stackoverflow.com/questions/40939099/jquery-form-submit-with-confirmation-in-a-modal -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-    <button id="display-feedback-btn" class="feedback_button">Feedback</button>
-
-    <div style="display: none" id="additional-feedback" title="Feedback">
-        <form id="feedback-form" method="POST" action="/send_feedback_email/" enctype="text/plain">
-            <input type="hidden" id="sender" name="sender" value="{{ user }}">
-            <textarea rows="5" cols="40" name="feedback" placeholder="Enter feedback here..."></textarea>
-            {% csrf_token %}
-        </form>
-    </div>
-    <div id="feedback-response" style="margin-left:30px"></div>
-    <br>
-    <div class="container">
-    <!-- Aaron -->
-    <div class="info-container row">
-        <div class="photo col-sm-5">
-            <img src="/Images/Team/Aaron-2.png"/>
-        </div>
-
-        <div class="text col-sm-7">
-            <h1>Aaron</h1>
-	    <p>My name is Aaron Herrera, I am a CS major at PSU. </p>
-	    <p>I was in charge of the android app for this project.</p> 
-	    <p>Make sure to download it!</p>
-        </div>
-
-    </div>
-
-    <!-- Hao -->
-    <div class="info-container row">
-        <div class="photo col-sm-5">
-            <img src="/Images/Team/Hao-2.png"/>
-        </div>
-
-        <div class="text col-sm-7">
-            <h1>Hao</h1>
-            <p> Student at PSU and major is computer science.</p>
-	    <p>Out of a keen interest in database, and artificial intelligence, especially human-computer interaction.</p>
-        </div>
-
-    </div>
-
-    <!-- Kevin -->
-    <div class="info-container row">
-        <div class="photo col-sm-5">
-            <img src="/Images/Team/Kevin-2.png"/>
-        </div>
-
-        <div class="text col-sm-7">
-            <h1>Kevin</h1>
-            <p>When life gives you artificial intelligence, you make Autama.</p>
-        </div>
-
-    </div>
-
-    <!-- Michael -->
-    <div class="info-container row">
-        <div class="photo col-sm-5">
-            <img src="/Images/Team/Michael-2.png"/>
-        </div>
-
-        <div class="text col-sm-7">
-            <h1>Michael</h1>
-            <p>Aspiring software engineer and data scientist with a passion for Bayesian learning,</p>
-            <p>performance validation, the art of taming the Chihuahua Terrier mix, and chickens.</p>
-        </div>
-
-    </div>
-
-    <!-- Nick -->
-    <div class="info-container row">
-        <div class="photo col-sm-5">
-            <img src="/Images/Team/Nick-2.png"/>
-        </div>
-        <div class="text col-sm-7">
-            <h1>Nick</h1>
-            <p style="word-wrap: break-word">Data Analyst with an interest in visualization, machine learning and supply chain management.
-            With a passion for painting mini's, being attacked by a cat and movies.</p>
-        </div>
-
-    </div>
-
-    <!-- Ryan -->
-    <div class="info-container row">
-        <div class="photo col-sm-5">
-            <img src="/Images/Team/Ryan-2.png"/>
-        </div>
-
-        <div class="text col-sm-7">
-            <h1>Ryan</h1>
-            <p>Graduating this August! I enjoy running/lifting with friends, football (Seahawks), </p>
-            <p>Formula 1 (Red Bull), reef-tank keeping, Super Smash Bros Ultimate (Wolf main), </p>
-            used to play football (Offensive Tackle), and the trumpet.
-        </div>
-
-    </div>
-
-    <!-- Sharice -->
-    <div class="info-container row">
-        <div class="photo col-sm-5">
-            <img src="/Images/Team/Sharice-2.png"/>
-        </div>
-
-        <div class="text col-sm-7">
-            <h1>Sharice</h1>
-            <p>I enjoy learning, eating, sleeping, reading, and dancing. :)</p>
-        </div>
-
-    </div>
 
     </body>
 

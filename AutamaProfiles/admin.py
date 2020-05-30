@@ -20,7 +20,7 @@ class AutamaProfileAdmin(admin.ModelAdmin):
 
     def massproduce(self, request):
         bacon = Bacon() # For generating personality
-        amount = 2 # The amount of Autama profiles to create
+        amount = 1 # The amount of Autama profiles to create
         username = str(request.user) # Username of user who presses the mass produce button
 
         for i in range(amount):

@@ -1,59 +1,137 @@
 {% extends 'base.html' %}
 
+{% block head %}
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+{% endblock %}
+
 
 {% block csstyle %}
-    <style>
-    div.profile{    /*profile card*/
-        height: 450px;
-        width: 350px;
-        border: 2px solid #d4cce0;
-        box-shadow: 10px 10px 5px #888888;
-        border-radius: 15px;
-        float: none;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 2rem; /*was 15%*/
-        margin-bottom: auto;
-        overflow-x: hidden;  /* was overflow: scroll;*/
-        overflow-y: scroll;
-    }
+   <style media="screen">
+        @media screen and (min-width:768px){
+			/* -- CSS for nav bar -- */
 
-    div.profile > img{  /*card pic*/
-        height: 370px;
-        width: 350px;
-        border-radius: 15px;
-    }
+			div.profile > img{  /*card pic*/
+			    height: 370px;
+			    width: 350px;
+			    border-radius: 15px;
+			}
 
-     div.profile > div:nth-child(1){
-        background-color: #9e9e9e9;/*this is grey*/
-    }
+			 div.profile > div:nth-child(1){
+			    background-color: grey;/*this is grey*/
+			}
 
-    div.profile > div:nth-child(2){
-        margin-top: 2rem;/*was 30px*/
-    }
+			div.profile > div:nth-child(2){
+			    margin-top: 2rem;/*was 30px*/
+			}
 
-    .name{
-        background: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
-        -webkit-background-clip: text;
-        color: transparent;
-    }
+			.name{
+			    background: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+			    -webkit-background-clip: text;
+			    color: transparent;
+			}
 
-    .intro{  /*profile header*/
-        margin-top: auto;
-        margin-left: 2rem; /* was 15px;*/
-	margin-right: 2rem;	/*added*/
-        float: none;
-        height:4rem; /* was 45px */
-        border-radius: 3px;
-        background-image:linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
-        text-align: center;
-        vertical-align: center;
-	width: 75%;	/*added */
-        color: white;
+			.intro{  /*profile header*/
+			    margin-top: auto;
+			    margin-left: 2rem; /* was 15px;*/
+			margin-right: 2rem;	/*added*/
+			    float: none;
+			    height:4rem; /* was 45px */
+			    border-radius: 3px;
+			    background-image:linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+			    text-align: center;
+			    vertical-align: center;
+			    width: 75%;	/*added */
+			    color: white;
 
-    }
+			}
+            .middle {
+                float: none;
+                display: inline;
+                vertical-align: center;
+                /*margin-left: 36%;*/
+            }
+			div.profile{    /*profile card*/
+			    height: 450px;
+			    width: 350px;
+			    border: 2px solid #d4cce0;
+			    box-shadow: 10px 10px 5px #888888;
+			    border-radius: 15px;
+			    float: none;
+			    display: block;
+			    margin-left: auto;
+			    margin-right: auto;
+			    margin-top: 2rem; /*was 15%*/
+			    margin-bottom: auto;
+			    overflow-x: hidden;  /* was overflow: scroll;*/
+			    overflow-y: scroll;
+			}
+        }
+        @media screen and (max-width:768px){
+           /* -- CSS for nav bar -- */
 
+           div.profile > img{  /*card pic*/
+               height: 370px;
+               width: 350px;
+               border-radius: 15px;
+           }
+
+            div.profile > div:nth-child(1){
+               background-color: grey;/*this is grey*/
+           }
+
+           div.profile > div:nth-child(2){
+               margin-top: 2rem;/*was 30px*/
+           }
+
+           .name{
+               background: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+               -webkit-background-clip: text;
+               color: transparent;
+           }
+
+           .intro{  /*profile header*/
+                  margin-top: auto;
+                  /* margin-left: 2rem; */
+                  /* margin-right: 2rem; */
+                  /* float: none; */
+                     height: 5rem;
+                     line-height: 5rem;
+                  margin: 0 auto 0!important;
+                  border-radius: 3px;
+                  background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+                  text-align: center;
+                  vertical-align: center;
+                  width: 80%;
+                  color: white;
+
+           }
+           .middle {
+               float: none;
+               display: inline;
+               vertical-align: center;
+               /*margin-left: 36%;*/
+           }
+
+
+
+			.profile{
+			   height: 450px;
+			   width: 100%;
+			   max-width: 350px;
+			    border: 2px solid #d4cce0;
+			    box-shadow: 10px 10px 5px #888888;
+			    border-radius: 15px;
+			    float: none;
+			    display: block;
+			    margin-left: auto;
+			    margin-right: auto;
+			    margin-top: 2rem;
+			    margin-bottom: auto;
+			    overflow-x: hidden;
+			    overflow-y: scroll;
+			}
+
+        }
     </style>
 {%  endblock %}
 
@@ -167,7 +245,7 @@
           });
 
     }
-	    
+
         function aa() {
         parent.location.reload();
     }
@@ -205,5 +283,3 @@
     }
     </script>
 {% endblock %}
-
-
