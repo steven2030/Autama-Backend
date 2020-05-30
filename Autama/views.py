@@ -425,7 +425,7 @@ class SeenAll(LoginRequiredMixin, View):
             user.currentAutama = autama_id_next(user.id, 0)
             user.nextAutama = autama_id_next(user.id, user.currentAutama)
         else:
-            user.currentAutama = ag.currentCount + 1;
+            user.currentAutama = ag.currentCount + 1
         user.save()
         return HttpResponse(status=200)
 

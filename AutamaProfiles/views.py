@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.forms import ModelForm
 from AutamaProfiles.models import AutamaProfile, AutamaGeneral
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import json
 from Nucleus.pancake import Pancake
 from Nucleus.bacon import Bacon
@@ -110,6 +110,8 @@ def get_meta():
         gen = AutamaGeneral()
         gen.currentCount = 1
         gen.totalCount = 100
+        gen.autamaLimit = 10
+        gen.autamaInProcess = 0
         gen.save()
 
     # Get and return meta data
@@ -131,3 +133,12 @@ def get_my_autama_limit():
     meta_autama = get_meta()
     limit = meta_autama.autamaLimit
     return limit
+
+
+@login_required()
+def autama_in_progress(request):
+    if request.method == 'GET':
+        ag = get_meta()
+        return JsonResponse({'inprogress': ag.autamaInProcess})
+    if request.method == 'POST':
+        return JsonResponse({'post': 'testing'})
