@@ -175,7 +175,7 @@
                             <li><a href="/logout/">Logout</a></li>
                             <li><a href="/accounts/profile/">Profile</a></li>
                             <li><a href="/about/">About Us</a></li>
-                            <li><a></a></li> <!--  add feedback option -->
+                            <li id="feedbackBtn"><a>Feedback</a></li>
                         </ul>
                     </li>                                         <!-- end right nav icon  -->
                 
@@ -192,12 +192,14 @@
 
     </div> <!-- end html nav bar in body -->
 
+    <div id="feedback-response" style="text-align: center"></div>
+
     <!-- HTML for cookie banner in body -->
     <!-- Tutorial: creating a simple cookie consent pop-up: 
       https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
     <div class="cookie-banner" style="display: none">
         <p>By using our website, you agree to our
-            <a href="http://127.0.0.1:8000/PrivacyPolicy/">privacy policy</a>
+            <a href="autama.org/PrivacyPolicy/">privacy policy</a>
         </p>
         <button class="close_banner">&times;</button>
     </div>
@@ -212,6 +214,91 @@
           $('.cookie-banner').fadeOut();
           localStorage.setItem('privacyCookieSeen', 'accepted');
         })
+    </script>
+
+
+    <!-- add feedback block here -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <style>
+        .ui-dialog button.red{
+            background: #ff4e50;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+        .ui-dialog button.blue{
+            background: rgb(92,67,197);
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+        div.ui-widget-header{
+            background: rgb(92,67,197);
+            color: white;
+        }
+    </style>
+
+    <div style="display:none" id="additional-feedback" title="Feedback">
+        <form id="feedback-form" method="POST" action="/send_feedback_email/" enctype="text/plain">
+            <input type="hidden" id="sender" name="sender" value="{{ user }}">
+            <textarea rows="5" cols="40" name="feedback" placeholder="Enter feedback here..."></textarea>
+            {% csrf_token %}
+        </form>
+    </div>
+
+    <script>
+        $(function() {
+            $(window).resize(function() {
+                $("#additional-feedback").dialog("option", "position", {my: "center", at: "center", of: window});
+            });
+
+            $('#feedback-form').submit(function() {
+                $("#feedback-response").show();
+                $("#feedback-response").html("Sending feedback...");
+                $.post($(this).attr('action'), $(this).serialize(), function(response) {
+                    $("#feedback-response").html(response);
+                });
+                return false;
+            });
+
+            $("#additional-feedback").dialog({
+                resizable: false,
+                height: "auto",
+                autoOpen: false,
+                width: "auto",
+                modal: true,
+                position: {
+                    my: "center",
+                    at: "center",
+                    of: window,        <!-- TODO change this for each custom navbar -->
+                },
+                buttons: {
+                    "Submit": function () {
+                        $('#feedback-form').submit();
+                        $(this).dialog("close");
+                        $("#feedback-response").fadeOut(3000);
+                    },
+                    "Close": function () {
+                        $(this).dialog("close");
+                    }
+                },
+                create: function () {
+                    $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
+                    $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
+                },
+            });
+
+            $('#feedbackBtn').click(function() {
+                $("#additional-feedback").dialog('open');
+            });
+        });
     </script>
 
     {% block content %}
