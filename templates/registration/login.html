@@ -28,12 +28,26 @@
             box-shadow: 0px 0px 5px 0px #000;
             background-color: #fff;
         }
+
         .l-t{
             text-align: center;
         }
         .l-t p > img{
             width: 60px;
         }
+
+        @media only screen and (min-width: 320px) {
+        	.login .l-m{
+            	border-radius: 20px;
+            	width: 20rem;
+            	margin: auto;
+            	margin-top: 4rem;
+            	padding: 50px 20px;
+            	box-shadow: 0px 0px 5px 0px #000;
+            	background-color: #fff;
+        	}
+        }
+
         @media screen and (max-width:760px) {
             a:hover{
                 text-decoration: none;
@@ -473,7 +487,7 @@
 
 					<form action="/login/" method="post">
 						<div class="form-group">
-						    <input type="text" id="username" class="form-control" name="username" placeholder="username">
+						    <input type="text" id="username" class="form-control" name="username" placeholder="username" >
 
                         </div>
                         <div class="form-group">
@@ -527,6 +541,7 @@
 				function open(){
 
 					olog.style.display="block"
+					document.getElementById("username").focus();
 				}
 
 				oclose.onclick = function(){
