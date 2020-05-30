@@ -13,13 +13,13 @@
             <div class="center" style="font-size: 24px; font-weight: bold">Wow!</div>
             <div class="center">You've seen all of the Autama currently generated.  Start over from the begining?</div> <br>
             <div>
-                <img id="stay" style="height: 85px; width: 85px;"  src="../Images/Images/dislike-button.png">
-                <img id="again" style="height: 85px; width: 85px;"  src="../Images/Images/like-button.png">
+                <img class="seenbutton" id="stay" style="height: 85px; width: 85px;"  src="../Images/Images/dislike-button.png">
+                <img class="seenbutton" id="again" style="height: 85px; width: 85px;"  src="../Images/Images/like-button.png">
             </div>
         </span>
     </div>
     <script>
-    $("img").click(function(e) {
+    $(".seenbutton").click(function(e) {
         $.ajax({
             type: "POST",
             url: "/SeenAll/",
