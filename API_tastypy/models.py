@@ -61,8 +61,8 @@ class AccountsResource(ModelResource):
     def dehydrate(self, bundle):
         username = bundle.request.headers.get('Username')
         user = User.objects.get(username=username)
-        apikey = ApiKey.objects.get(user=user)
-        bundle.data['apikey'] = apikey.key
+        #apikey = ApiKey.objects.get(user=user)
+        #bundle.data['apikey'] = apikey.key
         return bundle
 
 
@@ -78,10 +78,10 @@ class RegistrationResource(ModelResource):
             user = User.objects.create(username=bundle.data.get('username'))
             user.set_password(bundle.data.get('password'))
             user.save()
-            apikey = bundle.data.get('apikey')
-            user = User.objects.get(username=bundle.data.get('username'))
-            apikey = ApiKey.objects.create(key=apikey, user=user)
-            apikey.save()
+            #apikey = bundle.data.get('apikey')
+            #user = User.objects.get(username=bundle.data.get('username'))
+            #apikey = ApiKey.objects.create(key=apikey, user=user)
+            #apikey.save()
             bundle.obj = user  # HAVE to update the bundle object to include its data in post response.
         except IntegrityError:
             raise BadRequest('That username already exists')
