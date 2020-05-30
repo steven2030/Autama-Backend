@@ -81,13 +81,20 @@
             }
         }
         @media screen and (max-width:560px){
+
             .middle {
                 float: none;
                 display: inline;
                 vertical-align: center;
                 /*margin-left: 26%;*/
             }
-        } 
+            .imgscale {
+                width: 5rem;
+            }
+            .logo-right {
+                width: 9rem;
+            }
+        }
     </style>    <!-- end nav bar CSS -->
 
     <!-- Tutorial: creating a simple cookie consent pop-up: 
@@ -140,7 +147,7 @@
     <!-- HTML for nav bar in body -->
     <div>
         <div class="toplab">   <!-- top half top nav bar -->
-            <img class="Autama-text-logo" src="/Images/Images/autama-text-logo.png">
+            <img class="Autama-text-logo imgscale" src="/Images/Images/autama-text-logo.png">
         </div>
 
         <div id="container">    <!-- bottom half nav bar layers -->
@@ -150,27 +157,27 @@
 
                     <li class="nav-item" style="float:left; padding-left:3vw;">        <!-- left nav icon -->
                         <a href="/FindMatches/"> 
-                            <img class="logo-left" src="/Images/Images/swipe-icon-round.png"> 
+                            <img class="logo-left imgscale" src="/Images/Images/swipe-icon-round.png">
                         </a>
                     </li>                        <!-- end left nav icon -->
 
                     <li class="nav-item" style="float:left;">        <!-- left inner nav icon -->
                         <a href="/MyAutamas/"> 
-                            <img class="logo-mid" src="/Images/Images/logo-purp-round.png"> 
+                            <img class="logo-mid imgscale" src="/Images/Images/logo-purp-round.png">
                         </a>
                     </li>                        <!-- end left inner nav icon -->
 
                     <li class="nav-item">    <!-- right inner nav icon -->
                       <a href="/MyMatches/">
                         <!--<a class="nav-link" href="/MyMatches/" style="color: white; font-size: 1.5rem"> -->
-                            <img class="logo-right" src="/Images/Images/chat-icon-white-test.png"> 
+                            <img class="logo-right imgscale" src="/Images/Images/chat-icon-white-test.png">
                             <!--(<span id="myText"></span>) -->
                         </a>
                     </li>                                         <!-- end right nav icon  -->
 
-                    <li class="dropdown nav-item" style="float: right; padding-right: 3vw;">    <!-- right nav icon -->
+                    <li class="dropdown nav-item" style="float: right; padding-right: 2.5vw;">    <!-- right nav icon -->
                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> 
-                            <img class="logo-left" src="/Images/Images/hamburger-icon-white.png"> 
+                            <img class="logo-left imgscale" src="/Images/Images/hamburger-icon-white.png">
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="/logout/">Logout</a></li>
