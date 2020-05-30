@@ -16,16 +16,24 @@
     <script>
 
     document.getElementById("submitmass").addEventListener("click", function () {
-        $.post("massproduce/",
-            {
+        let count = $("#count").val();
+        $("#count").val("");
+        $.ajax({
+            url: "massproduce/",
+            type: "POST",
+            data: {
                 csrfmiddlewaretoken: "{{ csrf_token }}",
-                count: $("#count").val(),
-            }, function (data, status) {
-                console.log(data.test);
+                count: count,
+            },
+            dataType: "json",
+            timeout: 0,
+            success: function(response) {
                 if (status === 500) {
                     alert("Error: " + data.error);
                 }
+            }
         });
+        inprotget();
     });
 
     inprogget();
@@ -39,6 +47,15 @@
     function inprogget() {
         $.get("/AutamaProfiles/inprogress", function(data, status) {
             $('#inprog').text("In progress: " + data.inprogress);
+            if (data.inprogress > 0) {
+                console.log("Hidden");
+                document.getElementById("count").style.visibility = "hidden";
+                document.getElementById("submitmass").style.visibility = "hidden";
+            }
+            else {
+                document.getElementById("count").style.visibility = "visible";
+                document.getElementById("submitmass").style.visibility = "visible";
+            }
         });
     }
 
