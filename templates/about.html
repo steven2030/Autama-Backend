@@ -35,6 +35,17 @@
             max-width: 350px; /*was 350px then 30%*/
             object-fit: contain; /*was cover*/
         }
+
+        .feedback_button{
+            background: #ff4e50;
+            height: 7.5rem;
+            width: 15rem;
+            color: white;
+            font-size: 2rem;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 5rem;
+        }
     </style>
 
 
@@ -81,7 +92,7 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-    <button id="display-feedback-btn">Feedback</button>
+    <button id="display-feedback-btn" class="feedback_button">Feedback</button>
 
     <div style="display: none" id="additional-feedback" title="Feedback">
         <form id="feedback-form" method="POST" action="/send_feedback_email/" enctype="text/plain">

@@ -10,14 +10,17 @@
         </div>
     </div>
     <style>
+        .ui-resizable-handle {
+            display: none !important;
+        }
         .scaleable-wrapper {
             margin: auto;
             {#height: 100%;#}
             {#width: 100%;#}
         }
         #board {
-            width: 100%;
-            height: 100%;
+            {#width: 100%;#}
+            {#height: 100%;#}
             position: relative;
             /*overflow: hidden; */
             background-color: white;
@@ -212,15 +215,15 @@
             var scale, origin;
             scale = Math.min(
                 $(window).width() / elWidth,
-                $(window).height()*.75 / elHeight
+                $(window).height()*.73 / elHeight
             );
             console.log(scale);
             $el.css({
                 transform: "scale(" + scale + ")"
             });
 
-            $(this).css({height:'100%'});
-            $(this).css({width:'100%'});
+            {#$(this).css({height:'100%'});#}
+            {#$(this).css({width:'100%'});#}
 
         }
 
@@ -229,7 +232,7 @@
                 width: $wrapper.width(),
                 height: $wrapper.height()
             }
-        }
+        };
 
         doResize(null, starterData);
 
