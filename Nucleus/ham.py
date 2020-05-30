@@ -25,7 +25,8 @@ class Ham:
         self.__full_name = first_name + " " + last_name
         self.__personality = personality # A list of interests
         # An identity is a list containing a name and a personality
-        self.__identity = self.__create_identity() # A list of name and personality combined
+        #self.__identity = self.__create_identity() # With four of the traits consisting of name
+        self.__identity = self.__create_short_identity()
         self.__history = []
         # Messages for when user types in too much
         self.__error_messages = ["i'm here to have a conversation. not to read a book.",
@@ -104,4 +105,13 @@ class Ham:
         introduction = self.__create_intro(self.__first_name)
         personality = self.__format_personality()
         identity = full_introduction + introduction + personality
+        return self.__tokenize_and_encode(identity)
+    
+    # A method to create an identity with just one trait for name
+    def __create_short_identity(self):
+        name = self.__first_name.lower()
+        intro = ["my name is " + name + "."]
+        personality = self.__format_personality()
+        identity = intro + personality
+        print(identity)
         return self.__tokenize_and_encode(identity)
