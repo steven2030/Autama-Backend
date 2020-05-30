@@ -215,7 +215,7 @@
             var scale, origin;
             scale = Math.min(
                 $(window).width() / elWidth,
-                $(window).height()*.73 / elHeight
+                $(window).height()*.70 / elHeight
             );
             if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
                 $el.css({
@@ -225,9 +225,7 @@
             }
             else {
                 $el.css({
-                    transform: "scaleX(" + $(window).width() / elWidth + ")",
-                    transform: "scaleY(" + $(window).height() / elHeight + ")",
-                    transform: "scale(0.7)",
+                    transform: "scale(" + scale + ")",
                 });
             }
         }
