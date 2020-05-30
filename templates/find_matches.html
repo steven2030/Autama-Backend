@@ -10,6 +10,9 @@
         </div>
     </div>
     <style>
+        .ui-resizable-handle {
+            display: none !important;
+        }
         .scaleable-wrapper {
             margin: auto;
             {#height: 100%;#}
@@ -219,8 +222,8 @@
                 transform: "scale(" + scale + ")"
             });
 
-            $(this).css({height:'100%'});
-            $(this).css({width:'100%'});
+            {#$(this).css({height:'100%'});#}
+            {#$(this).css({width:'100%'});#}
 
         }
 
@@ -229,7 +232,7 @@
                 width: $wrapper.width(),
                 height: $wrapper.height()
             }
-        }
+        };
 
         doResize(null, starterData);
 
