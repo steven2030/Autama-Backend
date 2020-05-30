@@ -217,9 +217,10 @@
                 $(window).width() / elWidth,
                 $(window).height()*.73 / elHeight
             );
-            console.log(scale);
             $el.css({
-                transform: "scale(" + scale + ")"
+                transform: "scaleX(" + $(window).width() / elWidth + ")",
+                transform: "scaleY(" + $(window).height() / elHeight + ")",
+                transform: "scale(0.7)",
             });
 
             {#$(this).css({height:'100%'});#}
