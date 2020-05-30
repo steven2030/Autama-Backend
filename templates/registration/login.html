@@ -501,11 +501,22 @@
 
 					</form>
 
+
+
+
 				</div>
 			</div>
 
 		</div>
 		<div id="container">
+
+
+			{% if form.non_field_errors %}
+				{% for error in form.non_field_errors %}
+					<script>alert('Bad login credentials. Try another username.');</script>
+				{% endfor %}
+			{% endif %}
+
 
 			<div id="header">
 				<img src="/Images/images/01.png"  width="100%" class="backimg">

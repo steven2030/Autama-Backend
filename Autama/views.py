@@ -187,21 +187,13 @@ class LoginView(View):
         return render(request, 'login.html')
 
     def post(self, request):
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        is_remember_me = request.POST.get('is_remember_me')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            if user.is_active:
+        form = LoginForm(request.POST or None)
+        if request.POST and form.is_valid():
+            user = form.login(request)
+            if user:
                 login(request, user)
-                request.session.set_expiry(0)
-                if is_remember_me:
-                    request.session.set_expiry(None)
-                return HttpResponseRedirect(reverse("home"))
-            else:
-                return render(request, "login.html", {"error": "The user is not activated!"})
-        else:
-            return render(request, "login.html", {"error": "username or account is incorrect"})
+                return HttpResponseRedirect("home.html")  # Redirect to a success page.
+        return render(request, 'login.html', {'login_form': form})
 
 
 def create_post(request):
