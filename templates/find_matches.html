@@ -217,17 +217,15 @@
                 $(window).width() / elWidth,
                 $(window).height()*.70 / elHeight
             );
-            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-                $el.css({
-                    transform: "scaleX(" + document.documentElement.clientWidth / elWidth + ")",
-                    transform: "scaleY(" + document.documentElement.clientHeight / elHeight + ")",
-                })
-            }
-            else {
+            {#if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {#}
+            {#    $el.css({#}
+            {#        transform: "scaleX(" + document.documentElement.clientWidth / elWidth + ")",#}
+            {#        transform: "scaleY(" + document.documentElement.clientHeight / elHeight + ")",#}
+            {#    })#}
+            {#else {#}
                 $el.css({
                     transform: "scale(" + scale + ")",
                 });
-            }
         }
 
         var starterData = {
