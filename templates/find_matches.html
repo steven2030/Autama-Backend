@@ -217,15 +217,19 @@
                 $(window).width() / elWidth,
                 $(window).height()*.73 / elHeight
             );
-            $el.css({
-                transform: "scaleX(" + $(window).width() / elWidth + ")",
-                transform: "scaleY(" + $(window).height() / elHeight + ")",
-                transform: "scale(0.7)",
-            });
-
-            {#$(this).css({height:'100%'});#}
-            {#$(this).css({width:'100%'});#}
-
+            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+                $el.css({
+                    transform: "scaleX(" + document.documentElement.clientWidth / elWidth + ")",
+                    transform: "scaleY(" + document.documentElement.clientHeight / elHeight + ")",
+                })
+            }
+            else {
+                $el.css({
+                    transform: "scaleX(" + $(window).width() / elWidth + ")",
+                    transform: "scaleY(" + $(window).height() / elHeight + ")",
+                    transform: "scale(0.7)",
+                });
+            }
         }
 
         var starterData = {
