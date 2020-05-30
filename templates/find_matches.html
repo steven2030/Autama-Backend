@@ -12,21 +12,19 @@
     <style>
         .scaleable-wrapper {
             margin: auto;
-            height: 100%;
-            width: 100%;
-        }
-        html, body {
+            {#height: 100%;#}
+            {#width: 100%;#}
         }
         #board {
             width: 100%;
             height: 100%;
-            position: absolute;
+            position: relative;
             /*overflow: hidden; */
             background-color: white;
         }
         .card {
             position: absolute;
-            top: 100px; /*34rem; */
+            top: 34rem;
             left: 50%;
             height: 664px;
             width: 378px;
@@ -202,8 +200,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script>
         var $el = $("#board");
-        var elHeight = $el.outerHeight();
-        var elWidth = $el.outerWidth();
+        var elHeight = 664;
+        var elWidth = 378;
         var $wrapper = $("#scaleable-wrapper");
 
         $wrapper.resizable({
@@ -212,15 +210,11 @@
 
         function doResize(event, ui) {
             var scale, origin;
-            console.log(ui.size.width);
-            console.log(elWidth);
-            console.log(ui.size.height);
-            console.log(elHeight);
             scale = Math.min(
-                ui.size.width / elWidth,
-                ui.size.height / elHeight
+                $(window).width() / elWidth,
+                $(window).height()*.75 / elHeight
             );
-
+            console.log(scale);
             $el.css({
                 transform: "scale(" + scale + ")"
             });
