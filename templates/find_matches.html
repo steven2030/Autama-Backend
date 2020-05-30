@@ -5,28 +5,28 @@
 {% endblock %}
 
 {% block content %}
-    <div id="board">
-    <!--
-
-        <div class="like" id="like"/>
-        <div class="nope" id="nope"/>
-    -->
+    <div class="scaleable-wrapper" id="scaleable-wrapper">
+        <div id="board">
+        </div>
     </div>
     <style>
+        .scaleable-wrapper {
+            margin: auto;
+            height: 100%;
+            width: 100%;
+        }
         html, body {
         }
         #board {
             width: 100%;
             height: 100%;
             position: absolute;
-            overflow: hidden;
-            /* Just for testing */
+            /*overflow: hidden; */
             background-color: white;
         }
         .card {
-
             position: absolute;
-            top: 34rem;
+            top: 100px; /*34rem; */
             left: 50%;
             height: 664px;
             width: 378px;
@@ -196,8 +196,50 @@
             overflow-wrap: break-spaces;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script>
+        var $el = $("#board");
+        var elHeight = $el.outerHeight();
+        var elWidth = $el.outerWidth();
+        var $wrapper = $("#scaleable-wrapper");
+
+        $wrapper.resizable({
+            resize: doResize
+        });
+
+        function doResize(event, ui) {
+            var scale, origin;
+            console.log(ui.size.width);
+            console.log(elWidth);
+            console.log(ui.size.height);
+            console.log(elHeight);
+            scale = Math.min(
+                ui.size.width / elWidth,
+                ui.size.height / elHeight
+            );
+
+            $el.css({
+                transform: "scale(" + scale + ")"
+            });
+
+            $(this).css({height:'100%'});
+            $(this).css({width:'100%'});
+
+        }
+
+        var starterData = {
+            size: {
+                width: $wrapper.width(),
+                height: $wrapper.height()
+            }
+        }
+
+        doResize(null, starterData);
+
+
         /* Modified From original code below */
         /* LikeCarousel (c) 2019 Simone P.M. github.com/simonepm - Licensed MIT */
         function numberWithCommas(x) {
