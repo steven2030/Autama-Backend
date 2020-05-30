@@ -485,7 +485,7 @@
 						Don't be bad,you agree to our <span>Terms</span>
 					</p>
 
-					<form action="/login/" method="post">
+					<form action="/login/" method="post" id="form">
 						<div class="form-group">
 						    <input type="text" id="username" class="form-control" name="username" placeholder="username" >
 
@@ -546,6 +546,8 @@
 				oclose.onclick = function(){
 					olog.style.display="none"
 				}
+
+
 			</script>
 
 			<div class="main">
@@ -628,6 +630,7 @@
 						<p>
 							Autama can be used to teach your friends new music, share a joke with friends, general entertainment or just to hang out with. You can create your Autama any way you’d like.
 						</p>
+						<p>{{error}}</p>
 						<p>
 							<a href="/accounts/register/" class="active">SIGN UP</a>
 						</p>

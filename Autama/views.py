@@ -163,6 +163,25 @@ class LogoutView(View):
         return HttpResponseRedirect(reverse('login'))
 
 
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=255, required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        if not user or not user.is_active:
+            raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
+        return self.cleaned_data
+
+    def login(self, request):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        return user
+
+
 class LoginView(View):
     def get(self, request):
         return render(request, 'login.html')
@@ -182,7 +201,24 @@ class LoginView(View):
             else:
                 return render(request, "login.html", {"error": "The user is not activated!"})
         else:
-            return render(request, "login.html", {"error": "username or account is incorrect！"})
+            return render(request, "login.html", {"error": "username or account is incorrect"})
+
+
+def create_post(request):
+    if request.method == 'POST':
+        post_text = request.POST.get('the_post')
+        response_data = {}
+
+        response_data['result'] = 'Create post successful!'
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
 
 
 class ProfileView(LoginRequiredMixin, View):
