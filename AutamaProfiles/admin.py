@@ -4,7 +4,6 @@ from django.urls import path
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from Nucleus.bacon import Bacon
 from AutamaProfiles.views import create_autama_profile
-from .views import get_meta
 
 
 # Register your models here.
@@ -20,30 +19,16 @@ class AutamaProfileAdmin(admin.ModelAdmin):
         return my_urls + urls
 
     def massproduce(self, request):
-        count = request.POST.get('count')
-        count = int(count)
-        ag = get_meta()
+        amount = 1  # The amount of Autama profiles to create
+        bacon = Bacon()  # For generating personality
+        username = str(request.user)  # Username of user who presses the mass produce button
 
-        if count < 9999 and ag.autamaInProcess == 0:
-            ag.autamaInProcess = count
-            ag.save()
-            amount = count  # The amount of Autama profiles to create
-            bacon = Bacon()  # For generating personality
-            username = str(request.user)  # Username of user who presses the mass produce button
+        for i in range(amount):
+            personality = bacon.generate_full_personality()
+            create_autama_profile(personality=personality, creator=username)
 
-            for i in range(amount):
-                personality = bacon.generate_full_personality()
-                create_autama_profile(personality=personality, creator=username)
-                ag.autamaInProcess -= 1
-                ag.save()
-
-            self.message_user(request, "Mass-production completed.")
-            return JsonResponse({'prog': 'Created ' + str(amount)})
-
-        # Handle error return
-        if ag.autamaInProcess > 0:
-            return JsonResponse({'error': "Already in progress"}, status=500)
-        return JsonResponse({'error': "Invalid mass produce number attempted."}, status=500)
+        self.message_user(request, "Mass-production completed.")
+        return HttpResponseRedirect("../")
 
 
 admin.site.register(AutamaGeneral)

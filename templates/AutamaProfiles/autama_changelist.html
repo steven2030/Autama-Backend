@@ -1,63 +1,12 @@
 {% extends 'admin/change_list.html' %}
 
 {% block object-tools %}
-    <div class= "inprog" id="inprog">In progress: </div> <br>
     <div>
-        <input type="text" id="count" name="count" maxlength="4" size="4">
-        <button style="margin-left: 10px;" type="button" id="submitmass">Mass Produce</button>
-{#        <form action="massproduce/" method="POST">#}
-{#            {% csrf_token %}#}
-{#                <button type="submit">Mass-produce</button>#}
-{#        </form>#}
+        <form action="massproduce/" method="POST">
+            {% csrf_token %}
+                <button type="submit">Mass-produce</button>
+        </form>
     </div>
     <br />
     {{ block.super }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script>
-
-    document.getElementById("submitmass").addEventListener("click", function () {
-        let count = $("#count").val();
-        $("#count").val("");
-        $.ajax({
-            url: "massproduce/",
-            type: "POST",
-            data: {
-                csrfmiddlewaretoken: "{{ csrf_token }}",
-                count: count,
-            },
-            dataType: "json",
-            timeout: 0,
-            success: function(response) {
-                if (status === 500) {
-                    alert("Error: " + data.error);
-                }
-            }
-        });
-        inprotget();
-    });
-
-    inprogget();
-
-    // Poll the inprogress count every 5s
-    $(document).ready(function() {
-        setInterval(inprogget, 10000);
-    });
-
-    // Update in progress count
-    function inprogget() {
-        $.get("/AutamaProfiles/inprogress", function(data, status) {
-            $('#inprog').text("In progress: " + data.inprogress);
-            if (data.inprogress > 0) {
-                console.log("Hidden");
-                document.getElementById("count").style.visibility = "hidden";
-                document.getElementById("submitmass").style.visibility = "hidden";
-            }
-            else {
-                document.getElementById("count").style.visibility = "visible";
-                document.getElementById("submitmass").style.visibility = "visible";
-            }
-        });
-    }
-
-    </script>
 {% endblock %}
