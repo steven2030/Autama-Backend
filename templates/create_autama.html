@@ -58,30 +58,47 @@
 
             .create_button{
                 background: #ff4e50;
-                height: 5vw;
-                width: 10vw;
+                height: 5rem;
+                width: 10rem;
                 color: white;
-                font-size: 2vw;
+                font-size: 2rem;
                 text-align: center;
                 vertical-align: middle;
-                border-radius: 5vw;
+                border-radius: 5rem;
             }
+
+         .logo-right{         /* ellipsis is ~27x90 */
+             padding-top: 0.5rem;    /*added*/
+             padding-bottom: 0.75rem;   /*added*/
+             width: 1.8rem;   /* was 2rem */
+             height: 5.8rem;    /* */
+             object-fit: contain;
+         }
     </style>
 {% endblock %}
 
 {% block content %}
     <div>
         <div class="toplab">
-            <img class="Autama-text-logo" src="/Images/images/autama-text-logo.png">
+            <img class="Autama-text-logo" src="/Images/Images/autama-text-logo.png">
         </div>
 
         <div>
-		<div class="bottom">
-		    <ul class="nav nav-tabs">
-			<li class="nav-item" style="float:left; padding-left: 3vw;"><a href="/MyAutamas/"><img class="logo-left" src="/Images/Images/back-chevron.png"></a></li>
-		    </ul>
-		</div>
-	</div>
+            <div class="bottom">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" style="float:left; padding-left: 4rem;"><a href="/MyAutamas/"><img class="logo-left" src="/Images/Images/back-chevron.png"></a></li>
+                    <li class="dropdown nav-item" style="float: right; padding-right: 50px;">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" >
+                            <img class="logo-right" src="/Images/Images/ellipsis.png">
+                            <!--<p class="three-dots"></p>-->
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li id="feedbackBtn"><a onclick="">Feedback</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
         <div class="main">
             <div class="line">
@@ -91,7 +108,9 @@
         </div>
     </div>
 
-    <div style="width: 80%;margin: auto;">
+    <div id="feedback-response" style="text-align: center"></div>
+
+    <div id="create-an-autama" style="width: 80%;margin: auto;">
         <h1>Create an Autama</h1>
         <br>
 
@@ -102,16 +121,18 @@
                     <P>Hi there, {{ user.username }}! Nice to meet you.</P>
                     <p>I'm Dr. Autama, and I'm glad you're interested in helping me create Autamas.</p>
                 {% else %}
-                <P>Hi again {{ user.username }}!</P>
+                    <P>Hi again {{ user.username }}!</P>
                     <p>I'm glad you want to create more Autamas.</p>
                 {% endif %}
-                <p>You can create up to 10 Autamas.</p>
-                <p>Creating an Autama is easy. Just give it a name and a persona by filling out everything below and hitting the "Create" button.</p>
-                <p>I will generate a picture for your Autama, and I hope you like it!</p>
-                <br>
+                    {% if not request.user.is_superuser %}
+                        <p>You can create up to {{ my_autama_limit }} Autamas.</p>
+                    {% endif %}
+                    <p>Creating an Autama is easy. Just give it a name and a persona by filling out everything below and hitting the "Create" button.</p>
+                    <p>I will generate a picture for your Autama, and I hope you like it!</p>
+                    <br>
             </div>
 
-            <div style="color: red;font-size: 14px">
+            <div style="color: red; font-size: 2rem">
                 {{ error }}
             </div>
 
@@ -202,5 +223,89 @@
             </div>
             <br>
         {% endif %}
+
+        <!-- add feedback block here -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+        <style>
+            .ui-dialog button.red{
+                background: #ff4e50;
+                color: white;
+                font-size: 20px;
+                text-align: center;
+                vertical-align: middle;
+                border-radius: 20px;
+            }
+            .ui-dialog button.blue{
+                background: rgb(92,67,197);
+                color: white;
+                font-size: 20px;
+                text-align: center;
+                vertical-align: middle;
+                border-radius: 20px;
+            }
+            div.ui-widget-header{
+                background: rgb(92,67,197);
+                color: white;
+            }
+        </style>
+
+        <div style="display:none" id="additional-feedback" title="Feedback">
+            <form id="feedback-form" method="POST" action="/send_feedback_email/" enctype="text/plain">
+                <input type="hidden" id="sender" name="sender" value="{{ user }}">
+                <textarea rows="5" cols="40" name="feedback" placeholder="Enter feedback here..."></textarea>
+                {% csrf_token %}
+            </form>
+        </div>
+
+        <script>
+            $(function() {
+                $(window).resize(function() {
+                    $("#additional-feedback").dialog("option", "position", {my: "center", at: "top", of: window});
+                });
+
+                $('#feedback-form').submit(function() {
+                    $("#feedback-response").show();
+                    $("#feedback-response").html("Sending feedback...");
+                    $.post($(this).attr('action'), $(this).serialize(), function(response) {
+                        $("#feedback-response").html(response);
+                    });
+                    return false;
+                });
+
+                $("#additional-feedback").dialog({
+                    resizable: false,
+                    height: "auto",
+                    autoOpen: false,
+                    width: "auto",
+                    modal: true,
+                    position: {
+                        my: "center",
+                        at: "top",
+                        of: "#create-an-autama",        <!-- TODO change this for each custom navbar -->
+                    },
+                    buttons: {
+                        "Submit": function () {
+                            $('#feedback-form').submit();
+                            $(this).dialog("close");
+                            $("#feedback-response").fadeOut(3000);
+                        },
+                        "Close": function () {
+                            $(this).dialog("close");
+                        }
+                    },
+                    create: function () {
+                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
+                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
+                    },
+                });
+
+                $('#feedbackBtn').click(function() {
+                    $("#additional-feedback").dialog('open');
+                });
+            });
+        </script>
     </div>
 {% endblock %}

@@ -5,8 +5,9 @@ from django.shortcuts import reverse
 
 class AutamaGeneral(models.Model):
     currentCount = models.IntegerField() # Index of current picture's spot
-    totalCount = models.IntegerField() # Total amount of pictures
+    totalCount = models.IntegerField(default=200) # Total amount of pictures
     autamaLimit = models.IntegerField(default=10) # Maximum autamas allowed for users to create
+    autamaInProcess = models.IntegerField(default=0) # number of autama currently being produced via mass produce
 
     def __str__(self):
         return '{currentCount} {totalCount}'.format(currentCount=self.currentCount, totalCount=self.totalCount)

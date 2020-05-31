@@ -163,26 +163,54 @@ class LogoutView(View):
         return HttpResponseRedirect(reverse('login'))
 
 
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=255, required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        if not user or not user.is_active:
+            raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
+        return self.cleaned_data
+
+    def login(self, request):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        return user
+
+
 class LoginView(View):
     def get(self, request):
         return render(request, 'login.html')
 
     def post(self, request):
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        is_remember_me = request.POST.get('is_remember_me')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            if user.is_active:
+        form = LoginForm(request.POST or None)
+        if request.POST and form.is_valid():
+            user = form.login(request)
+            if user:
                 login(request, user)
-                request.session.set_expiry(0)
-                if is_remember_me:
-                    request.session.set_expiry(None)
-                return HttpResponseRedirect(reverse("home"))
-            else:
-                return render(request, "login.html", {"error": "The user is not activated!"})
-        else:
-            return render(request, "login.html", {"error": "username or account is incorrect！"})
+                return HttpResponseRedirect("home.html")  # Redirect to a success page.
+        return render(request, 'login.html', {'login_form': form})
+
+
+def create_post(request):
+    if request.method == 'POST':
+        post_text = request.POST.get('the_post')
+        response_data = {}
+
+        response_data['result'] = 'Create post successful!'
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
 
 
 class ProfileView(LoginRequiredMixin, View):
@@ -397,7 +425,7 @@ class SeenAll(LoginRequiredMixin, View):
             user.currentAutama = autama_id_next(user.id, 0)
             user.nextAutama = autama_id_next(user.id, user.currentAutama)
         else:
-            user.currentAutama = ag.currentCount + 1;
+            user.currentAutama = ag.currentCount + 1
         user.save()
         return HttpResponse(status=200)
 

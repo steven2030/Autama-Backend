@@ -23,20 +23,38 @@
             border-radius: 20px;
             width: 400px;
             margin: auto;
-            margin-top: 200px;
+            margin-top: 4rem;
             padding: 50px 20px;
             box-shadow: 0px 0px 5px 0px #000;
             background-color: #fff;
         }
+
         .l-t{
             text-align: center;
         }
         .l-t p > img{
             width: 60px;
         }
+
+        @media only screen and (min-width: 320px) {
+        	.login .l-m{
+            	border-radius: 20px;
+            	width: 20rem;
+            	margin: auto;
+            	margin-top: 4rem;
+            	padding: 50px 20px;
+            	box-shadow: 0px 0px 5px 0px #000;
+            	background-color: #fff;
+        	}
+        }
+
         @media screen and (max-width:760px) {
             a:hover{
                 text-decoration: none;
+            }
+		
+	    .backimg{
+                height: 25rem;
             }
 
             .top{
@@ -44,7 +62,7 @@
                 top: 0;
                 width: 100%;
 
-                padding: 25px 5%;
+                padding: 15px 5%;
             }
             .top img{
                 height: 1.8rem;
@@ -467,9 +485,9 @@
 						Don't be bad,you agree to our <span>Terms</span>
 					</p>
 
-					<form action="/login/" method="post">
+					<form action="/login/" method="post" id="form">
 						<div class="form-group">
-						    <input type="text" id="username" class="form-control" name="username" placeholder="username">
+						    <input type="text" id="username" class="form-control" name="username" placeholder="username" >
 
                         </div>
                         <div class="form-group">
@@ -483,14 +501,25 @@
 
 					</form>
 
+
+
+
 				</div>
 			</div>
 
 		</div>
 		<div id="container">
 
+
+			{% if form.non_field_errors %}
+				{% for error in form.non_field_errors %}
+					<script>alert('Bad login credentials. Try another username.');</script>
+				{% endfor %}
+			{% endif %}
+
+
 			<div id="header">
-				<img src="/Images/images/01.png"  width="100%">
+				<img src="/Images/images/01.png"  width="100%" class="backimg">
 				<div class="top">
 					<div class="logo">
 						<img src="/Images/images/03.png" >
@@ -521,13 +550,15 @@
 				var olog = document.getElementById("log")
 				var oclose = document.getElementById("close")
 				function open(){
-
 					olog.style.display="block"
+					document.getElementById("username").focus();
 				}
 
 				oclose.onclick = function(){
-				olog.style.display="none"
+					olog.style.display="none"
 				}
+
+
 			</script>
 
 			<div class="main">
@@ -610,6 +641,7 @@
 						<p>
 							Autama can be used to teach your friends new music, share a joke with friends, general entertainment or just to hang out with. You can create your Autama any way you’d like.
 						</p>
+						<p>{{error}}</p>
 						<p>
 							<a href="/accounts/register/" class="active">SIGN UP</a>
 						</p>

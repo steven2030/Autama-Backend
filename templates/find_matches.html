@@ -5,28 +5,29 @@
 {% endblock %}
 
 {% block content %}
-    <div id="board">
-    <!--
-
-        <div class="like" id="like"/>
-        <div class="nope" id="nope"/>
-    -->
+    <div class="scaleable-wrapper" id="scaleable-wrapper">
+        <div id="board">
+        </div>
     </div>
     <style>
-        html, body {
+        .ui-resizable-handle {
+            display: none !important;
+        }
+        .scaleable-wrapper {
+            margin: auto;
+            {#height: 100%;#}
+            {#width: 100%;#}
         }
         #board {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            overflow: hidden;
-            /* Just for testing */
+            {#width: 100%;#}
+            {#height: 100%;#}
+            position: relative;
+            /*overflow: hidden; */
             background-color: white;
         }
         .card {
-
             position: absolute;
-            top: 360px;
+            top: 34rem;
             left: 50%;
             height: 664px;
             width: 378px;
@@ -196,8 +197,47 @@
             overflow-wrap: break-spaces;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script>
+        var $el = $("#board");
+        var elHeight = 664;
+        var elWidth = 378;
+        var $wrapper = $("#scaleable-wrapper");
+
+        $wrapper.resizable({
+            resize: doResize
+        });
+
+        function doResize(event, ui) {
+            var scale, origin;
+            scale = Math.min(
+                $(window).width() / elWidth,
+                $(window).height()*.70 / elHeight
+            );
+            {#if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {#}
+            {#    $el.css({#}
+            {#        transform: "scaleX(" + document.documentElement.clientWidth / elWidth + ")",#}
+            {#        transform: "scaleY(" + document.documentElement.clientHeight / elHeight + ")",#}
+            {#    })#}
+            {#else {#}
+                $el.css({
+                    transform: "scale(" + scale + ")",
+                });
+        }
+
+        var starterData = {
+            size: {
+                width: $wrapper.width(),
+                height: $wrapper.height()
+            }
+        };
+
+        doResize(null, starterData);
+
+
         /* Modified From original code below */
         /* LikeCarousel (c) 2019 Simone P.M. github.com/simonepm - Licensed MIT */
         function numberWithCommas(x) {

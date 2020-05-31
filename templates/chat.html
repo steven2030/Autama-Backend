@@ -240,12 +240,12 @@
             margin-left: -43px;
             margin-top: -43px;
             background-color: white;
-        }
+         }
         .flexbox-image{
-            width: 125px;
+            width: 11.5rem;
             float: left;
-            padding-top: 10px;
-            padding-left: 20px;
+            padding-top: 1rem;
+            padding-left: 2rem;
         }
         .circular--portrait{
             /*position: relative;*/
@@ -261,9 +261,10 @@
         }
         .autama_description{
             float: left;
-            padding-left: 20px;
+            padding-left: 2rem;
             width: 75%;
         }
+
         .profile_view{
             padding: 0;
             height: 20%;
@@ -471,28 +472,32 @@
             <div class="bottom">
                 <ul class="nav nav-tabs">
                     {% if request.user.is_authenticated  %}
-                        <li class="nav-item" style="float: left; padding-left: 3vw;">
+                        <li class="nav-item" style="float: left; padding-left: 4rem;">
                             <a href="{{ last_page }}"><img class="logo-left" src="/Images/Images/back-chevron.png"></a>
                         </li>
                     {% endif %}
-                    <li class="dropdown nav-item" style="float: right; padding-right: 3vw;">   <!-- was 50px -->
+                    <li class="dropdown nav-item" style="float: right; padding-right: 5rem;">   <!-- was 50px -->
                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" > 
                             <img class="logo-right" src="/Images/Images/ellipsis.png"> 
                             <!--<p class="three-dots"></p>-->
                         </a>
                         <ul class="dropdown-menu">
                             {% if is_matched %}
-                                <li id="shareBtn" style=";"><a onclick="">Share</a></li>
+                                <li id="shareBtn"><a onclick="">Share</a></li>
                                 <li><a href="{% url 'UnMatch' pk=autama.pk %}">
                                     {% csrf_token %}
                                     Unmatch
                                 </a></li>
                                 <li><a onclick="showReport()">Report</a></li>
+                                <li id="feedbackBtn"><a onclick="">Feedback</a></li>
                             {% else %}
+                                <li id="shareBtn"><a onclick="">Share</a></li>
                                 <li><a id="nav_match" href="{% url 'Match' pk=autama.pk %}">
                                     {% csrf_token %}
                                     Match
                                 </a></li>
+                                <li><a onclick="showReport()">Report</a></li>
+                                <li id="feedbackBtn"><a onclick="">Feedback</a></li>
                             {% endif %}
                         </ul>    <!-- end dropdown menu -->
                     </li>    <!-- end dropdown nav-item -->
@@ -611,7 +616,7 @@
 
         <div style="display:none;text-align: center" id="share-popup" title="Share this Autama with others!">
             <br>
-            <input style="width:75%;" type="text" id="shareURL" value="http://127.0.0.1:8000/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}"></input>
+            <input style="width:75%;" type="text" id="shareURL" value="autama.org/Preview/{{ autama.pk }}"></input>
             <!-- <input style="width:75%;" type="text" id="shareURL" value="3.16.189.148/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}"></input> -->
             <button class="form-button-blue" id="copyBtn" onclick="copyToClipboard()">Copy</button>
         </div>
@@ -783,8 +788,8 @@
             });
 
             $(window).resize(function() {
-                $("#prompt-feedback").dialog("option", "position", {my: "center", at: "bottom", of: "#lite-chatbox"});
-                $("#additional-feedback").dialog("option", "position", {my: "center", at: "bottom", of: "#lite-chatbox"});
+                $("#prompt-feedback").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
+                $("#additional-feedback").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
                 $("#share-popup").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
             });
 
@@ -824,8 +829,8 @@
                     modal: true,
                     position: {
                         my: "center",
-                        at: "bottom",
-                        of: "#lite-chatbox",
+                        at: "top",
+                        of: "#lite-chatbox",         <!-- TODO change this for each custom navbar -->
                     },
                     buttons: {
                         "Submit": function() {
@@ -859,7 +864,7 @@
                     modal: true,
                     position: {
                         my: "center",
-                        at: "bottom",
+                        at: "top",
                         of: "#lite-chatbox",
                     },
                     buttons: [
@@ -911,6 +916,10 @@
 
                 $('#submitReport').on('click', function(e) {
                     $("#prompt-feedback").dialog('open');
+                });
+
+                $('#feedbackBtn').click(function() {
+                    $("#additional-feedback").dialog('open');
                 });
             });
         </script>
