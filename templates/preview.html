@@ -347,21 +347,27 @@
                             <li class="nav-item" style="float:left; padding-left: 4rem;"><a href="/FindMatches/"><img class="logo-left" src="/Images/Images/back-chevron.png"></a></li>
                         {% endif %}
 
-                        <ul class="nav nav-tabs" style="float: right; margin-right: 4vw;">
-                            {% if is_login %}
-                                <li>
-                                    <a href="{{ chat_page }}" class="option">
-                                        Official Chat Page
-                                    </a>
-                                </li>
-                            {% else %}
-                                <li>
-                                    <a href="/login/" class="option">
-                                        Login/Register
-                                    </a>
-                                </li>
-                            {% endif %}
-                        </ul>
+                        <li class="dropdown nav-item" style="float: right; padding-right: 5rem;">   <!-- was 50px -->
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" >
+                                <img class="logo-right" src="/Images/Images/ellipsis.png">
+                                <!--<p class="three-dots"></p>-->
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                {% if is_login %}
+                                    <li>
+                                        <a href="{{ chat_page }}" class="option">
+                                            Official Chat Page
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <a href="/login/" class="option">
+                                            Login/Register
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>    <!-- end dropdown menu -->
+                        </li>    <!-- end dropdown nav-item -->
                     </ul>
                 </div>
             </div>
