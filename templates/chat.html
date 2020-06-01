@@ -745,7 +745,7 @@
         <p>Would you like to provide additional feedback?</p>
     </div>
 
-    <div style="display:none;text-align: center" id="share-popup" title="Share this Autama with others!">
+    <div id="share-popup" style="display:none;text-align: center" title="Share this Autama with others!">
         <br>
         <input style="width:75%;" type="text" id="shareURL" value="autama.org/Preview/{{ autama.pk }}"></input>
         <button class="form-button-blue" id="copyBtn" onclick="copyToClipboard()">Copy</button>
@@ -791,6 +791,13 @@
             var elem = document.getElementById("copyBtn");
             elem.innerHTML = "Copied!";
         }
+
+        $(function() {
+            $('#copyBtn').click(function(){
+                $('.ui-dialog').fadeOut(3000);
+                $('#share-popup').dialog('close');
+            });
+        });
 
         function changeCopyBtnOnClose() {
             var elem = document.getElementById("copyBtn");
@@ -908,10 +915,6 @@
                 },
             });
 
-            $("#shareBtn").click( function() {
-                $("#share-popup").dialog('open');
-            });
-
             $("#share-popup").dialog({
                 resizable: false,
                 height: "auto",
@@ -934,6 +937,10 @@
 
             $('#feedbackBtn').click(function() {
                 $("#additional-feedback").dialog('open');
+            });
+
+            $('#shareBtn').click(function() {
+                $('#share-popup').dialog('open');
             });
         });
     </script>
