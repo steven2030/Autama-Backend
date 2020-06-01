@@ -596,71 +596,6 @@
             {#                </form>#}
         </section>
 
-        <!-- jQuery dialog code here: https://stackoverflow.com/questions/40939099/jquery-form-submit-with-confirmation-in-a-modal -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-
-        <div style="display:none" id="prompt-feedback" title="Report submitted, thank you!">
-            <p>Would you like to provide additional feedback?</p>
-        </div>
-
-        <div style="display:none" id="additional-feedback" title="Feedback">
-            <form id="feedback-form" method="POST" action="/send_feedback_email/" enctype="text/plain">
-                <input type="hidden" id="sender" name="sender" value="{{ user }}">
-                <textarea rows="5" cols="40" name="feedback" placeholder="Enter feedback here..."></textarea>
-                {% csrf_token %}
-            </form>
-        </div>
-
-        <div style="display:none;text-align: center" id="share-popup" title="Share this Autama with others!">
-            <br>
-            <input style="width:75%;" type="text" id="shareURL" value="autama.org/Preview/{{ autama.pk }}"></input>
-            <!-- <input style="width:75%;" type="text" id="shareURL" value="3.16.189.148/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}"></input> -->
-            <button class="form-button-blue" id="copyBtn" onclick="copyToClipboard()">Copy</button>
-        </div>
-
-        <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_copy_clipboard -->
-        <script>
-            function copyToClipboard() {
-                var a_URL = document.getElementById("shareURL");
-                a_URL.select();
-                a_URL.setSelectionRange(0, 99999);
-                document.execCommand("copy");
-                var elem = document.getElementById("copyBtn");
-                elem.innerHTML = "Copied!";
-            }
-
-            function changeCopyBtnOnClose() {
-                var elem = document.getElementById("copyBtn");
-                elem.innerHTML = "Copy";
-            }
-        </script>
-
-        <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
-        <div id="report" class="report_box" style="margin-left: 20px">
-            <h1>Report Autama</h1>
-            <form id="reportform" method="POST" action="/send_report_email/" enctype="text/plain">
-                <input type="hidden" id="sender" name="sender" value="{{ user }}">
-                <input type="hidden" id="autama_info" name='autama_info' value="{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
-                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="inappropriate" name="option1" value="inappropriate">
-                <label for="option1"> Inappropriate content</label><br>
-                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="broken" name="option2" value="broken">
-                <label for="option2"> Autama is broken</label><br>
-                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="boring" name="option3" value="boring">
-                <label for="option3"> Autama is boring</label><br>
-                <input style="margin: 15px 15px 15px 15px" type="checkbox" id="other" name="option4" value="other">
-                <label for="option4"> Other</label><br><br>
-                <input class="form-button-blue" type="submit" id="submitReportBtn" name="submitReport" value="Submit"/>
-                <input class="form-button-red" type="button" id="hideReportBtn" name="hideReport" value="Close"/>
-                {%csrf_token%}
-            </form>
-        </div>
-        <div id="report-response" style="margin-left:30px"></div>
-        <div id="feedback-response" style="margin-left:30px"></div>
-        <br>
-
         <script>
             // For counting how many times a user hit send
             var sent = 0;
@@ -786,143 +721,7 @@
             $('.time_stamp').text(function(index, text) {
                 return convertTime(text);
             });
-
-            $(window).resize(function() {
-                $("#prompt-feedback").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
-                $("#additional-feedback").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
-                $("#share-popup").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
-            });
-
-            /* Email report submission handling */
-            $("#reportform").submit(function() {
-                $("#report-response").show();
-                $("#report-response").html("Sending report..."); /* udpate div that we're working on it */
-                /* .post signature is .post(action, data, success_callback_handler)
-                   .serialize() converts the elements of the <form> into a text string */
-                $.post($(this).attr('action'), $(this).serialize(), function(response) {
-                    $("#report-response").html(response); /* update div with actual server response */
-                });
-                $("#prompt-feedback").dialog('open');
-                return false; /* don't use the actual HTML form submit process (we use jQuery .post()) */
-            });
-
-            $('#feedback-form').submit(function() {
-                $("#feedback-response").show();
-                $("#feedback-response").html("Sending feedback...");
-                $.post($(this).attr('action'), $(this).serialize(), function(response) {
-                    $("#feedback-response").html(response);
-                });
-                return false;
-            });
-
-            $("#hideReportBtn").click(function() {
-                $("#report").hide();
-                $("#report-response").html('');
-            });
-
-            $(function() {
-                $("#additional-feedback").dialog({
-                    resizable: false,
-                    height: "auto",
-                    autoOpen: false,
-                    width: "auto",
-                    modal: true,
-                    position: {
-                        my: "center",
-                        at: "top",
-                        of: "#lite-chatbox",         <!-- TODO change this for each custom navbar -->
-                    },
-                    buttons: {
-                        "Submit": function() {
-                            $('#feedback-form').submit();
-                            $(this).dialog("close");
-                            $("#report").fadeOut(3000);
-                            $("#report-response").fadeOut(3000);
-                            $("#feedback-response").fadeOut(3000);
-                        },
-                        "Close": function() {
-                            $(this).dialog("close");
-                            $("#report").fadeOut(3000);
-                            $("#report-response").fadeOut(3000);
-                        }
-                    },
-                    close: function() {
-                        $("#report").fadeOut(3000);
-                        $("#report-response").fadeOut(3000);
-                    },
-                    create: function() {
-                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
-                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
-                    },
-                });
-
-                $("#prompt-feedback").dialog({
-                    resizable: false,
-                    height: "auto",
-                    autoOpen: false,
-                    width: "auto",
-                    modal: true,
-                    position: {
-                        my: "center",
-                        at: "top",
-                        of: "#lite-chatbox",
-                    },
-                    buttons: [
-                        {
-                            text: "Yes",
-                            click: function() {
-                                $("#additional-feedback").dialog('open');
-                                $(this).dialog("close");
-                            },
-                        },
-                        {
-                            text: "No",
-                            click: function() {
-                                $(this).dialog("close");
-                                $("#report").fadeOut(3000);
-                                $("#report-response").fadeOut(3000);
-                            },
-                        }
-                    ],
-                    create: function() {
-                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
-                        $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
-                    },
-                    close: function() {
-                        $("#report").fadeOut(3000);
-                        $("#report-response").fadeOut(3000);
-                    },
-                });
-
-                $("#shareBtn").click( function() {
-                    $("#share-popup").dialog('open');
-                });
-
-                $("#share-popup").dialog({
-                    resizable: false,
-                    height: "auto",
-                    autoOpen: false,
-                    width: "400",
-                    modal: true,
-                    position: {
-                        my: "center",
-                        at: "top",
-                        of: "#lite-chatbox",
-                    },
-                    close: function (event, ui) {
-                        changeCopyBtnOnClose();
-                    },
-                });
-
-                $('#submitReport').on('click', function(e) {
-                    $("#prompt-feedback").dialog('open');
-                });
-
-                $('#feedbackBtn').click(function() {
-                    $("#additional-feedback").dialog('open');
-                });
-            });
-        </script>
+            </script>
     {% else %}
         <section class="match_warning">
             <h1>I don't talk to strangers.</h1>
@@ -933,6 +732,211 @@
 
         <section></section>
     {% endif %}
+
+    <!-- all report/feedback code here so features work when user isn't matched -->
+
+    <!-- jQuery dialog code here: https://stackoverflow.com/questions/40939099/jquery-form-submit-with-confirmation-in-a-modal -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+    <div style="display:none" id="prompt-feedback" title="Report submitted, thank you!">
+        <p>Would you like to provide additional feedback?</p>
+    </div>
+
+    <div style="display:none;text-align: center" id="share-popup" title="Share this Autama with others!">
+        <br>
+        <input style="width:75%;" type="text" id="shareURL" value="autama.org/Preview/{{ autama.pk }}"></input>
+        <button class="form-button-blue" id="copyBtn" onclick="copyToClipboard()">Copy</button>
+    </div>
+
+    <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
+    <div id="report" class="report_box" style="margin-left: 20px">
+        <h1>Report Autama</h1>
+        <form id="reportform" method="POST" action="/send_report_email/" enctype="text/plain">
+            <input type="hidden" id="sender" name="sender" value="{{ user }}">
+            <input type="hidden" id="autama_info" name='autama_info' value="{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
+            <input style="margin: 15px 15px 15px 15px" type="checkbox" id="inappropriate" name="option1" value="inappropriate">
+            <label for="option1"> Inappropriate content</label><br>
+            <input style="margin: 15px 15px 15px 15px" type="checkbox" id="broken" name="option2" value="broken">
+            <label for="option2"> Autama is broken</label><br>
+            <input style="margin: 15px 15px 15px 15px" type="checkbox" id="boring" name="option3" value="boring">
+            <label for="option3"> Autama is boring</label><br>
+            <input style="margin: 15px 15px 15px 15px" type="checkbox" id="other" name="option4" value="other">
+            <label for="option4"> Other</label><br><br>
+            <input class="form-button-blue" type="button" id="submitReportBtn" name="submitReport" value="Submit"/>
+            <input class="form-button-red" type="button" id="hideReportBtn" name="hideReport" value="Close"/>
+            {% csrf_token %}
+        </form>
+    </div>
+    <div id="report-response" style="margin-left:30px"></div>
+    <div id="feedback-response" style="margin-left:30px"></div>
+    <br>
+
+    <div style="display:none" id="additional-feedback" title="Feedback">
+        <form id="feedback-form" method="POST" action="/send_feedback_email/" enctype="text/plain">
+            <input type="hidden" id="sender" name="sender" value="{{ user }}">
+            <textarea rows="5" cols="40" name="feedback" placeholder="Enter feedback here..."></textarea>
+            {% csrf_token %}
+        </form>
+    </div>
+
+    <script>
+        function copyToClipboard() {
+            var a_URL = document.getElementById("shareURL");
+            a_URL.select();
+            a_URL.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            var elem = document.getElementById("copyBtn");
+            elem.innerHTML = "Copied!";
+        }
+
+        function changeCopyBtnOnClose() {
+            var elem = document.getElementById("copyBtn");
+            elem.innerHTML = "Copy";
+        }
+
+        $(window).resize(function() {
+            $("#prompt-feedback").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
+            $("#additional-feedback").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
+            $("#share-popup").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
+        });
+
+        /* Email report submission handling */
+        $("#reportform").submit(function() {
+            $("#report-response").show();
+            $("#report-response").html("Sending report..."); /* udpate div that we're working on it */
+            /* .post signature is .post(action, data, success_callback_handler)
+               .serialize() converts the elements of the <form> into a text string */
+            $.post($(this).attr('action'), $(this).serialize(), function(response) {
+                $("#report-response").html(response); /* update div with actual server response */
+            });
+            $("#prompt-feedback").dialog('open');
+            return false; /* don't use the actual HTML form submit process (we use jQuery .post()) */
+        });
+
+        $('#feedback-form').submit(function() {
+            $("#feedback-response").show();
+            $("#feedback-response").html("Sending feedback...");
+            $.post($(this).attr('action'), $(this).serialize(), function(response) {
+                $("#feedback-response").html(response);
+            });
+            return false;
+        });
+
+        $("#hideReportBtn").click(function() {
+            $("#report").hide();
+            $("#report-response").html('');
+        });
+
+        $("#submitReportBtn").click(function() {
+            $("#reportform").submit();
+        });
+
+        $(function() {
+            $("#additional-feedback").dialog({
+                resizable: false,
+                height: "auto",
+                autoOpen: false,
+                width: "auto",
+                modal: true,
+                position: {
+                    my: "center",
+                    at: "top",
+                    of: "#lite-chatbox",         <!-- TODO change this for each custom navbar -->
+                },
+                buttons: {
+                    "Submit": function() {
+                        $('#feedback-form').submit();
+                        $(this).dialog("close");
+                        $("#report").fadeOut(3000);
+                        $("#report-response").fadeOut(3000);
+                        $("#feedback-response").fadeOut(3000);
+                    },
+                    "Close": function() {
+                        $(this).dialog("close");
+                        $("#report").fadeOut(3000);
+                        $("#report-response").fadeOut(3000);
+                    }
+                },
+                close: function() {
+                    $("#report").fadeOut(3000);
+                    $("#report-response").fadeOut(3000);
+                },
+                create: function() {
+                    $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
+                    $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
+                },
+            });
+
+            $("#prompt-feedback").dialog({
+                resizable: false,
+                height: "auto",
+                autoOpen: false,
+                width: "auto",
+                modal: true,
+                position: {
+                    my: "center",
+                    at: "top",
+                    of: "#lite-chatbox",
+                },
+                buttons: [
+                    {
+                        text: "Yes",
+                        click: function() {
+                            $("#additional-feedback").dialog('open');
+                            $(this).dialog("close");
+                        },
+                    },
+                    {
+                        text: "No",
+                        click: function() {
+                            $(this).dialog("close");
+                            $("#report").fadeOut(3000);
+                            $("#report-response").fadeOut(3000);
+                        },
+                    }
+                ],
+                create: function() {
+                    $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
+                    $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
+                },
+                close: function() {
+                    $("#report").fadeOut(3000);
+                    $("#report-response").fadeOut(3000);
+                },
+            });
+
+            $("#shareBtn").click( function() {
+                $("#share-popup").dialog('open');
+            });
+
+            $("#share-popup").dialog({
+                resizable: false,
+                height: "auto",
+                autoOpen: false,
+                width: "400",
+                modal: true,
+                position: {
+                    my: "center",
+                    at: "top",
+                    of: "#lite-chatbox",
+                },
+                close: function (event, ui) {
+                    changeCopyBtnOnClose();
+                },
+            });
+
+            $('#submitReport').on('click', function(e) {
+                $("#prompt-feedback").dialog('open');
+            });
+
+            $('#feedbackBtn').click(function() {
+                $("#additional-feedback").dialog('open');
+            });
+        });
+    </script>
 
     </body>
 {% endblock %}
