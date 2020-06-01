@@ -45,25 +45,25 @@
             border: none;
         }
         .logo-left{         /*swipe icon 180x150*/
-            padding-top: 0.5rem;    /*added*/
-            padding-bottom: 0.75rem;    /*added*/
-            width: 7.2rem;  /* was 30.2px then 3rem*/
-            height: 6rem;  /* was 30px then 2.5rem*/
+            /*padding-top: 0.5rem;*/    /*added*/
+            /*padding-bottom: 0.75rem;*/    /*added*/
+            width: 5.8rem;  /* was 30.2px then 3rem then 7.2rem*/
+            height: 5.8rem;  /* was 30px then 2.5rem then 6rem*/
             object-fit: contain;  /*added*/
         }
         .logo-mid{        /* autama icon 180x150 */
-            padding-top: 0.5rem;    /*added*/
-            padding-bottom: 0.75rem;    /*added*/
-            width: 7.2rem;  /*was 45px then 3rem*/
-            height: 6rem;  /*was 45px, then 2.5rem*/
+            /*padding-top: 0.5rem;*/    /*added*/
+            /*padding-bottom: 0.75rem;*/    /*added*/
+            width: 5.8rem;  /*was 45px then 3rem then 7.2rem*/
+            height: 5.8rem;  /*was 45px, then 2.5rem then 6rem*/
             object-fit: contain; /*added*/
         }
         .logo-right{       /*added-chatbutton 180x175*/
-            margin-top: 0.5rem;
-            padding-bottom: .25rem;    /*added*/
-            width: 10rem;
-            height: 7rem;
-            object-fit: cover;
+            /*margin-top: 0.5rem;*/
+            /*padding-bottom: .25rem;*/    /*added*/
+            width: 5.8rem; /* was 10rem */
+            height: 5.8rem; /* was 7 rem */
+            object-fit: contain; /* was cover */
         }
         .logo-options{       /*added- hamburger 105x84*/
             margin-top: 1rem;
@@ -72,13 +72,20 @@
             height: 6rem;
             object-fit: contain;
         }
-	    @media screen and (min-width:559px){
+	    
+	    @media only screen and (max-width: 40rem) {
+            .imgscale{
+                width: 5rem;
+            }
+        }
+	    
+	    /*@media screen and (min-width:559px){
             .middle {
                 float: none;
                 display: inline;
                 vertical-align: center;
                 /*margin-left: 36%;*/
-            }
+            /*}
         }
         @media screen and (max-width:560px){
 
@@ -87,14 +94,14 @@
                 display: inline;
                 vertical-align: center;
                 /*margin-left: 26%;*/
-            }
+            /*}
             .imgscale {
                 width: 5rem;
             }
             .logo-right {
                 width: 9rem;
             }
-        }
+        }*/
     </style>    <!-- end nav bar CSS -->
 
 
@@ -176,13 +183,13 @@
 			<div class="bottom">    <!-- bottom bar -->
                 <ul class="nav nav-tabs">    <!-- nav-tabs -->
 
-                    <li class="nav-item" style="float:left; padding-left:3vw;">        <!-- left nav icon -->
+                    <li class="nav-item" style="float:left; padding-left:4.3rem;">        <!-- left nav icon -->
                         <a href="/FindMatches/"> 
                             <img class="logo-left imgscale" src="/Images/Images/swipe-icon-round.png">
                         </a>
                     </li>                        <!-- end left nav icon -->
 
-                    <li class="nav-item" style="float:left;">        <!-- left inner nav icon -->
+                    <li class="nav-item">        <!-- left inner nav icon -->
                         <a href="/MyAutamas/"> 
                             <img class="logo-mid imgscale" src="/Images/Images/logo-purp-round.png">
                         </a>
@@ -191,7 +198,7 @@
                     <li class="nav-item">    <!-- right inner nav icon -->
                       <a href="/MyMatches/">
                         <!--<a class="nav-link" href="/MyMatches/" style="color: white; font-size: 1.5rem"> -->
-                            <img class="logo-right imgscale" src="/Images/Images/chat-icon-white-test.png">
+                            <img class="logo-right imgscale" src="/Images/Images/my-matches.png">
                             <!--(<span id="myText"></span>) -->
                         </a>
                     </li>                                         <!-- end right nav icon  -->
