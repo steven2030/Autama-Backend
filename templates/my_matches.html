@@ -70,6 +70,10 @@
             overflow: hidden;
         }
 
+        .flexbox-interests {
+            font-size: calc(1em + 0.3vw);
+        }
+
         .flexbox-item-msg {
             width: 25%;          /* small screens: 25% */
             padding: 0.5%;       /* small screens: 0.5% */
@@ -215,10 +219,9 @@
                         <h5 class="profilename" style="text-align: center;">{{a_profile.autamaID.first}} {{a_profile.autamaID.last}}</h5>
                     </div>
                     <div class="flexbox-interests">
-                        {{ a_profile.interest1 }}
-                        I like to golf.
-                        Strawberry watermelon Gatorade.
-                        Walking my dog.
+                        {{ a_profile.autamaID.interest1 }}
+                        {{ a_profile.autamaID.interest2 }}
+                        {{ a_profile.autamaID.interest3 }}
                     </div>
                 </div>
             {% endfor %}
