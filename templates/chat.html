@@ -524,7 +524,7 @@
     <!--create some space between nav and chat box-->
     <!--<section><div style="margin-top: 10px;"></div></section>-->
 
-    <section class="profile_view">
+    <section class="profile_view" id="profile_view">
         <div class="profile_box">
             <div class="flexbox-image">
                 <div class="circular--portrait">
@@ -798,9 +798,9 @@
         }
 
         $(window).resize(function() {
-            $("#prompt-feedback").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
-            $("#additional-feedback").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
-            $("#share-popup").dialog("option", "position", {my: "center", at: "top", of: "#lite-chatbox"});
+            $("#prompt-feedback").dialog("option", "position", {my: "center", at: "bottom", of: "#profile_view"});
+            $("#additional-feedback").dialog("option", "position", {my: "center", at: "bottom", of: "#profile_view"});
+            $("#share-popup").dialog("option", "position", {my: "center", at: "bottom", of: "#profile_view"});
         });
 
         /* Email report submission handling */
@@ -843,8 +843,8 @@
                 modal: true,
                 position: {
                     my: "center",
-                    at: "top",
-                    of: "#lite-chatbox",         <!-- TODO change this for each custom navbar -->
+                    at: "bottom",
+                    of: "#profile_view",
                 },
                 buttons: {
                     "Submit": function() {
@@ -878,8 +878,8 @@
                 modal: true,
                 position: {
                     my: "center",
-                    at: "top",
-                    of: "#lite-chatbox",
+                    at: "bottom",
+                    of: "#profile_view",
                 },
                 buttons: [
                     {
@@ -920,8 +920,8 @@
                 modal: true,
                 position: {
                     my: "center",
-                    at: "top",
-                    of: "#lite-chatbox",
+                    at: "bottom",
+                    of: "#profile_view",
                 },
                 close: function (event, ui) {
                     changeCopyBtnOnClose();
