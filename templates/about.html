@@ -47,6 +47,18 @@
             border-radius: 5rem;
         }
 
+        .team_picture {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .team_picture img {
+            max-width: 100%;
+            height: auto;
+        }
+
         @media only screen and (max-width: 40rem) {
             .grid-container{
                 display: grid;
@@ -242,17 +254,9 @@
             </div>
 
             <!-- Meet the Team -->
-            <!-- Team Picture -->
             <div>
 
                 <h1> Meet the Team </h1>
-                <br>
-
-                <div class="photo">
-                    <img src="/Images/Team/teamphoto.png"/>
-                </div>
-
-                <br>
                 <br>
 
             </div>
@@ -393,6 +397,21 @@
                     </div>
                 </div>
 
+            </div>
+
+            <!-- Team Picture -->
+            <div>
+                <br>
+
+                <h1> Team Photo </h1>
+
+                <br>
+
+                <div class="team_picture">
+                    <img src="/Images/Team/teamphoto.png"/>
+                </div>
+
+                <br>
             </div>
 
         </div>
