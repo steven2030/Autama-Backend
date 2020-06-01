@@ -104,7 +104,7 @@
                 width: 85%;
             }
             .send_arrow{
-                height: 85%;
+                height: 7rem;
                 width: 15%;
             }
         }
@@ -115,7 +115,7 @@
                 width: 85%;
             }
             .send_arrow{
-                height: 85%;
+                height: 7rem;
                 width: 15%;
             }
         }
@@ -126,7 +126,7 @@
                 width: 87.5%;
             }
             .send_arrow{
-                height: 85%;
+                height: 7rem;
                 width: 12.5%;
             }
         }
@@ -137,7 +137,7 @@
                 width: 90%;
             }
             .send_arrow{
-                height: 85%;
+                height: 7rem;
                 width: 10%;
             }
         }
@@ -148,7 +148,7 @@
                 width: 92.5%;
             }
             .send_arrow{
-                height: 85%;
+                height: 7rem;
                 width: 7.5%;
             }
         }
@@ -159,7 +159,7 @@
                 width: 95%;
             }
             .send_arrow{
-                height: 85%;
+                height: 7rem;
                 width: 5%;
             }
         }
@@ -178,7 +178,7 @@
             background-color:rgba(241,241,241,.98);
             resize: none;
             width: 100%;
-            height: 70px;
+            height: 7rem;
             overflow-y: auto;
         }
         .content1{
@@ -385,17 +385,21 @@
             padding-top: 0.5rem;    /*added*/
             padding-bottom: 0.75rem;   /*added*/
             width: 3.75rem;   /* was 30.2px */
-            height: 6rem;    /* was 30px */
+            height: 5.8rem;    /* was 30px */
             object-fit: contain;
         }
         .logo-right{         /* ellipsis is ~27x90 */ 
             padding-top: 0.5rem;    /*added*/
             padding-bottom: 0.75rem;   /*added*/
             width: 1.8rem;   /* was 2rem */
-            height: 6rem;    /* */
+            height: 5.8rem;    /* */
             object-fit: contain;
         }
 
+        .option{
+            color: black;
+            font-size: 2rem;
+        }
     </style>
 {% endblock %} <!-- end css block -->
 
@@ -481,23 +485,23 @@
                             <img class="logo-right" src="/Images/Images/ellipsis.png"> 
                             <!--<p class="three-dots"></p>-->
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown-menu-right">
                             {% if is_matched %}
-                                <li id="shareBtn"><a onclick="">Share</a></li>
-                                <li><a href="{% url 'UnMatch' pk=autama.pk %}">
+                                <li id="shareBtn"><a class="option">Share</a></li>
+                                <li><a href="{% url 'UnMatch' pk=autama.pk %}" class="option">
                                     {% csrf_token %}
                                     Unmatch
                                 </a></li>
-                                <li><a onclick="showReport()">Report</a></li>
-                                <li id="feedbackBtn"><a onclick="">Feedback</a></li>
+                                <li><a onclick="showReport()" class="option">Report</a></li>
+                                <li id="feedbackBtn"><a class="option">Feedback</a></li>
                             {% else %}
-                                <li id="shareBtn"><a onclick="">Share</a></li>
-                                <li><a id="nav_match" href="{% url 'Match' pk=autama.pk %}">
+                                <li id="shareBtn"><a class="option">Share</a></li>
+                                <li><a id="nav_match" href="{% url 'Match' pk=autama.pk %}" class="option">
                                     {% csrf_token %}
                                     Match
                                 </a></li>
-                                <li><a onclick="showReport()">Report</a></li>
-                                <li id="feedbackBtn"><a onclick="">Feedback</a></li>
+                                <li><a onclick="showReport()" class="option">Report</a></li>
+                                <li id="feedbackBtn"><a class="option">Feedback</a></li>
                             {% endif %}
                         </ul>    <!-- end dropdown menu -->
                     </li>    <!-- end dropdown nav-item -->
