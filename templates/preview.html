@@ -326,8 +326,10 @@
 
         $(document).ready(function(){
             var warning = "Warning:"
+            var age = "You must be 18 or older to use this website due to the vast amount of topics known by our Autamas!"
             var message = "Please note that this is a preview, so your conversation will not be saved."
-            alert(warning + "\n" + message);
+            var agree = 'By clicking "OK" you acknowledge that you have read the warning.'
+            alert(warning + "\n" + age + "\n" + message + "\n" + agree);
         });
     </script>
 {% endblock %}
