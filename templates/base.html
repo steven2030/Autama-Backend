@@ -105,13 +105,15 @@
             display: flex;
             margin: auto;
             z-index: 1;
-            box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 2px 1px rgb(0, 0, 0.2);
             border-radius: 5px;
             background-color: #eee;
             left: 10%;
             right: 10%;
             width: 80%;
-            max-width: 600px;
+            height: 80%;
+            min-width: 375px;
+            max-width: 900px;
             padding: 25px 25px;
             flex-wrap: wrap;
             flex-direction: row;
@@ -120,31 +122,35 @@
             width: 100%;
         }
         .cookie-banner-text {
-            font-size: 40px;
+            font-size: calc(2em + 0.5vw);
             width: 100%
         }
         .cookie-banner-btns {
             display: flex;
             width: 100%;
         }
-        .accept-cookies {
-            width: 100%;
-            background: rgb(92,67,197);
-            color: white;
-            font-size: 45px;
-            text-align: center;
-            vertical-align: middle;
-            border-radius: 15px;
-        }
         .decline-cookies {
             width: 100%;
+            min-width: 100px;
+            max-height: 100px;
             background: #ff4e50;
             color: white;
-            font-size: 45px;
+            font-size: calc(2em + 0.5vw);
             text-align: center;
             vertical-align: middle;
             border-radius: 15px;
-            margin-right: 30px;
+            margin-right: 10%;
+        }
+        .accept-cookies {
+            width: 100%;
+            min-width: 100px;
+            max-height: 100px;
+            background: rgb(92,67,197);
+            color: white;
+            font-size: calc(2em + 0.5vw);
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 15px;
         }
     </style> <!-- end cookie banner CSS -->
 
@@ -227,7 +233,9 @@
     <!-- Tutorial: creating a simple cookie consent pop-up: 
       https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
     <div class="cookie-banner" style="display: none">
-        <div class="cookie-banner-text">By using this website, you must be 18 or older and agree to our
+        <div class="cookie-banner-text">You must be 18 or older to use this website due to the vast amount of topics known by our Autamas!
+            <br><br>
+            This site uses cookies -- to learn more, check out our
             <a href="/PrivacyPolicy/">privacy policy.</a>
         </div>
         <hr>
