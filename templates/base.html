@@ -97,34 +97,55 @@
         }
     </style>    <!-- end nav bar CSS -->
 
-    <!-- Tutorial: creating a simple cookie consent pop-up: 
-      https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
+
+    <!-- cookie banner -->
     <style>
-        /* -- CSS for cookie banner -- */
         .cookie-banner {
             position: fixed;
-            bottom: 40px;   /*was  */
+            display: flex;
+            margin: auto;
+            z-index: 1;
+            box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            background-color: #eee;
             left: 10%;
             right: 10%;
             width: 80%;
-            padding: 5px 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #eee;
-            border-radius: 5px;
-            box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+            height: 80%;
+            max-width: 600px;
+            padding: 25px 25px;
+            flex-wrap: wrap;
         }
-
-        .close_banner {
-             height: 20px;
-             background-color: #777;
-             border: none;
-             color: white;
-             border-radius: 2px;
-             cursor: pointer;
-         }
-
+        .cookie-banner hr {
+            width: 100%;
+        }
+        .cookie-banner-text {
+            font-size: 40px;
+            width: 100%
+        }
+        .cookie-banner-btns {
+            display: flex;
+            width: 100%;
+        }
+        .accept-cookies {
+            flex: 1;
+            background: rgb(92,67,197);
+            color: white;
+            font-size: 45px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 15px;
+            margin-right: 50px;
+        }
+        .decline-cookies {
+            flex: 1;
+            background: #ff4e50;
+            color: white;
+            font-size: 45px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 15px;
+        }
     </style> <!-- end cookie banner CSS -->
 
     {% block csstyle %}
@@ -206,22 +227,29 @@
     <!-- Tutorial: creating a simple cookie consent pop-up: 
       https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
     <div class="cookie-banner" style="display: none">
-        <p>By using our website, you agree to our
-            <a href="autama.org/PrivacyPolicy/">privacy policy</a>
-        </p>
-        <button class="close_banner">&times;</button>
+        <div class="cookie-banner-text">By using this website, you must be 18 or older and agree to our
+            <a href="/PrivacyPolicy/">privacy policy.</a>
+        </div>
+        <div class="cookie-banner-btns">
+            <button class="accept-cookies">Accept</button>
+            <button class="decline-cookies">Decline</button>
+        </div>
     </div>
 
     <!-- JS for cookie banner -->
     <script>
         if (localStorage.getItem('privacyCookieSeen') !== 'accepted') {
-            $('.cookie-banner').delay(1000).fadeIn();
+            $('.cookie-banner').delay(500).fadeIn(2000);
         }
 
-        $('.close_banner').click(function() {
+        $('.accept-cookies').click(function() {
           $('.cookie-banner').fadeOut();
           localStorage.setItem('privacyCookieSeen', 'accepted');
-        })
+        });
+
+        $('.decline-cookies').click(function() {
+            $('.cookie-banner').fadeOut();
+        });
     </script>
 
 
