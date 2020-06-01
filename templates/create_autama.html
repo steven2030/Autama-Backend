@@ -40,7 +40,7 @@
                 padding-top: 0.5rem;      /*added*/
                 padding-bottom: 0.75rem;  /*added*/
                 width: 3.75rem;           /*changed from 30.2px*/
-                height: 6rem;             /*changed from 30px*/
+                height: 5.8rem;             /*changed from 30px*/
                 object-fit: contain;      /*added*/
             }
 
@@ -74,6 +74,11 @@
              height: 5.8rem;    /* */
              object-fit: contain;
          }
+
+         .option{
+            color: black;
+            font-size: 2rem;
+        }
     </style>
 {% endblock %}
 
@@ -86,14 +91,14 @@
         <div>
             <div class="bottom">
                 <ul class="nav nav-tabs">
-                    <li class="nav-item" style="float:left; padding-left: 4rem;"><a href="/MyAutamas/"><img class="logo-left" src="/Images/Images/back-chevron.png"></a></li>
-                    <li class="dropdown nav-item" style="float: right; padding-right: 50px;">
-                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" >
+                    <li class="nav-item" style="float:left; padding-left: 4rem;"><a href="/MyAutamas/" title="Back"><img class="logo-left" src="/Images/Images/back-chevron.png"></a></li>
+                    <li class="dropdown nav-item" style="float: right; padding-right: 5rem;">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" title="More Options">
                             <img class="logo-right" src="/Images/Images/ellipsis.png">
                             <!--<p class="three-dots"></p>-->
                         </a>
-                        <ul class="dropdown-menu">
-                            <li id="feedbackBtn"><a onclick="">Feedback</a></li>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li id="feedbackBtn"><a class="option">Feedback</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -233,18 +238,18 @@
             .ui-dialog button.red{
                 background: #ff4e50;
                 color: white;
-                font-size: 20px;
+                font-size: 2rem;
                 text-align: center;
                 vertical-align: middle;
-                border-radius: 20px;
+                border-radius: 2rem;
             }
             .ui-dialog button.blue{
                 background: rgb(92,67,197);
                 color: white;
-                font-size: 20px;
+                font-size: 2rem;
                 text-align: center;
                 vertical-align: middle;
-                border-radius: 20px;
+                border-radius: 2rem;
             }
             div.ui-widget-header{
                 background: rgb(92,67,197);
