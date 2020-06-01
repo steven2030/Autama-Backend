@@ -118,6 +118,7 @@
 
         .profilename {
             font-size: calc(1.3em + 0.3vw);
+            color: #6041ce;
         }
 
         .some-recent-msg {
@@ -211,7 +212,13 @@
                         </div>
                     </a>
                     <div class="flexbox-profilename">
-                        <h5 class="profilename">{{a_profile.autamaID.first}} {{a_profile.autamaID.last}}</h5>
+                        <h5 class="profilename" style="text-align: center;">{{a_profile.autamaID.first}} {{a_profile.autamaID.last}}</h5>
+                    </div>
+                    <div class="flexbox-interests">
+                        {{ a_profile.interest1 }}
+                        I like to golf.
+                        Strawberry watermelon Gatorade.
+                        Walking my dog.
                     </div>
                 </div>
             {% endfor %}
