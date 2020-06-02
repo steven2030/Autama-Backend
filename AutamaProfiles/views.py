@@ -69,6 +69,14 @@ def create_custom_autama(creator: str, first: str, last: str, origin: str, perso
         # Get meta data on Autama Images and generate path for current autama picture
         picture = get_picture_name()
 
+        first_name = first.rstrip()
+        first_name = first_name.lstrip()
+        first_name = first_name.capitalize()
+
+        last_name = last.rstrip()
+        last_name = last_name.lstrip()
+        last_name = last_name.capitalize()
+
         interest1 = add_period(checked_personality[0])
         interest2 = add_period(checked_personality[1])
         interest3 = add_period(checked_personality[2])
@@ -76,7 +84,7 @@ def create_custom_autama(creator: str, first: str, last: str, origin: str, perso
         interest5 = add_period(checked_personality[4])
         interest6 = add_period(checked_personality[5])
 
-        new_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first, last=last,
+        new_autama = AutamaProfile.objects.create(creator=creator, picture=picture, first=first_name, last=last_name,
                                                   pickle=origin,
                                                   interest1=interest1, interest2=interest2,
                                                   interest3=interest3, interest4=interest4,
