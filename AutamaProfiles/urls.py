@@ -10,6 +10,5 @@ urlpatterns = [
     path('register/', AutamaProfile_views.register_autama, name='register_autama'),
     path('<int:pk>-<slug:slug>/', AutamaProfile_views.profile, name='profile'),
     path('claim/', AutamaProfile_views.claim, name='claim'),
-    path('test/', AutamaProfile_views.testfunc),
     path('inprogress/', AutamaProfile_views.autama_in_progress, name='autama_in_progress'),
 ]
