@@ -1,12 +1,8 @@
-from django.db import models
 from tastypie.resources import ModelResource
 from AutamaProfiles.models import AutamaProfile
 from accounts.models import User, Matches
 from tastypie.authorization import Authorization
-from tastypie.authentication import ApiKeyAuthentication, BasicAuthentication
-from tastypie.models import ApiKey
-from django.urls import path
-from django.conf.urls import url
+from tastypie.authentication import BasicAuthentication
 from django.db import IntegrityError
 from tastypie.exceptions import BadRequest
 from accounts.models import Messages
@@ -49,7 +45,7 @@ class AccountAuthorization(Authorization):
 class AccountsResource(ModelResource):
     class Meta:
         queryset = User.objects.all()
-        resource_name = 'accounts'  # Change to 'login' end point
+        resource_name = 'accounts'
         fields = ['id', 'username']
         filtering = {
             'username': ['exact']
@@ -61,8 +57,7 @@ class AccountsResource(ModelResource):
     def dehydrate(self, bundle):
         username = bundle.request.headers.get('Username')
         user = User.objects.get(username=username)
-        #apikey = ApiKey.objects.get(user=user)
-        #bundle.data['apikey'] = apikey.key
+
         return bundle
 
 
@@ -78,14 +73,12 @@ class RegistrationResource(ModelResource):
             user = User.objects.create(username=bundle.data.get('username'))
             user.set_password(bundle.data.get('password'))
             user.save()
-            #apikey = bundle.data.get('apikey')
-            #user = User.objects.get(username=bundle.data.get('username'))
-            #apikey = ApiKey.objects.create(key=apikey, user=user)
-            #apikey.save()
             bundle.obj = user  # HAVE to update the bundle object to include its data in post response.
         except IntegrityError:
             raise BadRequest('That username already exists')
+
         return bundle
+
 
 class MessagingAuthorization(Authorization):
     def read_list(self, object_list, bundle):
@@ -100,11 +93,10 @@ class MessagingResource(ModelResource):
         queryset = Messages.objects.all()
         resource_name = 'messages'
         authorization = MessagingAuthorization()
-        #authentication = ApiKeyAuthentication()
         authentication = BasicAuthentication()
         include_resource_uri = False
-        fields = ['userID', 'autamaID', 'message', 'sender', 'timeStamp'] # Seems like atleast one of the fields in the post must be mentioned here to have them included in post response.
-        always_return_data = True # Seems to need this get posted data returned in response.
+        fields = ['userID', 'autamaID', 'message', 'sender', 'timeStamp']  #Seems like atleast one of the fields in the post must be mentioned here to have them included in post response.
+        always_return_data = True  #Seems to need this get posted data returned in response.
         allowed_methods = ['post', 'get']
 
     def hydrate(self, bundle):
@@ -113,7 +105,7 @@ class MessagingResource(ModelResource):
         message = bundle.data.get("message")
         sender = bundle.data.get("sender")
         message = Messages.objects.create(userID=user, autamaID=autama, sender=sender, message=message)
-        #message.save() # somewhere in the hydrate cycle tastypie calls save for us
+
         bundle.obj = message
 
         return bundle
@@ -152,22 +144,23 @@ class MessagingResource(ModelResource):
 
         return bundle
 
+
 class MyMatchesAuthorization(Authorization):
     def read_list(self, object_list, bundle):
         user = bundle.request.user
         return object_list.filter(userID=user)
+
 
 class MyMatchesResource(ModelResource):
     class Meta:
         queryset = Matches.objects.all()
         resource_name = 'mymatches'
         authorization = MyMatchesAuthorization()
-        #authentication = ApiKeyAuthentication()
         authentication = BasicAuthentication()
 
     def dehydrate(self, bundle):
-        a_match  = Matches.objects.get(id=int(bundle.data.get("id")))
-        userID   = str(a_match.userID.id)
+        a_match = Matches.objects.get(id=int(bundle.data.get("id")))
+        userID  = str(a_match.userID.id)
         autamaID = str(a_match.autamaID.id)
         bundle.data['userID'] = userID
         bundle.data['autamaID'] = autamaID
