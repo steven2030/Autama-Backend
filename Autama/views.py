@@ -268,17 +268,19 @@ class FindMatches(LoginRequiredMixin, View):
 
         matches = Matches.objects.all().filter(userID=user.id).count()
         print(matches)
+        
         # Returns the base HTML if no AID parameter.  This is first page load.
         if a_id is None:
             user = User.objects.get(id=request.user.id)
             return render(request, 'find_matches.html', {'autama_id': user.currentAutama, 'num_matches': matches})
 
         # Check if the user has swiped all current Autama & redirect.
-        if user.currentAutama > ag.currentCount:
+        if user.currentAutama >= ag.currentCount:
             data = {
                 'redirect': '/SeenAll/',
             }
             return JsonResponse(data)
+        
         autama = None
 
         # Return current id
@@ -293,7 +295,7 @@ class FindMatches(LoginRequiredMixin, View):
                     user.currentAutama = autama_id_next(user.id, user.currentAutama)
                     user.nextAutama = autama_id_next(user.id, user.currentAutama)
                     user.save()
-                    if user.currentAutama > ag.currentCount:
+                    if user.currentAutama >= ag.currentCount:
                         data = {
                             'redirect': '/SeenAll/',
                         }
@@ -359,8 +361,8 @@ class FindMatches(LoginRequiredMixin, View):
                 autama.save()'''
 
         # Test to see if past current Autama Limit
-        ag = AutamaGeneral.objects.get(pk=1)
-        if user.currentAutama > ag.currentCount:
+        ag = get_meta()
+        if user.currentAutama >= ag.currentCount:
             print(str(user.currentAutama) + " " + str(ag.currentCount))
             return redirect('SeenAll')
 
@@ -391,14 +393,14 @@ def autama_id_exist(autama_id):
 # returns int of next valid autama id or -1 if reached end of the list
 def autama_id_next(user_id, autama_id):
     autama_id += 1
-    ag = AutamaGeneral.objects.get(pk=1)
+    ag = get_meta()
     while True:
         if autama_id_exist(autama_id) and not autama_is_matched(user_id, autama_id):
             return autama_id
         else:
             autama_id += 1
-            if autama_id > ag.currentCount:
-                return ag.currentCount + 1
+            if autama_id >= ag.currentCount:
+                return ag.currentCount
 
 
 # get the autama object matching provided int id
@@ -413,6 +415,11 @@ def autama_get_profile(autama_id):
 class SeenAll(LoginRequiredMixin, View):
     def get(self, request):
         matches = Matches.objects.all().filter(userID=request.user.id).count()
+        user = User.objects.get(pk=request.user.id)
+        ag = get_meta()
+        if user.currentAutama >= ag.currentCount:
+            user.nextAutama = user.currentAutama + 1
+            user.save()
         return render(request, 'seenall.html', {'num_matches': matches})
 
     def post(self, request):
@@ -420,12 +427,16 @@ class SeenAll(LoginRequiredMixin, View):
         retval = data.get('id')
         # User elects to restart from Autama 1
         user = User.objects.get(pk=request.user.id)
-        ag = AutamaGeneral.objects.get(pk=1)
+        ag = get_meta()
+        
         if retval == "again":
-            user.currentAutama = autama_id_next(user.id, 0)
-            user.nextAutama = autama_id_next(user.id, user.currentAutama)
+            if user.currentAutama >= ag.currentCount:
+                user.currentAutama = autama_id_next(user.id, 0)
+                user.nextAutama = autama_id_next(user.id, user.currentAutama)
         else:
-            user.currentAutama = ag.currentCount + 1
+            if user.currentAutama >= ag.currentCount:
+                user.currentAutama = ag.currentCount
+        
         user.save()
         return HttpResponse(status=200)
 
