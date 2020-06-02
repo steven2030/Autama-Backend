@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.conf.urls import include
 from django.urls import path
 from .models import UnmatchedAutamaResource, AccountsResource, RegistrationResource, MessagingResource, MyMatchesResource
 from tastypie.api import Api
