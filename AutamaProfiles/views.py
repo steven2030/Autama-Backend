@@ -84,18 +84,23 @@ def create_custom_autama(creator: str, first: str, last: str, origin: str, perso
         new_autama.save()
 
 
-# A function to check if an interest ends  with a punctuation mark, and if it does not, it will add a period
+# A function to check if an interest ends  with a punctuation mark. If it does not, it will add a period.
+# Also capitalizes first letter
 def add_period(interest: str):
-    period = interest.endswith(".")
-    question_mark = interest.endswith("?")
-    exclamation_point = interest.endswith("!")
+    i = interest.rstrip()
+    i = i.lstrip()
+    i = i.capitalize()
+
+    period = i.endswith(".")
+    question_mark = i.endswith("?")
+    exclamation_point = i.endswith("!")
 
     # Add period if interest does not end with a punctuation mark
     if not period and not question_mark and not exclamation_point:
-        revised_interest = interest + "."
+        revised_interest = i + "."
         return revised_interest
     else:
-        return interest
+        return i
 
 
 # A function to get meta data on Autama Images by first checking if it exists and then creating one if it doesn't
