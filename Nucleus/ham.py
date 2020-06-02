@@ -113,5 +113,4 @@ class Ham:
         intro = ["my name is " + name + "."]
         personality = self.__format_personality()
         identity = intro + personality
-        print(identity)
         return self.__tokenize_and_encode(identity)
