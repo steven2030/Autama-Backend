@@ -52,4 +52,6 @@ software for license terms.
 
 Django tutorial references here
 
+Hugging Face Inc. for ConvAI
+
 
