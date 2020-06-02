@@ -184,60 +184,83 @@
 <!-- html body -->
 <body onload="matchNotifications()">
     <!-- HTML for nav bar in body -->
-    <div>
-        <div class="toplab">   <!-- top half top nav bar -->
-            <img class="Autama-text-logo" src="/Images/Images/autama-text-logo.png">
+    {% if request.user.is_authenticated  %}
+        <div>
+            <div class="toplab">   <!-- top half top nav bar -->
+                <img class="Autama-text-logo" src="/Images/Images/autama-text-logo.png">
+            </div>
+
+            <div id="container">    <!-- bottom half nav bar layers -->
+
+                <div class="bottom">    <!-- bottom bar -->
+                    <ul class="nav nav-tabs">    <!-- nav-tabs -->
+
+                        <li class="nav-item" style="float:left; padding-left:4.3rem;">        <!-- left nav icon -->
+                            <a href="/FindMatches/" title="Find Matches: Find Autamas to Match With">
+                                <img class="logo-left imgscale" src="/Images/Images/swipe-icon-round.png">
+                            </a>
+                        </li>                        <!-- end left nav icon -->
+
+                        <li class="nav-item">        <!-- left inner nav icon -->
+                            <a href="/MyAutamas/" title="My Autamas: Create Custom Autamas">
+                                <img class="logo-mid imgscale" src="/Images/Images/logo-purp-round.png">
+                            </a>
+                        </li>                        <!-- end left inner nav icon -->
+
+                        <li class="nav-item">    <!-- right inner nav icon -->
+                          <a href="/MyMatches/" title="My Matches: Chat With Your Matches">
+                            <!--<a class="nav-link" href="/MyMatches/" style="color: white; font-size: 1.5rem"> -->
+                                <img class="logo-right imgscale" src="/Images/Images/my-matches.png">
+                                <!--(<span id="myText"></span>) -->
+                            </a>
+                        </li>                                         <!-- end right nav icon  -->
+
+                        <li class="dropdown nav-item" style="float: right; padding-right: 2.5vw;">    <!-- right nav icon -->
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" title="More Options">
+                                <img class="logo-left imgscale" src="/Images/Images/hamburger-icon-white.png">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a class="option" href="/logout/">Logout</a></li>
+                                <li><a class="option" href="/accounts/profile/">Profile</a></li>
+                                <li><a class="option" href="/about/">About Us</a></li>
+                                <li id="feedbackBtn" class="option"><a>Feedback</a></li>
+                            </ul>
+                        </li>                                         <!-- end right nav icon  -->
+
+                    </ul>                        <!-- end nav-tabs -->
+                </div>                   <!-- end bottom bar-->
+
+                <div class="main">    <!-- this is the lowest part of nav bar for curve on right-->
+                    <div class="line">    <!-- adds purple layer at bottom -->
+                        <div class="bg"></div>    <!-- adds white layer over purple -->
+                    </div>            <!-- end of lowest part of top nav bar -->
+                </div>  <!-- end lowest part of nav bottom -->
+
+            </div>  <!-- end container-->
+
+        </div> <!-- end html nav bar in body -->
+    {% else %}
+        <div>
+            <div class="toplab">
+                <img class="Autama-text-logo" src="/Images/Images/autama-text-logo.png">
+            </div>
+
+            <div>
+                <div class="bottom">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item" style="float:left; padding-left: 4rem;"><a href="/login/" title="Back"><img class="logo-left" src="/Images/Images/back-chevron.png"></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="main">
+                <div class="line">
+                    <div class="bg">
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div id="container">    <!-- bottom half nav bar layers -->
-
-			<div class="bottom">    <!-- bottom bar -->
-                <ul class="nav nav-tabs">    <!-- nav-tabs -->
-
-                    <li class="nav-item" style="float:left; padding-left:4.3rem;">        <!-- left nav icon -->
-                        <a href="/FindMatches/" title="Find Matches: Find Autamas to Match With"> 
-                            <img class="logo-left imgscale" src="/Images/Images/swipe-icon-round.png">
-                        </a>
-                    </li>                        <!-- end left nav icon -->
-
-                    <li class="nav-item">        <!-- left inner nav icon -->
-                        <a href="/MyAutamas/" title="My Autamas: Create Custom Autamas"> 
-                            <img class="logo-mid imgscale" src="/Images/Images/logo-purp-round.png">
-                        </a>
-                    </li>                        <!-- end left inner nav icon -->
-
-                    <li class="nav-item">    <!-- right inner nav icon -->
-                      <a href="/MyMatches/" title="My Matches: Chat With Your Matches">
-                        <!--<a class="nav-link" href="/MyMatches/" style="color: white; font-size: 1.5rem"> -->
-                            <img class="logo-right imgscale" src="/Images/Images/my-matches.png">
-                            <!--(<span id="myText"></span>) -->
-                        </a>
-                    </li>                                         <!-- end right nav icon  -->
-
-                    <li class="dropdown nav-item" style="float: right; padding-right: 2.5vw;">    <!-- right nav icon -->
-                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" title="More Options"> 
-                            <img class="logo-left imgscale" src="/Images/Images/hamburger-icon-white.png">
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a class="option" href="/logout/">Logout</a></li>
-                            <li><a class="option" href="/accounts/profile/">Profile</a></li>
-                            <li><a class="option" href="/about/">About Us</a></li>
-                            <li id="feedbackBtn" class="option"><a>Feedback</a></li>
-                        </ul>
-                    </li>                                         <!-- end right nav icon  -->
-                
-                </ul>                        <!-- end nav-tabs -->
-			</div>                   <!-- end bottom bar-->
-
-            <div class="main">    <!-- this is the lowest part of nav bar for curve on right-->
-                <div class="line">    <!-- adds purple layer at bottom -->
-					<div class="bg"></div>    <!-- adds white layer over purple -->
-                </div>            <!-- end of lowest part of top nav bar -->
-            </div>  <!-- end lowest part of nav bottom --> 
-            
-        </div>  <!-- end container-->
-
-    </div> <!-- end html nav bar in body -->
+    {% endif %}
 
     <div id="feedback-response" style="text-align: center"></div>
 
