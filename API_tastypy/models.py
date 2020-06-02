@@ -17,6 +17,7 @@ class UnmatchedAutamaAuthorization(Authorization):
 
         return unmatched_autama
 
+
 class UnmatchedAutamaResource(ModelResource):
     class Meta:
         queryset = AutamaProfile.objects.all()
