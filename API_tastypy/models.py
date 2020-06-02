@@ -96,8 +96,8 @@ class MessagingResource(ModelResource):
         authorization = MessagingAuthorization()
         authentication = BasicAuthentication()
         include_resource_uri = False
-        fields = ['userID', 'autamaID', 'message', 'sender', 'timeStamp']  #Seems like atleast one of the fields in the post must be mentioned here to have them included in post response.
-        always_return_data = True  #Seems to need this get posted data returned in response.
+        fields = ['userID', 'autamaID', 'message', 'sender', 'timeStamp']  # Seems like atleast one of the fields in the post must be mentioned here to have them included in post response.
+        always_return_data = True  # Seems to need this get posted data returned in response.
         allowed_methods = ['post', 'get']
 
     def hydrate(self, bundle):
