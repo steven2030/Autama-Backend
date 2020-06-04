@@ -263,6 +263,9 @@ class ResetPasswordView(LoginRequiredMixin, View):
 class FindMatches(LoginRequiredMixin, View):
     def get(self, request):
         user = User.objects.get(pk=request.user.id)
+        user.last_page = "/FindMatches/"  # User is now at the FindMatches page
+        user.save()
+        
         ag = get_meta()
         a_id = request.GET.get('AID')
 
