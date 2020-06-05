@@ -1,21 +1,14 @@
 from django.shortcuts import render, redirect
-from .forms import SignUpForm, EditProfileForm
-from django.contrib.auth.decorators import login_required
-from django.views import View
 import json
 from django.shortcuts import render,reverse
-from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Q
 from django.views import View
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from .models import User, Matches
-from AutamaProfiles.models import AutamaProfile
 from Nucleus.bacon import Bacon
 from AutamaProfiles.views import create_autama_profile
-#from email_validator import validate_email, EmailNotValidError
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 
@@ -47,19 +40,6 @@ class RegisterView(View):
 
         if password != rePassword:
             return render(request, '../templates/register.html', {'error': 'Passowrds don\'t match.'})
-
-        '''
-        try:
-            # Validate.
-            valid = validate_email(email)
-
-            # Update with the normalized form.
-            email = valid.email
-        except EmailNotValidError as e:
-            return render(request, '../templates/register.html', {'error': 'Invalid email address.'})
-            # email is not valid, exception message is human-readable
-            print(str(e))
-        '''
 
         try:
             validate_email(email)
