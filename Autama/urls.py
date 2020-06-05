@@ -24,7 +24,6 @@ from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
-    #path('', auth_views.LoginView.as_view(), name='login'),
     path('', main_page_views.FindMatches.as_view()),
     # Include all auth views
     url('^', include('django.contrib.auth.urls')),

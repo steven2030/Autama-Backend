@@ -1,11 +1,4 @@
-from django.http import HttpResponse
-from accounts.models import User
-from AutamaProfiles.models import AutamaProfile
-import simplejson
-from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-
+from django.shortcuts import redirect
 import json
 from django.shortcuts import render, reverse
 from django.contrib.auth.backends import ModelBackend
@@ -20,13 +13,10 @@ from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from AutamaProfiles.models import AutamaProfile, AutamaGeneral
 from AutamaProfiles.views import get_meta, create_custom_autama, get_my_autama_limit
-from django.utils import timezone
 from Nucleus.ham import Ham
-
 from django.core.mail import send_mail
 from Autama.settings import EMAIL_HOST_USER
 from Autama.settings import EMAIL_RECIPIENTS
-
 import datetime
 
 
