@@ -273,7 +273,21 @@ class FindMatches(LoginRequiredMixin, View):
                 'redirect': '/SeenAll/',
             }
             return JsonResponse(data)
-        
+        else:
+            if autama_is_matched(request.user.id, request.user.currentAutama):
+                while True:
+                    user.currentAutama = autama_id_next(user.id, user.currentAutama)
+                    user.nextAutama = autama_id_next(user.id, user.currentAutama)
+                    user.save()
+                    if user.currentAutama >= ag.currentCount:
+                        data = {
+                            'redirect': '/SeenAll/',
+                        }
+                        return JsonResponse(data)
+                    if autama_id_exist(user.currentAutama) and not autama_is_matched(request.user.id, user.currentAutama):
+                        autama = autama_get_profile(user.currentAutama)
+                        break
+
         autama = None
 
         # Return current id
