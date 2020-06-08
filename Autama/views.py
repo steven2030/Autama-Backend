@@ -274,6 +274,7 @@ class FindMatches(LoginRequiredMixin, View):
             }
             return JsonResponse(data)
         else:
+            # This else is for not displaying Autamas matched in chat
             if autama_is_matched(request.user.id, request.user.currentAutama):
                 while True:
                     user.currentAutama = autama_id_next(user.id, user.currentAutama)
