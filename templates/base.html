@@ -366,7 +366,8 @@
                 buttons: {
                     "Submit": function () {
                         $('#feedback-form').submit();
-                        $(this).dialog("close");
+                        $(this).closest('.ui-dialog').fadeOut(3000);
+                        $(this).dialog('close');
                         $("#feedback-response").fadeOut(3000);
                     },
                     "Close": function () {
