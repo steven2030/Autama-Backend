@@ -6,130 +6,146 @@
 
 
 {% block csstyle %}
-   <style media="screen">
+    <style media="screen">
+        .btn-blue {
+            background: rgb(92,67,197);
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+
+        .btn-red {
+            background: #ff4e50;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+
         @media screen and (min-width:768px){
-			/* -- CSS for nav bar -- */
+            /* -- CSS for nav bar -- */
 
-			div.profile > img{  /*card pic*/
-			    height: 370px;
-			    width: 350px;
-			    border-radius: 15px;
-			}
+            div.profile > img{  /*card pic*/
+                height: 370px;
+                width: 330px;
+                border-radius: 15px;
+            }
 
-			 div.profile > div:nth-child(1){
-			    background-color: grey;/*this is grey*/
-			}
+            div.profile > div:nth-child(1){
+                background-color: grey;/*this is grey*/
+            }
 
-			div.profile > div:nth-child(2){
-			    margin-top: 2rem;/*was 30px*/
-			}
+            div.profile > div:nth-child(2){
+                margin-top: 2rem;/*was 30px*/
+            }
 
-			.name{
-			    background: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
-			    -webkit-background-clip: text;
-			    color: transparent;
-			}
+            .name{
+                -webkit-background-clip: text;
+                color: #6041ce;
+            }
 
-			.intro{  /*profile header*/
-			    margin-top: auto;
-			    margin-left: 2rem; /* was 15px;*/
-			margin-right: 2rem;	/*added*/
-			    float: none;
-			    height:4rem; /* was 45px */
-			    border-radius: 3px;
-			    background-image:linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
-			    text-align: center;
-			    vertical-align: center;
-			    width: 75%;	/*added */
-			    color: white;
+            .intro{  /*profile header*/
+                margin-top: auto;
+                margin-left: 2rem; /* was 15px;*/
+                margin-right: 2rem;	/*added*/
+                float: none;
+                height:4rem; /* was 45px */
+                border-radius: 3px;
+                background-image:linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+                text-align: center;
+                vertical-align: center;
+                width: 75%;	/*added */
+                color: white;
 
-			}
+            }
             .middle {
                 float: none;
                 display: inline;
                 vertical-align: center;
                 /*margin-left: 36%;*/
             }
-			div.profile{    /*profile card*/
-			    height: 450px;
-			    width: 350px;
-			    border: 2px solid #d4cce0;
-			    box-shadow: 10px 10px 5px #888888;
-			    border-radius: 15px;
-			    float: none;
-			    display: block;
-			    margin-left: auto;
-			    margin-right: auto;
-			    margin-top: 2rem; /*was 15%*/
-			    margin-bottom: auto;
-			    overflow-x: hidden;  /* was overflow: scroll;*/
-			    overflow-y: scroll;
-			}
+            div.profile{    /*profile card*/
+                height: 450px;
+                width: 350px;
+                border: 2px solid #d4cce0;
+                box-shadow: 10px 10px 5px #888888;
+                border-radius: 15px;
+                float: none;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 2rem; /*was 15%*/
+                margin-bottom: auto;
+                overflow-x: hidden;  /* was overflow: scroll;*/
+                overflow-y: scroll;
+            }
         }
         @media screen and (max-width:768px){
-           /* -- CSS for nav bar -- */
+            /* -- CSS for nav bar -- */
 
-           div.profile > img{  /*card pic*/
-               height: 370px;
-               width: 350px;
-               border-radius: 15px;
-           }
+            div.profile > img{  /*card pic*/
+                height: 370px;
+                width: 330px;
+                border-radius: 15px;
+            }
 
             div.profile > div:nth-child(1){
-               background-color: grey;/*this is grey*/
-           }
+                background-color: grey;/*this is grey*/
+            }
 
-           div.profile > div:nth-child(2){
-               margin-top: 2rem;/*was 30px*/
-           }
+            div.profile > div:nth-child(2){
+                margin-top: 2rem;/*was 30px*/
+            }
 
-           .name{
-               background: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
-               -webkit-background-clip: text;
-               color: transparent;
-           }
+            .name{
+                -webkit-background-clip: text;
+                color: #6041ce;
+            }
 
-           .intro{  /*profile header*/
-                  margin-top: auto;
-                  /* margin-left: 2rem; */
-                  /* margin-right: 2rem; */
-                  /* float: none; */
-                     height: 5rem;
-                     line-height: 5rem;
-                  margin: 0 auto 0!important;
-                  border-radius: 3px;
-                  background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
-                  text-align: center;
-                  vertical-align: center;
-                  width: 80%;
-                  color: white;
+            .intro{  /*profile header*/
+                margin-top: auto;
+                /* margin-left: 2rem; */
+                /* margin-right: 2rem; */
+                /* float: none; */
+                height: 5rem;
+                line-height: 5rem;
+                margin: 0 auto 0!important;
+                border-radius: 3px;
+                background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%);
+                text-align: center;
+                vertical-align: center;
+                width: 80%;
+                color: white;
 
-           }
-           .middle {
-               float: none;
-               display: inline;
-               vertical-align: center;
-               /*margin-left: 36%;*/
-           }
-
+            }
+            .middle {
+                float: none;
+                display: inline;
+                vertical-align: center;
+                /*margin-left: 36%;*/
+            }
 
 
-			.profile{
-			   height: 450px;
-			   width: 100%;
-			   max-width: 350px;
-			    border: 2px solid #d4cce0;
-			    box-shadow: 10px 10px 5px #888888;
-			    border-radius: 15px;
-			    float: none;
-			    display: block;
-			    margin-left: auto;
-			    margin-right: auto;
-			    margin-top: 2rem;
-			    margin-bottom: auto;
-			    overflow-x: hidden;
-			    overflow-y: scroll;
-			}
+
+            .profile{
+                height: 450px;
+                width: 100%;
+                max-width: 350px;
+                border: 2px solid #d4cce0;
+                box-shadow: 10px 10px 5px #888888;
+                border-radius: 15px;
+                float: none;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 2rem;
+                margin-bottom: auto;
+                overflow-x: hidden;
+                overflow-y: scroll;
+            }
 
         }
     </style>
@@ -137,33 +153,25 @@
 
 
 {% block content %}
-<h2 class="intro" style="margin-top: 2rem;"><!--was margin-top 50px -->
+    <!--<h2 class="intro" style="margin-top: 2rem;">
         My Profile
     </h2>
+    -->
+    <h1 style="text-align: center; margin-top: -20px">My Profile</h1>
     <div style="width: 80%;  margin: auto; ">
 
         <div class="profile">
             <img {% if request.user.image %}src="{{ request.user.image.url }}" {% endif %} id="avatar">
-            <span class="name" style="font-weight: bold; font-size: xx-large; margin-left: 10px">{{ user.first_name }} {{user.last_name }}</span>
+            <span class="name" style="font-weight: bold; font-size: 40px; margin-left: 10px">{{ user.first_name }} {{user.last_name }}</span>
 
-            {% if myself %}
-            <div style="font-size: medium; color: gray; margin-left: 10px; margin-top: 5px; margin-bottom: 5px; display: block">
-                <input type="file" name="photo" style="display: none;" id="upload-img"/>
-                <button type="button"  style=" float:left; background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none; " class="btn btn-info" id="upload-img-btn" >
-                    Change Picture
-                </button>
-            </div>
-            {% endif %}
-
-            <div style="font-size: x-large; color: white; margin-left: 10px; margin-bottom: 5px">
-                Introduce
-            </div>
+            <br>
 
             <!-- <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
                 User ID: {{ user.id  }}
 	    </div> don't need this -->
             <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
-                Username: {{ user.username }}
+                Username: {{ user.username }} <br>
+                Email: {{ request.user.email }} <br>
             </div>
             <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
                 <span>Interest1:</span><input name="interest1" value="{{user.interests1 }}">
@@ -184,36 +192,51 @@
                 <span>Interest6:</span><input name="interest1" value="{{user.interests6 }}">
             </div>
 
-            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
-                Email: {{ request.user.email }}
-            </div>
-
             <!--<div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px">
                 <span>Gender:</span>
                 <label style="width: 60px;margin-left: 10px"><input name="sex" type="radio" value="0" {% if request.user.sex == 0 %} checked {% endif %}/>male </label>
                 <label><input name="sex" type="radio" value="1" {% if request.user.sex == 1 %} checked {% endif %}/>female </label>
 	    </div>-->
+            <br>
             {% if myself %}
-            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px; margin-top: 5px; display: block">
-                <input type="password" name="password" id="password">
-                <button type="button" style="display: block; background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none; margin-top: 5px;" class="btn btn-info" style="margin-top: 5px" onclick="change_password()">
-                   Change Password
-                </button>
-            </div>
+                <div id="change-password" class="change-password" style="font-size: medium; color: gray; margin-left: 10px; margin-top: 5px; margin-bottom: 10px; display: none">
+                    New password:<input id="new-pw1"><br>
+                    Verify new pw:<input id="new-pw2"><br>
+                    <button type="button" onclick="change_password()" class="btn-blue" style="margin-top: 10px">Submit</button>
+                <br><br>
+                </div>
+                <div style="font-size: medium; color: gray; margin-left: 10px; margin-top: 5px; margin-bottom: 5px; display: block">
+                    <button type="button" class="btn btn-info btn-blue" id="change-password" onclick="show_pw_form()">
+                        Change Password
+                    </button>
+                </div>
             {% endif %}
 
-            {% if myself %}
-            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px; display: inline-block">
-               <input style="background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none;" type="submit" class="btn btn-info" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;">
-            </div>
-             {% endif %}
+        <br>
 
-            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px; display: block">
-                 <a href="/logout/">
-                    <button type="button"  style=" float:left; background-image: linear-gradient(90deg, #6737E5 50%, #B93FA3 80%); border-style: none; margin-bottom: 5px;" class="btn btn-info" >
+            {% if myself %}
+                <div style="font-size: medium; color: gray; margin-left: 10px; margin-top: 5px; margin-bottom: 5px; display: block">
+                    <input type="file" name="photo" style="display: none;" id="upload-img"/>
+                    <button type="button"  class="btn btn-info btn-blue" id="upload-img-btn">
+                        Change Picture
+                    </button>
+                </div>
+            {% endif %}
+
+        <br>
+
+            {% if myself %}
+                <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px; display: inline-block">
+                    <input style="border-style: none;" type="submit" class="btn btn-info btn-blue" style="width:100px;position: absolute;top: 50%;transform: translateY(-50%)translateX(-50%);left: 50%;" value="Save">
+                </div>
+            {% endif %}
+
+            <div style="font-size: medium; color: gray; margin-left: 10px; margin-bottom: 5px; display: inline-block">
+                <a href="/logout/">
+                    <button type="button" class="btn btn-info btn-red" >
                         Logout
                     </button>
-                 </a>
+                </a>
             </div>
 
         </div>
@@ -225,61 +248,63 @@
 {% block js %}
     <script type="application/javascript">
         $(document).ready(function(){
-        $('#upload-img-btn').click(function(){
-            $('#upload-img').click();
+            $('#upload-img-btn').click(function(){
+                $('#upload-img').click();
+            });
+
+            $('#upload-img').change(function () {
+
+                if($(this).val() != ""){
+                    fileLoad(this);
+                }
+            })
+
         });
 
-        $('#upload-img').change(function () {
+        /* change pw doesn't work: if field is empty, changes password but then you cant login...
+        function change_password() {
+            var password = $("#password").val()
+            $.post("/accounts/reset-password/",{"password":password,"csrfmiddlewaretoken":"{{ csrf_token }}"},function(result){
+                alert("Successfully changed");
+            });
 
-            if($(this).val() != ""){
-                fileLoad(this);
-            }
-        })
-
-    });
-
-    function change_password() {
-        var password = $("#password").val()
-        $.post("/accounts/reset-password/",{"password":password,"csrfmiddlewaretoken":"{{ csrf_token }}"},function(result){
-            alert("Successfully changed");
-          });
-
-    }
+        }
+        */
 
         function aa() {
-        parent.location.reload();
-    }
+            parent.location.reload();
+        }
 
 
-    function fileLoad(ele){
-        var formData = new FormData();
+        function fileLoad(ele){
+            var formData = new FormData();
 
-        var name = $(ele).val();
+            var name = $(ele).val();
 
-        var files = $(ele)[0].files[0];
+            var files = $(ele)[0].files[0];
 
-        formData.append("file", files);
-        formData.append("name", name);
-        formData.append("csrfmiddlewaretoken", "{{ csrf_token }}");
-        $.ajax({
-            url: "/accounts/change-avatar/",
-            type: 'POST',
-            data: formData,
-            processData: false,// jquery don't process the data
-            contentType: false, // jQuery not to set Content-Type
-            beforeSend: function () {
-            },
-            success: function (responseStr) {
-               // successfully change
-	       aa();
-               $("#avatar").attr("src", JSON.parse(rchengedesponseStr)['avatar'] + "?a"+Date());
-               alert("Successfully changed");
-            }
-            ,
-            error : function (FresponseStr) {
-                alert("Fail to edit");
-            }
-        });
-    }
+            formData.append("file", files);
+            formData.append("name", name);
+            formData.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+            $.ajax({
+                url: "/accounts/change-avatar/",
+                type: 'POST',
+                data: formData,
+                processData: false,// jquery don't process the data
+                contentType: false, // jQuery not to set Content-Type
+                beforeSend: function () {
+                },
+                success: function (responseStr) {
+                    // successfully change
+                    aa();
+                    $("#avatar").attr("src", JSON.parse(rchengedesponseStr)['avatar'] + "?a"+Date());
+                    alert("Successfully changed");
+                }
+                ,
+                error : function (FresponseStr) {
+                    alert("Fail to edit");
+                }
+            });
+        }
     </script>
 {% endblock %}
