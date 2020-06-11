@@ -1,5 +1,5 @@
 """
-PANCAKE = Preparing Autama's Name Carefully And Kinda Equally
+PANCAKE = Picking Autama's Name Carefully And Kinda Equally
 
 This file contains a class to handle generating random names both first and last.
 The class reads in names from two files, and then randomly picks one to generate
