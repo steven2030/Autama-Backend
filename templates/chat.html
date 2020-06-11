@@ -411,14 +411,6 @@
             return moment.utc(timestamp).local().format('MMM D YYYY, h:mm a');
         }
 
-        function showReport() {
-            if (document.getElementById("report").style.display != "block") {
-                div = document.getElementById("report").style.display="block";
-            } else {
-                div = document.getElementById("report").style.display="none";
-            }
-        }
-
         /*
         A little smashed up of the two links below to create a function for submitting with the enter key.
         https://www.formget.com/submit-data-from-textarea-on-enter-key/
@@ -492,7 +484,7 @@
                                     {% csrf_token %}
                                     Unmatch
                                 </a></li>
-                                <li><a onclick="showReport()" class="option">Report</a></li>
+                                <li id="reportBtn"><a class="option">Report</a></li>
                                 <li id="feedbackBtn"><a class="option">Feedback</a></li>
                             {% else %}
                                 <li id="shareBtn"><a class="option">Share</a></li>
@@ -500,7 +492,7 @@
                                     {% csrf_token %}
                                     Match
                                 </a></li>
-                                <li><a onclick="showReport()" class="option">Report</a></li>
+                                <li id="reportBtn"><a class="option">Report</a></li>
                                 <li id="feedbackBtn"><a class="option">Feedback</a></li>
                             {% endif %}
                         </ul>    <!-- end dropdown menu -->
@@ -517,6 +509,9 @@
 
         </div>
     </section>
+
+    <div id="report-response" style="margin-left:30px; margin-top:-20px; position: absolute; left: 50%; transform: translate(-50%, 0)"></div>
+    <div id="feedback-response" style="margin-left:30px; margin-top: -20px; position: absolute; left: 50%; transform: translate(-50%, 0)"></div>
 
     <!--<div>
                     <a href="/AutamaProfiles/{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
@@ -756,27 +751,21 @@
     </div>
 
     <!-- https://www.tutorialspoint.com/How-to-Create-a-Multi-line-Text-Input-Text-Area-In-HTML -->
-    <div id="report" class="report_box" style="margin-left: 20px">
-        <h1>Report Autama</h1>
+    <div id="report" class="report_box" style="margin-left: 20px" title="Report Autama">
         <form id="reportform" method="POST" action="/send_report_email/" enctype="text/plain">
             <input type="hidden" id="sender" name="sender" value="{{ user }}">
             <input type="hidden" id="autama_info" name='autama_info' value="{{ autama.pk }}-{{ autama.first }}-{{ autama.last }}">
-            <input style="margin: 15px 15px 15px 15px" type="checkbox" id="inappropriate" name="option1" value="inappropriate">
+            <input style="margin: 15px 15px 15px 0px" type="checkbox" id="inappropriate" name="option1" value="inappropriate">
             <label for="option1"> Inappropriate content</label><br>
-            <input style="margin: 15px 15px 15px 15px" type="checkbox" id="broken" name="option2" value="broken">
+            <input style="margin: 15px 15px 15px 0px" type="checkbox" id="broken" name="option2" value="broken">
             <label for="option2"> Autama is broken</label><br>
-            <input style="margin: 15px 15px 15px 15px" type="checkbox" id="boring" name="option3" value="boring">
+            <input style="margin: 15px 15px 15px 0px" type="checkbox" id="boring" name="option3" value="boring">
             <label for="option3"> Autama is boring</label><br>
-            <input style="margin: 15px 15px 15px 15px" type="checkbox" id="other" name="option4" value="other">
+            <input style="margin: 15px 15px 15px 0px" type="checkbox" id="other" name="option4" value="other">
             <label for="option4"> Other</label><br><br>
-            <input class="form-button-blue" type="button" id="submitReportBtn" name="submitReport" value="Submit"/>
-            <input class="form-button-red" type="button" id="hideReportBtn" name="hideReport" value="Close"/>
             {% csrf_token %}
         </form>
     </div>
-    <div id="report-response" style="margin-left:30px"></div>
-    <div id="feedback-response" style="margin-left:30px"></div>
-    <br>
 
     <div style="display:none" id="additional-feedback" title="Feedback">
         <form id="feedback-form" method="POST" action="/send_feedback_email/" enctype="text/plain">
@@ -812,6 +801,7 @@
             $("#prompt-feedback").dialog("option", "position", {my: "center", at: "bottom", of: "#profile_view"});
             $("#additional-feedback").dialog("option", "position", {my: "center", at: "bottom", of: "#profile_view"});
             $("#share-popup").dialog("option", "position", {my: "center", at: "bottom", of: "#profile_view"});
+            $("#report").dialog("option", "position", {my: "center", at: "bottom", of: "#profile_view"});
         });
 
         /* Email report submission handling */
@@ -836,16 +826,39 @@
             return false;
         });
 
-        $("#hideReportBtn").click(function() {
-            $("#report").hide();
-            $("#report-response").html('');
-        });
-
         $("#submitReportBtn").click(function() {
             $("#reportform").submit();
         });
 
         $(function() {
+            $('#report').dialog({
+                resizable: false,
+                height: "auto",
+                autoOpen: false,
+                width: "auto",
+                modal: true,
+                position: {
+                    my: "center",
+                    at: "bottom",
+                    of: "#profile_view",
+                },
+                buttons: {
+                    "Submit": function() {
+                        $('#reportform').submit();
+                        $(this).closest('.ui-dialog').fadeOut(3000);
+                        $(this).dialog('close');
+                        $("#report-response").fadeOut(5000);
+                    },
+                    "Close": function() {
+                        $(this).dialog("close");
+                    }
+                },
+                create: function() {
+                    $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
+                    $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
+                },
+            });
+
             $("#additional-feedback").dialog({
                 resizable: false,
                 height: "auto",
@@ -860,20 +873,13 @@
                 buttons: {
                     "Submit": function() {
                         $('#feedback-form').submit();
-                        $(this).dialog("close");
-                        $("#report").fadeOut(3000);
-                        $("#report-response").fadeOut(3000);
-                        $("#feedback-response").fadeOut(3000);
+                        $("#feedback-response").fadeOut(5000);
+                        $(this).closest('.ui-dialog').fadeOut(3000);
+                        $(this).dialog('close');
                     },
                     "Close": function() {
                         $(this).dialog("close");
-                        $("#report").fadeOut(3000);
-                        $("#report-response").fadeOut(3000);
                     }
-                },
-                close: function() {
-                    $("#report").fadeOut(3000);
-                    $("#report-response").fadeOut(3000);
                 },
                 create: function() {
                     $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
@@ -904,18 +910,12 @@
                         text: "No",
                         click: function() {
                             $(this).dialog("close");
-                            $("#report").fadeOut(3000);
-                            $("#report-response").fadeOut(3000);
                         },
                     }
                 ],
                 create: function() {
                     $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").addClass("blue");
                     $(this).closest(".ui-dialog").find(".ui-button:nth-child(1)").next().addClass("red");
-                },
-                close: function() {
-                    $("#report").fadeOut(3000);
-                    $("#report-response").fadeOut(3000);
                 },
             });
 
@@ -945,6 +945,10 @@
 
             $('#shareBtn').click(function() {
                 $('#share-popup').dialog('open');
+            });
+
+            $('#reportBtn').click(function() {
+                $('#report').dialog('open');
             });
         });
     </script>
