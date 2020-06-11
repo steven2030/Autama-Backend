@@ -50,7 +50,7 @@
             font-size: 16px;
             padding: 12px 20px 12px 40px;
             border: 1px solid #ddd;
-            margin-top: 0px;
+            margin-top: -50px;
             margin-bottom: 0px;
         }
 
@@ -180,9 +180,7 @@
         <input type="text" id="search-input" onkeyup="dynamicSearch()" placeholder="Search your matches..." title="Type in a name">
 
         <!-- aligning images with text: https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_img_align -->
-        <h1 class="text-header">Conversations ({{num_messages}})</h1>
-
-        <br>
+        <br><br><h1 class="text-header">Conversations ({{num_messages}})</h1>
 
         {% for a_profile, a_message, a_chain in user_messages %}
 
@@ -209,7 +207,6 @@
         <title>My Matches</title>
         <br>
         <h1 class="text-header">Start a Conversation ({{num_matches}})</h1>
-        <br>
 
         <div class="flexbox-wrapper-matches">
             {% for a_profile in user_matches %}
