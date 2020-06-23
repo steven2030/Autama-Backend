@@ -266,11 +266,12 @@
         </div>
     {% endif %}
 
-    <div id="feedback-response" style="text-align: center"></div>
+    <div id="feedback-response" style="position: absolute; left: 50%; transform: translate(-50%, 0); font-size: 20px; top: 16%"></div>
 
     <!-- HTML for cookie banner in body -->
     <!-- Tutorial: creating a simple cookie consent pop-up: 
       https://blog.formpl.us/how-to-create-a-simple-cookie-consent-pop-up-for-your-website-dad17a174b60 -->
+    <!--
     <div class="cookie-banner" style="display: none">
         <div class="cookie-banner-text">You must be 18 or older to use this website due to the vast amount of topics known by our Autamas!
             <br><br>
@@ -283,6 +284,7 @@
             <button class="accept-cookies">Accept</button>
         </div>
     </div>
+    -->
 
     <!-- JS for cookie banner -->
     <script>
@@ -366,8 +368,9 @@
                 buttons: {
                     "Submit": function () {
                         $('#feedback-form').submit();
-                        $(this).dialog("close");
-                        $("#feedback-response").fadeOut(3000);
+                        $(this).closest('.ui-dialog').fadeOut(3000);
+                        $(this).dialog('close');
+                        $("#feedback-response").fadeOut(5000);
                     },
                     "Close": function () {
                         $(this).dialog("close");

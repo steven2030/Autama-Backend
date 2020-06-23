@@ -10,15 +10,20 @@
             width: 50%;
 
         }
+
+        .seenbutton:hover {
+            cursor: pointer;
+            background-color: lightgray;
+        }
     </style>
     <div style="margin-bottom: 80px"></div>
     <div class="center">
         <span style="text-align: center;">
             <div class="center" style="font-size: 24px; font-weight: bold">Wow!</div>
-            <div class="center">You've seen all of the Autama currently generated.  Start over from the begining?</div> <br>
+            <div class="center">You've seen all of the Autama currently generated.  Would you like to start over from the beginning?</div> <br>
             <div>
-                <img class="seenbutton" id="stay" style="height: 85px; width: 85px;"  src="../Images/Images/dislike-button.png">
-                <img class="seenbutton" id="again" style="height: 85px; width: 85px;"  src="../Images/Images/like-button.png">
+                <img class="seenbutton" id="stay" style="height: 85px; width: 85px;"  src="../Images/Images/dislike-button.png" title="No">
+                <img class="seenbutton" id="again" style="height: 85px; width: 85px;"  src="../Images/Images/like-button.png" title="Yes">
             </div>
         </span>
     </div>
