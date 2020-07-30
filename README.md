@@ -34,12 +34,8 @@ Add description here.
 
 Bugs, Defects, and Failing Test information goes here as needed.
 
-  * If you get a transformers.activations error while talking with an Autama, just recreate a nucleus
-  * 5/27/20 - Bugs needing solutions:
-    - first and last name fields during creation at registration not inserted into new Autama
-    - fix missing icons
-    - auto-login at registration(no redirect to login again)
-    - swipe card details are jumbled
+  * If you get a transformers.activations error while talking with an Autama, just recreate a nucleus 
+  
 
 
 ## License
@@ -50,7 +46,7 @@ software for license terms.
 
 ## Acknowledgments  
 
-Django tutorial references here
+Django tutorial references
 
 Hugging Face Inc. for ConvAI
 
